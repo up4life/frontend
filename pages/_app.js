@@ -13,7 +13,7 @@ import "../static/scss/material-kit-pro-react.scss";
 class MyApp extends App {
 	constructor() {
 		super();
-		this.pageContext = getPageContext();
+		// this.pageContext = getPageContext();
 	}
 	// pageContext = null;
 	// componentDidMount() {
@@ -29,6 +29,7 @@ class MyApp extends App {
 			console.log(!!ctx.req);
 			pageProps = await Component.getInitialProps(ctx);
 			if (!process.browser) {
+				console.log(Component, "component");
 				console.log(pageProps, "pageProps");
 			}
 		}
@@ -42,28 +43,33 @@ class MyApp extends App {
 
 		return (
 			<Container>
-				<JssProvider
-					registry={this.pageContext.sheetsRegistry}
-					generateClassName={this.pageContext.generateClassName}
-				>
-					<MuiThemeProvider
-						theme={this.pageContext.theme}
-						sheetsManager={this.pageContext.sheetsManager}
-					>
-						<CssBaseline />
-
-						<ApolloProvider client={apollo}>
-							<ApolloHooksProvider client={apollo}>
-								<Page>
-									<Component pageContext={this.pageContext} {...pageProps} />
-								</Page>
-							</ApolloHooksProvider>
-						</ApolloProvider>
-					</MuiThemeProvider>
-				</JssProvider>
+				<ApolloProvider client={apollo}>
+					<ApolloHooksProvider client={apollo}>
+						<Page>
+							<Component pageContext={this.pageContext} {...pageProps} />
+						</Page>
+					</ApolloHooksProvider>
+				</ApolloProvider>
 			</Container>
 		);
 	}
 }
 
 export default withData(MyApp);
+
+// return (
+//   <Container>
+//     <JssProvider
+//       registry={this.pageContext.sheetsRegistry}
+//       generateClassName={this.pageContext.generateClassName}
+//     >
+//       <MuiThemeProvider
+//         theme={this.pageContext.theme}
+//         sheetsManager={this.pageContext.sheetsManager}
+//       >
+//         <CssBaseline />
+
+//       </MuiThemeProvider>
+//     </JssProvider>
+//   </Container>
+// );
