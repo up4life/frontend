@@ -15,54 +15,54 @@ class MyApp extends App {
 		super();
 		this.pageContext = getPageContext();
 	}
-	// pageContext = null;
-	// componentDidMount() {
-	// 	const jssStyles = document.querySelector('#jss-server-side');
-	// 	if (jssStyles && jssStyles.parentNode) {
-	// 		jssStyles.parentNode.removeChild(jssStyles);
-	// 	}
-	// }
-	// static async getInitialProps({ Component, ctx, router }) {
-	// 	//console.log(Object.keys(ctx));
-	// 	let pageProps = {};
-	// 	if (Component.getInitialProps) {
-	// 		console.log(!!ctx.req);
-	// 		pageProps = await Component.getInitialProps(ctx);
-	// 		if (!process.browser) {
-	// 			console.log(Component, "component");
-	// 			console.log(pageProps, "pageProps");
-	// 		}
-	// 	}
+	pageContext = null;
+	componentDidMount() {
+		const jssStyles = document.querySelector("#jss-server-side");
+		if (jssStyles && jssStyles.parentNode) {
+			jssStyles.parentNode.removeChild(jssStyles);
+		}
+	}
+	static async getInitialProps({ Component, ctx, router }) {
+		//console.log(Object.keys(ctx));
+		let pageProps = {};
+		if (Component.getInitialProps) {
+			console.log(!!ctx.req);
+			pageProps = await Component.getInitialProps(ctx);
+			if (!process.browser) {
+				console.log(Component, "component");
+				console.log(pageProps, "pageProps");
+			}
+		}
 
-	// 	pageProps.query = ctx.query;
+		pageProps.query = ctx.query;
 
-	// 	return { pageProps };
-	// }
+		return { pageProps };
+	}
 
 	render() {
 		const { Component, apollo, pageProps } = this.props;
 
 		return (
 			<Container>
-				<JssProvider
-					registry={this.pageContext.sheetsRegistry}
-					generateClassName={this.pageContext.generateClassName}
-				>
-					<MuiThemeProvider
-						theme={this.pageContext.theme}
-						sheetsManager={this.pageContext.sheetsManager}
-					>
-						<CssBaseline />
+				<ApolloProvider client={apollo}>
+					<ApolloHooksProvider client={apollo}>
+						<JssProvider
+							registry={this.pageContext.sheetsRegistry}
+							generateClassName={this.pageContext.generateClassName}
+						>
+							<MuiThemeProvider
+								theme={this.pageContext.theme}
+								sheetsManager={this.pageContext.sheetsManager}
+							>
+								<CssBaseline />
 
-						<ApolloProvider client={apollo}>
-							<ApolloHooksProvider client={apollo}>
 								<Page>
 									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
-							</ApolloHooksProvider>
-						</ApolloProvider>
-					</MuiThemeProvider>
-				</JssProvider>
+							</MuiThemeProvider>
+						</JssProvider>
+					</ApolloHooksProvider>
+				</ApolloProvider>
 			</Container>
 		);
 	}
