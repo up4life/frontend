@@ -42,12 +42,12 @@ export default withApollo(({ headers = {} }) => {
 		headers
 	}));
 
-	// const errorLink = onError(({ graphQLErrors, networkError }) => {
-	// 	if (graphQLErrors) {
-	// 		graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
-	// 	}
-	// 	if (networkError) console.log(`[Network error]: ${networkError}`);
-	// });
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
 
 	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
