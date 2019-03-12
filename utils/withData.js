@@ -7,13 +7,13 @@ import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
-import fetch from "isomorphic-unfetch";
+// import fetch from "isomorphic-unfetch";
 
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-if (!process.browser) {
-	global.fetch = fetch;
-}
+// if (!process.browser) {
+// 	global.fetch = fetch;
+// }
 
 export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
@@ -35,12 +35,12 @@ export default withApollo(({ headers = {} }) => {
 	// 		}
 	// 	});
 
-	const contextLink = setContext(async () => ({
-		// fetchOptions: {
-		// 	credentials: "include"
-		// },
-		headers
-	}));
+	// const contextLink = setContext(async () => ({
+	// 	// fetchOptions: {
+	// 	// 	credentials: "include"
+	// 	// },
+	// 	headers
+	// }));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -49,7 +49,7 @@ export default withApollo(({ headers = {} }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+	let link = ApolloLink.from([errorLink, httpLink]);
 
 	// if (!ssrMode) {
 	// 	link = split(
