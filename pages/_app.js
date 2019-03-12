@@ -22,12 +22,7 @@ class MyApp extends App {
 		}
 	}
 	static async getInitialProps({ Component, ctx }) {
-		let pageProps = {};
-		if (Component.getInitialProps) {
-			pageProps = await Component.getInitialProps(ctx);
-		}
-		// this exposes the query to the user
-		pageProps.query = ctx.query;
+		const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 		return { pageProps };
 	}
 
@@ -48,7 +43,7 @@ class MyApp extends App {
 							>
 								<CssBaseline />
 								<Page>
-									<Component {...pageProps} />
+									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
 							</MuiThemeProvider>
 						</JssProvider>
