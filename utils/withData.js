@@ -37,7 +37,8 @@ export default withApollo(({ headers = {} }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "include"
+			credentials: "include",
+			rejectUnauthorized: false
 		},
 		headers
 	}));
