@@ -11,31 +11,23 @@ import JssProvider from "react-jss/lib/JssProvider";
 import getPageContext from "../utils/getPageContext";
 import "../static/scss/material-kit-pro-react.scss";
 class MyApp extends App {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.pageContext = getPageContext();
 	}
-	pageContext = null;
 	componentDidMount() {
 		const jssStyles = document.querySelector("#jss-server-side");
 		if (jssStyles && jssStyles.parentNode) {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	static async getInitialProps({ Component, ctx, router }) {
-		//console.log(Object.keys(ctx));
+	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {};
 		if (Component.getInitialProps) {
-			console.log(!!ctx.req);
 			pageProps = await Component.getInitialProps(ctx);
-			if (!process.browser) {
-				console.log(Component, "component");
-				console.log(pageProps, "pageProps");
-			}
 		}
-
+		// this exposes the query to the user
 		pageProps.query = ctx.query;
-
 		return { pageProps };
 	}
 
@@ -67,5 +59,11 @@ class MyApp extends App {
 		);
 	}
 }
+
+// class Context extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+// }
 
 export default withData(MyApp);

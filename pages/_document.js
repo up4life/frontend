@@ -1,9 +1,14 @@
-import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-import flush from 'styled-jsx/server';
+import React from "react";
+import Document, { Head, Main, NextScript } from "next/document";
+import flush from "styled-jsx/server";
+// import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
 	static getInitialProps({ renderPage }) {
+		// const sheet = new ServerStyleSheet();
+		// const page = renderPage(App => props => sheet.collectStyles(<App {...props} />));
+		// const styleTags = sheet.getStyleElement();
+		// return { ...page, styleTags };
 		let pageContext;
 		const page = renderPage(App => props => {
 			pageContext = props.pageContext;
@@ -18,10 +23,10 @@ export default class MyDocument extends Document {
 			pageContext,
 			styles: (
 				<React.Fragment>
-					<style id='jss-server-side' dangerouslySetInnerHTML={{ __html: css }} />
+					<style id="jss-server-side" dangerouslySetInnerHTML={{ __html: css }} />
 					{flush() || null}
 				</React.Fragment>
-			),
+			)
 		};
 	}
 
@@ -37,3 +42,5 @@ export default class MyDocument extends Document {
 		);
 	}
 }
+
+// { this.props.styleTags }
