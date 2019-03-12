@@ -11,16 +11,16 @@ import JssProvider from "react-jss/lib/JssProvider";
 import getPageContext from "../utils/getPageContext";
 import "../static/scss/material-kit-pro-react.scss";
 class MyApp extends App {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.pageContext = getPageContext();
-	// }
-	// componentDidMount() {
-	// 	const jssStyles = document.querySelector("#jss-server-side");
-	// 	if (jssStyles && jssStyles.parentNode) {
-	// 		jssStyles.parentNode.removeChild(jssStyles);
-	// 	}
-	// }
+	constructor() {
+		super();
+		this.pageContext = getPageContext();
+	}
+	componentDidMount() {
+		const jssStyles = document.querySelector("#jss-server-side");
+		if (jssStyles && jssStyles.parentNode) {
+			jssStyles.parentNode.removeChild(jssStyles);
+		}
+	}
 	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {};
 		if (Component.getInitialProps) {
@@ -38,20 +38,25 @@ class MyApp extends App {
 			<Container>
 				<ApolloProvider client={apollo}>
 					<ApolloHooksProvider client={apollo}>
-						<Page>
-							<Component {...pageProps} />
-						</Page>
+						<JssProvider
+							registry={this.pageContext.sheetsRegistry}
+							generateClassName={this.pageContext.generateClassName}
+						>
+							<MuiThemeProvider
+								theme={this.pageContext.theme}
+								sheetsManager={this.pageContext.sheetsManager}
+							>
+								<CssBaseline />
+								<Page>
+									<Component {...pageProps} />
+								</Page>
+							</MuiThemeProvider>
+						</JssProvider>
 					</ApolloHooksProvider>
 				</ApolloProvider>
 			</Container>
 		);
 	}
 }
-
-// class Context extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-// }
 
 export default withData(MyApp);

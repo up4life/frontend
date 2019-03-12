@@ -11,9 +11,9 @@ import fetch from "isomorphic-unfetch";
 
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-// if (!process.browser) {
-// 	global.fetch = fetch;
-// }
+if (!process.browser) {
+	global.fetch = fetch;
+}
 
 export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
@@ -22,18 +22,18 @@ export default withApollo(({ headers = {} }) => {
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
-	const wsLink =
-		!ssrMode &&
-		new WebSocketLink({
-			uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
-			options: {
-				reconnect: true
-				// maybe we can add a header in here to get some sort of auth working
-				// connectionParams: {d
-				//   authorization: headers.authorization
-				// }
-			}
-		});
+	// const wsLink =
+	// 	!ssrMode &&
+	// 	new WebSocketLink({
+	// 		uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
+	// 		options: {
+	// 			reconnect: true
+	// 			// maybe we can add a header in here to get some sort of auth working
+	// 			// connectionParams: {d
+	// 			//   authorization: headers.authorization
+	// 			// }
+	// 		}
+	// 	});
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
@@ -42,26 +42,26 @@ export default withApollo(({ headers = {} }) => {
 		headers
 	}));
 
-	const errorLink = onError(({ graphQLErrors, networkError }) => {
-		if (graphQLErrors) {
-			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
-		}
-		if (networkError) console.log(`[Network error]: ${networkError}`);
-	});
+	// const errorLink = onError(({ graphQLErrors, networkError }) => {
+	// 	if (graphQLErrors) {
+	// 		graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+	// 	}
+	// 	if (networkError) console.log(`[Network error]: ${networkError}`);
+	// });
 
 	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
-	if (!ssrMode) {
-		link = split(
-			// split based on operation type
-			({ query }) => {
-				const definition = getMainDefinition(query);
-				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
-			},
-			wsLink,
-			link
-		);
-	}
+	// if (!ssrMode) {
+	// 	link = split(
+	// 		// split based on operation type
+	// 		({ query }) => {
+	// 			const definition = getMainDefinition(query);
+	// 			return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+	// 		},
+	// 		wsLink,
+	// 		link
+	// 	);
+	// }
 
 	const cache = new InMemoryCache({
 		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
@@ -70,6 +70,7 @@ export default withApollo(({ headers = {} }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		ssrForceFetchDelay: 100
 	});
 });
