@@ -14,20 +14,20 @@ const Index = () => (
 	</User>
 );
 
-Index.getInitialProps = async ctx => {
-	// let user = await isLoggedIn(ctx.apolloClient);
-	if (!process.browser) {
-		console.log(Object.keys(ctx), "ctx object keys in SSR");
-	}
+// Index.getInitialProps = async ctx => {
+// let user = await isLoggedIn(ctx.apolloClient);
+// if (!process.browser) {
+// console.log(Object.keys(ctx), "ctx object keys in SSR");
+// }
 
-	// if (!user.currentUser) {
-	// 	console.log("no user Index.getInitProps");
-	// 	// redirect(ctx, '/joinus');
-	// }
-	// else {
-	// 	redirect(ctx, '/home');
-	// }
-	return {};
-};
+// if (!user.currentUser) {
+// 	console.log("no user Index.getInitProps");
+// 	// redirect(ctx, '/joinus');
+// }
+// else {
+// 	redirect(ctx, '/home');
+// }
+// return {};
+// };
 
 export default Index;
