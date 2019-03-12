@@ -16,7 +16,9 @@ const Index = () => (
 
 Index.getInitialProps = async ctx => {
 	// let user = await isLoggedIn(ctx.apolloClient);
-	console.log(ctx);
+	if (!process.browser) {
+		console.log(Object.keys(ctx), "ctx object keys in SSR");
+	}
 
 	// if (!user.currentUser) {
 	// 	console.log("no user Index.getInitProps");
