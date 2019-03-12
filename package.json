@@ -8,7 +8,6 @@
 		"route-dev": "node server.js",
 		"now-build": "next build",
 		"build": "next build",
-		
 		"start": "next start -p $PORT",
 		"heroku-postbuild": "next build",
 		"test": "NODE_ENV=test jest --watch"
@@ -86,8 +85,7 @@
 						"styled-components",
 						{
 							"ssr": true,
-							"displayName": true,
-							"preprocess": false
+							"displayName": true
 						}
 					]
 				]
@@ -101,8 +99,7 @@
 						"styled-components",
 						{
 							"ssr": true,
-							"displayName": true,
-							"preprocess": false
+							"displayName": true
 						}
 					]
 				]
