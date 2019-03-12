@@ -1,0 +1,30 @@
+.gradient-box {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 20px auto;
+  
+    position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+  
+    $border: 3px;
+    color: #000;
+    background: #fff;
+    background-clip: padding-box; 
+    border: solid $border transparent; 
+    border-radius: 6px;
+  
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -$border; 
+      border-radius: inherit; 
+      background-image: linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8);
+    }
+  }
