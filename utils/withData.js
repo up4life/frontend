@@ -44,7 +44,7 @@ export default withApollo(({ ctx, headers = {} }) => {
 			credentials: "include",
 			headers
 		},
-		headers,
+		// headers,
 		credentials: "include"
 	}));
 
