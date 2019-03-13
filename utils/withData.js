@@ -43,15 +43,15 @@ export default withApollo(({ headers = null }) => {
 			}
 		});
 
-	const contextLink = setContext(async () => ({
+	const request = setContext(async () => ({
 		fetchOptions: {
 			credentials: "include"
 		},
 		headers
 	}));
 
-	const request = operation =>
-		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
+	// const request = operation =>
+	// 	operation.setContext({ fetchOptions: { credentials: "include" }, headers });
 
 	const requestHandler = request
 		? new ApolloLink(

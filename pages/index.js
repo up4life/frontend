@@ -3,15 +3,20 @@ import User from "../components/Queries/User";
 import { isLoggedIn } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 import Home from "./home";
+import App from "./_app";
 
 const Index = () => (
-	<User>
-		{({ data, loading, error }) => {
-			if (loading) return <div>index</div>;
-			if (error || !data.currentUser) return <JoinUs />;
-			else return <Home />;
-		}}
-	</User>
+	<App>
+		{props => (
+			<User>
+				{({ data, loading, error }) => {
+					if (loading) return <div>index</div>;
+					if (error || !data.currentUser) return <JoinUs />;
+					else return <Home />;
+				}}
+			</User>
+		)}
+	</App>
 );
 
 Index.getInitialProps = async ctx => {
