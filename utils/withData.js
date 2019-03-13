@@ -2,7 +2,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
 import { createHttpLink, HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
-import { ApolloLink, split } from "apollo-link";
+import { ApolloLink, split, Observable } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
