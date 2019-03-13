@@ -86,7 +86,7 @@ export default withApollo(({ headers = null }) => {
 	});
 
 	// let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
-	let link = ApolloLink.from([errorLink, requestHandler, link].filter(x => !!x));
+	let link = ApolloLink.from([errorLink, requestHandler, httpLink].filter(x => !!x));
 
 	if (!ssrMode) {
 		link = split(
