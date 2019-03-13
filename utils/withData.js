@@ -39,9 +39,7 @@ export default withApollo(({ headers = null }) => {
 		fetchOptions: {
 			credentials: "include"
 		},
-		headers: {
-			cookie: headers && headers.cookie
-		}
+		headers
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -72,7 +70,6 @@ export default withApollo(({ headers = null }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache,
-		ssrForceFetchDelay: 500
+		cache
 	});
 });

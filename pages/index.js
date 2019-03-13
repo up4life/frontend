@@ -22,11 +22,10 @@ Index.getInitialProps = async ctx => {
 		// }
 		let { cookies, cookie } = ctx.req.headers;
 		console.log(cookies, cookie);
-		console.log(ctx.req.headers["x-forwarded-for"]);
+
 		console.log(ctx.res.body);
-		// console.log(Object.keys(ctx), "ctx object keys in SSR");
+
 		console.log(Object.keys(ctx.req.headers), "ctx object keys in SSR");
-		// console.log(user);
 	}
 
 	// if (!user.currentUser) {
