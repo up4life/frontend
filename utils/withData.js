@@ -18,6 +18,9 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
 
+	if (headers && headers.cookie) {
+		console.log(headers);
+	}
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
@@ -39,9 +42,7 @@ export default withApollo(({ headers = {} }) => {
 		fetchOptions: {
 			credentials: "include"
 		},
-		headers: {
-			cookie: headers && headers.cookie // NOTE: client-side headers is undefined!
-		}
+		headers
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
