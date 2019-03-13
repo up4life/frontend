@@ -46,14 +46,14 @@ export default withApollo(({ ctx, headers = {} }) => {
 			}
 		});
 
-	const contextLink = setContext(async () => ({
-		fetchOptions: {
-			credentials: "include",
-			headers
-		},
-		// headers,
-		credentials: "include"
-	}));
+	// const contextLink = setContext(async () => ({
+	// 	fetchOptions: {
+	// 		credentials: "include",
+	// 		headers
+	// 	},
+	// 	// headers,
+	// 	credentials: "include"
+	// }));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -62,7 +62,7 @@ export default withApollo(({ ctx, headers = {} }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+	let link = ApolloLink.from([errorLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
@@ -83,7 +83,8 @@ export default withApollo(({ ctx, headers = {} }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		credentials: "include"
 		// ssrForceFetchDelay: 100
 	});
 });
