@@ -15,11 +15,11 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	global.fetch = fetch;
 // }
 
-export default withApollo(({ headers = {} }) => {
+export default withApollo(({ ctx, headers = {} }) => {
 	const ssrMode = !process.browser;
 
-	if (headers && headers.cookie) {
-		console.log(headers);
+	if (ctx && ctx.req) {
+		console.log(ctx.req.headers);
 		// headers.host = "https://api.up4.life";
 	}
 	const httpLink = createHttpLink({
@@ -41,9 +41,11 @@ export default withApollo(({ headers = {} }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "include"
+			credentials: "include",
+			headers
 		},
-		headers
+		headers,
+		credentials: "include"
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
