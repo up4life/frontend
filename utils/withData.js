@@ -15,14 +15,9 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	global.fetch = fetch;
 // }
 
-export default withApollo(({ ctx, headers = {} }) => {
+export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
-	if (ctx && ctx.req) {
-		console.log(ctx.req.headers.cookie);
-		console.log(ctx.req.headers.cookies);
-		// headers.host = "https://api.up4.life";
-	}
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
