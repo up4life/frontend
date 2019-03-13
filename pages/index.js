@@ -6,17 +6,13 @@ import Home from "./home";
 import App from "./_app";
 
 const Index = () => (
-	<App>
-		{props => (
-			<User>
-				{({ data, loading, error }) => {
-					if (loading) return <div>index</div>;
-					if (error || !data.currentUser) return <JoinUs />;
-					else return <Home />;
-				}}
-			</User>
-		)}
-	</App>
+	<User>
+		{({ data, loading, error }) => {
+			if (loading) return <div>index</div>;
+			if (error || !data.currentUser) return <JoinUs />;
+			else return <Home />;
+		}}
+	</User>
 );
 
 Index.getInitialProps = async ctx => {
