@@ -37,10 +37,11 @@ export default withApollo(({ headers = {} }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "include",
-			rejectUnauthorized: false
+			credentials: "include"
 		},
-		headers
+		headers: {
+			cookie: headers && headers.cookie // NOTE: client-side headers is undefined!
+		}
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
