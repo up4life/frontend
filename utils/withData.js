@@ -15,7 +15,7 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	global.fetch = fetch;
 // }
 
-export default withApollo(({ headers }) => {
+export default withApollo(({ headers = null }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
@@ -35,24 +35,14 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	const contextLink = setContext(async () => {
-		console.log(headers, "headers here");
-		let updatedContext = {
-			fetchOptions: {
-				credentials: "include"
-			}
-		};
-		if (headers && headers.host !== prodEndpoint) {
-			return {
-				...updatedContext,
-				headers
-			};
-		} else {
-			return {
-				...updatedConext
-			};
+	const contextLink = setContext(async () => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers: {
+			cookie: headers && headers.cookie
 		}
-	});
+	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
