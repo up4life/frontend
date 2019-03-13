@@ -54,7 +54,8 @@ const User = props => (
 
 export const isLoggedIn = async ({ apolloClient }) => {
 	const { data } = await apolloClient.query({
-		query: CURRENT_USER_QUERY
+		query: CURRENT_USER_QUERY,
+		fetchPolicy: "cache-and-network"
 	});
 	if (data) {
 		return data.currentUser;
