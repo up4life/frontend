@@ -25,7 +25,12 @@ export default withApollo(({ ctx, headers = {} }) => {
 	}
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		headers
+		headers: {
+			cookie: headers && headers.cookie
+		},
+		fetchOptions: {
+			credentials: "include"
+		}
 	});
 
 	const wsLink =
