@@ -85,7 +85,8 @@ export default withApollo(({ headers = null }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
+	// let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
+	let link = ApolloLink.from([errorLink, requestHandler, link].filter(x => !!x));
 
 	if (!ssrMode) {
 		link = split(
@@ -98,8 +99,6 @@ export default withApollo(({ headers = null }) => {
 			link
 		);
 	}
-
-	const link = ApolloLink.from([errorLink, requestHandler, link].filter(x => !!x));
 
 	const cache = new InMemoryCache({
 		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
