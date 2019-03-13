@@ -19,14 +19,14 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	let httpLink = new HttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		credentials: "include"
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 	if (!process.browser && headers) {
+		console.log(headers, "headers yo");
 		headers.ssr = "1";
 		httpLink = new HttpLink({
-			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-			headers
+			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+			// headers
 		});
 	}
 
