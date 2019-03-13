@@ -19,18 +19,12 @@ export default withApollo(({ ctx, headers = {} }) => {
 	const ssrMode = !process.browser;
 
 	if (ctx && ctx.req) {
-		console.log(ctx.req.headers.host);
-		console.log(ctx.req.headers.origin);
+		console.log(ctx.req.headers.cookie);
+		console.log(ctx.req.headers.cookies);
 		// headers.host = "https://api.up4.life";
 	}
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		headers: {
-			cookie: headers && headers.cookie
-		},
-		fetchOptions: {
-			credentials: "include"
-		}
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
 	const wsLink =
@@ -49,10 +43,10 @@ export default withApollo(({ ctx, headers = {} }) => {
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
 			credentials: "include"
-			// headers
+		},
+		headers: {
+			cookie: headers && headers.cookie // NOTE: client-side headers is undefined!
 		}
-		// headers,
-		// credentials: "include"
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -84,7 +78,5 @@ export default withApollo(({ ctx, headers = {} }) => {
 		link,
 		ssrMode,
 		cache
-		// credentials: "include"
-		// ssrForceFetchDelay: 100
 	});
 });

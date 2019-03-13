@@ -17,6 +17,8 @@ const Index = () => (
 Index.getInitialProps = async ctx => {
 	if (!process.browser) {
 		// let user = await isLoggedIn(ctx.apolloClient);
+		let { cookies, cookie } = ctx.req;
+		console.log(cookies, cookie);
 		console.log(Object.keys(ctx), "ctx object keys in SSR");
 		console.log(Object.keys(ctx.req.headers), "ctx object keys in SSR");
 		// console.log(user);
