@@ -30,7 +30,8 @@ class MyApp extends App {
 		}
 		const tokenObj = nextCookie(ctx);
 		console.log(ctx.req.headers);
-		console.log(ctx.req.cookies);
+		console.log(ctx.req.cookie);
+		console.log(ctx.req.userId);
 		console.log(tokenObj);
 		// this exposes the query to the user
 		pageProps.query = ctx.query;
