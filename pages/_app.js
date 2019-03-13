@@ -29,6 +29,8 @@ class MyApp extends App {
 			pageProps = await Component.getInitialProps(ctx);
 		}
 		const tokenObj = nextCookie(ctx);
+		console.log(ctx.req.headers);
+		console.log(ctx.req.cookies);
 		console.log(tokenObj);
 		// this exposes the query to the user
 		pageProps.query = ctx.query;
