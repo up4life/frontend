@@ -25,8 +25,8 @@ export default withApollo(({ headers }) => {
 		headers.ssr = "1";
 		httpLink = new HttpLink({
 			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-			headers,
-			credentials: "include"
+			headers
+			// credentials: "include"
 		});
 	}
 
@@ -47,8 +47,9 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	const request = operation =>
-		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
+	const request = operation => operation.setContext({ headers });
+
+	// { fetchOptions: { credentials: "include" }
 
 	const requestHandler = request
 		? new ApolloLink(
