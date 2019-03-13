@@ -17,13 +17,13 @@ const Index = () => (
 Index.getInitialProps = async ctx => {
 	if (!process.browser) {
 		// let user = await isLoggedIn(ctx.apolloClient);
-		if (!(await isLoggedIn(ctx))) {
-			console.log("fucker");
-		}
+		// if (!(await isLoggedIn(ctx))) {
+		// 	console.log("fucker");
+		// }
 		let { cookies, cookie } = ctx.req.headers;
 		console.log(cookies, cookie);
 		console.log(ctx.req.headers["x-forwarded-for"]);
-		console.log(ctx.req.body);
+		console.log(ctx.res.body);
 		// console.log(Object.keys(ctx), "ctx object keys in SSR");
 		console.log(Object.keys(ctx.req.headers), "ctx object keys in SSR");
 		// console.log(user);
