@@ -7,13 +7,13 @@ import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
-// import fetch from "isomorphic-unfetch";
+import fetch from "isomorphic-unfetch";
 
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-// if (!process.browser) {
-// 	global.fetch = fetch;
-// }
+if (!process.browser) {
+	global.fetch = fetch;
+}
 
 export default withApollo(({ headers = null }) => {
 	const ssrMode = !process.browser;
@@ -107,6 +107,7 @@ export default withApollo(({ headers = null }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		fetch
 	});
 });
