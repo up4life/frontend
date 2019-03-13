@@ -19,7 +19,8 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
+		useGetForQueries: true
 	});
 
 	const wsLink =
@@ -39,9 +40,7 @@ export default withApollo(({ headers }) => {
 		fetchOptions: {
 			credentials: "include"
 		},
-		headers: {
-			cookie: headers && headers.cookie // NOTE: client-side headers is undefined!
-		}
+		headers
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
