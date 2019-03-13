@@ -20,7 +20,7 @@ export default withApollo(({ headers = {} }) => {
 
 	if (headers && headers.cookie) {
 		console.log(headers);
-		headers.host = "https://api.up4.life";
+		// headers.host = "https://api.up4.life";
 	}
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
