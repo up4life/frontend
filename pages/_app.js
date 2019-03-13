@@ -5,17 +5,11 @@ import getPageContext from "../utils/getPageContext";
 import JssProvider from "react-jss/lib/JssProvider";
 import { ApolloProvider } from "react-apollo";
 import App, { Container } from "next/app";
-import nextCookie from "next-cookies";
-import cookie from "cookie";
 // import Router from "next/router";
 // import redirect from "../utils/redirect";
 import "../static/scss/material-kit-pro-react.scss";
 import withData from "../utils/withData";
 import Page from "../components/Page";
-
-function parseCookies(req, options = {}) {
-	return cookie.parse(req ? req.headers.cookie : "", options);
-}
 
 class MyApp extends App {
 	constructor(props) {
@@ -33,15 +27,7 @@ class MyApp extends App {
 		if (Component.getInitialProps) {
 			pageProps = await Component.getInitialProps(ctx);
 		}
-		const tokenObj = nextCookie(ctx);
-		if (!process.browser) {
-			let cookies = parseCookies(ctx.req);
-			console.log(cookies, "parseCookies");
-			console.log(ctx.req.headers);
-			console.log(ctx.req.cookie);
-			// console.log(ctx.req.userId);
-			console.log(tokenObj);
-		}
+
 		// this exposes the query to the user
 		pageProps.query = ctx.query;
 		return { pageProps };
