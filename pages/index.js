@@ -17,6 +17,9 @@ const Index = () => (
 Index.getInitialProps = async ctx => {
 	if (!process.browser) {
 		// let user = await isLoggedIn(ctx.apolloClient);
+		if (!(await isLoggedIn(ctx))) {
+			console.log("fucker");
+		}
 		let { cookies, cookie } = ctx.req.headers;
 		console.log(cookies, cookie);
 		console.log(ctx.req.headers["x-forwarded-for"]);

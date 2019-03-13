@@ -1,6 +1,6 @@
-import { Query, withApollo } from 'react-apollo';
-import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
+import { Query, withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import PropTypes from "prop-types";
 
 const CURRENT_USER_QUERY = gql`
 	query {
@@ -52,18 +52,17 @@ const User = props => (
 	</Query>
 );
 
-export const isLoggedIn = async client => {
-	let response = await client.query({
-		query: CURRENT_USER_QUERY,
+export const isLoggedIn = async ({ apolloClient }) => {
+	const { data } = await apolloClient.query({
+		query: CURRENT_USER_QUERY
 	});
-	if (response) {
-		return { currentUser: response.data };
+	if (data) {
+		return data.currentUser;
 	}
-	return {};
 };
 
 User.propTypes = {
-	children: PropTypes.func.isRequired,
+	children: PropTypes.func.isRequired
 };
 
 export default User;
