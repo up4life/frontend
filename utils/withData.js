@@ -19,18 +19,12 @@ export default withApollo(({ ctx, headers = {} }) => {
 	const ssrMode = !process.browser;
 
 	if (ctx && ctx.req) {
-		console.log(ctx.req.headers);
+		console.log(ctx.req.headers.host);
+		console.log(ctx.req.headers.origin);
 		// headers.host = "https://api.up4.life";
 	}
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		request: operation =>
-			operation.setContext({
-				fetchOptions: {
-					credentials: "include"
-				},
-				headers
-			})
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
 	const wsLink =
@@ -46,14 +40,14 @@ export default withApollo(({ ctx, headers = {} }) => {
 			}
 		});
 
-	// const contextLink = setContext(async () => ({
-	// 	fetchOptions: {
-	// 		credentials: "include",
-	// 		headers
-	// 	},
-	// 	// headers,
-	// 	credentials: "include"
-	// }));
+	const contextLink = setContext(async () => ({
+		fetchOptions: {
+			// credentials: "include",
+			headers
+		},
+		// headers,
+		credentials: "include"
+	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -62,7 +56,7 @@ export default withApollo(({ ctx, headers = {} }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
@@ -77,14 +71,14 @@ export default withApollo(({ ctx, headers = {} }) => {
 	}
 
 	const cache = new InMemoryCache({
-		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache,
-		credentials: "include"
+		cache
+		// credentials: "include"
 		// ssrForceFetchDelay: 100
 	});
 });
