@@ -39,7 +39,9 @@ export default withApollo(({ headers }) => {
 		fetchOptions: {
 			credentials: "include"
 		},
-		headers
+		headers: {
+			"x-forwarded-for": headers ? headers["x-forwarded-for"] : null
+		}
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
