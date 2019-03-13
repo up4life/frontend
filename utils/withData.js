@@ -18,17 +18,17 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
-	let httpLink = new HttpLink({
+	const httpLink = new HttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
-	if (!process.browser && headers) {
-		console.log(headers, "headers yo");
-		headers.ssr = "1";
-		httpLink = new HttpLink({
-			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
-			// headers
-		});
-	}
+	// if (!process.browser && headers) {
+	// 	console.log(headers, "headers yo");
+	// 	headers.ssr = "1";
+	// 	httpLink = new HttpLink({
+	// 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+	// 		// headers
+	// 	});
+	// }
 
 	// const httpLink = createHttpLink({
 	// 	uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
@@ -48,7 +48,15 @@ export default withApollo(({ headers }) => {
 		});
 
 	const request = operation =>
-		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
+		operation.setContext({
+			fetchOptions: {
+				credentials: "include"
+			},
+			headers: headers
+		});
+
+	// const request = operation =>
+	// operation.setContext({ fetchOptions: { credentials: "include" }, headers });
 
 	const requestHandler = request
 		? new ApolloLink(
