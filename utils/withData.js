@@ -42,11 +42,11 @@ export default withApollo(({ ctx, headers = {} }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			// credentials: "include",
+			credentials: "include",
 			headers
-		},
+		}
 		// headers,
-		credentials: "include"
+		// credentials: "include"
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
