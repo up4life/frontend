@@ -35,7 +35,7 @@ class MyApp extends App {
 		}
 		const tokenObj = nextCookie(ctx);
 		if (!process.browser) {
-			let cookies = parseCookies(req);
+			let cookies = parseCookies(ctx.req);
 			console.log(cookies, "parseCookies");
 			console.log(ctx.req.headers);
 			console.log(ctx.req.cookie);
