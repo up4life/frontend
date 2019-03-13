@@ -35,9 +35,9 @@ class MyApp extends App {
 		const { Component, apollo, pageProps } = this.props;
 
 		return (
-			<ApolloProvider client={apollo}>
-				<ApolloHooksProvider client={apollo}>
-					<Container>
+			<Container>
+				<ApolloProvider client={apollo}>
+					<ApolloHooksProvider client={apollo}>
 						<JssProvider
 							registry={this.pageContext.sheetsRegistry}
 							generateClassName={this.pageContext.generateClassName}
@@ -52,9 +52,9 @@ class MyApp extends App {
 								</Page>
 							</MuiThemeProvider>
 						</JssProvider>
-					</Container>
-				</ApolloHooksProvider>
-			</ApolloProvider>
+					</ApolloHooksProvider>
+				</ApolloProvider>
+			</Container>
 		);
 	}
 }

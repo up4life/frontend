@@ -19,7 +19,8 @@ Index.getInitialProps = async ctx => {
 		// let user = await isLoggedIn(ctx.apolloClient);
 		let { cookies, cookie } = ctx.req.headers;
 		console.log(cookies, cookie);
-		console.log(ctx.req.headers["user-agent"]);
+		console.log(ctx.req.headers["x-forwarded-for"]);
+		console.log(ctx.req.body);
 		// console.log(Object.keys(ctx), "ctx object keys in SSR");
 		console.log(Object.keys(ctx.req.headers), "ctx object keys in SSR");
 		// console.log(user);
