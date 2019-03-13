@@ -1,27 +1,26 @@
-import Billing from '../components/Billing/Billing';
+import Billing from "../components/Billing/Billing";
 
-import User from '../components/Queries/User';
-import { isLoggedIn } from '../components/Queries/User';
-import JoinUs from './joinus';
+import User from "../components/Queries/User";
+import { isLoggedIn } from "../components/Queries/User";
+import JoinUs from "./joinus";
 
 const BillingPage = () => (
 	<User>
 		{({ loading, error, data }) => {
 			if (loading) return <div>Loading...</div>;
 			if (error || !data.currentUser) return <JoinUs />;
-
-			else return (
-				<>
-					<Billing currentUser={data.currentUser} />
-					{/* <TransactionList currentUser={currentUser} /> */}
-				</>
-			);
+			else
+				return (
+					<>
+						<Billing currentUser={data.currentUser} />
+					</>
+				);
 		}}
 	</User>
 );
 
 // BillingPage.getInitialProps = async ctx => {
-	
+
 // 	let user = await isLoggedIn(ctx.apolloClient);
 
 // 	if (!user) {

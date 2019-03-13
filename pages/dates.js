@@ -2,8 +2,8 @@ import Settings from "../components/Settings";
 import Header from "../components/Header";
 import JoinUs from "./joinus";
 import User from "../components/Queries/User";
-import { isLoggedIn } from "../components/Queries/User";
-import redirect from "../utils/redirect";
+// import { isLoggedIn } from "../components/Queries/User";
+// import redirect from "../utils/redirect";
 
 const SettingsPage = () => (
 	<User>

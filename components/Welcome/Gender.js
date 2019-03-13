@@ -1,14 +1,14 @@
-import React from 'react';
-import Router, { Link } from 'next/router';
-import NProgress from 'nprogress';
-import { Mutation } from 'react-apollo';
+import React from "react";
+import Router, { Link } from "next/router";
+import NProgress from "nprogress";
+import { Mutation } from "react-apollo";
 
-import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
-import Button from '../../styledComponents/CustomButtons/Button';
+import { UPDATE_USER_MUTATION } from "../Mutations/updateUser";
+import Button from "../../styledComponents/CustomButtons/Button";
 
 const Gender = ({ user }) => {
 	const handleSelect = (value, updateUser) => {
-		console.log('started');
+		// console.log('started');
 		NProgress.start();
 		updateUser({ variables: { gender: value } });
 	};
@@ -21,54 +21,54 @@ const Gender = ({ user }) => {
 					`/welcome?slug=2`,
 					`/welcome/profile/gender/preferences`,
 					{ shallow: true },
-					{ scroll: false },
+					{ scroll: false }
 				);
 			}}
 		>
 			{updateUser => (
 				<div
 					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
+						height: "100%",
+						width: "100%",
+						color: "white",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center"
 					}}
 				>
 					<div
 						style={{
-							display: 'flex',
-							flexDirection: 'column',
+							display: "flex",
+							flexDirection: "column",
 							// alignItems: "center",
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
+							justifyContent: "center",
+							backgroundColor: "rgb(0,0,0,.6)",
 
-							padding: '90px',
+							padding: "90px",
 
 							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
+							borderRadius: "6px"
 						}}
 					>
 						<h2>I am a...</h2>
 						<Button
-							color='danger'
+							color="danger"
 							style={{ zIndex: 1 }}
-							onClick={() => handleSelect('MALE', updateUser)}
+							onClick={() => handleSelect("MALE", updateUser)}
 						>
 							Man
 						</Button>
 						<Button
-							color='danger'
+							color="danger"
 							style={{ zIndex: 1 }}
-							onClick={() => handleSelect('FEMALE', updateUser)}
+							onClick={() => handleSelect("FEMALE", updateUser)}
 						>
 							Woman
 						</Button>
 						<Button
-							color='danger'
+							color="danger"
 							style={{ zIndex: 1 }}
-							onClick={() => handleSelect('OTHER', updateUser)}
+							onClick={() => handleSelect("OTHER", updateUser)}
 						>
 							Non-Binary
 						</Button>

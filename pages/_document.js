@@ -37,13 +37,3 @@ export default class MyDocument extends Document {
 		);
 	}
 }
-
-// { this.props.styleTags }
-// ctx.renderPage = () => originalRenderPage({
-//   enhanceApp: App => props => enhanceApp(App, { ...props, ...globalProps }),
-//   enhanceComponent: Component => Component
-// })
-
-// const initialProps = await Document.getInitialProps(ctx);
-
-// return { ...initialProps }

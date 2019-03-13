@@ -15,7 +15,7 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	global.fetch = fetch;
 // }
 
-export default withApollo(({ headers = null }) => {
+export default withApollo(({ initialState }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = new HttpLink({
@@ -43,40 +43,17 @@ export default withApollo(({ headers = null }) => {
 			}
 		});
 
-	// const request = setContext(async () => ({
-	// 	fetchOptions: {
-	// 		credentials: "include"
-	// 	},
-	// 	headers
-	// }));
-
-	const request = operation =>
-		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
-
-	const requestHandler = request
-		? new ApolloLink(
-				(operation, forward) =>
-					new Observable(observer => {
-						let handle;
-						Promise.resolve(operation)
-							.then(oper => request(oper))
-							.then(() => {
-								handle = forward(operation).subscribe({
-									next: observer.next.bind(observer),
-									error: observer.error.bind(observer),
-									complete: observer.complete.bind(observer)
-								});
-							})
-							.catch(observer.error.bind(observer));
-
-						return () => {
-							if (handle) {
-								handle.unsubscribe();
-							}
-						};
-					})
-		  )
-		: false;
+	const authLink = setContext((_, { headers }) => {
+		const token = getToken()["XSRF-TOKEN"];
+		const cookie = getToken().cookie;
+		return {
+			headers: {
+				...headers,
+				"X-XSRF-TOKEN": token,
+				cookie
+			}
+		};
+	});
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -86,7 +63,7 @@ export default withApollo(({ headers = null }) => {
 	});
 
 	// let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
-	let link = ApolloLink.from([errorLink, requestHandler, httpLink].filter(x => !!x));
+	let link = ApolloLink.from([errorLink, authLink, httpLink].filter(x => !!x));
 
 	if (!ssrMode) {
 		link = split(

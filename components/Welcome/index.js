@@ -1,43 +1,43 @@
-import React, { Fragment } from 'react';
-import { withRouter } from 'next/router';
+import React, { Fragment } from "react";
+import { withRouter } from "next/router";
 //MUI
-import withStyles from '@material-ui/core/styles/withStyles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import withStyles from "@material-ui/core/styles/withStyles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
 
-import Main from './Main';
-import Gender from './Gender';
-import GenderPrefs from './GenderPrefs';
-import Age from './Age';
-import AgePrefs from './AgePrefs';
-import Location from './Location';
-import Images from './Images';
-import Bio from './Bio';
-import Pro from './ProFeatures';
+import Main from "./Main";
+import Gender from "./Gender";
+import GenderPrefs from "./GenderPrefs";
+import Age from "./Age";
+import AgePrefs from "./AgePrefs";
+import Location from "./Location";
+import Images from "./Images";
+import Bio from "./Bio";
+import Pro from "./ProFeatures";
 
-import style from '../../static/jss/Welcome/welcomeStyles';
+import style from "../../static/jss/Welcome/welcomeStyles";
 
-import triangle1 from '../../static/img/triangle1.svg';
-import triangle2 from '../../static/img/triangle2.svg';
-import triangle3 from '../../static/img/triangle3.svg';
-import triangle4 from '../../static/img/triangle4.svg';
-import triangle5 from '../../static/img/triangle5.svg';
-import triangle6 from '../../static/img/triangle6.svg';
-import triangle7 from '../../static/img/triangle7.svg';
-import triangle8 from '../../static/img/triangle8.svg';
+import triangle1 from "../../static/img/triangle1.svg";
+import triangle2 from "../../static/img/triangle2.svg";
+import triangle3 from "../../static/img/triangle3.svg";
+import triangle4 from "../../static/img/triangle4.svg";
+import triangle5 from "../../static/img/triangle5.svg";
+import triangle6 from "../../static/img/triangle6.svg";
+import triangle7 from "../../static/img/triangle7.svg";
+import triangle8 from "../../static/img/triangle8.svg";
 
 function getSteps() {
 	return [
-		'Welcome',
-		'Gender',
-		'Gender Preference',
-		'Age',
-		'Age Preference',
-		'Location',
-		'Images',
-		'Bio',
-		'Go Pro',
+		"Welcome",
+		"Gender",
+		"Gender Preference",
+		"Age",
+		"Age Preference",
+		"Location",
+		"Images",
+		"Bio",
+		"Go Pro"
 	];
 }
 
@@ -62,7 +62,7 @@ function getStepContent(stepIndex, user) {
 		case 8:
 			return <Pro />;
 		default:
-			return 'Unknown stepIndex';
+			return "Unknown stepIndex";
 	}
 }
 
@@ -143,28 +143,30 @@ function getImage(stepIndex) {
 
 const Welcome = ({ classes, user, router: { query } }) => {
 	const steps = getSteps();
-	console.log(parseInt(query.slug));
+	// console.log(parseInt(query.slug));
 
 	return (
 		<div
 			className={classes.pageHeader}
-			style={{
-				// backgroundImage: `url(${getImage(parseInt(query.slug))})`,
-				// backgroundImage: `url(../../Assets/triangle1.svg)`,
-				// backgroundSize: "cover",
-				// backgroundPosition: "top center"
-			}}
+			style={
+				{
+					// backgroundImage: `url(${getImage(parseInt(query.slug))})`,
+					// backgroundImage: `url(../../Assets/triangle1.svg)`,
+					// backgroundSize: "cover",
+					// backgroundPosition: "top center"
+				}
+			}
 		>
 			<img
-				style={{ height: '100%', width: '100%', position: 'absolute', zIndex: '-10' }}
+				style={{ height: "100%", width: "100%", position: "absolute", zIndex: "-10" }}
 				src={getImage(parseInt(query.slug))}
 			/>
 			<div
 				style={{
-					height: '100vh',
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'space-between',
+					height: "100vh",
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "space-between"
 				}}
 				className={classes.container}
 			>
@@ -179,13 +181,13 @@ const Welcome = ({ classes, user, router: { query } }) => {
 							<StepLabel
 								// className={classes.activeIcon}
 								classes={{
-									label: classes.step,
+									label: classes.step
 								}}
 								StepIconProps={{
 									classes: {
 										active: classes.active,
-										completed: classes.completed,
-									},
+										completed: classes.completed
+									}
 								}}
 							>
 								{label}

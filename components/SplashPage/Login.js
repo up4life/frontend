@@ -205,7 +205,7 @@ const Login = ({ classes, showing, setShowing }) => {
 										disabled
 										onSubmit={async e => {
 											e.preventDefault();
-											console.log(user);
+											// console.log(user);
 											NProgress.start();
 											await signin({
 												variables: {

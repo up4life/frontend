@@ -24,13 +24,6 @@ const ProfilePage = () => (
 // ProfilePage.getInitialProps = async ctx => {
 // 	let user = await isLoggedIn(ctx.apolloClient);
 
-// 	if (!user) {
-// 		redirect(ctx, '/joinus');
-// 	}
-// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
-// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
-// 	// 	redirect(ctx, '/joinus');
-// 	// }
 // 	return {  };
 // };
 
