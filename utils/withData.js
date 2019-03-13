@@ -18,13 +18,17 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
-	const httpLink = new HttpLink({
+	let httpLink = new HttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
-		// fetchOptions: {
-		// 	credentials: "include"
-		// },
-		// headers
 	});
+	if (!process.browser && headers) {
+		headers.ssr = "1";
+		httpLink = new HttpLink({
+			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
+			headers,
+			credentials: "include"
+		});
+	}
 
 	// const httpLink = createHttpLink({
 	// 	uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
@@ -42,18 +46,6 @@ export default withApollo(({ headers }) => {
 				// }
 			}
 		});
-
-	// const authLink = setContext((_, { headers }) => {
-	// 	const token = getToken()["XSRF-TOKEN"];
-	// 	const cookie = getToken().cookie;
-	// 	return {
-	// 		headers: {
-	// 			...headers,
-	// 			"X-XSRF-TOKEN": token,
-	// 			cookie
-	// 		}
-	// 	};
-	// });
 
 	const request = operation =>
 		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
