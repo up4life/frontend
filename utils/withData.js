@@ -19,7 +19,7 @@ export default withApollo(({ headers = null }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint + "/graphql"
 	});
 
 	const wsLink =
