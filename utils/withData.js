@@ -1,6 +1,6 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
-import { createHttpLink } from "apollo-link-http";
+import { createHttpLink, HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
@@ -18,9 +18,17 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo(({ headers = null }) => {
 	const ssrMode = !process.browser;
 
-	const httpLink = createHttpLink({
+	const httpLink = new HttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+		// fetchOptions: {
+		// 	credentials: "include"
+		// },
+		// headers
 	});
+
+	// const httpLink = createHttpLink({
+	// 	uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+	// });
 
 	const wsLink =
 		!ssrMode &&
@@ -42,6 +50,34 @@ export default withApollo(({ headers = null }) => {
 		headers
 	}));
 
+	const request = operation =>
+		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
+
+	const requestHandler = request
+		? new ApolloLink(
+				(operation, forward) =>
+					new Observable(observer => {
+						let handle;
+						Promise.resolve(operation)
+							.then(oper => request(oper))
+							.then(() => {
+								handle = forward(operation).subscribe({
+									next: observer.next.bind(observer),
+									error: observer.error.bind(observer),
+									complete: observer.complete.bind(observer)
+								});
+							})
+							.catch(observer.error.bind(observer));
+
+						return () => {
+							if (handle) {
+								handle.unsubscribe();
+							}
+						};
+					})
+		  )
+		: false;
+
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
@@ -49,7 +85,7 @@ export default withApollo(({ headers = null }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+	let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
@@ -62,6 +98,8 @@ export default withApollo(({ headers = null }) => {
 			link
 		);
 	}
+
+	const link = ApolloLink.from([errorLink, requestHandler, link].filter(x => !!x));
 
 	const cache = new InMemoryCache({
 		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
