@@ -19,14 +19,14 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	let httpLink = new HttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
+		credentials: "include"
 	});
 	if (!process.browser && headers) {
 		headers.ssr = "1";
 		httpLink = new HttpLink({
 			uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
 			headers
-			// credentials: "include"
 		});
 	}
 
@@ -47,9 +47,8 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	const request = operation => operation.setContext({ headers });
-
-	// { fetchOptions: { credentials: "include" }
+	const request = operation =>
+		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
 
 	const requestHandler = request
 		? new ApolloLink(
