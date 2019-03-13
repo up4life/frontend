@@ -11,9 +11,9 @@ import fetch from "isomorphic-unfetch";
 
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-if (!process.browser) {
-	global.fetch = fetch;
-}
+// if (!process.browser) {
+// 	global.fetch = fetch;
+// }
 
 export default withApollo(({ headers = null }) => {
 	const ssrMode = !process.browser;
@@ -107,7 +107,6 @@ export default withApollo(({ headers = null }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache,
-		fetch
+		cache
 	});
 });
