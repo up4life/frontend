@@ -2,7 +2,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
-import { ApolloLink, split, Observable } from "apollo-link";
+import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
@@ -36,44 +36,23 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	// const contextLink = setContext(async () => ({
-	// 	fetchOptions: {
-	// 		credentials: "include"
-	// 	},
-	// 	headers: {
-	// 		"x-forwarded-for": headers ? headers["x-forwarded-for"] : null
-	// 	}
-	// }));
-
-	const request = async operation => {
-		operation.setContext({
+	const contextLink = setContext(async () => {
+		let updatedContext = {
 			fetchOptions: {
 				credentials: "include"
-			},
-			headers
-		});
-	};
-
-	const requestLink = new ApolloLink(
-		(operation, forward) =>
-			new Observable(observer => {
-				let handle;
-				Promise.resolve(operation)
-					.then(oper => request(oper))
-					.then(() => {
-						handle = forward(operation).subscribe({
-							next: observer.next.bind(observer),
-							error: observer.error.bind(observer),
-							complete: observer.complete.bind(observer)
-						});
-					})
-					.catch(observer.error.bind(observer));
-
-				return () => {
-					if (handle) handle.unsubscribe();
-				};
-			})
-	);
+			}
+		};
+		if (headers.host && headers.host !== prodEndpoint) {
+			return {
+				...updatedContext
+			};
+		} else {
+			return {
+				...updatedConext,
+				headers
+			};
+		}
+	});
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -82,7 +61,7 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, requestLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
