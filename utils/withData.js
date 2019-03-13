@@ -24,7 +24,8 @@ export default withApollo(({ ctx, headers = {} }) => {
 		// headers.host = "https://api.up4.life";
 	}
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
+		headers
 	});
 
 	const wsLink =
@@ -42,8 +43,8 @@ export default withApollo(({ ctx, headers = {} }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "include",
-			headers
+			credentials: "include"
+			// headers
 		}
 		// headers,
 		// credentials: "include"
