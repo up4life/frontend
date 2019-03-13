@@ -19,8 +19,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		credentials: "include"
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
 	const wsLink =
@@ -43,14 +42,14 @@ export default withApollo(({ headers }) => {
 				credentials: "include"
 			}
 		};
-		if (headers.host && headers.host !== prodEndpoint) {
+		if (headers && headers.host !== prodEndpoint) {
 			return {
-				...updatedContext
+				...updatedContext,
+				headers
 			};
 		} else {
 			return {
-				...updatedConext,
-				headers
+				...updatedConext
 			};
 		}
 	});
@@ -83,6 +82,7 @@ export default withApollo(({ headers }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		ssrForceFetchDelay: 500
 	});
 });
