@@ -19,8 +19,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		useGetForQueries: true
+		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
 	const wsLink =
