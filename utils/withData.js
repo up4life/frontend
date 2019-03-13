@@ -43,15 +43,15 @@ export default withApollo(({ headers = null }) => {
 			}
 		});
 
-	const request = setContext(async () => ({
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
-	}));
+	// const request = setContext(async () => ({
+	// 	fetchOptions: {
+	// 		credentials: "include"
+	// 	},
+	// 	headers
+	// }));
 
-	// const request = operation =>
-	// 	operation.setContext({ fetchOptions: { credentials: "include" }, headers });
+	const request = operation =>
+		operation.setContext({ fetchOptions: { credentials: "include" }, headers });
 
 	const requestHandler = request
 		? new ApolloLink(
@@ -101,7 +101,7 @@ export default withApollo(({ headers = null }) => {
 	}
 
 	const cache = new InMemoryCache({
-		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
