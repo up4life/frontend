@@ -1,13 +1,25 @@
 import React from 'react';
-
+import gql from 'graphql-tag';
+import Router from 'next/router';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { useMutation } from '../Mutations/useMutation';
 import StyledFooter from '../../styledComponents/Footer/Footer.jsx';
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/footerStyle.jsx';
 import List from '@material-ui/core/List';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 import ListItem from '@material-ui/core/ListItem';
 
+const DELETE_USER = gql`
+	mutation {
+		deleteUser {
+			message
+		}
+	}
+`;
+
 const Footer = ({ classes }) => {
+	const [ deleteUser ] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
+
 	return (
 		<StyledFooter
 			theme='dark'
@@ -67,7 +79,32 @@ const Footer = ({ classes }) => {
 								>
 									<i className='fab fa-github' />
 								</Button>
-							</li>{' '}
+							</li>
+							<li>
+								<Button onClick={() => deleteUser()} color='google' justIcon simple>
+									<i className='fab fa-google-plus-g' />
+								</Button>
+							</li>
+							{/* <li>
+								<Button
+									href='https://dribbble.com/creativetim'
+									color='dribbble'
+									justIcon
+									simple
+								>
+									<i className='fab fa-dribbble' />
+								</Button>
+							</li>
+							<li>
+								<Button
+									href='https://instagram.com/CreativeTimOfficial'
+									color='google'
+									justIcon
+									simple
+								>
+									<i className='fab fa-google-plus-g' />
+								</Button>
+							</li> */}
 						</ul>
 					</div>
 				</div>
