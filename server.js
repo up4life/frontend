@@ -1,64 +1,35 @@
-// const next = require('next');
-// const http = require('http');
+const express = require("express");
+const next = require("next");
+const port = parseInt(process.env.PORT, 10) || 3000;
+const dev = process.env.NODE_ENV !== "production";
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-// const dev = process.env.NODE_ENV !== 'production';
-// const app = next({ dev });
-// const handleNextRequests = app.getRequestHandler();
+app.prepare().then(() => {
+	const server = express();
+	server.get("/billing", (req, res) => app.render(req, res, "/billing"));
+	server.get("/joinus", (req, res) => app.render(req, res, "/joinus"));
+	server.get("/profile", (req, res) => {
+		app.render(req, res, "/profile");
+	});
+	server.get("/home", (req, res) => app.render(req, res, "/"));
+	server.get("/welcome", (req, res) => {
+		const actualPage = Object.assign({ slug: req.params.slug }, req.query);
 
-// app.prepare().then(() => {
-// 	const server = new http.Server((req, res) => {
-// 		// Add assetPrefix support based on the hostname
-// 		console.log(req.headers);
-// 		if (req.headers.host === 'my-app.com') {
-// 			app.setAssetPrefix('http://cdn.com/myapp');
-// 		} else {
-// 			app.setAssetPrefix('');
-// 		}
+		app.render(req, res, "/welcome", actualPage);
+	});
 
-// 		handleNextRequests(req, res);
-// 	});
+	server.get("/", (req, res) => app.render(req, res, "/"));
 
-// 	server.listen(port, err => {
-// 		if (err) {
-// 			throw err;
-// 		}
+	server.get("*", (req, res) => {
+		return handle(req, res);
+	});
 
-// 		console.log(`> Ready on http://localhost:${port}`);
-// 	});
-// });
-
-// const express = require('express');
-// const next = require('next');
-// const port = parseInt(process.env.PORT, 10) || 3000;
-// const dev = process.env.NODE_ENV !== 'production';
-// const app = next({ dev });
-// const handle = app.getRequestHandler();
-
-// app.prepare().then(() => {
-// 	const server = express();
-// 	server.get('/billing', (req, res) => app.render(req, res, '/billing'));
-// 	server.get('/joinus', (req, res) => app.render(req, res, '/joinus'));
-// 	server.get('/profile', (req, res) => {
-// 		app.render(req, res, '/profile');
-// 	});
-// 	server.get('/home', (req, res) => app.render(req, res, '/'));
-// 	server.get('/welcome', (req, res) => {
-// 		const actualPage = Object.assign({ slug: req.params.slug }, req.query);
-
-// 		app.render(req, res, '/welcome', actualPage);
-// 	});
-
-// 	server.get('/', (req, res) => app.render(req, res, '/'));
-
-// 	server.get('*', (req, res) => {
-// 		return handle(req, res);
-// 	});
-
-// 	server.listen(port, err => {
-// 		if (err) throw err;
-// 		console.log(`Listening on http://localhost:${port}`);
-// 	});
-// });
+	server.listen(port, err => {
+		if (err) throw err;
+		console.log(`Listening on http://localhost:${port}`);
+	});
+});
 
 // let actualPage;
 // const { slug } = req.params;
