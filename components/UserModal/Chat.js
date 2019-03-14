@@ -66,12 +66,21 @@ const REMAINING_MESSAGES = gql`
 	}
 `;
 
-const Chat = ({ classes, data, id, currentUser, subscribeToNewMessages, match, client }) => {
+const Chat = ({
+	classes,
+	data,
+	id,
+	currentUser,
+	subscribeToNewMessages,
+	match,
+	client,
+	refetch,
+}) => {
 	const [ message, setMessage ] = useState('');
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
 	const msgRef = useRef(null);
-
+	console.log(data);
 	//Flip flop this lil guy
 	currentUser.verified = true;
 
@@ -186,6 +195,7 @@ const Chat = ({ classes, data, id, currentUser, subscribeToNewMessages, match, c
 				variables={{ id, message }}
 				onCompleted={e => {
 					console.log(e);
+					refetch();
 					NProgress.done();
 				}}
 				onError={e => {

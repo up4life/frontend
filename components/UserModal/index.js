@@ -117,7 +117,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 			{({ like, unlike, block, potentialMatch }) => {
 				let match = potentialMatch.data ? potentialMatch.data.user : null;
 				let isLiked = currentUser ? currentUser.liked.find(usr => usr.id === user) : false;
-				console.log(match);
+
 				if (!match) return <div />;
 				else {
 					NProgress.done();
@@ -342,7 +342,13 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											query={GET_CONVERSATION_QUERY}
 											variables={{ id: user }}
 										>
-											{({ loading, error, data, subscribeToMore }) => {
+											{({
+												loading,
+												error,
+												data,
+												subscribeToMore,
+												refetch,
+											}) => {
 												if (loading) return <div>Fetching</div>;
 												if (error) return <div>Error</div>;
 												return (
@@ -350,6 +356,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 														data={data}
 														id={user}
 														match={match}
+														refetch={refetch}
 														currentUser={currentUser}
 														subscribeToNewMessages={() => {
 															data &&

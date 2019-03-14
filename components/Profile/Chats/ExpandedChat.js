@@ -129,7 +129,6 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 			<div className={classes.messageList} ref={msgRef}>
 				{chat &&
 					chat.messages.map(msg => {
-						console.log(msg);
 						const img = msg.from.img.find(x => x.default).img_url;
 						return (
 							<Media
