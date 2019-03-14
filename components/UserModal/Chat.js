@@ -194,9 +194,7 @@ const Chat = ({ classes, data, id, currentUser, subscribeToNewMessages, match, c
 				}}
 			>
 				{sendMessage =>
-					error ? !error.link ? (
-						<Verify />
-					) : (
+					error ? (
 						<div>
 							<h4>{error.msg}</h4>
 							<Button

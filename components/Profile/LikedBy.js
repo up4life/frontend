@@ -53,15 +53,15 @@ const LikedBy = ({ user, setSelected, classes }) => {
 					's you!
 				</h5>
 			)}
-			{data.getLikedByList.map(usr => (
-				<div
-					style={{
-						height: '60px',
-						margin: '20px',
-						display: 'flex',
-						alignItems: 'center',
-					}}
-				>
+			<div
+				style={{
+					height: '60px',
+					margin: '20px',
+					display: 'flex',
+					alignItems: 'center',
+				}}
+			>
+				{data.getLikedByList.map(usr => (
 					<img
 						src={usr.img.find(x => x.default).img_url}
 						style={{
@@ -76,8 +76,8 @@ const LikedBy = ({ user, setSelected, classes }) => {
 							}
 						}}
 					/>
-				</div>
-			))}
+				))}
+			</div>
 		</div>
 	);
 };
