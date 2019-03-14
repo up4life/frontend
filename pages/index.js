@@ -15,14 +15,13 @@ const Index = () => (
 );
 
 Index.getInitialProps = async ctx => {
-	let user = await isLoggedIn(ctx.apolloClient);
-	console.log(user);
+	//let user = await isLoggedIn(ctx.apolloClient);
 
 	// if (!user.currentUser) {
 	// 	console.log("no user Index.getInitProps");
 	// 	// redirect(ctx, '/joinus');
 	// }
-	// else {
+	// // else {
 	// 	redirect(ctx, '/home');
 	// }
 	return {};

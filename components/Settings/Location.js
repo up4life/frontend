@@ -35,11 +35,22 @@ const Location = ({ user, classes }) => {
 	return (
 		<Fragment>
 			<div style={{ display: 'flex', alignItems: 'center' }}>
+				<svg
+					style={{ width: 0, height: 0, position: 'absolute' }}
+					aria-hidden='true'
+					focusable='false'
+				>
+					<linearGradient id='indexID' x2='1' y2='1'>
+						<stop offset='0%' stopColor='#8AC9C5' />
+						<stop offset='50%' stopColor='#4CB5AE' />
+						<stop offset='100%' stopColor='#37C5BC' />
+					</linearGradient>
+				</svg>
 				<Typography variant='h5' style={{ color: '#fafafa', marginLeft: '6px' }}>
 					{user.location ? user.location : 'Set your default location'}
 				</Typography>
 				<IconButton justIcon simple round color='primary' onClick={() => showModal(true)}>
-					<EditLocation />
+					<EditLocation className={classes.location} />
 				</IconButton>
 			</div>
 			<Dialog

@@ -54,32 +54,12 @@ const Footer = ({ classes }) => {
 						<ul>
 							<li>
 								<Button
-									href='https://twitter.com/CreativeTim'
+									href='https://github.com/Lambda-School-Labs/labs10-date-planning'
 									color='twitter'
 									justIcon
 									simple
 								>
-									<i className='fab fa-twitter' />
-								</Button>
-							</li>
-							<li>
-								<Button
-									href='https://dribbble.com/creativetim'
-									color='dribbble'
-									justIcon
-									simple
-								>
-									<i className='fab fa-dribbble' />
-								</Button>
-							</li>
-							<li>
-								<Button
-									href='https://instagram.com/CreativeTimOfficial'
-									color='google'
-									justIcon
-									simple
-								>
-									<i className='fab fa-google-plus-g' />
+									<i className='fab fa-github' />
 								</Button>
 							</li>
 						</ul>

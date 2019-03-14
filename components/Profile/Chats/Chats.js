@@ -10,13 +10,26 @@ import ExpandedChat from './ExpandedChat';
 import SmallChat from './SideView';
 
 const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser, classes }) => {
-	const [ chatId, setChatId ] = useState('');
-
+	const [ chatId, setChatId ] = useState(undefined);
+	const [ newChatUser, setNewChatUser ] = useState(undefined);
+	console.log(data);
 	useEffect(() => {
 		subscribeToNewChats();
 		subscribetoNewMessages();
-		return () => console.log('unmounting...');
 	}, []);
+
+	const handleSelectUser = usr => {
+		console.log(usr);
+		let chat;
+		if (data.getUserChats && data.getUserChats.length) {
+			chat = data.getUserChats.find(chat => chat.users.some(x => x.id === usr.id));
+		}
+		if (chat) setChatId(chat.id);
+		else {
+			setChatId(undefined);
+			setNewChatUser(usr);
+		}
+	};
 
 	const formattedChats = userChats => {
 		return userChats
@@ -57,19 +70,23 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 	return (
 		<div className={classes.container} style={{ padding: '30px 0' }}>
 			<GridContainer style={{ height: '100%', flexDirection: 'column' }}>
-				<LikedBy user={currentUser} />
+				<LikedBy user={currentUser} setSeleccted={handleSelectUser} />
 				<GridContainer style={{ height: 'calc(100vh - 300px)' }}>
 					<GridItem sm={12} md={4} lg={4}>
 						<Paper
-							style={{ height: '100%', minWidth: '250px' }}
+							style={{
+								height: '100%',
+								minWidth: '250px',
+								backgroundColor: '#1f1e1e',
+								backgroundImage:
+									'url("https://www.transparenttextures.com/theme/images/transparent.png")',
+							}}
 							className={classes.paper}
 						>
 							<Typography
 								variant='div'
 								gutterBottom
 								style={{
-									backgroundImage:
-										'linear-gradient(to right, #b2ddf7, #a8daf9, #9fd8fb, #94d5fd, #8ad2ff)',
 									textAlign: 'center',
 									padding: '7px',
 									borderTopLeftRadius: '6px',
@@ -101,23 +118,29 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 						</Paper>
 					</GridItem>
 					<GridItem sm={12} md={8} lg={8} style={{ maxHeight: 'calc(100vh - 300px)' }}>
-						<Paper className={classes.paper} style={{ height: '100%' }}>
-							<Typography
-								variant='div'
-								gutterBottom
-								style={{
-									backgroundImage:
-										'linear-gradient(to right, #b2ddf7, #a8daf9, #9fd8fb, #94d5fd, #8ad2ff)',
-									textAlign: 'center',
-									padding: '7px',
-									borderTopLeftRadius: '6px',
-									color: 'white',
-								}}
-							>
-								<h4 style={{ margin: '15px' }} className={classes.title}>
-									Select a user to the left.
-								</h4>
-							</Typography>
+						<Paper
+							className={classes.paper2}
+							style={{
+								height: '100%',
+								backgroundColor: '#1f1e1e',
+								backgroundImage:
+									'url("https://www.transparenttextures.com/theme/images/transparent.png")',
+							}}
+						>
+							{/* <Typography
+                variant="div"
+                gutterBottom
+                style={{
+                  textAlign: "center",
+                  padding: "7px",
+                  borderTopLeftRadius: "6px",
+                  color: "white"
+                }}
+              >
+                <h4 style={{ margin: "15px" }} className={classes.title}>
+                  Select a user to the left.
+                </h4>
+              </Typography> */}
 							<ExpandedChat chat={selectedChat} currentUser={currentUser} />
 						</Paper>
 					</GridItem>

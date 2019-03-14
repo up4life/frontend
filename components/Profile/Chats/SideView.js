@@ -12,10 +12,12 @@ const Chat = ({ chat, setChat, selectedChat, classes }) => {
 			style={{
 				display: 'flex',
 				marginBottom: '20px',
-				padding: '5px 10px',
+				padding: isSelected ? '10px 15px' : '12px 17px',
 				borderRadius: '2px',
+				border: isSelected ? '1px solid #4cb5ae' : 'none',
+				backgroundColor: isSelected ? '#373737' : '#1f1e1e',
 				backgroundImage: isSelected
-					? 'linear-gradient(to top, #b893b3, #bd9db8, #c1a6be, #c6b0c3, #cabac8)'
+					? 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)'
 					: 'none',
 			}}
 		>

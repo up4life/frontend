@@ -6,7 +6,7 @@ const landingPageStyle = {
 		...container,
 		zIndex: '2',
 		//Addition
-		paddingTop: '20px'
+		paddingTop: '20px',
 	},
 	title: {
 		...title,
@@ -78,7 +78,13 @@ const landingPageStyle = {
 		padding: '17px',
 		borderRadius: '20px',
 		margin: '10px auto',
-	}
+	},
+	registerButton: {
+		backgroundImage: 'linear-gradient(to right, #f6655a, #f9574c, #fc473e, #fe332f, #ff101f)',
+	},
+	loginButton: {
+		backgroundColor: '#81d6e3',
+	},
 };
 
 export default landingPageStyle;

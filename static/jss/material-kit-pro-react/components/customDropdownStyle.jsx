@@ -78,21 +78,33 @@ const customDropdownStyle = theme => ({
 		backgroundClip: 'padding-box',
 	},
 	msgdd: {
+		color: '#fafafa !important',
 		minWidth: '240px',
 		maxWidth: '240px',
 		borderRadius: '3px',
 		border: '0',
 		boxShadow: '0 2px 5px 0 rgba(0, 0, 0, 0.26)',
+		border: '1px solid #b2ddf7',
+		borderRadius: '6px',
 		top: '100%',
 		zIndex: '1000',
-
 		padding: '5px 0',
 		margin: '2px 0 0',
 		fontSize: '14px',
 		textAlign: 'left',
 		listStyle: 'none',
-		backgroundColor: '#fff',
-		backgroundClip: 'padding-box',
+		backgroundColor: '#242121',
+		minWidth: '400px',
+		backgroundUImage: 'url(https://www.transparenttextures.com/theme/images/transparent.png)',
+		'& div': {
+			color: '#fafafa',
+		},
+		'& small': {
+			color: '#fafafa',
+		},
+		'& img': {
+			borderRadius: '6px !important',
+		},
 	},
 	menuList: {
 		padding: '0',
@@ -151,9 +163,11 @@ const customDropdownStyle = theme => ({
 	},
 	primaryHover: {
 		'&:hover': {
-			backgroundColor: primaryColor,
+			backgroundColor: '#191919',
+			//   border: "1px solid #81d6e3",
+			//   padding: '-1px',
 			color: '#FFFFFF',
-			...primaryBoxShadow,
+			//   ...primaryBoxShadow
 		},
 	},
 	infoHover: {

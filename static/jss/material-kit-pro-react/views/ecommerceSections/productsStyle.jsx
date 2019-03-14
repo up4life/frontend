@@ -103,6 +103,40 @@ const styles = {
 	drawerContainer: {
 		display: 'flex',
 		alignItems: 'center',
+		backgroundColor: '#2e2e2e',
+		backgroundImage: 'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
+	},
+	metaDrawer: {
+		backgroundColor: '#2e2e2e',
+		backgroundImage: 'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
+		'& div': {
+			backgroundColor: '#2e2e2e',
+			backgroundImage:
+				'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
+			borderBottom: 'none !important',
+		},
+		'& svg': {
+			color: '#fafafa',
+			borderColor: '#fafafa',
+		},
+		'& ::after': {
+			borderBottomColor: '#b2ddf7',
+		},
+		'& label': {
+			color: '#fafafa !important',
+		},
+		'& p': {
+			color: '#fafafa',
+		},
+		'& h4': {
+			color: '#fafafa',
+		},
+		'& button': {
+			backgroundColor: '#ff101f',
+		},
+	},
+	transparentButton: {
+		backgroundColor: 'transparent !important',
 	},
 };
 

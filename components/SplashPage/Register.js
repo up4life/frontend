@@ -43,10 +43,11 @@ import CustomInput from '../../styledComponents/CustomInput/CustomInput';
 import InfoArea from '../../styledComponents/InfoArea/InfoArea';
 //assets
 import TheaterMasks from '../../static/icons/TheatreMask';
+import Futbol from '../../static/icons/futbol-solid.js';
 //styles
 import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
 //utils
-import { auth } from '../../utils/firebaseProd';
+import { auth } from '../../utils/firebase';
 
 const REGISTER_USER = gql`
 	mutation REGISTER_USER(
@@ -177,7 +178,7 @@ const Register = ({ classes, showing, setShowing }) => {
 						aria-labelledby='signup-modal-slide-title'
 						aria-describedby='signup-modal-slide-description'
 					>
-						<Card plain className={classes.modalSignupCard}>
+						<Card plain className={classes.modalSignupCard + ' ' + classes.register}>
 							{termsShowing ? (
 								<Terms setTermsShowing={setTermsShowing} />
 							) : (
@@ -216,12 +217,12 @@ const Register = ({ classes, showing, setShowing }) => {
 											>
 												<InfoArea
 													className={classes.infoArea}
-													title='Concerts'
+													title='Music'
 													description={
 														<p>
-															Find shows near you according to your
-															tastes and get notified when your
-															favorite performers are in town.
+															From the biggest acts in town to more
+															intimate venues, find out who's playing
+															in your area.
 														</p>
 													}
 													icon={MusicNote}
@@ -229,12 +230,12 @@ const Register = ({ classes, showing, setShowing }) => {
 												/>
 												<InfoArea
 													className={classes.infoArea}
-													title='Comedy and Theater'
+													title='Theater'
 													description={
 														<p>
-															Get the scoop on nearby comedy and
-															theatrical events as well as other kind
-															of live performances.
+															Comedy, musicals, classical productions.
+															Discover the productions on offer near
+															you.
 														</p>
 													}
 													icon={TheaterMasks}
@@ -242,15 +243,11 @@ const Register = ({ classes, showing, setShowing }) => {
 												/>
 												<InfoArea
 													className={classes.infoArea}
-													title='Epicurean Adventures'
+													title='Sports'
 													description={
-														<p>
-															Be the first to make a reservation at
-															nearby restaurant grand openings or prix
-															fixe events.
-														</p>
+														<p>Sports ball. If you're into that.</p>
 													}
-													icon={Restaurant}
+													icon={Futbol}
 													iconColor='info'
 												/>
 											</GridItem>
@@ -514,14 +511,18 @@ const Register = ({ classes, showing, setShowing }) => {
 																				checkedIcon={
 																					<Check
 																						className={
-																							classes.checkedIcon
+																							classes.checkedIcon +
+																							' ' +
+																							classes.registerCheck
 																						}
 																					/>
 																				}
 																				icon={
 																					<Check
 																						className={
-																							classes.uncheckedIcon
+																							classes.uncheckedIcon +
+																							' ' +
+																							classes.registerCheck
 																						}
 																					/>
 																				}
@@ -534,7 +535,12 @@ const Register = ({ classes, showing, setShowing }) => {
 																			/>
 																		}
 																		label={
-																			<span>
+																			<span
+																				style={{
+																					color:
+																						'#fafafa',
+																				}}
+																			>
 																				I agree to the{' '}
 																				<a
 																					onClick={() =>
@@ -557,9 +563,12 @@ const Register = ({ classes, showing, setShowing }) => {
 																	>
 																		<ButtonBase type='submit'>
 																			<Button
+																				className={
+																					classes.registerModalButton
+																				}
 																				round
-																				disabled
-																				//disabled={!terms}
+																				// disabled
+																				disabled={!terms}
 																				color='primary'
 																				component='div'
 																			>
