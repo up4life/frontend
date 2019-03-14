@@ -195,7 +195,6 @@ const Register = ({ classes, showing, setShowing }) => {
 											aria-label='Close'
 											onClick={() => setShowing(false)}
 										>
-											{' '}
 											<Close className={classes.modalClose} />
 										</Button>
 										<h3
