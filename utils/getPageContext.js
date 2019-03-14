@@ -1,53 +1,36 @@
-import { SheetsRegistry } from "jss";
-import { createMuiTheme, createGenerateClassName } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
+import { SheetsRegistry } from 'jss';
+import { createMuiTheme, createGenerateClassName } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
 
-// const theme = createMuiTheme({
-// 	palette: {
-// 		primary: {
-// 			main: '#4cb5ae',
-// 		},
-// 		secondary: {
-// 			main: '#b2ddf7',
-// 		},
+const theme = createMuiTheme({
+	palette: {
+		primary: {
+			main: '#4cb5ae',
+		},
+		secondary: {
+			main: '#b2ddf7',
+		},
 
-// 		error: {
-// 			main: '#ff101f',
-// 		},
-// 	},
-// 	typography: {
-// 		fontFamily: [ 'Fira Sans', 'sans-serif' ].join(','),
-// 		useNextVariants: true,
-// 	},
-// });
+		error: {
+			main: '#ff101f',
+		},
+	},
+	typography: {
+		fontFamily: [ 'Fira Sans', 'sans-serif' ].join(','),
+		useNextVariants: true,
+	},
+});
 
 function createPageContext() {
 	return {
-		theme: createMuiTheme({
-			palette: {
-				primary: {
-					main: "#4cb5ae"
-				},
-				secondary: {
-					main: "#b2ddf7"
-				},
-
-				error: {
-					main: "#ff101f"
-				}
-			},
-			typography: {
-				fontFamily: ["Fira Sans", "sans-serif"].join(","),
-				useNextVariants: true
-			}
-		}),
+		theme,
 		// This is needed in order to deduplicate the injection of CSS in the page.
 		sheetsManager: new Map(),
 		// This is needed in order to inject the critical CSS.
 		sheetsRegistry: new SheetsRegistry(),
 		// The standard class name generator.
-		generateClassName: createGenerateClassName()
+		generateClassName: createGenerateClassName(),
 	};
 }
 

@@ -17,6 +17,7 @@ const style = {
 		display: 'flex',
 		justifyContent: 'flex-start',
 	},
+
 	profileImg: {
 		backgroundSize: '100%',
 		height: '180px',
@@ -67,6 +68,7 @@ const style = {
 			},
 		},
 	},
+	
 };
 
 export default style;

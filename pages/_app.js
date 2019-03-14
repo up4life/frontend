@@ -1,19 +1,18 @@
+import App, { Container } from "next/app";
+
+import Page from "../components/Page";
+import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
+import withData from "../utils/withData";
+
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import getPageContext from "../utils/getPageContext";
 import JssProvider from "react-jss/lib/JssProvider";
-import { ApolloProvider } from "react-apollo";
-import App, { Container } from "next/app";
-// import Router from "next/router";
-// import redirect from "../utils/redirect";
+import getPageContext from "../utils/getPageContext";
 import "../static/scss/material-kit-pro-react.scss";
-import withData from "../utils/withData";
-import Page from "../components/Page";
-
 class MyApp extends App {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 		this.pageContext = getPageContext();
 	}
 	componentDidMount() {
@@ -22,40 +21,54 @@ class MyApp extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	static async getInitialProps({ Component, ctx }) {
+	static async getInitialProps({ Component, ctx, router }) {
 		let pageProps = {};
 		if (Component.getInitialProps) {
 			pageProps = await Component.getInitialProps(ctx);
 		}
 
-		// this exposes the query to the user
 		pageProps.query = ctx.query;
-		return { pageProps };
-	}
 
+		return { pageProps };
+		// static async getInitialProps(ctx) {
+		// 	const {
+		// 	  Component,
+		// 	  router,
+		// 	  ctx: { req, res }
+		// 	} = ctx;
+		// 	const apollo = initApollo(
+		// 	  {},
+		// 	  {
+		// 		getToken: () => parseCookies(req).token,
+		// 		cookies: req ? req.headers.cookie : "",
+		// 		csrfToken: res ? res.locals.csrfToken : document.cookie
+		// 	  }
+		// 	);
+	}
 	render() {
 		const { Component, apollo, pageProps } = this.props;
 
 		return (
 			<Container>
-				<ApolloProvider client={apollo}>
-					<ApolloHooksProvider client={apollo}>
-						<JssProvider
-							registry={this.pageContext.sheetsRegistry}
-							generateClassName={this.pageContext.generateClassName}
-						>
-							<MuiThemeProvider
-								theme={this.pageContext.theme}
-								sheetsManager={this.pageContext.sheetsManager}
-							>
-								<CssBaseline />
+				<JssProvider
+					registry={this.pageContext.sheetsRegistry}
+					generateClassName={this.pageContext.generateClassName}
+				>
+					<MuiThemeProvider
+						theme={this.pageContext.theme}
+						sheetsManager={this.pageContext.sheetsManager}
+					>
+						<CssBaseline />
+
+						<ApolloProvider client={apollo}>
+							<ApolloHooksProvider client={apollo}>
 								<Page>
-									<Component {...pageProps} pageContext={this.pageContext} />
+									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
-							</MuiThemeProvider>
-						</JssProvider>
-					</ApolloHooksProvider>
-				</ApolloProvider>
+							</ApolloHooksProvider>
+						</ApolloProvider>
+					</MuiThemeProvider>
+				</JssProvider>
 			</Container>
 		);
 	}

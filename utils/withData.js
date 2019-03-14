@@ -1,24 +1,18 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
-import { createHttpLink, HttpLink } from "apollo-link-http";
+import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
-import { ApolloLink, split, Observable } from "apollo-link";
+import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
-import fetch from "isomorphic-unfetch";
-
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-// if (!process.browser) {
-// 	global.fetch = fetch;
-// }
-
-export default withApollo(({ headers }) => {
+export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
 
-	const httpLink = new HttpLink({
+	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint
 	});
 
@@ -29,47 +23,18 @@ export default withApollo(({ headers }) => {
 			options: {
 				reconnect: true
 				// maybe we can add a header in here to get some sort of auth working
-				// connectionParams: {
+				// connectionParams: {d
 				//   authorization: headers.authorization
 				// }
 			}
 		});
 
-	const request = operation =>
-		operation.setContext({
-			fetchOptions: {
-				credentials: "include"
-			},
-			headers
-		});
-
-	// const request = operation =>
-	// operation.setContext({ fetchOptions: { credentials: "include" }, headers });
-
-	const requestHandler = request
-		? new ApolloLink(
-				(operation, forward) =>
-					new Observable(observer => {
-						let handle;
-						Promise.resolve(operation)
-							.then(oper => request(oper))
-							.then(() => {
-								handle = forward(operation).subscribe({
-									next: observer.next.bind(observer),
-									error: observer.error.bind(observer),
-									complete: observer.complete.bind(observer)
-								});
-							})
-							.catch(observer.error.bind(observer));
-
-						return () => {
-							if (handle) {
-								handle.unsubscribe();
-							}
-						};
-					})
-		  )
-		: false;
+	const contextLink = setContext(async () => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -78,8 +43,19 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	// let link = ApolloLink.from([errorLink, requestHandler, httpLink]);
-	let link = ApolloLink.from([errorLink, requestHandler, httpLink].filter(x => !!x));
+
+	// const authLink = setContext((_, { headers }) => {
+	// 	const token = getToken()["XSRF-TOKEN"];
+	// 	return {
+	// 		headers: {
+	// 			...headers,
+	// 			"X-XSRF-TOKEN": token
+	// 		}
+	// 	};
+	// });
+
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+
 
 	if (!ssrMode) {
 		link = split(
@@ -94,7 +70,7 @@ export default withApollo(({ headers }) => {
 	}
 
 	const cache = new InMemoryCache({
-		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({

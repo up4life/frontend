@@ -10,6 +10,7 @@ import Button from '../../../styledComponents/CustomButtons/Button';
 import CustomInput from '../../../styledComponents/CustomInput/CustomInput.jsx';
 import Media from '../../../styledComponents/Media/Media.jsx';
 import { Send } from '@material-ui/icons';
+import scrollbar from '../../../static/jss/ScrollbarStyles';
 
 const SEND_MESSAGE_MUTATION = gql`
 	mutation SEND_MESSAGE_MUTATION($id: String!, $message: String!) {
@@ -89,7 +90,7 @@ const Chat = ({ chat, currentUser, classes }) => {
 			style={{
 				flexGrow: 1,
 				height: '100%',
-				overflow: 'scroll',
+				overflow: 'hidden',
 				display: 'flex',
 				flexDirection: 'column',
 			}}
@@ -97,6 +98,7 @@ const Chat = ({ chat, currentUser, classes }) => {
 			<div className={classes.messageList} ref={msgRef}>
 				{chat &&
 					chat.messages.map(msg => {
+						console.log(msg);
 						const img = msg.from.img.find(x => x.default).img_url;
 						return (
 							<Media
@@ -106,7 +108,9 @@ const Chat = ({ chat, currentUser, classes }) => {
 								title={
 									<span style={{ color: '#fafafa' }}>
 										{msg.from.firstName}{' '}
-										<small>· {moment(msg.createdAt).fromNow()}</small>
+										<small style={{ fontSize: '12px' }}>
+											· {moment(msg.createdAt).fromNow()}
+										</small>
 									</span>
 								}
 								body={
@@ -116,7 +120,15 @@ const Chat = ({ chat, currentUser, classes }) => {
 											wordBreak: 'break-word',
 										}}
 									>
-										<p style={{ color: '#fafafa' }}>{msg.text}</p>
+										<p style={{ color: '#fafafa', fontSize: '14px' }}>
+											{msg.text}
+										</p>
+										{currentUser.permissions !== 'FREE' && msg.seen ? (
+											<small>
+												<span style={{ marginRight: '2px' }}>seen</span>
+												{moment(msg.UpdatedAt).format('M/D/YY h:mm a')}
+											</small>
+										) : null}
 									</span>
 								}
 							/>
@@ -131,46 +143,36 @@ const Chat = ({ chat, currentUser, classes }) => {
 					onError={() => NProgress.done()}
 				>
 					{sendMessage => (
-						<Media
-							currentUser
-							style={{
-								width: '100%',
-								borderTop: '2px solid #bdbdbd',
-							}}
-							avatar={currentUser.img.find(img => img.default).img_url}
-							body={
-								<CustomInput
-									id='logged'
-									formControlProps={{
-										fullWidth: true,
-									}}
-									inputProps={{
-										multiline: true,
-										rows: 6,
-										placeholder: `Respond to ${friend.firstName}`,
+						<div className={classes.expandedChat}>
+							<CustomInput
+								id='logged'
+								formControlProps={{
+									fullWidth: true,
+								}}
+								inputProps={{
+									multiline: true,
+									rows: 6,
+									placeholder: `Respond to ${friend.firstName}`,
+									value: message,
+									onChange: e => setMessage(e.target.value),
+									style: { color: '#fafafa', width: '80%' },
+								}}
+							/>
 
-										value: message,
-										onChange: e => setMessage(e.target.value),
-										style: { color: '#fafafa' },
-									}}
-								/>
-							}
-							footer={
-								<Button
-									color='primary'
-									justIcon
-									className={classes.floatRight}
-									onClick={() => {
-										NProgress.start();
-										sendMessage();
+							<Button
+								color='primary'
+								justIcon
+								className={classes.floatRight}
+								onClick={() => {
+									NProgress.start();
+									sendMessage();
 
-										setMessage('');
-									}}
-								>
-									<Send />
-								</Button>
-							}
-						/>
+									setMessage('');
+								}}
+							>
+								<Send />
+							</Button>
+						</div>
 					)}
 				</Mutation>
 			)}

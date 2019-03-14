@@ -1,6 +1,6 @@
-import React from "react";
-import Document, { Head, Main, NextScript } from "next/document";
-import flush from "styled-jsx/server";
+import React from 'react';
+import Document, { Head, Main, NextScript } from 'next/document';
+import flush from 'styled-jsx/server';
 
 export default class MyDocument extends Document {
 	static getInitialProps({ renderPage }) {
@@ -18,10 +18,10 @@ export default class MyDocument extends Document {
 			pageContext,
 			styles: (
 				<React.Fragment>
-					<style id="jss-server-side" dangerouslySetInnerHTML={{ __html: css }} />
+					<style id='jss-server-side' dangerouslySetInnerHTML={{ __html: css }} />
 					{flush() || null}
 				</React.Fragment>
-			)
+			),
 		};
 	}
 

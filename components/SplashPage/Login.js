@@ -102,6 +102,7 @@ const Login = ({ classes, showing, setShowing }) => {
 
 	const handleError = error => {
 		NProgress.done();
+		console.log("hi");
 		if (error.message.replace("GraphQL error: ", "") === "Invalid Password!") {
 			setError({ password: error.message.replace("GraphQL error: ", "") });
 		} else if (error.message.includes("normal")) {
@@ -125,7 +126,7 @@ const Login = ({ classes, showing, setShowing }) => {
 					aria-labelledby="signup-modal-slide-title"
 					aria-describedby="signup-modal-slide-description"
 				>
-					<Card plain className={classes.modalLoginCard}>
+					<Card plain className={classes.modalLoginCard + " " + classes.login}>
 						<DialogTitle
 							id="login-modal-slide-title"
 							disableTypography
@@ -134,7 +135,9 @@ const Login = ({ classes, showing, setShowing }) => {
 							<CardHeader
 								plain
 								color="primary"
-								className={`${classes.textCenter} ${classes.cardLoginHeader}`}
+								className={`${classes.textCenter} ${classes.cardLoginHeader} ${
+									classes.loginHeader
+								}`}
 							>
 								<Button
 									simple
@@ -205,7 +208,7 @@ const Login = ({ classes, showing, setShowing }) => {
 										disabled
 										onSubmit={async e => {
 											e.preventDefault();
-											// console.log(user);
+											console.log(user);
 											NProgress.start();
 											await signin({
 												variables: {
@@ -284,10 +287,11 @@ const Login = ({ classes, showing, setShowing }) => {
 										>
 											<ButtonBase type="submit">
 												<Button
+													className={classes.loginButton}
 													color="primary"
 													simple
-													disabled
-													//disabled={!user.email || !user.password}
+													// disabled
+													disabled={!user.email || !user.password}
 													size="lg"
 													component="div"
 												>
