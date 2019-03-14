@@ -43,7 +43,6 @@ const GenderPrefs = ({ user }) => {
 		<Mutation
 			mutation={UPLOAD_IMAGE_MUTATION}
 			onCompleted={e => {
-				console.log(e);
 				NProgress.done();
 			}}
 			onError={e => console.log(e)}
