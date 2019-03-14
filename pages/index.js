@@ -10,7 +10,7 @@ const Index = () => (
 		{({ data, loading, error }) => {
 			if (loading) return <div>index</div>;
 			if (error || !data.currentUser) return <JoinUs />;
-			if (!data.currentUser.gender) return <Welcome query={{ slug: 0 }} />;
+			if (!data.currentUser.dob) return <Welcome />;
 			else return <Home />;
 		}}
 	</User>
