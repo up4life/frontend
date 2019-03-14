@@ -68,7 +68,6 @@ const Footer = ({ classes }) => {
 									<i className='fab fa-github' />
 								</Button>
 							</li>{' '}
-							*/}
 						</ul>
 					</div>
 				</div>

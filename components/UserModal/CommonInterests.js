@@ -12,7 +12,7 @@ const CommonInterests = ({ match, user, classes }) => {
 	let interests = user.interests.filter(x => match.interests.some(y => x.id === y.id));
 	if (!interests.length) return <div />;
 	return (
-		<div>
+		<div className={classes.interests}>
 			<h4 style={{ color: '#fafafa' }} className={classes.title}>
 				Interests in common
 			</h4>
