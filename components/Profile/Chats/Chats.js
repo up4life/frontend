@@ -69,10 +69,12 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 
 	return (
 		<div className={classes.container} style={{ padding: '30px 0' }}>
-			<GridContainer style={{ height: '100%', flexDirection: 'column' }}>
+			<GridContainer style={{ height: '100%', flexDirection: 'column', width: '100%' }}>
 				<LikedBy user={currentUser} setSeleccted={handleSelectUser} />
-				<GridContainer style={{ height: 'calc(100vh - 300px)', overflow: 'scroll' }}>
-					<GridItem sm={12} md={4} lg={4}>
+				<GridContainer
+					style={{ height: 'calc(100vh - 300px)', overflow: 'scroll', width: '100%' }}
+				>
+					<GridItem sm={12} md={4} lg={4} style={{ height: '100%' }}>
 						<Paper
 							style={{
 								height: '100%',
@@ -98,7 +100,13 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 									Slidin' in to your DMs
 								</h4>
 							</Typography>
-							<div style={{ padding: '20px 5px 20px' }}>
+							<div
+								style={{
+									padding: '20px 5px 20px',
+									maxHeight: '100%',
+									overflow: 'scroll',
+								}}
+							>
 								{data.getUserChats &&
 									formattedChats(data.getUserChats).map((chat, i) => (
 										<div
