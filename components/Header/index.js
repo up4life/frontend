@@ -70,7 +70,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 					fromId: usr.id,
 					text: messages[len] ? messages[len].text : null,
 					img: img,
-					time: messages[len].createdAt,
+					time: messages[len] ? messages[len].createdAt : null,
 				};
 			})
 			.sort((a, b) => {
