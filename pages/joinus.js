@@ -6,7 +6,7 @@ import User from "../components/Queries/User";
 const Index = () => (
 	<User>
 		{({ data, loading }) => {
-			if (loading) return <div>hallo</div>;
+			if (loading) return <div />;
 			return <Splash />;
 		}}
 	</User>
