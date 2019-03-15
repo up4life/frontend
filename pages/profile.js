@@ -16,7 +16,7 @@ const ProfilePage = () => (
 						<Profile currentUser={data.currentUser} />
 					</>
 				);
-			else return <div>hi</div>;
+			else return <div />;
 		}}
 	</User>
 );
