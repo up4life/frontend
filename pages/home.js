@@ -24,11 +24,11 @@ const Home = ({ query }) => {
 };
 
 Home.getInitialProps = async ctx => {
-	const { currentUser } = await isLoggedIn(ctx);
+	// const { currentUser } = await isLoggedIn(ctx);
 
-	if (currentUser) {
-		return { currentUser };
-	}
+	// if (currentUser) {
+	// 	return { currentUser };
+	// }
 	// 	if (!user.currentUser) {
 	// 		console.log("no user logged in");
 	// 		// redirect(ctx, '/joinus');
