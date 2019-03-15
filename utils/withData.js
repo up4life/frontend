@@ -75,7 +75,7 @@ export default withApollo(({ headers = {} }) => {
 			// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 		},
 	);
-
+	console.log(cache);
 	return new ApolloClient({
 		link,
 		ssrMode,

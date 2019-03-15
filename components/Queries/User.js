@@ -55,7 +55,7 @@ const User = props => (
 );
 
 export const isLoggedIn = async client => {
-	console.log(client);
+	console.log(client.query);
 	let response = await client.query({
 		query: CURRENT_USER_QUERY,
 	});
