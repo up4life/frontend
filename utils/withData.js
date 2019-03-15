@@ -9,7 +9,7 @@ import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-export default withApollo(({ headers = {} }) => {
+export default withApollo(({ initialState, headers = {} }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
@@ -69,7 +69,7 @@ export default withApollo(({ headers = {} }) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	});
+	}).restore(initialState || {});
 
 	return new ApolloClient({
 		link,

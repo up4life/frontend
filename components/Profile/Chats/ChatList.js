@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
-import Chats from './Chats';
+import React, { useState } from "react";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+import Chats from "./Chats";
 
 const ALL_CHATS_QUERY = gql`
 	query {
@@ -103,7 +103,7 @@ export default ({ user }) => {
 	return (
 		<Query query={ALL_CHATS_QUERY}>
 			{({ loading, error, data, subscribeToMore }) => {
-				if (loading || !data.getUserChats) return <div>Fetching</div>;
+				if (loading || !data.getUserChats) return <div />;
 				if (error) return <div>Error</div>;
 
 				return (
@@ -114,38 +114,31 @@ export default ({ user }) => {
 							subscribeToMore({
 								document: MY_CHAT_SUBSCRIPTION,
 								variables: {
-									id: user.id,
+									id: user.id
 								},
 								updateQuery: (prev, { subscriptionData }) => {
 									if (!subscriptionData) return prev;
-									if (subscriptionData.data.myChat.mutation === 'UPDATED')
-										return prev;
-									const newNode = [
-										...prev.getUserChats,
-										subscriptionData.data.myChat.node,
-									];
+									if (subscriptionData.data.myChat.mutation === "UPDATED") return prev;
+									const newNode = [...prev.getUserChats, subscriptionData.data.myChat.node];
 									return { getUserChats: newNode };
-								},
+								}
 							});
 						}}
 						subscribetoNewMessages={() => {
 							subscribeToMore({
 								document: MY_MESSAGE_SUBSCRIPTION,
 								variables: {
-									id: user.id,
+									id: user.id
 								},
 								updateQuery: (prev, { subscriptionData }) => {
 									if (!subscriptionData) return prev;
 
 									const convos = prev.getUserChats.find(
-										chat =>
-											chat.id ===
-											subscriptionData.data.myMessages.node.chat.id,
+										chat => chat.id === subscriptionData.data.myMessages.node.chat.id
 									);
 
 									const doubleMessage = convos.messages.find(
-										message =>
-											message.id === subscriptionData.data.myMessages.node.id,
+										message => message.id === subscriptionData.data.myMessages.node.id
 									);
 
 									if (doubleMessage) return prev;
@@ -157,13 +150,13 @@ export default ({ user }) => {
 											if (chat.id === newMessage.chat.id) {
 												return {
 													...chat,
-													messages: [ ...chat.messages, newMessage ],
+													messages: [...chat.messages, newMessage]
 												};
 											}
 											return chat;
-										}),
+										})
 									};
-								},
+								}
 							});
 						}}
 					/>
