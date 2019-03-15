@@ -49,7 +49,13 @@ const Location = ({ user, classes }) => {
 				<Typography variant='h5' style={{ color: '#fafafa', marginLeft: '6px' }}>
 					{user.location ? user.location : 'Set your default location'}
 				</Typography>
-				<IconButton justIcon simple round color='primary' onClick={() => showModal(true)}>
+				<IconButton
+					// justIcon
+					simple='true'
+					round='true'
+					color='primary'
+					onClick={() => showModal(true)}
+				>
 					<EditLocation className={classes.location} />
 				</IconButton>
 			</div>
@@ -70,7 +76,7 @@ const Location = ({ user, classes }) => {
 				>
 					{' '}
 					<Button
-						simple
+						simple='true'
 						className={classes.modalCloseButton}
 						key='close'
 						aria-label='Close'
@@ -132,8 +138,8 @@ const Location = ({ user, classes }) => {
 														}}
 													/>
 													<Button
-														justIcon
-														round
+														// justIcon
+														round='true'
 														disabled={!selectedItem}
 														onClick={() => {
 															updateLocation();
