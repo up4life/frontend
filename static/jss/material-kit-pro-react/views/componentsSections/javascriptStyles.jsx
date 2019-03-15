@@ -249,6 +249,7 @@ const javascriptStyles = theme => {
 			display: 'flex',
 			justifyContent: 'flex-end',
 			alignItems: 'flex-end',
+			marginTop: '20px',
 			// borderTop: "2px solid #b2ddf7",
 			'& textarea': {
 				color: '#fafafa',
@@ -262,8 +263,8 @@ const javascriptStyles = theme => {
 				background: 'transparent',
 				borderRadius: '6px',
 				marginLeft: '20px',
-				position: 'relative',
-				bottom: '16px',
+				// position: 'relative',
+				// bottom: '16px'
 			},
 		},
 		userFavorite: {
@@ -291,6 +292,15 @@ const javascriptStyles = theme => {
 		},
 		inputWidth: {
 			width: '80%',
+		},
+		textareaAutosize: {
+			width: '100%',
+			background: 'transparent',
+			border: 'none',
+			resize: 'none',
+			fontSize: '16px',
+			userSelect: 'all',
+			color: '#fafafa',
 		},
 	};
 };

@@ -16,6 +16,7 @@ import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx';
 import Media from '../../styledComponents/Media/Media.jsx';
 import Button from '../../styledComponents/CustomButtons/Button';
 import { ButtonBase } from '@material-ui/core';
+import TextareaAutosize from 'react-autosize-textarea';
 
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
@@ -195,7 +196,6 @@ const Chat = ({
 				variables={{ id, message }}
 				onCompleted={e => {
 					console.log(e);
-					refetch();
 					NProgress.done();
 				}}
 				onError={e => {
@@ -204,7 +204,9 @@ const Chat = ({
 				}}
 			>
 				{sendMessage =>
-					error ? (
+					error ? !error.link ? (
+						<Verify />
+					) : (
 						<div>
 							<h4>{error.msg}</h4>
 							<Button
@@ -224,7 +226,7 @@ const Chat = ({
 								setMessage('');
 							}}
 						>
-							<CustomInput
+							{/* <CustomInput
 								id='logged'
 								className={classes.inputWidth}
 								formControlProps={{
@@ -238,6 +240,27 @@ const Chat = ({
 										: `Send ${match.firstName} a message.`,
 									value: message,
 									onChange: e => setMessage(e.target.value),
+								}}
+							/> */}
+
+							<TextareaAutosize
+								className={classes.textareaAutosize}
+								onChange={e => setMessage(e.target.value)}
+								placeholder={
+									data.getConversation ? (
+										`Respond to ${match.firstName}`
+									) : (
+										`Send ${match.firstName} a message.`
+									)
+								}
+								rows={1}
+								maxRows={4}
+								value={message}
+								onKeyDown={e => {
+									if (e.keyCode === 13) {
+										sendMessage();
+										setMessage('');
+									}
 								}}
 							/>
 							<ButtonBase type='submit'>

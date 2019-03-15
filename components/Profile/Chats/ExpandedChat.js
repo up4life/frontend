@@ -12,7 +12,8 @@ import Button from '../../../styledComponents/CustomButtons/Button';
 import CustomInput from '../../../styledComponents/CustomInput/CustomInput.jsx';
 import Media from '../../../styledComponents/Media/Media.jsx';
 import { Send } from '@material-ui/icons';
-//import scrollbar from '../../../static/jss/ScrollbarStyles';
+import TextareaAutosize from 'react-autosize-textarea';
+import scrollbar from '../../../static/jss/ScrollbarStyles';
 
 const SEND_MESSAGE_MUTATION = gql`
 	mutation SEND_MESSAGE_MUTATION($id: String!, $message: String!) {
@@ -65,7 +66,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	const msgRef = useRef(null);
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
-	currentUser.verified = true;
+
 	useEffect(() => {
 		// if (!currentUser.verified) {
 		// 	setError({
@@ -123,6 +124,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 				overflow: 'hidden',
 				display: 'flex',
 				flexDirection: 'column',
+				justifyContent: 'space-between',
 			}}
 		>
 			<div className={classes.messageList} ref={msgRef}>
@@ -198,18 +200,33 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 									setMessage('');
 								}}
 							>
-								<CustomInput
+								{/* <CustomInput
 									id='logged'
 									formControlProps={{
 										fullWidth: true,
 									}}
 									inputProps={{
 										multiline: true,
-										rows: 1,
+										rows: '3',
+										// rows: Math.ceil(message.length / 60),
 										placeholder: `Respond to ${friend.firstName}`,
 										value: message,
 										onChange: e => setMessage(e.target.value),
 										style: { color: '#fafafa', width: '80%' },
+									}}
+								/> */}
+								<TextareaAutosize
+									className={classes.textareaAutosize}
+									onChange={e => setMessage(e.target.value)}
+									placeholder={`Respond to ${friend.firstName}`}
+									rows={1}
+									maxRows={4}
+									value={message}
+									onKeyDown={e => {
+										if (e.keyCode === 13) {
+											sendMessage();
+											setMessage('');
+										}
 									}}
 								/>
 								<ButtonBase type='submit'>
