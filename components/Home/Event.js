@@ -43,6 +43,21 @@ import CardStyles from '../../static/jss/material-kit-pro-react/views/components
 
 const Event = React.memo(({ event, classes, user, refetch }) => {
 	const [ deleteEvent ] = useMutation(DELETE_EVENT_MUTATION, {
+		update: (cache, { data }) => {
+			const { currentUser } = cache.readQuery({
+				query: CURRENT_USER_QUERY,
+			});
+
+			cache.writeQuery({
+				query: CURRENT_USER_QUERY,
+				data: {
+					currentUser: {
+						...currentUser,
+						events: currentUser.events.filter(x => x.id !== event.id),
+					},
+				},
+			});
+		},
 		variables: { id: event.id },
 		onCompleted: e => console.log(e),
 		onError: e => console.log(e),
