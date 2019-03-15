@@ -1,6 +1,6 @@
 import JoinUs from "./joinus";
 import User from "../components/Queries/User";
-import { isLoggedIn } from "../components/Queries/User";
+import { isLoggedIn, CURRENT_USER_QUERY } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 import Home from "./home";
 import Welcome from "./welcome";
@@ -16,9 +16,22 @@ const Index = () => (
 	</User>
 );
 
-Index.getInitialProps = async ctx => {
-	let user = await isLoggedIn(ctx.apolloClient);
-	console.log("init props", user);
+Index.getInitialProps = async ({ apolloClient }) => {
+	try {
+		const response = await apolloClient.query({
+			query: CURRENT_USER_QUERY,
+			operationName: "skrtskrt"
+		});
+		console.log("res", response, response.data);
+		if (response) {
+			return { currentUser: response.data };
+		}
+	} catch (e) {
+		console.log("hello", e);
+		return {};
+	}
+	// let user = await isLoggedIn(ctx.apolloClient);
+	// console.log("init props", user);
 	// if (!user.currentUser) {
 	// 	console.log("no user Index.getInitProps");
 	// 	// redirect(ctx, '/joinus');
