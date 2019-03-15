@@ -85,6 +85,6 @@ export default withApollo(({ initialState, headers = {} }) => {
 		link,
 		ssrMode,
 		cache,
-		ssrForceFetchDelay: 100, // (maybe setting a delay will allow the render to stick)
+		//ssrForceFetchDelay: 100, // (maybe setting a delay will allow the render to stick)
 	});
 });
