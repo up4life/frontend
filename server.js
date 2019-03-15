@@ -61,6 +61,11 @@ app.prepare().then(() => {
 		app.render(req, res, "/home", { user: userId });
 	});
 
+	server.get("/reset/:token", (req, res) => {
+		const { token } = req.params;
+		app.render(req, res, "/reset", { token });
+	});
+
 	server.get("*", (req, res) => {
 		return handle(req, res);
 	});

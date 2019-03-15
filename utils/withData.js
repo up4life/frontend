@@ -69,6 +69,9 @@ export default withApollo(({ initialState, headers = {} }) => {
 		);
 	}
 
+	// maybe we can try to initialize with window.__APOLLO_STATE__ window var
+	// not available during SSR tho
+	// new InMemoryCache().restore(window.__APOLLO_STATE__)
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	}).restore(initialState || {});
