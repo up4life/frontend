@@ -61,13 +61,15 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 				let len = chatObj.messages.length - 1;
 				const { messages, users } = chatObj;
 				let [ usr ] = users.filter(usr => usr.id !== user.id);
-				let img = usr.img.length
-					? usr.img.find(img => img.default).img_url
-					: profileStandIn;
+
+				let img =
+					usr && usr.img.length
+						? usr.img.find(img => img.default).img_url
+						: profileStandIn;
 				return {
 					id: chatObj.id,
-					from: usr.firstName,
-					fromId: usr.id,
+					from: usr && usr.firstName,
+					fromId: usr && usr.id,
 					text: messages[len] ? messages[len].text : null,
 					img: img,
 					time: messages[len] ? messages[len].createdAt : null,

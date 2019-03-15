@@ -35,10 +35,6 @@ export const ADD_EVENT_MUTATION = gql`
 			}
 		) {
 			id
-			title
-			url
-			times
-			image_url
 			attending {
 				id
 				firstName
