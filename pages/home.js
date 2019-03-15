@@ -3,6 +3,7 @@ import Router from "next/router";
 import Events from "../components/Home/Events";
 import Header from "../components/Header";
 import User, { isLoggedIn } from "../components/Queries/User";
+import { ALL_EVENTS_QUERY } from "../components/Queries/AllEvents";
 import redirect from "../utils/redirect";
 
 const Home = ({ query }) => {
@@ -23,19 +24,31 @@ const Home = ({ query }) => {
 	);
 };
 
-// Home.getInitialProps = async ctx => {
-// 	let user = await isLoggedIn(ctx.apolloClient);
+Home.getInitialProps = async ({ apolloClient }) => {
+	try {
+		const { data } = await apolloClient.readQuery({
+			query: ALL_EVENTS_QUERY,
+			fetchPolicy: "cache-and-network"
+		});
+		console.log(data.getEvents, "getEvents");
+		console.log(data, "data");
+		if (data.getEvents) {
+			return { events: data.getEvents };
+		}
+	} catch (e) {
+		console.log(e);
+	}
 
-// 	if (!user.currentUser) {
-// 		console.log("no user logged in");
-// 		// redirect(ctx, '/joinus');
-// 	}
-// 	// 	//if (ctx.query.welcome)
-// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
-// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
-// 	// 	// 	redirect(ctx, '/joinus');
-// 	// 	// }
-// 	return {};
-// };
+	// 	if (!user.currentUser) {
+	// 		console.log("no user logged in");
+	// 		// redirect(ctx, '/joinus');
+	// 	}
+	// 	// 	//if (ctx.query.welcome)
+	// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
+	// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
+	// 	// 	// 	redirect(ctx, '/joinus');
+	// 	// 	// }
+	return {};
+};
 
 export default Home;
