@@ -1,5 +1,4 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
-// import { persistCache } from "apollo-cache-persist";
 import { getMainDefinition } from "apollo-utilities";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
@@ -71,11 +70,6 @@ export default withApollo(({ initialState, headers = {} }) => {
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	}).restore(initialState);
-
-	// persistCache({
-	// 	cache,
-	// 	storage: window.localStorage
-	// });
 
 	return new ApolloClient({
 		link,

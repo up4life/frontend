@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
 
 export const ALL_EVENTS_QUERY = gql`
 	query ALL_EVENTS_QUERY(
@@ -57,7 +57,7 @@ export const ALL_EVENTS_QUERY = gql`
 
 const Events = ({ children, variables }) => {
 	return (
-		<Query query={ALL_EVENTS_QUERY} variables={variables}>
+		<Query query={ALL_EVENTS_QUERY} variables={variables} ssr={false}>
 			{payload => children(payload)}
 		</Query>
 	);
