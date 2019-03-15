@@ -16,22 +16,10 @@ const Index = () => (
 	</User>
 );
 
-Index.getInitialProps = async ({ apolloClient }) => {
-	try {
-		const response = await apolloClient.query({
-			query: CURRENT_USER_QUERY,
-			operationName: "skrtskrt"
-		});
-		console.log("res", response, response.data);
-		if (response) {
-			return { currentUser: response.data };
-		}
-	} catch (e) {
-		console.log("hello", e);
-		return {};
-	}
+Index.getInitialProps = async ctx => {
+	const user = await isLoggedIn(ctx);
 	// let user = await isLoggedIn(ctx.apolloClient);
-	// console.log("init props", user);
+	console.log("init props", user);
 	// if (!user.currentUser) {
 	// 	console.log("no user Index.getInitProps");
 	// 	// redirect(ctx, '/joinus');
