@@ -24,20 +24,6 @@ const Home = ({ query }) => {
 };
 
 Home.getInitialProps = async ({ apolloClient }) => {
-	try {
-		const { data } = await apolloClient.readQuery({
-			query: CURRENT_USER_QUERY,
-			fetchPolicy: "cache-first"
-		});
-		console.log(data.getEvents, "getEvents");
-		console.log(data, "data");
-		if (data.getEvents) {
-			return { events: data.getEvents };
-		}
-	} catch (e) {
-		console.log(e);
-	}
-
 	// 	if (!user.currentUser) {
 	// 		console.log("no user logged in");
 	// 		// redirect(ctx, '/joinus');

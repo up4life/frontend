@@ -17,9 +17,9 @@ const Index = () => (
 );
 
 Index.getInitialProps = async ctx => {
-	const user = await isLoggedIn(ctx);
+	// const user = await isLoggedIn(ctx);
 	// let user = await isLoggedIn(ctx.apolloClient);
-	console.log("init props", user);
+	// console.log("init props", user);
 	// if (!user.currentUser) {
 	// 	console.log("no user Index.getInitProps");
 	// 	// redirect(ctx, '/joinus');
