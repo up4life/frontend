@@ -143,6 +143,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 													}
 												}
 											});
+											console.log(cache.extract(), "extracted cache");
 										} catch (err) {
 											console.log(err);
 										}
