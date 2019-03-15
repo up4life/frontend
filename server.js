@@ -70,15 +70,6 @@ app.prepare().then(() => {
 	});
 });
 
-const errorHandler = (err, req, res, next) => {
-	if (res.headersSent) {
-		return next(err);
-	}
-	const { status } = err;
-	res.status(status).json(err);
-};
-app.use(errorHandler);
-
 const getSlug = (page, subPage = null) => {
 	if (subPage) {
 		page = `${page}/${subPage}`;
