@@ -25,6 +25,7 @@ import Primary from '../../styledComponents/Typography/Primary';
 //styled components
 import GridContainer from '../../styledComponents/Grid/GridContainer';
 import GridItem from '../../styledComponents/Grid/GridItem';
+
 //styles
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 

@@ -67,6 +67,7 @@ const LikedBy = ({ user, setSelected, classes }) => {
 						style={{
 							height: '100%',
 							borderRadius: '6px',
+							margin: '5px',
 							cursor: hidden ? 'default' : 'pointer',
 							filter: hidden ? 'blur(3px)' : 'blur(0)',
 						}}

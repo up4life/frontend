@@ -195,7 +195,7 @@ const Chat = ({
 				mutation={SEND_MESSAGE_MUTATION}
 				variables={{ id, message }}
 				onCompleted={e => {
-					console.log(e);
+					refetch();
 					NProgress.done();
 				}}
 				onError={e => {
