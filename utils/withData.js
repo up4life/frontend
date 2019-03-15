@@ -69,7 +69,7 @@ export default withApollo(({ initialState, headers = {} }) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	}).restore(initialState || {});
+	}).restore(initialState);
 
 	return new ApolloClient({
 		link,
