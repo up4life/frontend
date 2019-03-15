@@ -47,7 +47,7 @@ import Futbol from '../../static/icons/futbol-solid.js';
 //styles
 import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
 //utils
-import { auth } from '../../utils/firebase';
+import { auth } from '../../utils/firebaseProd';
 
 const REGISTER_USER = gql`
 	mutation REGISTER_USER(
