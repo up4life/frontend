@@ -2,8 +2,7 @@ import JoinUs from "./joinus";
 import Router from "next/router";
 import Events from "../components/Home/Events";
 import Header from "../components/Header";
-import User, { isLoggedIn } from "../components/Queries/User";
-import { ALL_EVENTS_QUERY } from "../components/Queries/AllEvents";
+import User, { isLoggedIn, CURRENT_USER_QUERY } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 
 const Home = ({ query }) => {
@@ -27,8 +26,8 @@ const Home = ({ query }) => {
 Home.getInitialProps = async ({ apolloClient }) => {
 	try {
 		const { data } = await apolloClient.readQuery({
-			query: ALL_EVENTS_QUERY,
-			fetchPolicy: "cache-and-network"
+			query: CURRENT_USER_QUERY,
+			fetchPolicy: "cache-first"
 		});
 		console.log(data.getEvents, "getEvents");
 		console.log(data, "data");

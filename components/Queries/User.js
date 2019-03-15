@@ -59,7 +59,7 @@ export const isLoggedIn = async client => {
 		let response = await client.readQuery({
 			query: CURRENT_USER_QUERY,
 			operationName: "hellayyy",
-			fetchPolicy: "cache-and-network"
+			fetchPolicy: "cache-first"
 		});
 		console.log("res", response);
 		if (response) {
