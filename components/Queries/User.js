@@ -60,11 +60,12 @@ export const isLoggedIn = async client => {
 			query: CURRENT_USER_QUERY,
 			operationName: 'hellayyy',
 		});
+		console.log('res', response);
 		if (response) {
 			return { currentUser: response.data };
 		}
 	} catch (e) {
-		console.log(e);
+		console.log('hello', e);
 		return {};
 	}
 };
