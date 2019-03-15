@@ -153,7 +153,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										setError(e);
 									}}
 									onCompleted={() => {
-										refetch();
+										//refetch();
 										NProgress.done();
 									}}
 								>
