@@ -57,7 +57,7 @@ export const ALL_EVENTS_QUERY = gql`
 
 const Events = ({ children, variables }) => {
 	return (
-		<Query query={ALL_EVENTS_QUERY} variables={variables} ssr={false}>
+		<Query query={ALL_EVENTS_QUERY} variables={variables}>
 			{payload => children(payload)}
 		</Query>
 	);
