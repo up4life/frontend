@@ -36,6 +36,8 @@ export default withApollo(({ initialState, headers = {} }) => {
 		headers
 	}));
 
+	// we should turn this off before we go into production so errors aren't popping into
+	// the console n whatnot
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
@@ -69,11 +71,12 @@ export default withApollo(({ initialState, headers = {} }) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	}).restore(initialState);
+	}).restore(initialState || {});
 
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		ssrForceFetchDelay: 100 // (maybe setting a delay will allow the render to stick)
 	});
 });

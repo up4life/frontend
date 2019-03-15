@@ -2,7 +2,7 @@ import JoinUs from "./joinus";
 import Router from "next/router";
 import Events from "../components/Home/Events";
 import Header from "../components/Header";
-import User, { isLoggedIn, CURRENT_USER_QUERY } from "../components/Queries/User";
+import User, { isLoggedIn } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 
 const Home = ({ query }) => {
@@ -23,7 +23,12 @@ const Home = ({ query }) => {
 	);
 };
 
-Home.getInitialProps = async ({ apolloClient }) => {
+Home.getInitialProps = async ctx => {
+	const { currentUser } = await isLoggedIn(ctx);
+
+	if (currentUser) {
+		return { currentUser };
+	}
 	// 	if (!user.currentUser) {
 	// 		console.log("no user logged in");
 	// 		// redirect(ctx, '/joinus');

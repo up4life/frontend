@@ -6,15 +6,15 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
-	const errorHandler = (err, req, res, next) => {
-		if (res.headersSent) {
-			return next(err);
-		}
-		const { status } = err;
-		res.status(status).json(err);
-	};
+	// const errorHandler = (err, req, res, next) => {
+	// 	if (res.headersSent) {
+	// 		return next(err);
+	// 	}
+	// 	const { status } = err;
+	// 	res.status(status).json(err);
+	// };
 
-	server.use(errorHandler);
+	// server.use(errorHandler);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
