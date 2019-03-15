@@ -58,6 +58,7 @@ export const isLoggedIn = async client => {
 	try {
 		let response = await client.query({
 			query: CURRENT_USER_QUERY,
+			operationName: 'hellayyy',
 		});
 		if (response) {
 			return { currentUser: response.data };
