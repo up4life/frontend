@@ -23,22 +23,22 @@ const Home = ({ query }) => {
 	);
 };
 
-Home.getInitialProps = async ctx => {
-	// const { currentUser } = await isLoggedIn(ctx);
+// Home.getInitialProps = async ctx => {
+// const { currentUser } = await isLoggedIn(ctx);
 
-	// if (currentUser) {
-	// 	return { currentUser };
-	// }
-	// 	if (!user.currentUser) {
-	// 		console.log("no user logged in");
-	// 		// redirect(ctx, '/joinus');
-	// 	}
-	// 	// 	//if (ctx.query.welcome)
-	// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
-	// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
-	// 	// 	// 	redirect(ctx, '/joinus');
-	// 	// 	// }
-	return {};
-};
+// if (currentUser) {
+// 	return { currentUser };
+// }
+// 	if (!user.currentUser) {
+// 		console.log("no user logged in");
+// 		// redirect(ctx, '/joinus');
+// 	}
+// 	// 	//if (ctx.query.welcome)
+// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
+// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
+// 	// 	// 	redirect(ctx, '/joinus');
+// 	// 	// }
+// return {};
+// };
 
 export default Home;
