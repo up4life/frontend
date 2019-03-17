@@ -1,4 +1,3 @@
-const bodyParser = require("body-parser");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -16,6 +15,14 @@ app.prepare().then(() => {
 	};
 
 	server.use(errorHandler);
+	server.use(express.json());
+
+	const customRouter = express.Router();
+	customRouter.post("/", (req, res) => {
+		handle(req, res);
+	});
+
+	server.use(customRouter);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
@@ -70,12 +77,6 @@ app.prepare().then(() => {
 	server.get("*", (req, res) => {
 		return handle(req, res);
 	});
-
-	const customRouter = Express.Router();
-	customRouter.use(bodyParser());
-	customRouter.post("/", handler);
-
-	server.use(customRouter);
 
 	server.listen(port, err => {
 		if (err) throw err;
