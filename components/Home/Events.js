@@ -105,6 +105,10 @@ const Events = React.memo(({ classes, router, href, ...props }) => {
 				let getEvents =
 					data && data.getEvents && data.getEvents.events ? data.getEvents : { events: [] };
 				console.log(currentUser, "currentUser Events.js");
+				console.log("\n\n");
+				console.log(data.getEvents, "data.getEvents Events.js");
+				console.log("\n\n");
+				// console.log(data.getEvents, "data.getEvents Events.js");
 				return (
 					<div className={classes.background}>
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
@@ -238,7 +242,7 @@ const Events = React.memo(({ classes, router, href, ...props }) => {
 												</GridItem>
 											</GridContainer>
 										) : (
-											<div>This is where the problem is</div>
+											<div />
 										)}
 									</GridItem>
 								</GridContainer>
