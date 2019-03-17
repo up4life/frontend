@@ -6,8 +6,7 @@ module.exports = withSass(
 	withImages({
 		serverRuntimeConfig: {},
 		publicRuntimeConfig: {
-			appContext: "/"
+			// appContext: "/"
 		}
-		// target: 'serverless',
 	})
 );
