@@ -25,7 +25,6 @@ import Primary from "../../styledComponents/Typography/Primary";
 //styled components
 import GridContainer from "../../styledComponents/Grid/GridContainer";
 import GridItem from "../../styledComponents/Grid/GridItem";
-
 //styles
 import styles from "../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx";
 
@@ -37,15 +36,7 @@ const Composed = adopt({
 	location: ({ user, render }) => (
 		// not sure what happened but the default for this value is not working at all
 		// had to add it into the Query to make site work
-		<Value
-			initial={
-				user.data.currentUser && user.data.currentUser.location
-					? user.data.currentUser.location
-					: "Los Angeles, CA"
-			}
-		>
-			{render}
-		</Value>
+		<Value initial={user.data.currentUser && user.data.currentUser.location}>{render}</Value>
 	),
 	filters: ({ render }) => (
 		<State
@@ -62,13 +53,13 @@ const Composed = adopt({
 		<Query
 			query={ALL_EVENTS_QUERY}
 			variables={{
-				location: location.value,
+				location: location.value || "Los Angeles, CA",
 				page: page.value,
 				categories: filters.state.cats,
 				genres: filters.state.genres,
 				dates: filters.state.dates
 			}}
-			onCompleted={() => NProgress.done()}
+			//onCompleted={() => NProgress.done()}
 			onError={() => NProgress.done()}
 		>
 			{render}
@@ -104,11 +95,6 @@ const Events = React.memo(({ classes, router, href, ...props }) => {
 			}) => {
 				let getEvents =
 					data && data.getEvents && data.getEvents.events ? data.getEvents : { events: [] };
-				console.log(currentUser, "currentUser Events.js");
-				console.log("\n\n");
-				console.log(data.getEvents, "data.getEvents Events.js");
-				console.log("\n\n");
-				console.log(data, "data object Events.js");
 				return (
 					<div className={classes.background}>
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
