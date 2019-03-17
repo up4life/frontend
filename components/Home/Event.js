@@ -141,6 +141,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										description: event.description
 									}}
 									update={(cache, { data: { addEvent } }) => {
+										console.log(addEvent, "addEvent value update fn");
 										try {
 											const { currentUser } = cache.readQuery({
 												query: CURRENT_USER_QUERY
