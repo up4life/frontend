@@ -9,7 +9,7 @@ import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-export default withApollo(({ initialState, headers = {} }) => {
+export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
@@ -69,17 +69,14 @@ export default withApollo(({ initialState, headers = {} }) => {
 		);
 	}
 
-	// maybe we can try to initialize with window.__APOLLO_STATE__ window var
-	// not available during SSR tho
-	// new InMemoryCache().restore(window.__APOLLO_STATE__)
 	const cache = new InMemoryCache({
-		//dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
-		// ssrForceFetchDelay: 100 // (maybe setting a delay will allow the render to stick)
+		cache,
+		ssrForceFetchDelay: 100 // (maybe setting a delay will allow the render to stick)
 	});
 });
