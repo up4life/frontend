@@ -231,8 +231,8 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 					</ListItem>
 					<Mutation
 						mutation={SIGNOUT_MUTATION}
-						refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-						awaitRefetchQueries
+						// refetchQueries={[{ query: CURRENT_USER_QUERY }]}
+						// awaitRefetchQueries
 					>
 						{(signout, { called, client }) => {
 							{

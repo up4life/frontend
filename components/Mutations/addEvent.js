@@ -1,6 +1,3 @@
-import React from "react";
-
-import { Query } from "react-apollo";
 import gql from "graphql-tag";
 
 export const ADD_EVENT_MUTATION = gql`
@@ -43,9 +40,19 @@ export const ADD_EVENT_MUTATION = gql`
 			image_url
 			address
 			city
+			genre
+			category
+			notes
 			attending {
 				id
+				dob
 				firstName
+				img {
+					id
+					default
+					img_url
+				}
+				biography
 			}
 		}
 	}
