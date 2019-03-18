@@ -40,19 +40,9 @@ export const ADD_EVENT_MUTATION = gql`
 			image_url
 			address
 			city
-			genre
-			category
-			notes
 			attending {
 				id
-				dob
 				firstName
-				img {
-					id
-					default
-					img_url
-				}
-				biography
 			}
 		}
 	}

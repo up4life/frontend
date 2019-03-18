@@ -32,7 +32,7 @@ const UpFor = ({ main, justFour, handleClick, classes }) => {
 	return (
 		<div
 			className={main ? classes.mainContainer : classes.container}
-			onClick={() => handleClick()}
+			onClick={handleClick}
 			onMouseEnter={() => {
 				setHovering(true);
 			}}
