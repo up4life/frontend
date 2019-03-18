@@ -59,12 +59,14 @@ export const isLoggedIn = async client => {
 		let response = await client.query({
 			query: CURRENT_USER_QUERY,
 			operationName: "hellayyy"
+			// fetchPolicy: "cache-and-network"
 		});
+		console.log("res", response);
 		if (response) {
 			return { currentUser: response.data };
 		}
 	} catch (e) {
-		console.log(e);
+		console.log("hello", e);
 		return {};
 	}
 };

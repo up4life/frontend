@@ -42,6 +42,7 @@ import getAge from "../../utils/getAge";
 import CardStyles from "../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards";
 
 const Event = React.memo(({ event, classes, user, refetch }) => {
+	// console.log(event, user, "event & user");
 	const [deleteEvent] = useMutation(DELETE_EVENT_MUTATION, {
 		update: (cache, { data }) => {
 			const { currentUser } = cache.readQuery({
@@ -140,25 +141,28 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										description: event.description
 									}}
 									update={(cache, { data: { addEvent } }) => {
-										const { currentUser } = cache.readQuery({
-											query: CURRENT_USER_QUERY
-										});
-										// const lilCache = cache.readQuery({
-										// 	query: ALL_EVENTS_QUERY,
-										// });
-										console.log(addEvent);
-										cache.writeQuery({
-											query: CURRENT_USER_QUERY,
-											data: {
-												currentUser: {
-													...currentUser,
-													events: [...currentUser.events, addEvent]
+										console.log(addEvent, "addEvent value update fn");
+										try {
+											const { currentUser } = cache.readQuery({
+												query: CURRENT_USER_QUERY
+											});
+
+											cache.writeQuery({
+												query: CURRENT_USER_QUERY,
+												data: {
+													currentUser: {
+														...currentUser,
+														events: [...currentUser.events, addEvent]
+													}
 												}
-											}
-										});
+											});
+										} catch (err) {
+											console.log(err);
+										}
 									}}
 									onError={e => {
 										NProgress.done();
+										console.error(e);
 										setError(e);
 									}}
 									onCompleted={() => {
