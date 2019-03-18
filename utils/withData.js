@@ -43,16 +43,6 @@ export default withApollo(({ headers = {} }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	// const authLink = setContext((_, { headers }) => {
-	// 	const token = getToken()["XSRF-TOKEN"];
-	// 	return {
-	// 		headers: {
-	// 			...headers,
-	// 			"X-XSRF-TOKEN": token
-	// 		}
-	// 	};
-	// });
-
 	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
@@ -68,7 +58,7 @@ export default withApollo(({ headers = {} }) => {
 	}
 
 	const cache = new InMemoryCache({
-		// dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({

@@ -139,21 +139,21 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										long: event.location.long,
 										description: event.description
 									}}
-									update={(cache, { data: { addEvent } }) => {
-										const { currentUser } = cache.readQuery({
-											query: CURRENT_USER_QUERY
-										});
-										console.log(addEvent, "addEvent from update in mutation");
-										cache.writeQuery({
-											query: CURRENT_USER_QUERY,
-											data: {
-												currentUser: {
-													...currentUser,
-													events: [...currentUser.events, addEvent]
-												}
-											}
-										});
-									}}
+									// update={(cache, { data: { addEvent } }) => {
+									// 	const { currentUser } = cache.readQuery({
+									// 		query: CURRENT_USER_QUERY
+									// 	});
+									// 	console.log(addEvent, "addEvent from update in mutation");
+									// 	cache.writeQuery({
+									// 		query: CURRENT_USER_QUERY,
+									// 		data: {
+									// 			currentUser: {
+									// 				...currentUser,
+									// 				events: [...currentUser.events, addEvent]
+									// 			}
+									// 		}
+									// 	});
+									// }}
 									onError={e => {
 										NProgress.done();
 										setError(e);
@@ -164,6 +164,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 									}}
 								>
 									{(addEvent, { error, loading, called, data }) => {
+										console.log(data, "data from mutation Event.js");
 										if (error) console.log(error);
 										if (called) NProgress.start();
 
