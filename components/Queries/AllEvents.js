@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 export const ALL_EVENTS_QUERY = gql`
 	query ALL_EVENTS_QUERY(
@@ -26,12 +26,12 @@ export const ALL_EVENTS_QUERY = gql`
 			events {
 				id
 				title
-				url
 				image_url
 				times
 				genre
 				category
-				notes
+				city
+				venue
 				attending {
 					id
 					dob
@@ -41,14 +41,6 @@ export const ALL_EVENTS_QUERY = gql`
 						default
 						img_url
 					}
-					biography
-				}
-				location {
-					venue
-					city
-					address
-					lat
-					long
 				}
 			}
 		}
