@@ -46,7 +46,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 	const handleClick = (e, signout, client) => {
 		if (e === "Sign out") {
 			signout();
-			client.cache.reset().then(() => {
+			client.clearStore().then(() => {
 				Router.push("/joinus");
 			});
 		} else {
