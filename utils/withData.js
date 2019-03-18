@@ -36,8 +36,6 @@ export default withApollo(({ headers = {} }) => {
 		headers
 	}));
 
-	// we should turn this off before we go into production so errors aren't popping into
-	// the console n whatnot
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
@@ -77,6 +75,5 @@ export default withApollo(({ headers = {} }) => {
 		link,
 		ssrMode,
 		cache
-		// ssrForceFetchDelay: 100 // (maybe setting a delay will allow the render to stick)
 	});
 });
