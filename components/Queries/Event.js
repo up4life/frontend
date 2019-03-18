@@ -7,14 +7,9 @@ export const EVENT_QUERY = gql`
 		getEvent(id: $id) {
 			id
 			title
-			url
-			description
 			times
-			location {
-				venue
-				city
-				address
-			}
+			venue
+			city
 			image_url
 		}
 	}

@@ -136,10 +136,10 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 									mutation={ADD_EVENT_MUTATION}
 									variables={{
 										title: event.title,
-										venue: event.location.venue,
+										venue: event.venue,
 										image_url: event.image_url,
 										times: event.times,
-										city: event.location.city,
+										city: event.city,
 									}}
 									update={(cache, { data: { addEvent } }) => {
 										console.log(addEvent, 'addEvent value update fn');
@@ -212,7 +212,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 							</Typography>
 
 							<div className={classes.gradientBorder}>
-								{event.location.venue}
+								{event.venue}
 								<div
 									className={`${classes.stats} ${classes.mlAuto}`}
 									style={{ display: 'block' }}
