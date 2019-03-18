@@ -175,7 +175,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 															<img className={classes.arrow} src={Arrow} />
 														</div>
 													) : (
-														<Up4 handleClick={() => addEvent()} justFour />
+														<Up4 handleClick={addEvent} justFour />
 													)}
 												</div>
 											</div>
