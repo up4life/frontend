@@ -93,7 +93,6 @@ const Events = React.memo(({ classes, router, href, ...props }) => {
 			}) => {
 				let getEvents =
 					data && data.getEvents && data.getEvents.events ? data.getEvents : { events: [] };
-				console.log(data.getEvents, "getEvents in Events.js");
 				return (
 					<div className={classes.background}>
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}

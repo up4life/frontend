@@ -143,8 +143,10 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										const { currentUser } = cache.readQuery({
 											query: CURRENT_USER_QUERY
 										});
-										console.log(addEvent, "addEvent from update in mutation");
-										console.log(cache.extract(), "entire cache");
+										// const lilCache = cache.readQuery({
+										// 	query: ALL_EVENTS_QUERY,
+										// });
+										console.log(addEvent);
 										cache.writeQuery({
 											query: CURRENT_USER_QUERY,
 											data: {
