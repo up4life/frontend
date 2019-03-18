@@ -144,6 +144,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 											query: CURRENT_USER_QUERY
 										});
 										console.log(addEvent, "addEvent from update in mutation");
+										console.log(cache.extract(), "entire cache");
 										cache.writeQuery({
 											query: CURRENT_USER_QUERY,
 											data: {
@@ -159,7 +160,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										setError(e);
 									}}
 									onCompleted={() => {
-										// refetch();
+										refetch();
 										NProgress.done();
 									}}
 								>

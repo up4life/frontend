@@ -47,7 +47,7 @@ const Dates = ({ classes, user }) => {
 				futureDates.map(date => <Date key={date.id} date={date} currentUser={user} />)
 			) : (
 				<div>
-					<p>You have no previous dates!</p>
+					<p>You have no upcoming dates!</p>
 				</div>
 			)}
 		</GridContainer>
