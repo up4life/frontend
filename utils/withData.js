@@ -11,7 +11,7 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
 export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
-	console.log("headers", headers, ssrMode);
+	// console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
 		uri: "https://api.up4.life"
 	});
@@ -31,7 +31,7 @@ export default withApollo(({ headers }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "include"
+			credentials: "same-origin"
 		},
 		headers
 	}));
