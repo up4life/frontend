@@ -6,7 +6,6 @@ import gql from 'graphql-tag';
 import { useMutation } from '../Mutations/useMutation';
 import Slider from 'react-slick';
 
-// import 'pure-react-carousel/dist/react-carousel.es.css';
 //MUI
 import { IconButton, Typography, Avatar } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';

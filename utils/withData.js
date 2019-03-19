@@ -45,19 +45,20 @@ export default withApollo(({ headers = {} }) => {
 
 	let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
 
-	// if (!ssrMode) {
-	link = split(
-		// split based on operation type
-		({ query }) => {
-			const definition = getMainDefinition(query);
-			return (
-				definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
-			);
-		},
-		wsLink,
-		link,
-	);
-	//	}
+	if (!ssrMode) {
+		link = split(
+			// split based on operation type
+			({ query }) => {
+				const definition = getMainDefinition(query);
+				return (
+					definition.kind === 'OperationDefinition' &&
+					definition.operation === 'subscription'
+				);
+			},
+			wsLink,
+			link,
+		);
+	}
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null),
