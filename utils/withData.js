@@ -92,8 +92,8 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 // 	return apolloClient;
 // }
 
-export default withApollo(stuff => {
-	console.log('stuff', stuff.headers);
+export default withApollo(({ headers }) => {
+	//console.log('stuff', stuff.headers);
 	const ssrMode = !process.browser;
 	// console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
@@ -117,9 +117,9 @@ export default withApollo(stuff => {
 		fetchOptions: {
 			credentials: 'include',
 		},
-		// headers: {
-		// 	cookie: headers && headers.cookie,
-		// },
+		headers: {
+			cookie: headers && headers.cookie,
+		},
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
