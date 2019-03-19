@@ -10,7 +10,6 @@ import ApolloClient from 'apollo-client';
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 
 export default withApollo(({ headers = {} }) => {
-	console.log('headers', headers);
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
@@ -34,7 +33,7 @@ export default withApollo(({ headers = {} }) => {
 		fetchOptions: {
 			credentials: 'include',
 		},
-		headers,
+		headers: headers && headers.cookie,
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {

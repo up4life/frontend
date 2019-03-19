@@ -29,7 +29,7 @@ class MyApp extends App {
 		}
 
 		pageProps.query = ctx.query;
-		console.log('pageprops', pageProps.query);
+
 		return { pageProps };
 	}
 	render() {
