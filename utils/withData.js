@@ -31,9 +31,11 @@ export default withApollo(({ headers }) => {
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: "same-origin"
+			credentials: "include"
 		},
-		headers
+		headers: {
+			cookies: headers && headers.cookies
+		}
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
