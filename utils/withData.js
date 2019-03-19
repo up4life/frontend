@@ -28,11 +28,7 @@ function create(initialState, { getToken }) {
 		const token = getToken();
 		console.log('token', token);
 		return {
-			headers: {
-				...headers,
-				cookie: token ? token : null,
-				//authorization: token ? `Bearer ${token}` : '',
-			},
+			headers,
 		};
 	});
 

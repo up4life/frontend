@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
-import NProgress from "nprogress";
-import moment from "moment";
-import Router from "next/router";
-import gql from "graphql-tag";
+import React, { useState, useEffect, useRef, Fragment } from 'react';
+import NProgress from 'nprogress';
+import moment from 'moment';
+import Router from 'next/router';
+import gql from 'graphql-tag';
 
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Send } from "@material-ui/icons";
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Send } from '@material-ui/icons';
 
-import { Mutation, withApollo } from "react-apollo";
-import { useMutation } from "react-apollo-hooks";
+import { Mutation, withApollo } from 'react-apollo';
+import { useMutation } from 'react-apollo-hooks';
 
 // import { SEND_MESSAGE_MUTATION } from '../Mutations/sendMessage';
-import Verify from "../verifyPhone";
-import CustomInput from "../../styledComponents/CustomInput/CustomInput.jsx";
-import Media from "../../styledComponents/Media/Media.jsx";
-import Button from "../../styledComponents/CustomButtons/Button";
-import { ButtonBase } from "@material-ui/core";
-import TextareaAutosize from "react-autosize-textarea";
+import Verify from '../verifyPhone';
+import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx';
+import Media from '../../styledComponents/Media/Media.jsx';
+import Button from '../../styledComponents/CustomButtons/Button';
+import { ButtonBase } from '@material-ui/core';
+import TextareaAutosize from 'react-autosize-textarea';
 
-import styles from "../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx";
+import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
 const SEND_MESSAGE_MUTATION = gql`
 	mutation SEND_MESSAGE_MUTATION($id: String!, $message: String!) {
@@ -75,13 +75,13 @@ const Chat = ({
 	subscribeToNewMessages,
 	match,
 	client,
-	refetch
+	refetch,
 }) => {
-	const [message, setMessage] = useState("");
-	const [error, setError] = useState(null);
+	const [ message, setMessage ] = useState('');
+	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
 	const msgRef = useRef(null);
-	console.log(data);
+
 	//Flip flop this lil guy
 	currentUser.verified = true;
 
@@ -94,26 +94,31 @@ const Chat = ({
 		// 		linkText: 'Verify now?',
 		// 	});
 		// } else
-		if (currentUser.permissions === "FREE") {
+		if (currentUser.permissions === 'FREE') {
 			getRemainingMessages();
 		}
 	}, []);
-	useEffect(() => {
-		if (msgRef.current) {
-			msgRef.current.scrollTop = msgRef.current.scrollHeight;
-		}
-	}, [data.getConversation]);
+	useEffect(
+		() => {
+			if (msgRef.current) {
+				msgRef.current.scrollTop = msgRef.current.scrollHeight;
+			}
+		},
+		[ data.getConversation ],
+	);
 	useEffect(() => {
 		const unSeen =
 			data &&
 			data.getConversation &&
-			data.getConversation.messages.filter(msg => !msg.seen && msg.from.id !== currentUser.id);
+			data.getConversation.messages.filter(
+				msg => !msg.seen && msg.from.id !== currentUser.id,
+			);
 
 		if (unSeen && unSeen.length > 0) {
 			markAllAsSeen({
 				variables: {
-					chatId: data.getConversation.id
-				}
+					chatId: data.getConversation.id,
+				},
 			});
 		}
 	});
@@ -121,9 +126,9 @@ const Chat = ({
 		let messagesRemaining = await client.query({ query: REMAINING_MESSAGES });
 		if (messagesRemaining.data.remainingMessages === 0) {
 			setError({
-				msg: "You are out of weekly messages allowed on a free account!",
-				link: "/profile/billing",
-				linkText: "Go Pro?"
+				msg: 'You are out of weekly messages allowed on a free account!',
+				link: '/profile/billing',
+				linkText: 'Go Pro?',
 			});
 		}
 	};
@@ -146,26 +151,32 @@ const Chat = ({
 								key={msg.id}
 								avatar={img}
 								title={
-									<span style={{ color: "#fafafa" }}>
+									<span style={{ color: '#fafafa' }}>
 										{msg.from.firstName}
 										<small
 											style={{
-												fontWeight: unseen && "bold",
-												fontSize: "12px"
+												fontWeight: unseen && 'bold',
+												fontSize: '12px',
 											}}
 										>
 											· {moment(msg.createdAt).fromNow()}
-											{unseen ? <span style={{ color: "red", marginLeft: "6px" }}>new</span> : null}
+											{unseen ? (
+												<span style={{ color: 'red', marginLeft: '6px' }}>
+													new
+												</span>
+											) : null}
 										</small>
 									</span>
 								}
 								body={
 									<span>
-										<p style={{ wordBreak: "break-word", fontSize: "14px" }}>{msg.text}</p>
-										{currentUser.permissions !== "FREE" && msg.seen ? (
+										<p style={{ wordBreak: 'break-word', fontSize: '14px' }}>
+											{msg.text}
+										</p>
+										{currentUser.permissions !== 'FREE' && msg.seen ? (
 											<small>
-												<span style={{ marginRight: "2px" }}>seen</span>
-												{moment(msg.UpdatedAt).format("M/D/YY h:mm a")}
+												<span style={{ marginRight: '2px' }}>seen</span>
+												{moment(msg.UpdatedAt).format('M/D/YY h:mm a')}
 											</small>
 										) : null}
 									</span>
@@ -174,9 +185,9 @@ const Chat = ({
 						);
 					})
 				) : (
-					<h4 style={{ color: "#fafafa", fontStyle: "italic" }}>
-						No message history to show with {match.firstName}.<br /> Send a message to see what{" "}
-						{match.firstName} is up4!
+					<h4 style={{ color: '#fafafa', fontStyle: 'italic' }}>
+						No message history to show with {match.firstName}.<br /> Send a message to
+						see what {match.firstName} is up4!
 					</h4>
 				)}
 			</div>
@@ -193,17 +204,17 @@ const Chat = ({
 				}}
 			>
 				{sendMessage =>
-					error ? (
-						!error.link ? (
-							<Verify />
-						) : (
-							<div>
-								<h4>{error.msg}</h4>
-								<Button onClick={() => Router.push("/profile?slug=billing", error.link)}>
-									{error.linkText}
-								</Button>
-							</div>
-						)
+					error ? !error.link ? (
+						<Verify />
+					) : (
+						<div>
+							<h4>{error.msg}</h4>
+							<Button
+								onClick={() => Router.push('/profile?slug=billing', error.link)}
+							>
+								{error.linkText}
+							</Button>
+						</div>
 					) : (
 						<form
 							className={classes.expandedChat}
@@ -212,7 +223,7 @@ const Chat = ({
 								NProgress.start();
 								sendMessage();
 
-								setMessage("");
+								setMessage('');
 							}}
 						>
 							{/* <CustomInput
@@ -236,9 +247,11 @@ const Chat = ({
 								className={classes.textareaAutosize}
 								onChange={e => setMessage(e.target.value)}
 								placeholder={
-									data.getConversation
-										? `Respond to ${match.firstName}`
-										: `Send ${match.firstName} a message.`
+									data.getConversation ? (
+										`Respond to ${match.firstName}`
+									) : (
+										`Send ${match.firstName} a message.`
+									)
 								}
 								rows={1}
 								maxRows={4}
@@ -246,26 +259,25 @@ const Chat = ({
 								onKeyDown={e => {
 									if (e.keyCode === 13) {
 										sendMessage();
-										setMessage("");
+										setMessage('');
 									}
 								}}
 							/>
-							<ButtonBase type="submit">
+							<ButtonBase type='submit'>
 								<Button
 									style={{
-										background: "transparent",
-										borderRadius: "6px !important"
+										background: 'transparent',
+										borderRadius: '6px !important',
 									}}
 									justIcon
 									className={classes.floatRight}
-									component="div"
+									component='div'
 								>
 									<Send />
 								</Button>
 							</ButtonBase>
 						</form>
-					)
-				}
+					)}
 			</Mutation>
 		</div>
 	);
