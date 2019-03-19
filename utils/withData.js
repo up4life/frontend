@@ -33,6 +33,7 @@ export default withApollo(({ headers = {} }) => {
 		fetchOptions: {
 			credentials: 'include',
 		},
+		credentials: 'include',
 		headers: headers && headers.cookie,
 	}));
 
