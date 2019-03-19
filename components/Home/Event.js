@@ -141,6 +141,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										times: event.times,
 										city: event.city,
 										category: event.category,
+										genre: event.genre,
 									}}
 									update={(cache, { data: { addEvent } }) => {
 										console.log(addEvent, 'addEvent value update fn');
