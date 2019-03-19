@@ -329,7 +329,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										</h6>
 									</div>
 								</div>
-								<GridContainer>
+								<GridContainer style={{ justifyContent: 'space-around' }}>
 									{event.attending.map(usr => {
 										let chat = user
 											? user.chats.find(x =>
@@ -349,6 +349,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 												style={{
 													padding: '5px',
 													position: 'relative',
+													minWidth: '150px',
 													maxWidth: '170px',
 												}}
 											>
