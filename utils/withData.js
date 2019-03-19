@@ -35,7 +35,7 @@ export default withApollo(({ headers = {} }) => {
 			credentials: 'include',
 		},
 		credentials: 'include',
-		headers: headers && headers.cookie,
+		headers: headers && headers.cookies,
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
