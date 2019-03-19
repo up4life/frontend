@@ -117,9 +117,9 @@ export default withApollo(stuff => {
 		fetchOptions: {
 			credentials: 'include',
 		},
-		headers: {
-			cookie: headers && headers.cookie,
-		},
+		// headers: {
+		// 	cookie: headers && headers.cookie,
+		// },
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
