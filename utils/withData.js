@@ -13,7 +13,7 @@ export default withApollo(({ headers = {} }) => {
 	const ssrMode = !process.browser;
 	console.log('headers', headers, ssrMode);
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+		uri: 'https://api.up4.life',
 	});
 
 	const wsLink =
@@ -34,7 +34,7 @@ export default withApollo(({ headers = {} }) => {
 			credentials: 'include',
 		},
 		credentials: 'include',
-		headers: headers && headers.cookie,
+		headers,
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
