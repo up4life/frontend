@@ -31,13 +31,16 @@ const Splash = ({ classes }) => {
 						alignItems='center'
 						direction='column'
 						xs={12}
-						sm={12}
+						sm={8}
 						md={12}
 					>
 						<Logo main />
 
 						<div className={classes.tagline}>
-							<Typography style={{ color: '#fafafa' }} variant='h2'>
+							<Typography
+								style={{ color: '#fafafa', textAlign: 'center' }}
+								variant='h2'
+							>
 								Meet People. Go Places.
 							</Typography>
 						</div>

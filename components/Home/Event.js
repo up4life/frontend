@@ -140,6 +140,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										image_url: event.image_url,
 										times: event.times,
 										city: event.city,
+										category: event.category,
 									}}
 									update={(cache, { data: { addEvent } }) => {
 										console.log(addEvent, 'addEvent value update fn');
@@ -340,9 +341,14 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										return (
 											<GridItem
 												key={usr.id}
-												sm={4}
+												xs={6}
+												sm={6}
 												md={4}
-												style={{ padding: '5px', position: 'relative' }}
+												style={{
+													padding: '5px',
+													position: 'relative',
+													maxWidth: '170px',
+												}}
 											>
 												{liked && <Favorite className={classes.favorite} />}
 												{chat && <Chat className={classes.chat} />}
@@ -356,6 +362,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 															{ scroll: false },
 														);
 													}}
+													style={{}}
 												>
 													<div
 														className={` ${classes.gradientBorder}  ${classes.userCard}`}
