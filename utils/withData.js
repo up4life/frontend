@@ -48,7 +48,13 @@ function create(initialState, { getToken }) {
 				// }
 			},
 		});
-	let link = authLink.concat(httpLink);
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
+	let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
 
 	if (!ssrMode) {
 		link = split(
@@ -64,6 +70,7 @@ function create(initialState, { getToken }) {
 			link,
 		);
 	}
+
 	// Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
 	return new ApolloClient({
 		connectToDevTools: process.browser,
