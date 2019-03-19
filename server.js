@@ -24,7 +24,7 @@ app.prepare().then(() => {
 	// 	handle(req, res);
 	// });
 
-	server.use(customRouter);
+	// server.use(customRouter);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
