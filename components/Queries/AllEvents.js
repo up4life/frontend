@@ -25,6 +25,7 @@ export const ALL_EVENTS_QUERY = gql`
 			location
 			events {
 				id
+				tmID
 				title
 				image_url
 				times

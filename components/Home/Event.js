@@ -135,6 +135,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 								<Mutation
 									mutation={ADD_EVENT_MUTATION}
 									variables={{
+										tmID: event.tmID,
 										title: event.title,
 										venue: event.venue,
 										image_url: event.image_url,

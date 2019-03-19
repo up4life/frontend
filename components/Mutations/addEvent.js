@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 
 export const ADD_EVENT_MUTATION = gql`
 	mutation ADD_EVENT_MUTATION(
+		$tmID: String!
 		$title: String!
 		$venue: String!
 		$image_url: String
@@ -15,6 +16,7 @@ export const ADD_EVENT_MUTATION = gql`
 	) {
 		addEvent(
 			event: {
+				tmID: $tmID
 				title: $title
 				venue: $venue
 				image_url: $image_url
@@ -25,6 +27,7 @@ export const ADD_EVENT_MUTATION = gql`
 			}
 		) {
 			id
+			tmID
 			attending {
 				id
 				firstName
