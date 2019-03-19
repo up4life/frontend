@@ -121,7 +121,9 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 			{({ like, unlike, block, potentialMatch }) => {
 				let match = potentialMatch.data ? potentialMatch.data.user : null;
 				let isLiked = currentUser ? currentUser.liked.find(usr => usr.id === user) : false;
-
+				let userImgs = match
+					? match.img.sort((a, b) => (a.default ? -1 : b.default ? 1 : 0))
+					: [];
 				if (!match) return <div />;
 				else {
 					NProgress.done();
@@ -233,20 +235,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											open={reportUser}
 											setOpen={handleReport}
 										/>
-										{/* {match.score > 7000 ? (
-                      <h3
-                        style={{
-                          color: "#fafafa",
-                          border: "2px solid #cabac8",
-                          borderRadius: "4px",
-                          margin: 0,
-                          padding: "10px 5px"
-                        }}
-                        className={classes.title}
-                      >
-                        {(match.score * 0.01).toFixed()}% match!
-                      </h3>
-                    ) : null} */}
+
 										{match.score > 6000 ? (
 											<div>
 												<Tooltip
@@ -328,7 +317,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 														{...settings}
 														className={classes.slicky}
 													>
-														{match.img.map(img => (
+														{userImgs.map(img => (
 															<div key={img.img_url}>
 																<img
 																	src={img.img_url}
