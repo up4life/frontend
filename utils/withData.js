@@ -10,94 +10,26 @@ import ApolloClient from 'apollo-client';
 import fetch from 'isomorphic-unfetch';
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 
-let apolloClient = null;
+// let apolloClient = null;
 
-const ssrMode = !process.browser;
+// const ssrMode = !process.browser;
 
-if (!process.browser) {
-	global.fetch = fetch;
-}
+// if (!process.browser) {
+// 	global.fetch = fetch;
+// }
 
-function create(initialState, { getToken }) {
-	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
-		credentials: 'include',
-	});
-
-	const authLink = setContext((_, { headers }) => {
-		const token = getToken();
-		console.log('token', token);
-		return {
-			headers,
-		};
-	});
-
-	const wsLink =
-		!ssrMode &&
-		new WebSocketLink({
-			uri: process.env.NODE_ENV === 'development' ? wsEndpoint : wsProdEndpoint,
-			options: {
-				reconnect: true,
-				// maybe we can add a header in here to get some sort of auth working
-				// connectionParams: {d
-				//   authorization: headers.authorization
-				// }
-			},
-		});
-	const errorLink = onError(({ graphQLErrors, networkError }) => {
-		if (graphQLErrors) {
-			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
-		}
-		if (networkError) console.log(`[Network error]: ${networkError}`);
-	});
-	let link = ApolloLink.from([ errorLink, authLink, httpLink ]);
-
-	if (!ssrMode) {
-		link = split(
-			// split based on operation type
-			({ query }) => {
-				const definition = getMainDefinition(query);
-				return (
-					definition.kind === 'OperationDefinition' &&
-					definition.operation === 'subscription'
-				);
-			},
-			wsLink,
-			link,
-		);
-	}
-
-	// Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
-	return new ApolloClient({
-		connectToDevTools: process.browser,
-
-		ssrMode, // Disables forceFetch on the server (so queries are only run once)
-		link,
-		cache: new InMemoryCache().restore(initialState || {}),
-	});
-}
-
-export default function initApollo(initialState, options) {
-	// Make sure to create a new client for every server-side request so that data
-	// isn't shared between connections (which would be bad)
-	if (!process.browser) {
-		return create(initialState, options);
-	}
-
-	// Reuse client on the client-side
-	if (!apolloClient) {
-		apolloClient = create(initialState, options);
-	}
-
-	return apolloClient;
-}
-
-// export default withApollo(stuff => {
-// 	console.log('stuff', Object.keys(stuff.ctx));
-// 	const ssrMode = !process.browser;
-// 	// console.log("headers", headers, ssrMode);
+// function create(initialState, { getToken }) {
 // 	const httpLink = createHttpLink({
-// 		uri: 'https://api.up4.life',
+// 		uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+// 		credentials: 'include',
+// 	});
+
+// 	const authLink = setContext((_, { headers }) => {
+// 		const token = getToken();
+// 		console.log('token', token);
+// 		return {
+// 			headers,
+// 		};
 // 	});
 
 // 	const wsLink =
@@ -112,24 +44,13 @@ export default function initApollo(initialState, options) {
 // 				// }
 // 			},
 // 		});
-
-// 	const contextLink = setContext(async () => ({
-// 		fetchOptions: {
-// 			credentials: 'include',
-// 		},
-// 		// headers: {
-// 		// 	cookies: headers && headers.cookies
-// 		// }
-// 	}));
-
 // 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 // 		if (graphQLErrors) {
 // 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
 // 		}
 // 		if (networkError) console.log(`[Network error]: ${networkError}`);
 // 	});
-
-// 	let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
+// 	let link = ApolloLink.from([ errorLink, authLink, httpLink ]);
 
 // 	if (!ssrMode) {
 // 		link = split(
@@ -146,13 +67,92 @@ export default function initApollo(initialState, options) {
 // 		);
 // 	}
 
-// 	const cache = new InMemoryCache({
-// 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null),
-// 	});
-
+// 	// Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
 // 	return new ApolloClient({
+// 		connectToDevTools: process.browser,
+
+// 		ssrMode, // Disables forceFetch on the server (so queries are only run once)
 // 		link,
-// 		ssrMode,
-// 		cache,
+// 		cache: new InMemoryCache().restore(initialState || {}),
 // 	});
-// });
+// }
+
+// export default function initApollo(initialState, options) {
+// 	// Make sure to create a new client for every server-side request so that data
+// 	// isn't shared between connections (which would be bad)
+// 	if (!process.browser) {
+// 		return create(initialState, options);
+// 	}
+
+// 	// Reuse client on the client-side
+// 	if (!apolloClient) {
+// 		apolloClient = create(initialState, options);
+// 	}
+
+// 	return apolloClient;
+// }
+
+export default withApollo(stuff => {
+	console.log('stuff', Object.keys(stuff.ctx));
+	const ssrMode = !process.browser;
+	// console.log("headers", headers, ssrMode);
+	const httpLink = createHttpLink({
+		uri: 'https://api.up4.life',
+	});
+
+	const wsLink =
+		!ssrMode &&
+		new WebSocketLink({
+			uri: process.env.NODE_ENV === 'development' ? wsEndpoint : wsProdEndpoint,
+			options: {
+				reconnect: true,
+				// maybe we can add a header in here to get some sort of auth working
+				// connectionParams: {d
+				//   authorization: headers.authorization
+				// }
+			},
+		});
+
+	const contextLink = setContext(async () => ({
+		fetchOptions: {
+			credentials: 'include',
+		},
+		headers: {
+			cookie: headers && headers.cookie,
+		},
+	}));
+
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
+
+	let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
+
+	if (!ssrMode) {
+		link = split(
+			// split based on operation type
+			({ query }) => {
+				const definition = getMainDefinition(query);
+				return (
+					definition.kind === 'OperationDefinition' &&
+					definition.operation === 'subscription'
+				);
+			},
+			wsLink,
+			link,
+		);
+	}
+
+	const cache = new InMemoryCache({
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null),
+	});
+
+	return new ApolloClient({
+		link,
+		ssrMode,
+		cache,
+	});
+});
