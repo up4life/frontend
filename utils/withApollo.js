@@ -19,7 +19,7 @@ export default App => {
 
 		static async getInitialProps(ctx) {
 			const { Component, router, ctx: { req, res } } = ctx;
-			console.log('req', parseCookies(req));
+			console.log('req', req);
 			const apollo = initApollo(
 				{},
 				{
