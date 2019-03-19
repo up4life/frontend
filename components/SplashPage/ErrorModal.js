@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Dialog, DialogContent, DialogActions } from '@material-ui/core';
 //styledcomponents
 import Button from '../../styledComponents/CustomButtons/Button';
+import Transition from '../Transistion';
 //styles
 import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
@@ -26,7 +27,7 @@ const ErrorModal = ({ error, classes, billing }) => {
 				paper: classes.modal + ' ' + classes.modalSmall,
 			}}
 			open={modal}
-			// TransitionComponent={Transition}
+			TransitionComponent={Transition}
 			//keepMounted
 			onClose={() => showModal(false)}
 			aria-labelledby='small-modal-slide-title'
@@ -46,7 +47,7 @@ const ErrorModal = ({ error, classes, billing }) => {
 							: showModal(false);
 					}}
 					color='danger'
-					simple="true"
+					simple='true'
 					className={
 						classes.modalSmallFooterFirstButton +
 						' ' +
