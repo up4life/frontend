@@ -21,7 +21,7 @@ if (!process.browser) {
 function create(initialState, { getToken }) {
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
-		credentials: "same-origin"
+		credentials: "include"
 	});
 
 	const authLink = setContext((_, { headers }) => {
