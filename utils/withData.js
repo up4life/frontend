@@ -10,6 +10,7 @@ import ApolloClient from 'apollo-client';
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 
 export default withApollo(({ headers = {} }) => {
+	console.log('headers', headers);
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
