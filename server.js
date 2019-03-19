@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -17,14 +18,17 @@ app.prepare().then(() => {
 	server.use(errorHandler);
 	server.use(express.json());
 
-	// const customRouter = express.Router();
-	// customRouter.post("/", (req, res) => {
-	// 	console.log(req.headers, "headers");
-	// 	console.log(req.query, "query (if there at all)");
-	// 	handle(req, res);
-	// });
+	const customRouter = express.Router();
+	customRouter.use(cookieParser());
+	customRouter.post("/", (req, res) => {
+		const { token } = req.cookies;
+		console.log(req.cookies, "request cookies");
+		console.log(req.headers, "headers");
+		console.log(req.query, "query (if there at all)");
+		return handle(req, res);
+	});
 
-	// server.use(customRouter);
+	server.use(customRouter);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
