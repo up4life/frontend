@@ -17,12 +17,12 @@ app.prepare().then(() => {
 	server.use(errorHandler);
 	server.use(express.json());
 
-	const customRouter = express.Router();
-	customRouter.post("/", (req, res) => {
-		console.log(req.headers, "headers");
-		console.log(req.query, "query (if there at all)");
-		handle(req, res);
-	});
+	// const customRouter = express.Router();
+	// customRouter.post("/", (req, res) => {
+	// 	console.log(req.headers, "headers");
+	// 	console.log(req.query, "query (if there at all)");
+	// 	handle(req, res);
+	// });
 
 	server.use(customRouter);
 

@@ -1,40 +1,41 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { getMainDefinition } from 'apollo-utilities';
-import { createHttpLink } from 'apollo-link-http';
-import { setContext } from 'apollo-link-context';
-import { ApolloLink, split } from 'apollo-link';
-import { WebSocketLink } from 'apollo-link-ws';
-import { onError } from 'apollo-link-error';
-import withApollo from 'next-with-apollo';
-import ApolloClient from 'apollo-client';
-import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { getMainDefinition } from "apollo-utilities";
+import { createHttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { ApolloLink, split } from "apollo-link";
+import { WebSocketLink } from "apollo-link-ws";
+import { onError } from "apollo-link-error";
+import withApollo from "next-with-apollo";
+import ApolloClient from "apollo-client";
+import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-export default withApollo(({ headers = {} }) => {
+export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
-	console.log('headers', headers, ssrMode);
+	console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
-		uri: 'https://api.up4.life',
+		uri: "https://api.up4.life"
 	});
 
 	const wsLink =
 		!ssrMode &&
 		new WebSocketLink({
-			uri: process.env.NODE_ENV === 'development' ? wsEndpoint : wsProdEndpoint,
+			uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
 			options: {
-				reconnect: true,
+				reconnect: true
 				// maybe we can add a header in here to get some sort of auth working
 				// connectionParams: {d
 				//   authorization: headers.authorization
 				// }
-			},
+			}
 		});
 
 	const contextLink = setContext(async () => ({
 		fetchOptions: {
-			credentials: 'include',
+			credentials: "include"
 		},
-		credentials: 'include',
-		headers,
+		headers: {
+			cookie: headers && headers.cookie
+		}
 	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -44,31 +45,27 @@ export default withApollo(({ headers = {} }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
 			// split based on operation type
 			({ query }) => {
 				const definition = getMainDefinition(query);
-				return (
-					definition.kind === 'OperationDefinition' &&
-					definition.operation === 'subscription'
-				);
+				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
 			},
 			wsLink,
-			link,
+			link
 		);
 	}
 
 	const cache = new InMemoryCache({
-		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null),
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
-		credentials: 'include',
 		link,
 		ssrMode,
-		cache,
+		cache
 	});
 });
