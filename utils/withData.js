@@ -93,7 +93,7 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 // }
 
 export default withApollo(stuff => {
-	console.log('stuff', Object.keys(stuff.headers));
+	console.log('stuff', stuff.headers);
 	const ssrMode = !process.browser;
 	// console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
