@@ -29,12 +29,12 @@ const Main = ({ user }) => {
 					borderRadius: '6px',
 				}}
 			>
-				<h2 style={{ display: 'flex' }}>
-					<span style={{ marginRight: '26px' }}>Welcome to</span>
+				<h2 style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+					<span style={{ marginRight: '20px' }}>Welcome to</span>
 					{<Logo />}
 					<span style={{ marginLeft: '6px' }}>{user.firstName}!</span>
 				</h2>
-				<h3>Tell us a little about yourself...</h3>
+				<h3 style={{ textAlign: 'center' }}>Tell us a little about yourself...</h3>
 				<Button
 					color='danger'
 					style={{ zIndex: 1 }}

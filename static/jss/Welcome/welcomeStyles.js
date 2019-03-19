@@ -82,6 +82,20 @@ const styles = {
 	proButton: {
 		backgroundImage: 'linear-gradient(to right, #f6655a, #f9574c, #fc473e, #fe332f, #ff101f)',
 	},
+	mobileStepper: {
+		background: 'transparent',
+		display: 'flex',
+		justifyContent: 'center',
+	},
+	dots: {
+		display: 'flex',
+	},
+	dot: {
+		margin: '0 6px',
+	},
+	dotActive: {
+		backgroundColor: '#ff101f',
+	},
 };
 
 export default styles;

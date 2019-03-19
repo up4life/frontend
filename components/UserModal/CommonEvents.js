@@ -29,7 +29,7 @@ const CommonEvents = ({ classes, id }) => {
 				{data.getSharedEvents.length ? (
 					data.getSharedEvents.map(event => (
 						<GridItem
-							sm={4}
+							sm={6}
 							md={6}
 							lg={6}
 							key={event.id}
