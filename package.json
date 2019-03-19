@@ -57,6 +57,7 @@
 		"react-avatar-image-cropper": "^1.2.0",
 		"react-cropper": "^1.2.0",
 		"react-dom": "^16.8.1",
+		"react-image-gallery": "^0.8.14",
 		"react-infinite-scroller": "^1.2.4",
 		"react-input-mask": "^2.0.4",
 		"react-input-range": "^1.3.0",
