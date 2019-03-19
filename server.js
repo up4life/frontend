@@ -21,7 +21,7 @@ app.prepare().then(() => {
 	const customRouter = express.Router();
 	customRouter.use(cookieParser());
 	customRouter.post("/", (req, res) => {
-		const { token } = req.cookies;
+		// const { token } = req.cookies;
 		console.log(req.cookies, "request cookies");
 		console.log(req.headers, "headers");
 		console.log(req.query, "query (if there at all)");
