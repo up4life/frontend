@@ -1,10 +1,14 @@
-const styles = {
+const styles = theme => ({
 	mainContainer: {
 		fontFamily: 'Baumans',
 		lineHeight: '500px',
 		fontSize: '400px',
 		display: 'flex',
 		cursor: 'pointer',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '200px',
+			lineHeight: '250px',
+		},
 	},
 	container: {
 		fontFamily: 'Baumans',
@@ -33,6 +37,9 @@ const styles = {
 		fontSize: '400px',
 		position: 'relative',
 		marginRight: '5px',
+		[theme.breakpoints.down('xs')]: {
+			fontSize: '200px',
+		},
 	},
 	redFirstFour: {
 		color: '#ff101f',
@@ -50,6 +57,6 @@ const styles = {
 		position: 'absolute',
 		transformOrigin: '70%',
 	},
-};
+});
 
 export default styles;

@@ -161,7 +161,7 @@ const Register = ({ classes, showing, setShowing }) => {
 
 	return (
 		<Fragment>
-			<GridItem xs={6} sm={6} md={6} lg={6}>
+			<GridItem xs={12} sm={6} md={6} lg={6}>
 				<div className={`${classes.section} cd-section`} id='javascriptComponents'>
 					<Dialog
 						classes={{
