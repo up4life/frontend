@@ -17,7 +17,7 @@ import {
 	SubdirectoryArrowRightRounded as Flipper,
 	SubdirectoryArrowLeftRounded as Flopper,
 } from '@material-ui/icons';
-import { IconButton, Typography, Avatar, Button } from '@material-ui/core';
+import { Typography, Avatar } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 //Images
@@ -233,7 +233,7 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 								</div>
 							</div>
 						</CardBody>
-						{/* {isSaved && <Bookmark className='Event__bookmark' />} */}
+
 						{event.attending.length ? (
 							<CardFooter
 								style={{ display: 'flex', justifyContent: 'space-between' }}
@@ -273,7 +273,6 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 						) : (
 							''
 						)}
-						{/* <EventModal modal={modal} showModal={showModal} event={event} /> */}
 					</div>
 					<GridContainer
 						style={{
