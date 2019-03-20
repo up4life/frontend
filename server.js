@@ -38,9 +38,11 @@ app.prepare().then(() => {
 
 	//server.use(customRouter);
 
-	server.post("*", (req, res) => {
-		return handle(req, res);
-	});
+	// server.post("*", (req, res) => {
+	// 	console.log(Object.keys(req.headers), "headers obj global post");
+	// 	console.log(req.cookies, "cookies inside global post");
+	// 	return handle(req, res);
+	// });
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
@@ -93,6 +95,8 @@ app.prepare().then(() => {
 	});
 
 	server.get("*", (req, res) => {
+		console.log(req.headers, "global get headers");
+		console.log(req.cookies, "global get cookies");
 		return handle(req, res);
 	});
 
