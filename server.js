@@ -92,7 +92,13 @@ app.prepare().then(() => {
 	});
 
 	server.post("*", (req, res) => {
-		console.log(Object.keys(req), "request obj keys");
+		// console.log(Object.keys(req), "request obj keys");
+		console.log(req.cookies, "cookies here");
+		console.log("\n");
+		console.log(req.query, "query here");
+		console.log("\n");
+		console.log(req.client, "client here");
+		console.log("\n");
 		return handle(req, res);
 	});
 
