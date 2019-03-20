@@ -5,7 +5,6 @@ const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 const ApolloClient = require("apollo-client");
-const InMemoryCache = require("");
 const { InMemoryCache } = require("apollo-cache-inmemory");
 const { createHttpLink } = require("apollo-link-http");
 const { setContext } = require("apollo-link-context");
@@ -21,27 +20,9 @@ app.prepare().then(() => {
 		res.status(status).json(err);
 	};
 
-	// server.user(cors({ credentials: true }));
 	server.use(cookieParser());
 	server.use(express.json());
 	server.use(errorHandler);
-
-	// server.options('/', (req, res, next) => {
-	// 	console.log('headerz', req.headers);
-	// 	console.log('cookiez', req.cookies);
-	// 	return next();
-	// });
-	// const customRouter = express.Router();
-	// customRouter.use(cookieParser());
-	// customRouter.post("/", (req, res) => {
-	// 	// const { token } = req.cookies;
-	// 	console.log(req.cookies, "request cookies");
-	// 	console.log(req.headers, "headers");
-	// 	console.log(req.query, "query (if there at all)");
-	// 	return handle(req, res);
-	// });
-
-	//server.use(customRouter);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
@@ -108,11 +89,9 @@ app.prepare().then(() => {
 			fetchOptions: {
 				credentials: "include"
 			}
-			// headers
 		}));
 
 		const link = ApolloLink.from([contextLink, httpLink]);
-
 		const cache = new InMemoryCache({
 			dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 		});
@@ -127,7 +106,7 @@ app.prepare().then(() => {
 			query: CURRENT_USER_QUERY
 		});
 
-		console.log(data);
+		console.log(data, "heres that data from the query");
 		return handle(req, res);
 	});
 
