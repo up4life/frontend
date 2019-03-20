@@ -8,7 +8,7 @@ import Welcome from "./welcome";
 const Index = () => (
 	<User>
 		{({ data, loading, error }) => {
-			if (loading) return <div>index</div>;
+			if (loading) return <div />;
 			if (error || !data.currentUser) return <JoinUs />;
 			if (!data.currentUser.gender) return <Welcome query={{ slug: 0 }} />;
 			else return <Home />;
