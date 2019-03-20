@@ -4,6 +4,12 @@ const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
+const ApolloClient = require("apollo-client");
+const InMemoryCache = require("");
+const { InMemoryCache } = require("apollo-cache-inmemory");
+const { createHttpLink } = require("apollo-link-http");
+const { setContext } = require("apollo-link-context");
+const { CURRENT_USER_QUERY } = require("./components/Queries/User");
 
 app.prepare().then(() => {
 	const server = express();
@@ -92,13 +98,36 @@ app.prepare().then(() => {
 	});
 
 	server.post("*", (req, res) => {
-		console.log(Object.keys(req.client), "request obj keys");
-		// console.log(req.cookies, "cookies here");
-		console.log("\n");
-		// console.log(req.query, "query here");
-		// console.log("\n");
-		// console.log(req.client, "client here");
-		// console.log("\n");
+		const httpLink = createHttpLink({
+			uri: "https://api.up4.life/",
+			fetchOptions: {
+				credentials: "include"
+			}
+		});
+		const contextLink = setContext(() => ({
+			fetchOptions: {
+				credentials: "include"
+			}
+			// headers
+		}));
+
+		const link = ApolloLink.from([contextLink, httpLink]);
+
+		const cache = new InMemoryCache({
+			dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
+		});
+
+		const client = new ApolloClient({
+			link,
+			ssrMode: true,
+			cache
+		});
+
+		const { data } = client.query({
+			query: CURRENT_USER_QUERY
+		});
+
+		console.log(data);
 		return handle(req, res);
 	});
 
