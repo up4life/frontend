@@ -97,7 +97,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 	// console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
-		uri: "://api.up4.life/graphql"
+		uri: "/graphql"
 	});
 
 	const wsLink =
