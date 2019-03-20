@@ -86,7 +86,6 @@ app.prepare().then(() => {
 	});
 
 	server.get('*', (req, res) => {
-		console.log('reqkt', req.headers);
 		return handle(req, res);
 	});
 
