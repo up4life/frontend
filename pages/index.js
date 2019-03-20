@@ -25,9 +25,7 @@ Index.getInitialProps = async ctx => {
 			let response = await ctx.apolloClient.query({
 				query: CURRENT_USER_QUERY,
 				context: {
-					headers: {
-						...ctx.req.headers
-					}
+					credentials: "include"
 				}
 				//operationName: 'hellayyy',
 				// fetchPolicy: "cache-and-network"
