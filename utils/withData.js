@@ -1,6 +1,6 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { getMainDefinition } from "apollo-utilities";
-import { createHttpLink } from "apollo-link-http";
+import { createHttpLink, HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
@@ -97,7 +97,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 	// console.log("headers", headers, ssrMode);
 	const httpLink = createHttpLink({
-		uri: "/graphql"
+		uri: "api.up4.life/graphql"
 	});
 
 	const wsLink =
