@@ -17,7 +17,7 @@ app.prepare().then(() => {
 
 	server.use(errorHandler);
 	server.use(express.json());
-
+	server.use(cookieParser());
 	// const customRouter = express.Router();
 	// customRouter.use(cookieParser());
 	// customRouter.post("/", (req, res) => {
@@ -81,7 +81,7 @@ app.prepare().then(() => {
 	});
 
 	server.get('*', (req, res) => {
-		console.log(req);
+		console.log('reqkt', req, req.cookies);
 		return handle(req, res);
 	});
 
