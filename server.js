@@ -1,7 +1,6 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
-// const cors = require("cors");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
@@ -37,12 +36,6 @@ app.prepare().then(() => {
 	// });
 
 	//server.use(customRouter);
-
-	// server.post("*", (req, res) => {
-	// 	console.log(Object.keys(req.headers), "headers obj global post");
-	// 	console.log(req.cookies, "cookies inside global post");
-	// 	return handle(req, res);
-	// });
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;

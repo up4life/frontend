@@ -24,16 +24,11 @@ Index.getInitialProps = async ctx => {
 			console.log(ctx.req.query, "req.query");
 			console.log(ctx.req.body, "ctx.req.body");
 			console.log(ctx.req.cookies, "cookies");
-			console.log(ctx.req.method, "http method");
-			console.log(ctx.req.statusMessage, "http status message");
-			console.log(ctx.req.route, "http route");
 			// let user = await isLoggedIn(ctx.apolloClient);
 			// console.log("init props", user);
 			const response = await ctx.apolloClient.query({
 				query: CURRENT_USER_QUERY,
-				context: {
-					credentials: "include"
-				}
+				fetchPolicy: "network-only"
 				//operationName: 'hellayyy',
 				// fetchPolicy: "cache-and-network"
 			});
