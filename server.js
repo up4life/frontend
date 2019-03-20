@@ -92,6 +92,7 @@ app.prepare().then(() => {
 	});
 
 	server.post("*", (req, res) => {
+		console.log(Object.keys(req), "request obj keys");
 		return handle(req, res);
 	});
 
