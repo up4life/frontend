@@ -88,8 +88,10 @@ app.prepare().then(() => {
 	});
 
 	server.get("*", (req, res) => {
-		console.log(req.headers, "global get headers");
-		console.log(req.cookies, "global get cookies");
+		return handle(req, res);
+	});
+
+	server.post("*", (req, res) => {
 		return handle(req, res);
 	});
 
