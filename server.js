@@ -38,6 +38,10 @@ app.prepare().then(() => {
 
 	//server.use(customRouter);
 
+	server.post("*", (req, res) => {
+		return handle(req, res);
+	});
+
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
 		const slug = subPage ? getSlug(page, subPage) : getSlug(page);
