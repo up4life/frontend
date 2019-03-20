@@ -17,6 +17,9 @@ const Index = () => (
 );
 
 Index.getInitialProps = async ctx => {
+	if (ctx.req && ctx.req.headers) {
+		console.log(ctx.req.headers, "request headers");
+	}
 	let user = await isLoggedIn(ctx.apolloClient);
 	console.log("init props", user);
 
