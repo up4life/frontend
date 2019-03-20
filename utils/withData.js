@@ -67,10 +67,8 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 		);
 // 	}
 
-// 	// Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
 // 	return new ApolloClient({
 // 		connectToDevTools: process.browser,
-
 // 		ssrMode, // Disables forceFetch on the server (so queries are only run once)
 // 		link,
 // 		cache: new InMemoryCache().restore(initialState || {}),
@@ -93,9 +91,8 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // }
 
 export default withApollo(({ headers }) => {
-	//console.log('stuff', stuff.headers);
 	const ssrMode = !process.browser;
-	// console.log("headers", headers, ssrMode);
+
 	const httpLink = createHttpLink({
 		uri: "https://api.up4.life/"
 	});
@@ -112,7 +109,7 @@ export default withApollo(({ headers }) => {
 				// }
 			}
 		});
-	// console.log('headers', headers);
+
 	const contextLink = setContext(() => ({
 		fetchOptions: {
 			credentials: "include"
