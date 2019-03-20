@@ -1,7 +1,7 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
-const cors = require("cors");
+// const cors = require("cors");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
@@ -16,7 +16,7 @@ app.prepare().then(() => {
 		res.status(status).json(err);
 	};
 
-	server.user(cors({ credentials: true }));
+	// server.user(cors({ credentials: true }));
 	server.use(cookieParser());
 	server.use(express.json());
 	server.use(errorHandler);
