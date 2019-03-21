@@ -104,9 +104,9 @@ export default withApollo(({ headers }) => {
 	const httpLink = createHttpLink({
 		uri: "https://testup4.herokuapp.com",
 		fetchOptions: {
-			credentials: "include"
-		}
-		// headers
+			credentials: "same-origin"
+		},
+		headers
 	});
 
 	const wsLink =
@@ -153,7 +153,7 @@ export default withApollo(({ headers }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache,
-		headers
+		cache
+		// headers
 	});
 });
