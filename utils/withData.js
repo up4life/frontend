@@ -98,7 +98,7 @@ export default withApollo((initialState, context) => {
 			? // Server URL must be FQ on server
 			  "https://testup4.herokuapp.com"
 			: // otherwise path only works
-			  `/graphql`;
+			  `/`;
 
 	const headers =
 		context && context.req
