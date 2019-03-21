@@ -1,4 +1,4 @@
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -15,8 +15,8 @@ app.prepare().then(() => {
 		res.status(status).json(err);
 	};
 
-	server.use(cookieParser());
-	server.use(express.json());
+	// server.use(cookieParser());
+	// server.use(express.json());
 	server.use(errorHandler);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {

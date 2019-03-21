@@ -1,0 +1,189 @@
+# import * from '../generated/prisma.graphql'
+
+type Mutation {
+	firebaseAuth(idToken: String!): FirebasePayload
+	signup(email: String!, password: String!, firstName: String!, lastName: String!): User!
+	signin(email: String!, password: String!): User!
+	requestReset(email: String!): Message
+	resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+	internalPasswordReset(oldPassword: String!, newPassword1: String!, newPassword2: String!): User!
+	signout: Message
+	updateDefaultImage(id: String!): User!
+	updateLocation(city: String!): User!
+	addEvent(event: AddEventInput): Event
+	deleteEvent(id: String!, eventId: String!): User!
+	createOrder(token: String!, subscription: Permission!): Message
+	cancelSubscription(id: String!): User!
+	updateUser(data: UserUpdateInput!): User
+	createChat(id: String!, message: String!): Chat!
+	deleteChat(id: String): Message
+	sendMessage(id: String!, message: String!): Chat!
+	verifyPhone(phone: String!): Message
+	checkVerify(phone: String!, code: String!): Message
+	blockUser(id: String!): User!
+	likeUser(id: String!): User!
+	unblockUser(id: String!): User!
+	unlikeUser(id: String!): User!
+	updateSeenMessage(chatId: String!): Chat!
+	deleteManyGenres(where: GenreWhereInput): BatchPayload!
+	markAllAsSeen(chatId: String!): Chat!
+	deleteUser: Message
+	uploadImage(url: String!): User!
+	reportUser(id: String!, message: String!): Message
+}
+
+type Query {
+	getEvents(
+		location: String
+		page: Int
+		categories: [String]
+		dates: [String]
+		genres: [String]
+	): AllEvents
+	remainingMessages: Int
+	getEvent(id: String!): Event
+	currentUser: User
+	user(where: UserWhereUniqueInput!): User
+	getLocation(latitude: Float!, longitude: Float!): Location!
+	locationSearch(city: String!): [Location]
+	getRemainingDates: DatesCount!
+	invoicesList(userStripeCustomerId: String!): [Invoice]
+	getChat(id: String!): Chat
+	getUserChats: [Chat]!
+	getConversation(id: String): Chat
+	getSharedEvents(userToMatchId: String!): [Event!]!
+	getMatchUsers: [MatchScore!]!
+	getScore: Int
+	getMessages(id: String): [DirectMessage]
+	genres: [Genre!]
+	userEvents: [Event]
+	getLikedByList: [User!]!
+	getMessageLeft: Int!
+}
+
+type Subscription {
+	myChat(id: String!): ChatSubscriptionPayload
+	myMessages(id: String!): MessageSubscriptionPayload!
+	myMessage(chatId: String!): MessageSubscriptionPayload!
+}
+
+enum MutationType {
+	CREATED
+	UPDATED
+	DELETED
+}
+
+type ChatSubscriptionPayload {
+	mutation: MutationType!
+	node: Chat
+}
+
+type MessageSubscriptionPayload {
+	mutation: MutationType!
+	node: DirectMessage
+}
+
+type DirectMessage {
+	id: ID!
+	text: String!
+	from: User!
+	to: User!
+	createdAt: DateTime!
+	updatedAt: DateTime
+	chat: Chat!
+	seen: Boolean
+}
+
+input AddEventInput {
+	title: String!
+	venue: String!
+	tmID: String!
+	image_url: String
+	times: [String]
+	url: String
+	address: String
+	city: String
+	genre: String
+	category: String
+}
+
+type User {
+	id: ID!
+	firstName: String!
+	lastName: String!
+	email: String!
+	location: String
+	gender: Gender
+	biography: String
+	dob: String
+	password: String
+	img: [ProfilePic]
+	permissions: Permission
+	interests: [Genre]
+	genderPrefs: [GenderPrefs]
+	minAgePref: Int
+	maxAgePref: Int
+	events: [Event!]!
+	liked: [User]
+	blocked: [User]
+	createdAt: DateTime!
+	updatedAt: DateTime!
+	stripeCustomerId: String
+	stripeSubscriptionId: String
+	score: Int
+	chats: [Chat]
+	verified: Boolean
+}
+
+type AllEvents {
+	events: [Event]
+	total_items: Int
+	page_count: Int
+	page_total: Int
+	page_number: Int
+	location: String
+}
+
+type Event {
+	id: ID!
+	tmID: String!
+	title: String!
+	times: [String]
+	attending: [User!]!
+	city: String
+	venue: String
+	image_url: String
+	genre: String
+	category: String
+}
+
+type Location {
+	city: String
+}
+
+type Message {
+	message: String
+}
+
+type DatesCount {
+	count: Int!
+}
+
+type FirebasePayload {
+	token: String!
+	user: User!
+}
+
+type Invoice {
+	receipt_number: String
+	amount_due: Int
+	amount_paid: Int
+	date: Int
+	hosted_invoice_url: String
+	invoice_pdf: String
+}
+
+type MatchScore {
+	user: User!
+	score: Int
+}
