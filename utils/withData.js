@@ -96,7 +96,7 @@ export default withApollo((initialState, context) => {
 	const headers =
 		context && context.req
 			? {
-					cookies: context.req.headers.cookie || "",
+					cookie: context.req.headers.cookie || "",
 					...context.req.headers
 			  }
 			: null;
@@ -144,7 +144,7 @@ export default withApollo((initialState, context) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	}).restore(initialState || {});
+	});
 
 	return new ApolloClient({
 		link,
