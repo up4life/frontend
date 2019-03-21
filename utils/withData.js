@@ -90,16 +90,16 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	return apolloClient;
 // }
 
-export default withApollo((initialState, context) => {
+export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
-	const headers =
-		context && context.req
-			? {
-					cookie: context.req.headers.cookie || "",
-					...context.req.headers
-			  }
-			: null;
+	// const headers =
+	// 	context && context.req
+	// 		? {
+	// 				cookie: context.req.headers.cookie || "",
+	// 				...context.req.headers
+	// 		  }
+	// 		: null;
 
 	const httpLink = createHttpLink({
 		uri: "https://testup4.herokuapp.com"
