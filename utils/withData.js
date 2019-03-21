@@ -103,10 +103,8 @@ export default withApollo((initialState, context) => {
 	const headers =
 		context && context.req
 			? {
-					Cookie: context.req.headers.cookie || "",
-					...(context.req.headers.authorization && {
-						authorization: context.req.headers.authorization
-					})
+					cookies: context.req.headers.cookie || "",
+					...context.req.headers
 			  }
 			: null;
 
