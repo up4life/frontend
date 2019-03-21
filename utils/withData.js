@@ -102,11 +102,7 @@ export default withApollo((initialState, context) => {
 			: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://testup4.herokuapp.com",
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
+		uri: "https://testup4.herokuapp.com"
 	});
 
 	const wsLink =
@@ -118,12 +114,12 @@ export default withApollo((initialState, context) => {
 			}
 		});
 
-	// const contextLink = setContext(() => ({
-	// 	fetchOptions: {
-	// 		credentials: "include"
-	// 	},
-	// 	headers
-	// }));
+	const contextLink = setContext(() => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -132,7 +128,7 @@ export default withApollo((initialState, context) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
@@ -148,7 +144,7 @@ export default withApollo((initialState, context) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	});
+	}).restore(initialState || {});
 
 	return new ApolloClient({
 		link,

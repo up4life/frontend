@@ -24,9 +24,9 @@ class MyApp extends App {
 	}
 	static async getInitialProps({ Component, ctx, router }) {
 		let pageProps = {};
-		// if (Component.getInitialProps) {
-		// 	pageProps = await Component.getInitialProps(ctx);
-		// }
+		if (Component.getInitialProps) {
+			pageProps = await Component.getInitialProps(ctx);
+		}
 
 		pageProps.query = ctx.query;
 
