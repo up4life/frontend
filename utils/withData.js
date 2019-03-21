@@ -102,7 +102,7 @@ export default withApollo(({ headers }) => {
 	// 		: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://testup4.herokuapp.com",
+		uri: "https://up4lifee.herokuapp.com",
 		fetchOptions: {
 			credentials: "same-origin"
 		},
