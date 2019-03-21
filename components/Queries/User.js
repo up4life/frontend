@@ -61,7 +61,7 @@ export const isLoggedIn = async client => {
 		});
 		console.log("res", response);
 		if (response) {
-			return { currentUser: response.data };
+			return { currentUser: response.data.currentUser };
 		}
 	} catch (e) {
 		console.log("hello", e);

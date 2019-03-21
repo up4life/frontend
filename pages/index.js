@@ -21,7 +21,9 @@ Index.getInitialProps = async ctx => {
 		console.log(ctx.req.headers, "request headers");
 	}
 	const response = await isLoggedIn(ctx.apolloClient);
-	console.log("init props", response);
+	if (!process.browser && ctx.req && ctx.req.headers) {
+		console.log("init props", response);
+	}
 
 	return {};
 };
