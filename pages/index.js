@@ -20,10 +20,10 @@ Index.getInitialProps = async ctx => {
 	if (ctx.req && ctx.req.headers) {
 		console.log(ctx.req.headers, "request headers");
 	}
-	const { data } = await ctx.apolloClient.query({
+	const response = await ctx.apolloClient.query({
 		query: CURRENT_USER_QUERY
 	});
-	console.log("init props", data);
+	console.log("init props", response);
 
 	return {};
 };
