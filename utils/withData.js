@@ -6,7 +6,7 @@ import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "apollo-client";
 import fetch from "isomorphic-unfetch";
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
