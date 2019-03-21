@@ -6,7 +6,7 @@ import { ApolloLink, split } from "apollo-link";
 import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
-import { ApolloClient } from "apollo-client";
+import ApolloClient from "apollo-client";
 import fetch from "isomorphic-unfetch";
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
@@ -102,11 +102,7 @@ export default withApollo(({ headers }) => {
 	// 		: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://testup4.herokuapp.com",
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
+		uri: "https://testup4.herokuapp.com"
 	});
 
 	const wsLink =
@@ -118,12 +114,12 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	// const contextLink = setContext(() => ({
-	// fetchOptions: {
-	// 	credentials: "include"
-	// },
-	// headers
-	// }));
+	const contextLink = setContext(() => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -132,7 +128,7 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
