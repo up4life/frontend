@@ -98,7 +98,7 @@ export default withApollo((initialState, context) => {
 			? // Server URL must be FQ on server
 			  "https://testup4.herokuapp.com"
 			: // otherwise path only works
-			  `/`;
+			  `https://testup4.herokuapp.com`;
 
 	const headers =
 		context && context.req
