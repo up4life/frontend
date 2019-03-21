@@ -145,6 +145,7 @@ export default withApollo(({ headers }) => {
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache
+		cache,
+		headers
 	});
 });
