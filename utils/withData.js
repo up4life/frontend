@@ -93,13 +93,6 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo((initialState, context) => {
 	const ssrMode = !process.browser;
 
-	const uri =
-		context && context.req
-			? // Server URL must be FQ on server
-			  "https://testup4.herokuapp.com"
-			: // otherwise path only works
-			  `https://testup4.herokuapp.com`;
-
 	const headers =
 		context && context.req
 			? {
@@ -109,7 +102,11 @@ export default withApollo((initialState, context) => {
 			: null;
 
 	const httpLink = createHttpLink({
-		uri
+		uri: "https://testup4.herokuapp.com",
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
 	});
 
 	const wsLink =
@@ -121,12 +118,12 @@ export default withApollo((initialState, context) => {
 			}
 		});
 
-	const contextLink = setContext(() => ({
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
-	}));
+	// const contextLink = setContext(() => ({
+	// 	fetchOptions: {
+	// 		credentials: "include"
+	// 	},
+	// 	headers
+	// }));
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -151,12 +148,11 @@ export default withApollo((initialState, context) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	}).restore(initialState || {});
+	});
 
 	return new ApolloClient({
 		link,
 		ssrMode,
-		cache,
-		headers
+		cache
 	});
 });
