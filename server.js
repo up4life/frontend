@@ -1,9 +1,39 @@
-// const cookieParser = require("cookie-parser");
+const { ApolloServer } = require("apollo-server-express");
+const cookieParser = require("cookie-parser");
+const { createServer } = require("http");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
+
+const apolloServer = new ApolloServer({
+	schema,
+	context: ({ req }) => ({
+		...req,
+		db: { ...bindings.query, ...bindings.mutation, subscription: bindings.subscription }
+	}),
+	playground: true,
+	introspection: true,
+	debug: process.env.NODE_ENV === "development"
+});
+
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.json());
+
+app.use(isAuth);
+app.use(populateUser);
+
+apolloServer.applyMiddleware({ app, cors: corsConfig, path: "/" });
+
+const server = http.createServer(app);
+
+apolloServer.installSubscriptionHandlers(server);
+
+server.listen(process.env.PORT || 4000, () => {
+	console.log("woo server uppp");
+});
 
 app.prepare().then(() => {
 	const server = express();
