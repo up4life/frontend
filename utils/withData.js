@@ -90,8 +90,18 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 // 	return apolloClient;
 // }
 
-export default withApollo(({ headers }) => {
+export default withApollo((initialState, context) => {
 	const ssrMode = !process.browser;
+
+	const headers =
+		context && context.req
+			? {
+					Cookie: context.req.headers.cookie || "",
+					...(context.req.headers.authorization && {
+						authorization: context.req.headers.authorization
+					})
+			  }
+			: null;
 
 	const httpLink = createHttpLink({
 		uri: "https://testup4.herokuapp.com"
@@ -136,7 +146,7 @@ export default withApollo(({ headers }) => {
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-	});
+	}).restore(initialState || {});
 
 	return new ApolloClient({
 		link,
