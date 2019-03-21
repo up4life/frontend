@@ -132,7 +132,7 @@ export default withApollo((initialState, context) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+	let link = ApolloLink.from([errorLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
