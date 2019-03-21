@@ -25,6 +25,12 @@ Index.getInitialProps = async ctx => {
 	});
 	if (!process.browser && ctx.req && ctx.req.headers) {
 		console.log("init props", response);
+
+		const query = ctx.apolloClient.readQuery({
+			query: CURRENT_USER_QUERY
+		});
+
+		console.log("local cache query", query);
 	}
 
 	return {};
