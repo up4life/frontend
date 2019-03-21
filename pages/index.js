@@ -23,14 +23,9 @@ Index.getInitialProps = async ctx => {
 	const response = await ctx.apolloClient.query({
 		query: CURRENT_USER_QUERY
 	});
+
 	if (!process.browser && ctx.req && ctx.req.headers) {
 		console.log("init props", response);
-
-		const query = ctx.apolloClient.readQuery({
-			query: CURRENT_USER_QUERY
-		});
-
-		console.log("local cache query", query);
 	}
 
 	return {};
