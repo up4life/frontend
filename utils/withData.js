@@ -103,10 +103,6 @@ export default withApollo(({ headers }) => {
 			uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
 			options: {
 				reconnect: true
-				// maybe we can add a header in here to get some sort of auth working
-				// connectionParams: {d
-				//   authorization: headers.authorization
-				// }
 			}
 		});
 
