@@ -93,6 +93,13 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo((initialState, context) => {
 	const ssrMode = !process.browser;
 
+	const uri =
+		context && context.req
+			? // Server URL must be FQ on server
+			  "https://testup4.herokuapp.com"
+			: // otherwise path only works
+			  `/graphql`;
+
 	const headers =
 		context && context.req
 			? {
@@ -104,7 +111,7 @@ export default withApollo((initialState, context) => {
 			: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://testup4.herokuapp.com"
+		uri
 	});
 
 	const wsLink =
