@@ -105,8 +105,8 @@ export default withApollo(({ headers }) => {
 		uri: "https://testup4.herokuapp.com",
 		fetchOptions: {
 			credentials: "include"
-		},
-		headers
+		}
+		// headers
 	});
 
 	const wsLink =
