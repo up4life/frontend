@@ -104,7 +104,7 @@ export default withApollo(({ headers }) => {
 	const httpLink = createHttpLink({
 		uri: "https://up4lifee.herokuapp.com",
 		fetchOptions: {
-			credentials: "same-origin"
+			credentials: "include"
 		},
 		headers
 	});
