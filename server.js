@@ -1,39 +1,43 @@
-const { ApolloServer } = require("apollo-server-express");
-const cookieParser = require("cookie-parser");
-const { createServer } = require("http");
+// const { ApolloServer } = require("apollo-server-express");
+// const cookieParser = require("cookie-parser");
+// const { createServer } = require("http");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
-const apolloServer = new ApolloServer({
-	schema,
-	context: ({ req }) => ({
-		...req,
-		db: { ...bindings.query, ...bindings.mutation, subscription: bindings.subscription }
-	}),
-	playground: true,
-	introspection: true,
-	debug: process.env.NODE_ENV === "development"
-});
+// const schema = require("./src/schema");
+// const { bindings } = require("./src/db");
+// const { isAuth, populateUser } = require("./src/middleware/index");
 
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.json());
+// const apolloServer = new ApolloServer({
+// 	schema,
+// 	context: ({ req }) => ({
+// 		...req,
+// 		db: { ...bindings.query, ...bindings.mutation, subscription: bindings.subscription }
+// 	}),
+// 	playground: true,
+// 	introspection: true,
+// 	debug: process.env.NODE_ENV === "development"
+// });
 
-app.use(isAuth);
-app.use(populateUser);
+// app.use(express.urlencoded({ extended: true }));
+// app.use(cookieParser());
+// app.use(express.json());
 
-apolloServer.applyMiddleware({ app, cors: corsConfig, path: "/" });
+// app.use(isAuth);
+// app.use(populateUser);
 
-const server = http.createServer(app);
+// apolloServer.applyMiddleware({ app, cors: corsConfig, path: "/" });
 
-apolloServer.installSubscriptionHandlers(server);
+// const server = createServer(app);
 
-server.listen(process.env.PORT || 4000, () => {
-	console.log("woo server uppp");
-});
+// apolloServer.installSubscriptionHandlers(server);
+
+// server.listen(process.env.PORT || 4000, () => {
+// 	console.log("woo server uppp");
+// });
 
 app.prepare().then(() => {
 	const server = express();
@@ -45,9 +49,9 @@ app.prepare().then(() => {
 		res.status(status).json(err);
 	};
 
+	server.use(errorHandler);
 	// server.use(cookieParser());
 	// server.use(express.json());
-	server.use(errorHandler);
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
