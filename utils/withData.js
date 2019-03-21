@@ -94,7 +94,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: "https://api.up4.life/"
+		uri: "https://testup4.herokuapp.com"
 	});
 
 	const wsLink =
