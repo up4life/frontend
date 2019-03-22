@@ -1,3 +1,4 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
 // const path = require("path");
@@ -8,6 +9,9 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
+	server.use(express.json());
+	server.use(cookieParser());
+
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
 			return next(err);
@@ -16,23 +20,13 @@ app.prepare().then(() => {
 		res.status(status).json(err);
 	};
 
+	server.use(errorHandler);
+
 	server.use(function(req, res, next) {
 		// var proto = req.headers["x-forwarded-proto"];
-		console.log("cookie headers middleware", req.headers.cookie);
-		console.log("cookies headers", req.headers.cookies);
-		console.log("set-cookie", req.headers["set-cookie"]);
+		console.log("headers middleware", req.headers);
 		console.log("cookies", req.cookies);
-		// if (proto === "https") {
-		// 	res.set({
-		// 		"Strict-Transport-Security": "max-age=31557600" // one-year
-		// 	});
-		// 	return next();
-		// }
-		// res.redirect("https://" + req.headers.host + req.url);
 	});
-
-	// server.use(cookieParser());
-	// server.use(express.json());
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;
@@ -88,10 +82,6 @@ app.prepare().then(() => {
 		return handle(req, res);
 	});
 
-	// server.post("*", (req, res) => {
-	// 	return handle(req, res);
-	// });
-	server.use(errorHandler);
 	server.listen(port, err => {
 		if (err) throw err;
 		console.log(`Listening on http://localhost:${port}`);
