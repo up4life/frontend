@@ -9,8 +9,8 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
-	server.use(express.json());
-	server.use(cookieParser());
+	// server.use(express.json());
+	// server.use(cookieParser());
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
@@ -87,8 +87,6 @@ app.prepare().then(() => {
 		console.log(`Listening on http://localhost:${port}`);
 	});
 });
-
-// createServer(app).listen(port);
 
 const getSlug = (page, subPage = null) => {
 	if (subPage) {

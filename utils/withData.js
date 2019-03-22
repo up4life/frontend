@@ -13,6 +13,9 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
+	console.log(headers, "headers here");
+	console.log(headers.cookie, "cookie here");
+
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life"
 	});
