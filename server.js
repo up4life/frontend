@@ -1,6 +1,6 @@
 const express = require("express");
 const next = require("next");
-const path = require("path");
+// const path = require("path");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -17,28 +17,19 @@ app.prepare().then(() => {
 	};
 
 	server.use(function(req, res, next) {
-		var proto = req.headers["x-forwarded-proto"];
+		// var proto = req.headers["x-forwarded-proto"];
 		console.log("cookie headers middleware", req.headers.cookie);
 		console.log("cookies headers", req.headers.cookies);
 		console.log("set-cookie", req.headers["set-cookie"]);
 		console.log("cookies", req.cookies);
-		if (proto === "https") {
-			res.set({
-				"Strict-Transport-Security": "max-age=31557600" // one-year
-			});
-			return next();
-		}
-		res.redirect("https://" + req.headers.host + req.url);
+		// if (proto === "https") {
+		// 	res.set({
+		// 		"Strict-Transport-Security": "max-age=31557600" // one-year
+		// 	});
+		// 	return next();
+		// }
+		// res.redirect("https://" + req.headers.host + req.url);
 	});
-
-	// Static files
-	// https://github.com/zeit/next.js/tree/4.2.3#user-content-static-file-serving-eg-images
-	server.use(
-		"/static",
-		express.static(path.join(__dirname, "static"), {
-			maxAge: dev ? "0" : "365d"
-		})
-	);
 
 	// server.use(cookieParser());
 	// server.use(express.json());
