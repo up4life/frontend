@@ -1,20 +1,15 @@
-import App, { Container } from "next/app";
-import cookie from "cookie";
-
-import Page from "../components/Page";
-import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
-import withData from "../utils/withData";
-
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import JssProvider from "react-jss/lib/JssProvider";
+import { ApolloProvider } from "react-apollo";
+import App, { Container } from "next/app";
+
 import getPageContext from "../utils/getPageContext";
 import "../static/scss/material-kit-pro-react.scss";
-
-function parseCookies(req, options = {}) {
-	return cookie.parse(req ? req.headers.cookie || "" : document.cookie, options);
-}
+// import withData from "../utils/withData";
+import withApollo from "../utils/withApollo";
+import Page from "../components/Page";
 
 class MyApp extends App {
 	constructor() {
@@ -27,23 +22,20 @@ class MyApp extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	static async getInitialProps({ Component, ctx, router }) {
-		let pageProps = {};
-		let cookie;
-		if (ctx && ctx.req && ctx.req.headers) {
-			cookie = parseCookies(ctx.req);
-			console.log(cookie, "cookie here");
-		}
-		if (Component.getInitialProps) {
-			pageProps = await Component.getInitialProps(ctx);
-		}
+	// static async getInitialProps({ Component, ctx, router }) {
+	// 	let pageProps = {};
 
-		pageProps.query = ctx.query;
+	// 	if (Component.getInitialProps) {
+	// 		pageProps = await Component.getInitialProps(ctx);
+	// 	}
 
-		return { pageProps };
-	}
+	// 	pageProps.query = ctx.query;
+
+	// 	return { pageProps };
+	// }
+
 	render() {
-		const { Component, apollo, pageProps } = this.props;
+		const { Component, apollo, pageProps, apolloClient } = this.props;
 
 		return (
 			<Container>
@@ -56,8 +48,8 @@ class MyApp extends App {
 						sheetsManager={this.pageContext.sheetsManager}
 					>
 						<CssBaseline />
-						<ApolloProvider client={apollo}>
-							<ApolloHooksProvider client={apollo}>
+						<ApolloProvider client={apolloClient}>
+							<ApolloHooksProvider client={apolloClient}>
 								<Page>
 									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
@@ -70,4 +62,4 @@ class MyApp extends App {
 	}
 }
 
-export default withData(MyApp);
+export default withApollo(MyApp);
