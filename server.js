@@ -1,43 +1,9 @@
-// const { ApolloServer } = require("apollo-server-express");
-// const cookieParser = require("cookie-parser");
-// const { createServer } = require("http");
 const express = require("express");
 const next = require("next");
+const path = require("path");
 const port = parseInt(process.env.PORT, 10) || 3000;
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
-
-// const schema = require("./src/schema");
-// const { bindings } = require("./src/db");
-// const { isAuth, populateUser } = require("./src/middleware/index");
-
-// const apolloServer = new ApolloServer({
-// 	schema,
-// 	context: ({ req }) => ({
-// 		...req,
-// 		db: { ...bindings.query, ...bindings.mutation, subscription: bindings.subscription }
-// 	}),
-// 	playground: true,
-// 	introspection: true,
-// 	debug: process.env.NODE_ENV === "development"
-// });
-
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
-// app.use(express.json());
-
-// app.use(isAuth);
-// app.use(populateUser);
-
-// apolloServer.applyMiddleware({ app, cors: corsConfig, path: "/" });
-
-// const server = createServer(app);
-
-// apolloServer.installSubscriptionHandlers(server);
-
-// server.listen(process.env.PORT || 4000, () => {
-// 	console.log("woo server uppp");
-// });
 
 app.prepare().then(() => {
 	const server = express();
@@ -52,8 +18,9 @@ app.prepare().then(() => {
 	server.use(function(req, res, next) {
 		var proto = req.headers["x-forwarded-proto"];
 		console.log("cookie headers middleware", req.headers.cookie);
-		console.log("cookies headers middleware", req.headers.cookies);
-		console.log("cookies middleware", req.cookies);
+		console.log("cookies headers", req.headers.cookies);
+		console.log("set-cookie", req.headers["set-cookie"]);
+		console.log("cookies", req.cookies);
 		if (proto === "https") {
 			res.set({
 				"Strict-Transport-Security": "max-age=31557600" // one-year

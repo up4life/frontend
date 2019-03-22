@@ -48,6 +48,7 @@
 		"next-with-apollo": "^3.4.0",
 		"node-sass": "^4.11.0",
 		"nprogress": "^0.2.0",
+		"path": "^0.12.7",
 		"prop-types": "^15.7.2",
 		"react": "^16.8.4",
 		"react-adopt": "^0.6.0",
