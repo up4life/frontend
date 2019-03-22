@@ -102,11 +102,7 @@ export default withApollo(({ headers }) => {
 	// 		: null;
 
 	const httpLink = createHttpLink({
-		uri: "//testup4.herokuapp.com",
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
+		uri: "//testup4.herokuapp.com"
 	});
 
 	const wsLink =
