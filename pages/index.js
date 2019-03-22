@@ -24,9 +24,10 @@ Index.getInitialProps = async ctx => {
 		query: CURRENT_USER_QUERY
 	});
 
-	if (!process.browser && ctx.req && ctx.req.headers) {
-		console.log("init props", response);
-	}
+	console.log(response, "response");
+	// if (!process.browser && ctx.req && ctx.req.headers) {
+	// 	console.log("init props", response);
+	// }
 
 	return {};
 };
