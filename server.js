@@ -1,16 +1,12 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const next = require("next");
-// const path = require("path");
 const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
+const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
-	// server.use(express.json());
-	// server.use(cookieParser());
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
@@ -21,12 +17,6 @@ app.prepare().then(() => {
 	};
 
 	server.use(errorHandler);
-
-	server.use(function(req, res, next) {
-		// var proto = req.headers["x-forwarded-proto"];
-		console.log("headers middleware", req.headers);
-		console.log("cookies", req.cookies);
-	});
 
 	server.get("/welcome/profile/:page/:subPage", (req, res) => {
 		const { page, subPage } = req.params;

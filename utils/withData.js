@@ -36,6 +36,23 @@ export default withApollo(({ headers }) => {
 		headers
 	}));
 
+	const middlewareLink = new ApolloLink((operation, forward) => {
+		return forward(operation).map(response => {
+			const context = operation.getContext();
+
+			const {
+				response: { headers }
+			} = context;
+			if (headers) {
+				const cookie = response.headers.get("set-cookie");
+				if (cookie) {
+					console.log(cookie);
+				}
+			}
+			return response;
+		});
+	});
+
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
@@ -43,7 +60,7 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
+	let link = ApolloLink.from([middlewareLink, contextLink, errorLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(
