@@ -20,9 +20,7 @@ Index.getInitialProps = async ctx => {
 	if (ctx.req && ctx.req.headers) {
 		console.log(ctx.req.headers, "request headers");
 	}
-	const response = await ctx.apolloClient.query({
-		query: CURRENT_USER_QUERY
-	});
+	const response = await isLoggedIn(ctx.apolloClient);
 
 	console.log(response, "response");
 	// if (!process.browser && ctx.req && ctx.req.headers) {
