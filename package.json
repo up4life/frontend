@@ -8,8 +8,8 @@
 		"route-dev": "node server.js",
 		"now-build": "next build",
 		"build": "next build",
-		"start": "NODE_ENV=production node server.js -p $PORT",
-		"heroku-postbuild": "NODE_ENV=production next build",
+		"start": "next build",
+		"heroku-postbuild": "NODE_ENV=production node server.js",
 		"test": "NODE_ENV=test jest --watch"
 	},
 	"author": "",
