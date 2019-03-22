@@ -14,7 +14,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	console.log(headers, "headers here");
-	console.log(headers.cookie, "cookie here");
+	// console.log(headers.cookie, "cookie here");
 
 	const httpLink = createHttpLink({
 		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life"
@@ -38,13 +38,10 @@ export default withApollo(({ headers }) => {
 
 	const middlewareLink = new ApolloLink((operation, forward) => {
 		return forward(operation).map(response => {
-			const context = operation.getContext();
+			// const context = operation.getContext();
 
-			const {
-				response: { headers }
-			} = context;
 			if (headers) {
-				const cookie = response.headers.get("set-cookie");
+				const cookie = headers.get("set-cookie");
 				if (cookie) {
 					console.log(cookie);
 				}

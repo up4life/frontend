@@ -3,6 +3,10 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "server.js",
+	"engines": {
+		"node": "11.12.0",
+		"npm": "6.9.0"
+	},
 	"scripts": {
 		"dev": "next",
 		"route-dev": "node server.js",
