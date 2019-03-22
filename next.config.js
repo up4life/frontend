@@ -2,8 +2,4 @@ const withSass = require("@zeit/next-sass");
 const withImages = require("next-images");
 const isProd = process.env.NODE_ENV === "production";
 
-module.exports = withSass(
-	withImages({
-		assetPrefix: isProd ? "http://up4lifee.herokuapp.com" : ""
-	})
-);
+module.exports = withSass(withImages({}));

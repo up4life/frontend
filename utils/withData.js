@@ -101,24 +101,13 @@ export default withApollo(({ headers }) => {
 	// 		  }
 	// 		: null;
 
-	const linky = createHttpLink({
+	const httpLink = createHttpLink({
 		uri: "//testup4.herokuapp.com",
 		fetchOptions: {
 			credentials: "include"
 		},
 		headers
 	});
-
-	// const middlewaree = new ApolloLink((operation, forward) => {
-	// 	operation.setContext({
-	// 		uri: "https://testup4.herokuapp.com",
-	// 		fetchOptions: {
-	// 			credentials: "include"
-	// 		},
-	// 		headers
-	// 	});
-	// 	return forward(operation);
-	// });
 
 	const wsLink =
 		!ssrMode &&
@@ -129,40 +118,40 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	// const contextLink = setContext(() => ({
-	// 	fetchOptions: {
-	// 		credentials: "include"
-	// 	},
-	// 	headers
-	// }));
+	const contextLink = setContext(() => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
 
-	// const errorLink = onError(({ graphQLErrors, networkError }) => {
-	// 	if (graphQLErrors) {
-	// 		graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
-	// 	}
-	// 	if (networkError) console.log(`[Network error]: ${networkError}`);
-	// });
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
 
-	// let link = ApolloLink.from([middlewaree, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
-	// if (!ssrMode) {
-	// 	link = split(
-	// 		// split based on operation type
-	// 		({ query }) => {
-	// 			const definition = getMainDefinition(query);
-	// 			return definition.kind === "OperationDefinition" && definition.operation === "subscription";
-	// 		},
-	// 		wsLink,
-	// 		link
-	// 	);
-	// }
+	if (!ssrMode) {
+		link = split(
+			// split based on operation type
+			({ query }) => {
+				const definition = getMainDefinition(query);
+				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+			},
+			wsLink,
+			link
+		);
+	}
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
-		link: linky,
+		link,
 		ssrMode,
 		cache
 	});
