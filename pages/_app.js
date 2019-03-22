@@ -31,7 +31,7 @@ class MyApp extends App {
 		let pageProps = {};
 		let cookie;
 		if (ctx && ctx.req && ctx.req.headers) {
-			cookie = parseCookies(req).token;
+			cookie = parseCookies(ctx.req).token;
 			console.log(cookie, "cookie here");
 		}
 		if (Component.getInitialProps) {
