@@ -32,6 +32,7 @@
 		"bufferutil": "^4.0.1",
 		"classnames": "^2.2.6",
 		"cloudinary-core": "^2.6.2",
+		"cookie": "^0.3.1",
 		"cookie-parser": "^1.4.4",
 		"date-fns": "^2.0.0-alpha.27",
 		"dotenv": "^7.0.0",
