@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
 			return <App {...props} />;
 		});
 		let css;
-		console.log('page context', pageContext);
+
 		if (pageContext) {
 			css = pageContext.sheetsRegistry.toString();
 		}

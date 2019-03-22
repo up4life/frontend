@@ -17,7 +17,7 @@ const Index = () => (
 );
 
 Index.getInitialProps = async ctx => {
-	console.log('keys', Object.keys(ctx));
+	console.log('keys', Object.keys(ctx), 'apolloClient', Object.keys(ctx.apolloClient));
 	if (ctx.req && ctx.req.headers) {
 		console.log(ctx.req.headers, 'request headers');
 		console.log(ctx.req.cookies, 'request cookies');
