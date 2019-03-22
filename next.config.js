@@ -4,9 +4,6 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = withSass(
 	withImages({
-		serverRuntimeConfig: {},
-		publicRuntimeConfig: {
-			// appContext: "/"
-		}
+		assetPrefix: isProd ? "https://testup4.herokuapp.com" : ""
 	})
 );
