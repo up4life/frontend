@@ -91,7 +91,9 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 // }
 
 export default withApollo(({ ctx, headers }) => {
-	console.log('ctx', Object.keys(ctx.req));
+	if (ctx) {
+		console.log(ctx.req);
+	}
 	const ssrMode = !process.browser;
 
 	// const headers =
