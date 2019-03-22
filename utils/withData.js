@@ -102,7 +102,11 @@ export default withApollo(({ headers }) => {
 	// 		: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://testup4.herokuapp.com"
+		uri: "https://testup4.herokuapp.com",
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
 	});
 
 	const middlewaree = new ApolloLink((operation, forward) => {
@@ -140,17 +144,17 @@ export default withApollo(({ headers }) => {
 
 	let link = ApolloLink.from([middlewaree, httpLink]);
 
-	if (!ssrMode) {
-		link = split(
-			// split based on operation type
-			({ query }) => {
-				const definition = getMainDefinition(query);
-				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
-			},
-			wsLink,
-			link
-		);
-	}
+	// if (!ssrMode) {
+	// 	link = split(
+	// 		// split based on operation type
+	// 		({ query }) => {
+	// 			const definition = getMainDefinition(query);
+	// 			return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+	// 		},
+	// 		wsLink,
+	// 		link
+	// 	);
+	// }
 
 	const cache = new InMemoryCache({
 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
