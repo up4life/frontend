@@ -1,6 +1,6 @@
 // const { ApolloServer } = require("apollo-server-express");
 // const cookieParser = require("cookie-parser");
-// const { createServer } = require("http");
+const { createServer } = require("http");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -111,11 +111,13 @@ app.prepare().then(() => {
 	// 	return handle(req, res);
 	// });
 
-	server.listen(port, err => {
-		if (err) throw err;
-		console.log(`Listening on http://localhost:${port}`);
-	});
+	// server.listen(port, err => {
+	// 	if (err) throw err;
+	// 	console.log(`Listening on http://localhost:${port}`);
+	// });
 });
+
+createServer(app).listen(port);
 
 const getSlug = (page, subPage = null) => {
 	if (subPage) {
