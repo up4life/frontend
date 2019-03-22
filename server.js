@@ -104,6 +104,10 @@ app.prepare().then(() => {
 	});
 
 	server.get("*", (req, res) => {
+		console.log(req.headers, "req headers");
+		console.log(res.headers, "res headers");
+		console.log(req.cookies);
+		console.log(res.cookies);
 		return handle(req, res);
 	});
 
