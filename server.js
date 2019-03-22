@@ -51,6 +51,9 @@ app.prepare().then(() => {
 
 	server.use(function(req, res, next) {
 		var proto = req.headers["x-forwarded-proto"];
+		console.log("cookie headers middleware", req.headers.cookie);
+		console.log("cookies headers middleware", req.headers.cookies);
+		console.log("cookies middleware", req.cookies);
 		if (proto === "https") {
 			res.set({
 				"Strict-Transport-Security": "max-age=31557600" // one-year
