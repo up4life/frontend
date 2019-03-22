@@ -102,7 +102,7 @@ export default withApollo(({ headers }) => {
 	// 		: null;
 
 	const httpLink = createHttpLink({
-		uri: "https://api.up4.life"
+		uri: "https://tesup4.herokuapp.com"
 	});
 
 	const wsLink =
