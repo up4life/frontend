@@ -7,8 +7,7 @@ import App, { Container } from "next/app";
 
 import getPageContext from "../utils/getPageContext";
 import "../static/scss/material-kit-pro-react.scss";
-// import withData from "../utils/withData";
-import withApollo from "../utils/withApollo";
+import withData from "../utils/withData";
 import Page from "../components/Page";
 
 class MyApp extends App {
@@ -22,20 +21,20 @@ class MyApp extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	// static async getInitialProps({ Component, ctx, router }) {
-	// 	let pageProps = {};
+	static async getInitialProps({ Component, ctx, router }) {
+		let pageProps = {};
 
-	// 	if (Component.getInitialProps) {
-	// 		pageProps = await Component.getInitialProps(ctx);
-	// 	}
+		if (Component.getInitialProps) {
+			pageProps = await Component.getInitialProps(ctx);
+		}
 
-	// 	pageProps.query = ctx.query;
+		pageProps.query = ctx.query;
 
-	// 	return { pageProps };
-	// }
+		return { pageProps };
+	}
 
 	render() {
-		const { Component, apollo, pageProps, apolloClient } = this.props;
+		const { Component, apollo, pageProps } = this.props;
 
 		return (
 			<Container>
@@ -48,8 +47,8 @@ class MyApp extends App {
 						sheetsManager={this.pageContext.sheetsManager}
 					>
 						<CssBaseline />
-						<ApolloProvider client={apolloClient}>
-							<ApolloHooksProvider client={apolloClient}>
+						<ApolloProvider client={apollo}>
+							<ApolloHooksProvider client={apollo}>
 								<Page>
 									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
@@ -62,4 +61,4 @@ class MyApp extends App {
 	}
 }
 
-export default withApollo(MyApp);
+export default withData(MyApp);

@@ -7,127 +7,74 @@ import { WebSocketLink } from "apollo-link-ws";
 import { onError } from "apollo-link-error";
 import withApollo from "next-with-apollo";
 import ApolloClient from "apollo-client";
-// import fetch from "isomorphic-unfetch";
+
 import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from "../config";
 
-// import { ApolloClient, InMemoryCache } from 'apollo-boost'
-// import { createHttpLink } from 'apollo-link-http'
-// import { setContext } from "apollo-link-context";
-import fetch from "isomorphic-unfetch";
+export default withApollo(({ headers }) => {
+	const ssrMode = !process.browser;
 
-let apolloClient = null;
-
-// Polyfill fetch() on the server (used by apollo-client)
-if (!process.browser) {
-	global.fetch = fetch;
-}
-
-function create(initialState, { getToken }) {
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life",
-		fetchOptions: {
-			credentials: "include"
-		}
+		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life"
 	});
 
-	const authLink = setContext((_, { headers }) => {
-		const token = getToken();
-		return {
-			headers: {
-				...headers,
-				cookie: token ? token : null
+	const wsLink =
+		!ssrMode &&
+		new WebSocketLink({
+			uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
+			options: {
+				reconnect: true
 			}
-		};
+		});
+
+	const contextLink = setContext(() => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
+
+	const middlewareLink = new ApolloLink((operation, forward) => {
+		return forward(operation).map(response => {
+			const context = operation.getContext();
+
+			if (context.req && context.req.headers) {
+				const cookie = context.req.headers.get("set-cookie");
+				if (cookie) {
+					console.log(cookie);
+				}
+			}
+			return response;
+		});
+	});
+
+	const errorLink = onError(({ graphQLErrors, networkError }) => {
+		if (graphQLErrors) {
+			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
+		}
+		if (networkError) console.log(`[Network error]: ${networkError}`);
+	});
+
+	let link = ApolloLink.from([middlewareLink, contextLink, errorLink, httpLink]);
+
+	if (!ssrMode) {
+		link = split(
+			// split based on operation type
+			({ query }) => {
+				const definition = getMainDefinition(query);
+				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+			},
+			wsLink,
+			link
+		);
+	}
+
+	const cache = new InMemoryCache({
+		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
 	});
 
 	return new ApolloClient({
-		connectToDevTools: process.browser,
-		ssrMode: !process.browser,
-		link: authLink.concat(httpLink),
-		cache: new InMemoryCache().restore(initialState || {})
+		link,
+		ssrMode,
+		cache
 	});
-}
-
-export default function initApollo(initialState, options) {
-	if (!process.browser) {
-		return create(initialState, options);
-	}
-
-	if (!apolloClient) {
-		apolloClient = create(initialState, options);
-	}
-
-	return apolloClient;
-}
-
-// export default withApollo(({ headers }) => {
-// 	const ssrMode = !process.browser;
-
-// 	console.log(headers, "headers here");
-// 	// console.log(headers.cookie, "cookie here");
-
-// 	const httpLink = createHttpLink({
-// 		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life"
-// 	});
-
-// 	const wsLink =
-// 		!ssrMode &&
-// 		new WebSocketLink({
-// 			uri: process.env.NODE_ENV === "development" ? wsEndpoint : wsProdEndpoint,
-// 			options: {
-// 				reconnect: true
-// 			}
-// 		});
-
-// 	const contextLink = setContext(() => ({
-// 		fetchOptions: {
-// 			credentials: "include"
-// 		},
-// 		headers
-// 	}));
-
-// 	const middlewareLink = new ApolloLink((operation, forward) => {
-// 		return forward(operation).map(response => {
-// 			// const context = operation.getContext();
-
-// 			if (headers) {
-// 				const cookie = headers.get("set-cookie");
-// 				if (cookie) {
-// 					console.log(cookie);
-// 				}
-// 			}
-// 			return response;
-// 		});
-// 	});
-
-// 	const errorLink = onError(({ graphQLErrors, networkError }) => {
-// 		if (graphQLErrors) {
-// 			graphQLErrors.map(err => console.log(`[GraphQL error]: Message: ${err.message}`));
-// 		}
-// 		if (networkError) console.log(`[Network error]: ${networkError}`);
-// 	});
-
-// 	let link = ApolloLink.from([middlewareLink, contextLink, errorLink, httpLink]);
-
-// 	if (!ssrMode) {
-// 		link = split(
-// 			// split based on operation type
-// 			({ query }) => {
-// 				const definition = getMainDefinition(query);
-// 				return definition.kind === "OperationDefinition" && definition.operation === "subscription";
-// 			},
-// 			wsLink,
-// 			link
-// 		);
-// 	}
-
-// 	const cache = new InMemoryCache({
-// 		dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null)
-// 	});
-
-// 	return new ApolloClient({
-// 		link,
-// 		ssrMode,
-// 		cache
-// 	});
-// });
+});
