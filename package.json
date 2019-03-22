@@ -7,7 +7,7 @@
 		"dev": "next",
 		"route-dev": "node server.js",
 		"now-build": "next build",
-		"start": "next build && NODE_ENV=production node server.js -p $PORT",
+		"start": "next build && node server.js -p $PORT",
 		"test": "NODE_ENV=test jest --watch"
 	},
 	"author": "",
