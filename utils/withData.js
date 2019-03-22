@@ -101,7 +101,7 @@ export default withApollo(({ headers }) => {
 	// 		  }
 	// 		: null;
 
-	const httpLink = createHttpLink({
+	const linky = createHttpLink({
 		uri: "https://testup4.herokuapp.com",
 		fetchOptions: {
 			credentials: "include"
@@ -109,15 +109,16 @@ export default withApollo(({ headers }) => {
 		headers
 	});
 
-	const middlewaree = new ApolloLink((operation, forward) => {
-		operation.setContext({
-			fetchOptions: {
-				credentials: "include"
-			},
-			headers
-		});
-		return forward(operation);
-	});
+	// const middlewaree = new ApolloLink((operation, forward) => {
+	// 	operation.setContext({
+	// 		uri: "https://testup4.herokuapp.com",
+	// 		fetchOptions: {
+	// 			credentials: "include"
+	// 		},
+	// 		headers
+	// 	});
+	// 	return forward(operation);
+	// });
 
 	const wsLink =
 		!ssrMode &&
@@ -142,7 +143,7 @@ export default withApollo(({ headers }) => {
 	// 	if (networkError) console.log(`[Network error]: ${networkError}`);
 	// });
 
-	let link = ApolloLink.from([middlewaree, httpLink]);
+	// let link = ApolloLink.from([middlewaree, httpLink]);
 
 	// if (!ssrMode) {
 	// 	link = split(
@@ -161,7 +162,7 @@ export default withApollo(({ headers }) => {
 	});
 
 	return new ApolloClient({
-		link,
+		link: linky,
 		ssrMode,
 		cache
 	});
