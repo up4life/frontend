@@ -2,4 +2,8 @@ const withSass = require("@zeit/next-sass");
 const withImages = require("next-images");
 const isProd = process.env.NODE_ENV === "production";
 
-module.exports = withSass(withImages({}));
+module.exports = withSass(
+	withImages({
+		target: "serverless"
+	})
+);
