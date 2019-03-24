@@ -35,7 +35,7 @@ export default withApollo(({ headers = {} }) => {
 		},
 		headers: {
 			...headers,
-			cookie: headers.cookie,
+			cookie: headers && headers.cookie,
 		},
 	}));
 
