@@ -1,28 +1,17 @@
-import Splash from "../components/SplashPage";
-import { isLoggedIn } from "../components/Queries/User";
-import redirect from "../utils/redirect";
-import User from "../components/Queries/User";
+import Splash from '../components/SplashPage';
+import { isLoggedIn } from '../components/Queries/User';
+import redirect from '../utils/redirect';
 
-const Index = () => (
-	<User>
-		{({ data, loading }) => {
-			if (loading) return <div />;
-			return <Splash />;
-		}}
-	</User>
-);
+const Index = () => <Splash />;
 
-// Index.getInitialProps = async ctx => {
-// 	let user = await isLoggedIn(ctx.apolloClient);
+Index.getInitialProps = async ctx => {
+	let { currentUser } = await isLoggedIn(ctx.apolloClient);
 
-// 	if (user.currentUser) {
-// 		redirect(ctx, "/home");
-// 	}
-// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
-// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
-// 	// 	// 	redirect(ctx, '/joinus');
-// 	// 	// }
-// 	return {};
-// };
+	if (currentUser) {
+		redirect(ctx, '/home');
+	}
+
+	return {};
+};
 
 export default Index;

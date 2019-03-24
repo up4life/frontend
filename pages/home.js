@@ -1,44 +1,26 @@
-import JoinUs from "./joinus";
-import Router from "next/router";
 import Events from "../components/Home/Events";
 import Header from "../components/Header";
-import User, { isLoggedIn } from "../components/Queries/User";
+import { isLoggedIn } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 
-const Home = ({ query }) => {
+const Home = ({ query, currentUser }) => {
+	console.log(query, currentUser)
 	return (
-		<User>
-			{({ data, loading }) => {
-				if (loading) return <div />;
-				if (!data.currentUser) return <JoinUs />;
-				else
-					return (
-						<>
-							<Header color="primary" currentUser={data.currentUser} />
-							<Events />
-						</>
-					);
-			}}
-		</User>
-	);
+		<>
+			<Header color="primary" currentUser={currentUser} />
+			<Events />
+		</>
+	)
 };
 
-// Home.getInitialProps = async ctx => {
-// const { currentUser } = await isLoggedIn(ctx);
+Home.getInitialProps = async ctx => {
+const { currentUser } = await isLoggedIn(ctx.apolloClient);
 
-// if (currentUser) {
-// 	return { currentUser };
-// }
-// 	if (!user.currentUser) {
-// 		console.log("no user logged in");
-// 		// redirect(ctx, '/joinus');
-// 	}
-// 	// 	//if (ctx.query.welcome)
-// 	// 	//console.log(!user.currentUser && router.pathname !== '/joinus');
-// 	// 	// if (!(user.currentUser && router.aspath != '/joinus')) {
-// 	// 	// 	redirect(ctx, '/joinus');
-// 	// 	// }
-// return {};
-// };
+if (!currentUser) {
+	redirect(ctx, '/joinus');
+}
+
+return { currentUser };
+};
 
 export default Home;

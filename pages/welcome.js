@@ -1,20 +1,17 @@
-import Welcome from "../components/Welcome";
-import JoinUs from "./joinus";
-import User from "../components/Queries/User";
+import Welcome from '../components/Welcome';
+import { isLoggedIn } from '../components/Queries/User';
+import redirect from '../utils/redirect';
 
-const WelcomePage = ({ query }) => (
-	<User>
-		{({ data, loading }) => {
-			if (loading) return <div />;
-			if (!data.currentUser) return <JoinUs />;
-			else return <Welcome user={data.currentUser} slug={query.slug} />;
-		}}
-	</User>
-);
+const WelcomePage = ({ query, currentUser }) => <Welcome user={currentUser} slug={query.slug} />;
 
-// WelcomePage.getInitialProps = ctx => {
-// 	// return { slug: ctx.req.params.slug };
-// 	return {};
-// };
+WelcomePage.getInitialProps = async ctx => {
+	const { currentUser } = await isLoggedIn(ctx.apolloClient);
+
+	if (!currentUser) {
+		redirect(ctx, '/joinus');
+	}
+
+	return { currentUser };
+};
 
 export default WelcomePage;
