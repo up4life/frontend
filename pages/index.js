@@ -16,23 +16,23 @@ const Index = () => (
 	</User>
 );
 
-// Index.getInitialProps = async ctx => {
-// 	if (ctx.req && ctx.req.headers) {
-// 		console.log(ctx.req.headers.cookie, 'request cookie');
-// 		console.log(Object.keys(ctx.apolloClient), 'object keys apolloClient');
-// 		console.log(ctx.apolloClient, 'apolloClient');
-// 	}
-// 	// 	//const user = await isLoggedIn(ctx.apolloClient, ctx.req.headers.cookie);
-// 	// 	console.log(user, 'user here');
-// 	// }
-// 	const response = await isLoggedIn(ctx.apolloClient);
+Index.getInitialProps = async ctx => {
+	if (ctx.req && ctx.req.headers) {
+		console.log(ctx.req.headers.cookie, 'request cookie');
+		console.log(Object.keys(ctx.apolloClient), 'object keys apolloClient');
+		console.log(ctx.apolloClient, 'apolloClient');
+	}
+	// 	//const user = await isLoggedIn(ctx.apolloClient, ctx.req.headers.cookie);
+	// 	console.log(user, 'user here');
+	// }
+	const response = await isLoggedIn(ctx.apolloClient);
 
-// 	console.log(response, 'response');
-// 	// if (!process.browser && ctx.req && ctx.req.headers) {
-// 	// 	console.log("init props", response);
-// 	// }
+	console.log(response, 'response');
+	// if (!process.browser && ctx.req && ctx.req.headers) {
+	// 	console.log("init props", response);
+	// }
 
-// 	return {};
-// };
+	return {};
+};
 
 export default Index;

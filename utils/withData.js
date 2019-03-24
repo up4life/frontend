@@ -33,7 +33,10 @@ export default withApollo(({ headers }) => {
 		fetchOptions: {
 			credentials: 'include',
 		},
-		headers,
+		headers: {
+			...headers,
+			cookie: headers.cookie,
+		},
 	}));
 
 	// const middlewareLink = new ApolloLink((operation, forward) => {
