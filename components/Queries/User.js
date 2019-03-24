@@ -58,7 +58,12 @@ export const isLoggedIn = async client => {
 	console.log('client', client);
 	try {
 		const response = await client.query({
-			query: CURRENT_USER_QUERY,
+			query: gql`
+				query currentUser {
+					id
+					firstName
+				}
+			`,
 		});
 		console.log('res', response);
 		if (response) {
