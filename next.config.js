@@ -4,6 +4,6 @@ const isProd = process.env.NODE_ENV === "production";
 
 module.exports = withSass(
 	withImages({
-		target: "serverless"
+		// target: "serverless"
 	})
 );
