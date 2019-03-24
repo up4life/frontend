@@ -5,8 +5,8 @@ import Welcome from './welcome';
 
 const Index = ({ currentUser }) => {
 	console.log(currentUser);
-	if (!currentUser.gender) return <Welcome query={{ slug: 0 }} />;
-	else return <Home />;
+	if (!currentUser.gender) return <Welcome currentUser={currentUser} query={{ slug: 0 }} />;
+	else return <Home currentUser={currentUser} />;
 };
 
 Index.getInitialProps = async ctx => {

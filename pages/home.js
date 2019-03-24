@@ -14,6 +14,7 @@ const Home = ({ query, currentUser }) => {
 };
 
 Home.getInitialProps = async ctx => {
+	console.log(Object.keys(ctx))
 const { currentUser } = await isLoggedIn(ctx.apolloClient);
 console.log(currentUser)
 if (!currentUser) {
