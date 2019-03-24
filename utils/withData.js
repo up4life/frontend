@@ -33,19 +33,19 @@ export default withApollo(({ headers }) => {
 		headers
 	}));
 
-	const middlewareLink = new ApolloLink((operation, forward) => {
-		return forward(operation).map(response => {
-			const context = operation.getContext();
+	// const middlewareLink = new ApolloLink((operation, forward) => {
+	// 	return forward(operation).map(response => {
+	// 		const context = operation.getContext();
 
-			if (context.req && context.req.headers) {
-				const cookie = context.req.headers.get("set-cookie");
-				if (cookie) {
-					console.log(cookie);
-				}
-			}
-			return response;
-		});
-	});
+	// 		if (context.req && context.req.headers) {
+	// 			const cookie = context.req.headers.get("set-cookie");
+	// 			if (cookie) {
+	// 				console.log(cookie);
+	// 			}
+	// 		}
+	// 		return response;
+	// 	});
+	// });
 
 	const errorLink = onError(({ graphQLErrors, networkError }) => {
 		if (graphQLErrors) {
@@ -54,7 +54,7 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([middlewareLink, contextLink, errorLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(

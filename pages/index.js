@@ -17,14 +17,9 @@ const Index = () => (
 );
 
 Index.getInitialProps = async ctx => {
-	let user;
-
 	if (ctx.req && ctx.req.headers) {
 		console.log(ctx.req.headers.cookie, "request cookie");
-		user = await ctx.apolloClient.query({
-			query: CURRENT_USER_QUERY
-		});
-
+		let user = await isLoggedIn(ctx.apolloClient);
 		console.log(user, "user here");
 	}
 	// const response = await isLoggedIn(ctx.apolloClient);
