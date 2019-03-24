@@ -5,34 +5,32 @@ import redirect from '../utils/redirect';
 import Home from './home';
 import Welcome from './welcome';
 
-const Index = () => (
-	<User>
-		{({ data, loading, error }) => {
-			if (loading) return <div />;
-			if (error || !data.currentUser) return <JoinUs />;
-			if (!data.currentUser.gender) return <Welcome query={{ slug: 0 }} />;
-			else return <Home />;
-		}}
-	</User>
-);
+const Index = ({ currentUser }) => {
+	console.log(currentUser);
+	if (!currentUser.gender) return <Welcome query={{ slug: 0 }} />;
+	else return <Home />;
+};
 
 Index.getInitialProps = async ctx => {
-	if (ctx.req && ctx.req.headers) {
-		console.log(ctx.req.headers.cookie, 'request cookie');
-		console.log(Object.keys(ctx.apolloClient), 'object keys apolloClient');
-		console.log(ctx.apolloClient, 'apolloClient');
-	}
+	// if (ctx.req && ctx.req.headers) {
+	// 	console.log(ctx.req.headers.cookie, 'request cookie');
+	// 	console.log(Object.keys(ctx.apolloClient), 'object keys apolloClient');
+	// 	console.log(ctx.apolloClient, 'apolloClient');
+	// }
 	// 	//const user = await isLoggedIn(ctx.apolloClient, ctx.req.headers.cookie);
 	// 	console.log(user, 'user here');
 	// }
-	const response = await isLoggedIn(ctx.apolloClient);
+	const { currentUser } = await isLoggedIn(ctx.apolloClient);
 
-	console.log(response, 'response');
+	console.log(currentUser, 'response');
+	if (!currentUser) {
+		redirect(ctx, '/joinus');
+	}
 	// if (!process.browser && ctx.req && ctx.req.headers) {
 	// 	console.log("init props", response);
 	// }
 
-	return {};
+	return { currentUser };
 };
 
 export default Index;
