@@ -4,6 +4,7 @@ import Home from './home';
 import Welcome from './welcome';
 
 const Index = ({ currentUser }) => {
+	console.log(currentUser);
 	if (!currentUser.gender) return <Welcome query={{ slug: 0 }} />;
 	else return <Home />;
 };
