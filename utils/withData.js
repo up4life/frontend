@@ -36,6 +36,7 @@ export default withApollo(
 			},
 			headers: {
 				...headers,
+				host: 'api.up4.life',
 				cookie: headers && headers.cookie,
 			},
 		}));
