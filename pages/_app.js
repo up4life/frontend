@@ -34,7 +34,7 @@ class MyApp extends App {
 	// }
 
 	render() {
-		const { Component, apollo } = this.props;
+		const { Component, apollo, pageProps } = this.props;
 
 		return (
 			<Container>
@@ -50,7 +50,7 @@ class MyApp extends App {
 						<ApolloProvider client={apollo}>
 							<ApolloHooksProvider client={apollo}>
 								<Page>
-									<Component pageContext={this.pageContext} />
+									<Component pageContext={this.pageContext} {...pageProps} />
 								</Page>
 							</ApolloHooksProvider>
 						</ApolloProvider>
