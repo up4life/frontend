@@ -60,8 +60,10 @@ export const isLoggedIn = async client => {
 		const response = await client.query({
 			query: gql`
 				query currentUser {
-					id
-					firstName
+					currentUser {
+						id
+						firstName
+					}
 				}
 			`,
 		});
