@@ -21,20 +21,20 @@ class MyApp extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	static async getInitialProps({ Component, ctx, router }) {
-		let pageProps = {};
+	// static async getInitialProps({ Component, ctx, router }) {
+	// 	let pageProps = {};
 
-		if (Component.getInitialProps) {
-			pageProps = await Component.getInitialProps(ctx);
-		}
-		console.log('pageprops', pageProps);
-		pageProps.query = ctx.query;
+	// 	if (Component.getInitialProps) {
+	// 		pageProps = await Component.getInitialProps(ctx);
+	// 	}
+	// 	console.log('pageprops', pageProps);
+	// 	pageProps.query = ctx.query;
 
-		return { pageProps };
-	}
+	// 	return { pageProps };
+	// }
 
 	render() {
-		const { Component, apollo, pageProps } = this.props;
+		const { Component, apollo } = this.props;
 
 		return (
 			<Container>
@@ -50,7 +50,7 @@ class MyApp extends App {
 						<ApolloProvider client={apollo}>
 							<ApolloHooksProvider client={apollo}>
 								<Page>
-									<Component pageContext={this.pageContext} {...pageProps} />
+									<Component pageContext={this.pageContext} />
 								</Page>
 							</ApolloHooksProvider>
 						</ApolloProvider>
