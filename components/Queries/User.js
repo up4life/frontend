@@ -57,7 +57,8 @@ const User = props => (
 export const isLoggedIn = async client => {
 	try {
 		const response = await client.query({
-			query: CURRENT_USER_QUERY
+			query: CURRENT_USER_QUERY,
+			fetchPolicy: "network-only"
 		});
 		console.log("res", response);
 		if (response) {
