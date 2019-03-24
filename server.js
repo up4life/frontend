@@ -70,10 +70,6 @@ app.prepare().then(() => {
 		app.render(req, res, "/reset", { token });
 	});
 
-	server.post("*", (req, res) => {
-		return handle(req, res);
-	});
-
 	server.get("*", (req, res) => {
 		return handle(req, res);
 	});

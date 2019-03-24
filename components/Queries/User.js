@@ -54,11 +54,16 @@ const User = props => (
 	</Query>
 );
 
-export const isLoggedIn = async client => {
+export const isLoggedIn = async (client, cookie) => {
 	try {
 		const response = await client.query({
 			query: CURRENT_USER_QUERY,
-			fetchPolicy: "network-only"
+			context: {
+				headers: {
+					...headers,
+					cookie
+				}
+			}
 		});
 		console.log("res", response);
 		if (response) {

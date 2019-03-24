@@ -14,11 +14,7 @@ export default withApollo(({ headers }) => {
 	const ssrMode = !process.browser;
 
 	const httpLink = createHttpLink({
-		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life",
-		fetchOptions: {
-			credentials: "include"
-		},
-		headers
+		uri: process.env.NODE_ENV === "development" ? "http://localhost:4000" : "https://api.up4.life"
 	});
 
 	const wsLink =
@@ -30,12 +26,12 @@ export default withApollo(({ headers }) => {
 			}
 		});
 
-	// const contextLink = setContext(() => ({
-	// 	fetchOptions: {
-	// 		credentials: "include"
-	// 	},
-	// 	headers
-	// }));
+	const contextLink = setContext(() => ({
+		fetchOptions: {
+			credentials: "include"
+		},
+		headers
+	}));
 
 	// const middlewareLink = new ApolloLink((operation, forward) => {
 	// 	return forward(operation).map(response => {
@@ -58,7 +54,7 @@ export default withApollo(({ headers }) => {
 		if (networkError) console.log(`[Network error]: ${networkError}`);
 	});
 
-	let link = ApolloLink.from([errorLink, httpLink]);
+	let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 	if (!ssrMode) {
 		link = split(

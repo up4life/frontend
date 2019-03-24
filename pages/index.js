@@ -21,7 +21,7 @@ Index.getInitialProps = async ctx => {
 		console.log(ctx.req.headers.cookie, "request cookie");
 		console.log(Object.keys(ctx.apolloClient), "object keys apolloClient");
 		console.log(ctx.apolloClient, "apolloClient");
-		const user = await isLoggedIn(ctx.apolloClient);
+		const user = await isLoggedIn(ctx.apolloClient, ctx.req.headers.cookie);
 		console.log(user, "user here");
 	}
 	// const response = await isLoggedIn(ctx.apolloClient);
