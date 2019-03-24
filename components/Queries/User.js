@@ -55,9 +55,9 @@ const User = props => (
 );
 
 export const isLoggedIn = async client => {
-	console.log('client', client);
+	console.log('client', Object.keys(client));
 	try {
-		const response = await client.ApolloClient.query({
+		const response = await client.query({
 			query: CURRENT_USER_QUERY,
 		});
 		console.log('res', response);
