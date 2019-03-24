@@ -8,7 +8,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
 	const server = express();
 
-	server.set("trust proxy", true);
+	// server.set("trust proxy", true);
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
