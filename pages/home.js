@@ -15,7 +15,7 @@ const Home = ({ query, currentUser }) => {
 
 Home.getInitialProps = async ctx => {
 const { currentUser } = await isLoggedIn(ctx.apolloClient);
-
+console.log(currentUser)
 if (!currentUser) {
 	redirect(ctx, '/joinus');
 }
