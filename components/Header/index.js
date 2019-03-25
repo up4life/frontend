@@ -297,7 +297,10 @@ const Nav = ({ classes, color, router, href }) => {
 														color: 'transparent',
 													}}
 													dropdownList={[ 'Sign out' ]}
-													onClick={e => signout()}
+													onClick={e => {
+														signout();
+														client.clearStore();
+													}}
 												/>
 											</ListItem>
 										);
