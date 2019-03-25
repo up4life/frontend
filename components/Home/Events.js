@@ -89,9 +89,9 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 	});
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION);
 
-	// useEffect(() => {
-	// 	NProgress.start();
-	// }, []);
+	useEffect(() => {
+		NProgress.start();
+	}, []);
 	// return (
 	// 	<Composed>
 	// 		{({

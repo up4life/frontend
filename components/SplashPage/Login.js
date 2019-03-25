@@ -155,7 +155,7 @@ const Login = ({ classes, showing, setShowing }) => {
 										refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 										awaitRefetchQueries
 										onError={handleError}
-										onCompleted={() => Router.push('/')}
+										onCompleted={() => Router.push('/home')}
 									>
 										{(firebaseAuth, { called }) => {
 											//if (called) NProgress.start();
