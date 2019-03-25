@@ -5,14 +5,14 @@ const style = {
 	container,
 
 	profileHeader: {
-		height: '200px',
+		height: '190px',
 		width: '100%',
 		backgroundColor: 'rgba(0,0,0,0.32)',
 		marginBottom: '60px',
 	},
 	innerHeader: {
 		margin: '0 auto',
-		padding: '50px 60px 0',
+		padding: '40px 60px 0',
 		maxWidth: '1200px',
 		display: 'flex',
 		justifyContent: 'flex-start',
@@ -68,7 +68,6 @@ const style = {
 			},
 		},
 	},
-	
 };
 
 export default style;
