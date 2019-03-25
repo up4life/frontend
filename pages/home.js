@@ -15,13 +15,13 @@ const Home = ({ query, currentUser }) => {
 
 Home.getInitialProps = async ctx => {
 	console.log(Object.keys(ctx))
-const { currentUser } = await isLoggedIn(ctx.apolloClient);
-console.log(currentUser)
-if (!currentUser) {
-	redirect(ctx, '/joinus');
-}
+	const { currentUser } = await isLoggedIn(ctx.apolloClient);
+	console.log(currentUser)
+	if (!currentUser) {
+		redirect(ctx, '/joinus');
+	}
 
-return { currentUser };
+	return { currentUser };
 };
 
 export default Home;
