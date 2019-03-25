@@ -297,9 +297,7 @@ const Nav = ({ classes, color, router, href }) => {
 														color: 'transparent',
 													}}
 													dropdownList={[ 'Sign out' ]}
-													onClick={async e => {
-														await signout();
-													}}
+													onClick={e => signout()}
 												/>
 											</ListItem>
 										);
