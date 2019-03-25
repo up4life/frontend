@@ -259,7 +259,7 @@ const Nav = ({ classes, color, router, href }) => {
 									mutation={SIGNOUT_MUTATION}
 									// refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 									// awaitRefetchQueries
-									//onCompleted={() => }
+									onCompleted={() => Router.push('/joinus')}
 								>
 									{(signout, { called, client }) => {
 										{
