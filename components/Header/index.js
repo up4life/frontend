@@ -237,7 +237,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 							}
 						/>
 					</ListItem>
-					<Mutation mutation={SIGNOUT_MUTATION} onCompleted={e => console.log(e)}>
+					<Mutation mutation={SIGNOUT_MUTATION}>
 						{(signout, { called, client }) => {
 							{
 								/* if (called) Router.push('/joinus'); */
@@ -273,7 +273,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 										dropdownList={[ 'Sign out' ]}
 										onClick={async e => {
 											await signout();
-											await client.resetStore();
+											client.resetStore();
 											Router.push('/joinus');
 										}}
 									/>
