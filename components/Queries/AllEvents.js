@@ -57,6 +57,7 @@ const Events = ({ children, variables }) => {
 };
 
 export const getAllEvents = async (client, user) => {
+	console.log(client);
 	try {
 		const response = await client.query({
 			query: ALL_EVENTS_QUERY,

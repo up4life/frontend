@@ -15,7 +15,6 @@ Index.getInitialProps = async ctx => {
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
 	} else {
-		console.log(ctx.apolloClient);
 		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
 		return { currentUser, getEvents };
 	}
