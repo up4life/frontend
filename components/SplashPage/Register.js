@@ -495,7 +495,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																				: false,
 																		}}
 																	/>
-																	<FormControlLabel
+																	{/* <FormControlLabel
 																		classes={{
 																			label: classes.label,
 																		}}
@@ -556,7 +556,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																				.
 																			</span>
 																		}
-																	/>
+																	/> */}
 																	<div
 																		className={
 																			classes.textCenter
@@ -569,7 +569,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																				}
 																				round='true'
 																				// disabled
-																				disabled={!terms}
+																				//disabled={!terms}
 																				color='primary'
 																				component='div'
 																			>

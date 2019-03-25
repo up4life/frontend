@@ -5,9 +5,7 @@ import { withRouter } from 'next/router';
 import NProgress from 'nprogress';
 import InfiniteScroll from 'react-infinite-scroller';
 import classNames from 'classnames';
-import { adopt } from 'react-adopt';
 import { useMutation } from '../Mutations/useMutation';
-import { State, Value, Toggle } from 'react-powerplug';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
@@ -31,71 +29,17 @@ import backgroundImg from '../../static/img/shattered-dark.png';
 import drawerbgImg from '../../static/img/dark-fish-skin.png';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 
-// const Composed = adopt({
-// 	drawer: <Toggle initial={false} />,
-// 	page: <Value initial={0} />,
-
-// 	user: ({ render }) => <Query query={CURRENT_USER_QUERY}>{render}</Query>,
-// 	location: ({ user, render }) => (
-// 		// not sure what happened but the default for this value is not working at all
-// 		// had to add it into the Query to make site work
-// 		<Value initial={user.data.currentUser && user.data.currentUser.location}>{render}</Value>
-// 	),
-// 	filters: ({ render }) => (
-// 		<State
-// 			initial={{
-// 				cats: [],
-// 				genres: [],
-// 				dates: [],
-// 			}}
-// 		>
-// 			{render}
-// 		</State>
-// 	),
-// 	// getEvents: ({ page, location, filters, render }) => (
-// 	// 	<Query
-// 	// 		query={ALL_EVENTS_QUERY}
-// 	// 		variables={{
-// 	// 			location: location.value || 'Los Angeles, CA',
-// 	// 			page: page.value,
-// 	// 			categories: filters.state.cats,
-// 	// 			genres: filters.state.genres,
-// 	// 			dates: filters.state.dates,
-// 	// 		}}
-// 	// 		//onCompleted={() => NProgress.done()}
-// 	// 		onError={() => NProgress.done()}
-// 	// 	>
-// 	// 		{render}
-// 	// 	</Query>
-// 	// ),
-
-// 	updateUser: ({ render }) => (
-// 		<Mutation
-// 			mutation={UPDATE_USER_MUTATION}
-// 			onCompleted={() => NProgress.done()}
-// 			onError={() => NProgress.done()}
-// 		>
-// 			{render}
-// 		</Mutation>
-// 	),
-// });
-
 const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => {
 	const [ drawer, setDrawer ] = useState(false);
-	const [ page, setPage ] = useState(0);
-	const [ location, setLocation ] = useState(currentUser.location || 'Los Angeles, CA');
+	const [ page, setPage ] = useState(getEvents.data.getEvents.page_number);
+	const [ events, setEvents ] = useState(getEvents.data.getEvents.events);
+	const [ location, setLocation ] = useState(getEvents.data.getEvents.location);
 	const [ filters, setFilters ] = useState({
 		cats: [],
 		genres: [],
 		dates: [],
 	});
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION);
-
-	useEffect(() => {
-		NProgress.start();
-	}, []);
-
-	getEvents = getEvents && getEvents.data ? getEvents.data.getEvents : [];
 
 	return (
 		<div className={classes.background} style={{ backgroundImage: `url(${backgroundImg})` }}>
@@ -132,7 +76,7 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 						}}
 						aria-label='Open drawer'
 						onClick={() => setDrawer(true)}
-						className={classNames(classes.menuButton, drawer.on && classes.hide)}
+						className={classNames(classes.menuButton, drawer && classes.hide)}
 					>
 						<Menu />
 					</IconButton>
@@ -151,19 +95,19 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 									<ChevronLeft />
 								</IconButton>
 								<LocationSearch setLocation={val => setLocation(val)} />
-								<p style={{ margin: 0 }}>Showing events near {location.value}.</p>
+								<p style={{ margin: 0 }}>Showing events near {location}.</p>
 								<div
 									className={classes.drawerContainer}
 									style={{ backgroundImage: `url(${drawerbgImg})` }}
 								>
-									{currentUser && currentUser.location !== location.value ? (
+									{currentUser && currentUser.location !== location ? (
 										<Primary>
 											<b
 												onClick={() => {
 													NProgress.start();
 													updateUser({
 														variables: {
-															location: location.value,
+															location: location,
 														},
 													});
 												}}
@@ -184,7 +128,7 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 					</ClickAwayListener>
 					<GridContainer>
 						<GridItem sm={12} md={12} sm={12}>
-							{getEvents ? (
+							{events ? (
 								<GridContainer>
 									<GridItem sm={12} md={6} lg={6}>
 										{/* <InfiniteScroll
@@ -199,17 +143,14 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 														threshold={400}
 														loader={<div key={0} />}
 													> */}
-										{getEvents &&
-											getEvents.events
-												.filter((e, i) => i % 2 === 0)
-												.map(event => (
-													<Event
-														event={event}
-														key={event.id}
-														//refetch={refetch}
-														user={currentUser}
-													/>
-												))}
+										{events.filter((e, i) => i % 2 === 0).map(event => (
+											<Event
+												event={event}
+												key={event.id}
+												//refetch={refetch}
+												user={currentUser}
+											/>
+										))}
 
 										{/* {getEvents.events.map(event => (
 															<Event
@@ -224,17 +165,14 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 									</GridItem>
 
 									<GridItem sm={12} md={6} lg={6}>
-										{getEvents &&
-											getEvents.events
-												.filter((e, i) => i % 2 !== 0)
-												.map(event => (
-													<Event
-														event={event}
-														key={event.id}
-														//refetch={refetch}
-														user={currentUser}
-													/>
-												))}
+										{events.filter((e, i) => i % 2 !== 0).map(event => (
+											<Event
+												event={event}
+												key={event.id}
+												//refetch={refetch}
+												user={currentUser}
+											/>
+										))}
 									</GridItem>
 								</GridContainer>
 							) : (
