@@ -46,13 +46,6 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 		},
 	);
 
-	const handleClick = (e, signout, client) => {
-		signout();
-		client.clearStore().then(() => {
-			Router.push('/joinus');
-		});
-	};
-
 	const formattedChats = (newMessages, user) => {
 		return newMessages
 			.filter(msg => msg.messages)
@@ -244,8 +237,9 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 					</ListItem>
 					<Mutation
 						mutation={SIGNOUT_MUTATION}
-						// refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
-						// awaitRefetchQueries
+						refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
+						awaitRefetchQueries
+						onCompleted={() => Router.push('/joinus')}
 					>
 						{(signout, { called, client }) => {
 							{
@@ -280,7 +274,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 											color: 'transparent',
 										}}
 										dropdownList={[ 'Sign out' ]}
-										onClick={e => handleClick(e, signout, client)}
+										onClick={e => signout()}
 									/>
 								</ListItem>
 							);
