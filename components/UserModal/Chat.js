@@ -132,34 +132,53 @@ const Chat = ({
 			});
 		}
 	};
+	function groupByUser(messages) {
+		const grouped = [];
+		let fromSameUser = [ messages[0] ];
+		let user = messages[0].from.id;
+
+		for (let i = 1; i < messages.length; i++) {
+			if (messages[i].from.id !== user) {
+				grouped.push(fromSameUser);
+				fromSameUser = [ messages[i] ];
+				user = messages[i].from.id;
+			} else {
+				fromSameUser.push(messages[i]);
+			}
+		}
+
+		grouped.push(fromSameUser);
+		return grouped;
+	}
+
 	let messages =
 		data.getConversation && data.getConversation.messages.length
-			? data.getConversation.messages
+			? groupByUser(data.getConversation.messages)
 			: null;
-
+	console.log(messages);
 	return (
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>
 				{messages ? (
 					messages.map(msg => {
-						let fromMatch = msg.from.id === id;
-						let unseen = !msg.seen && msg.from.id !== currentUser.id;
-						let img = msg.from.img.find(img => img.default).img_url;
+						let fromMatch = msg[0].from.id === id;
+						let unseen = !msg[0].seen && msg[0].from.id !== currentUser.id;
+						let img = msg[0].from.img.find(img => img.default).img_url;
 						return (
 							<Media
 								currentUser={!fromMatch}
-								key={msg.id}
+								key={msg[0].id}
 								avatar={img}
 								title={
 									<span style={{ color: '#fafafa' }}>
-										{msg.from.firstName}
+										{msg[0].from.firstName}
 										<small
 											style={{
 												fontWeight: unseen && 'bold',
 												fontSize: '12px',
 											}}
 										>
-											· {moment(msg.createdAt).fromNow()}
+											{/* · {moment(msg.createdAt).fromNow()} */}
 											{unseen ? (
 												<span style={{ color: 'red', marginLeft: '6px' }}>
 													new
@@ -170,9 +189,39 @@ const Chat = ({
 								}
 								body={
 									<span>
-										<p style={{ wordBreak: 'break-word', fontSize: '14px' }}>
-											{msg.text}
-										</p>
+										{msg.map(m => (
+											<div>
+												<div
+													style={{
+														display: 'inline-flex',
+														alignItems: 'center',
+														flexDirection: fromMatch
+															? 'row'
+															: 'row-reverse',
+													}}
+												>
+													<p
+														style={{
+															wordBreak: 'break-word',
+															fontSize: '14px',
+														}}
+													>
+														{m.text}
+													</p>{' '}
+													<small
+														style={{
+															marginBottom: '10px',
+															marginLeft: '5px',
+															marginRight: '5px',
+															display: 'none',
+														}}
+													>
+														{' '}
+														{moment(msg.createdAt).fromNow()}
+													</small>
+												</div>
+											</div>
+										))}
 										{currentUser.permissions !== 'FREE' && msg.seen ? (
 											<small>
 												<span style={{ marginRight: '2px' }}>seen</span>
