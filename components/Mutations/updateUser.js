@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const UPDATE_USER_MUTATION = gql`
 	mutation UPDATE_USER_MUTATION(
@@ -72,6 +72,10 @@ export const DELETE_EVENT_MUTATION = gql`
 			id
 			events {
 				id
+				tmID
+				attending {
+					id
+				}
 			}
 		}
 	}

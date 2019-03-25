@@ -19,6 +19,7 @@ import {
 //styled components
 import Card from '../../styledComponents/Card/Card';
 import { USER_EVENTS_QUERY } from '../Queries/UserEvents';
+import { DELETE_EVENT_MUTATION } from '../Mutations/updateUser';
 import CardHeader from '../../styledComponents/Card/CardHeader';
 import CardFooter from '../../styledComponents/Card/CardFooter';
 import CardBody from '../../styledComponents/Card/CardBody';
@@ -38,20 +39,6 @@ let settings = {
 	slidesToScroll: 3,
 };
 
-const DELETE_EVENT = gql`
-	mutation deleteEvent($id: String!, $eventId: String!) {
-		deleteEvent(id: $id, eventId: $eventId) {
-			id
-			events {
-				id
-				attending {
-					id
-				}
-			}
-		}
-	}
-`;
-
 const Wrapper = ({ classes, carousel, children }) => {
 	if (carousel)
 		return (
@@ -63,13 +50,23 @@ const Wrapper = ({ classes, carousel, children }) => {
 };
 
 const DateView = ({ date, classes, client, currentUser, refetch }) => {
-	const [ deleteEvent ] = useMutation(DELETE_EVENT, {
-		variables: { id: currentUser.id, eventId: date.id },
-		refetchQueries: [
-			{
-				query: USER_EVENTS_QUERY,
-			},
-		],
+	const [ deleteEvent ] = useMutation(DELETE_EVENT_MUTATION, {
+		variables: { eventId: date.id },
+		update: (cache, { data }) => {
+			const { currentUser } = cache.readQuery({
+				query: CURRENT_USER_QUERY,
+			});
+
+			cache.writeQuery({
+				query: CURRENT_USER_QUERY,
+				data: {
+					currentUser: {
+						...currentUser,
+						events: currentUser.events.filter(x => x.id !== event.id),
+					},
+				},
+			});
+		},
 		onCompleted: () => console.log('hi'),
 	});
 	const carousel = date.attending.filter(usr => usr.id !== currentUser.id).length > 3;
