@@ -384,7 +384,7 @@ const styles = {
 	flip: {
 		// backgroundImage: 'linear-gradient(to right, #cdcece, #c0c8c8, #b4c2c2, #a7bdbc, #9bb7b5)',
 		position: 'absolute',
-		bottom: '0',
+		bottom: '5',
 		right: '0',
 		height: '55px',
 		width: '64px',

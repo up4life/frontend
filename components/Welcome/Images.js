@@ -23,7 +23,7 @@ const UPLOAD_IMAGE_MUTATION = gql`
 		}
 	}
 `;
-const GenderPrefs = ({ user }) => {
+const GenderPrefs = ({ user, classes }) => {
 	const handleUpload = async uploadImage => {
 		openUploadWidget((error, result) => {
 			// console.log(result.event);

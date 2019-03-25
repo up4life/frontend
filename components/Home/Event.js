@@ -259,7 +259,12 @@ const Event = ({ event, classes, user }) => {
 									})}
 								</div>
 							) : (
-								''
+								<div
+									style={{
+										width: '40px',
+										height: '40px',
+									}}
+								/>
 							)}
 							<div
 								onClick={() => setRotate(classes.activateRotate)}
@@ -293,7 +298,7 @@ const Event = ({ event, classes, user }) => {
 											</a>
 										</h3>
 										<h6 style={{ color: '#263238', fontSize: '15px' }}>
-											Showing{' '}
+											Showing
 											{!user ||
 											!user.genderPrefs.length ||
 											user.genderPrefs.length === 3 ? (
