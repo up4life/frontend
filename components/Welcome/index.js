@@ -97,9 +97,12 @@ function getImage(stepIndex) {
 }
 
 const Welcome = ({ classes, user, router: { prefetch, query } }) => {
-	useEffect(() => {
-		prefetch('/home');
-	}, []);
+	useEffect(
+		() => {
+			if (query.slug === 3) prefetch('/home');
+		},
+		[ query.slug ],
+	);
 	const steps = getSteps();
 	// console.log(parseInt(query.slug));
 
