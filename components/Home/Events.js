@@ -10,7 +10,7 @@ import { useMutation } from '../Mutations/useMutation';
 import { State, Value, Toggle } from 'react-powerplug';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Drawer, IconButton } from '@material-ui/core';
+import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
 import { Menu, ChevronLeft } from '@material-ui/icons';
 //Q&M
 import { ALL_EVENTS_QUERY } from '../Queries/AllEvents';
@@ -27,6 +27,8 @@ import Primary from '../../styledComponents/Typography/Primary';
 import GridContainer from '../../styledComponents/Grid/GridContainer';
 import GridItem from '../../styledComponents/Grid/GridItem';
 //styles
+import backgroundImg from '../../static/img/shattered-dark.png';
+import drawerbgImg from '../../static/img/dark-fish-skin.png';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 
 // const Composed = adopt({
@@ -96,7 +98,7 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 	getEvents = getEvents && getEvents.data ? getEvents.data.getEvents : [];
 
 	return (
-		<div className={classes.background}>
+		<div className={classes.background} style={{ backgroundImage: `url(${backgroundImg})` }}>
 			{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
 			<svg
 				style={{ width: 0, height: 0, position: 'absolute' }}
@@ -129,52 +131,57 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 							backgroundColor: 'transparent !important',
 						}}
 						aria-label='Open drawer'
-						onClick={drawer.toggle}
+						onClick={() => setDrawer(true)}
 						className={classNames(classes.menuButton, drawer.on && classes.hide)}
 					>
 						<Menu />
 					</IconButton>
-					<Drawer
-						classes={{ paper: classes.metaDrawer }}
-						variant='persistent'
-						anchor='left'
-						open={drawer.on}
-					>
-						<div className={classes.drawer}>
-							<IconButton
-								className={classes.transparentButton}
-								onClick={drawer.toggle}
-							>
-								<ChevronLeft />
-							</IconButton>
-							<LocationSearch setLocation={val => setLocation(val)} />
-							<p style={{ margin: 0 }}>Showing events near {location.value}.</p>
-							<div className={classes.drawerContainer}>
-								{currentUser && currentUser.location !== location.value ? (
-									<Primary>
-										<b
-											onClick={() => {
-												NProgress.start();
-												updateUser({
-													variables: {
-														location: location.value,
-													},
-												});
-											}}
-											style={{
-												cursor: 'pointer',
-											}}
-										>
-											make default location?
-										</b>
-									</Primary>
-								) : (
-									<div style={{ height: '21px' }} />
-								)}
+					<ClickAwayListener onClickAway={() => setDrawer(false)}>
+						<Drawer
+							classes={{ paper: classes.metaDrawer }}
+							variant='persistent'
+							anchor='left'
+							open={drawer}
+						>
+							<div className={classes.drawer}>
+								<IconButton
+									className={classes.transparentButton}
+									onClick={() => setDrawer(false)}
+								>
+									<ChevronLeft />
+								</IconButton>
+								<LocationSearch setLocation={val => setLocation(val)} />
+								<p style={{ margin: 0 }}>Showing events near {location.value}.</p>
+								<div
+									className={classes.drawerContainer}
+									style={{ backgroundImage: `url(${drawerbgImg})` }}
+								>
+									{currentUser && currentUser.location !== location.value ? (
+										<Primary>
+											<b
+												onClick={() => {
+													NProgress.start();
+													updateUser({
+														variables: {
+															location: location.value,
+														},
+													});
+												}}
+												style={{
+													cursor: 'pointer',
+												}}
+											>
+												make default location?
+											</b>
+										</Primary>
+									) : (
+										<div style={{ height: '21px' }} />
+									)}
+								</div>
 							</div>
-						</div>
-						<Filters filters={filters} setFilters={setFilters} user={currentUser} />
-					</Drawer>
+							<Filters filters={filters} setFilters={setFilters} user={currentUser} />
+						</Drawer>
+					</ClickAwayListener>
 					<GridContainer>
 						<GridItem sm={12} md={12} sm={12}>
 							{getEvents ? (

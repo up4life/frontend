@@ -24,7 +24,7 @@ import Header from '../../styledComponents/Header/Header.jsx';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 //assets
-// import image from '../../static/img/bg.jpg';
+
 import profileStandIn from '../../static/img/placeholder.jpg';
 
 Router.onRouteChangeComplete = () => {

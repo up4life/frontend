@@ -21,7 +21,7 @@ import Card from '../../styledComponents/Card/Card.jsx';
 import CardBody from '../../styledComponents/Card/CardBody.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 // images
-import img from '../../static/img/billingImage.jpg';
+//import img from '../../static/img/billingImage.jpg';
 //styles
 import pricingStyle from '../../static/jss/material-kit-pro-react/views/pricingStyle.jsx';
 import '../../styles/Billing/Billing.scss';
@@ -51,7 +51,7 @@ const Billing = ({ classes, currentUser, client }) => {
 		// style={{ backgroundImage: `url(${img})`, height: '100%' }}
 		>
 			<Header color='transparent' currentUser={currentUser} />
-			<Parallax image={img} filter='dark' small>
+			<Parallax filter='dark' small>
 				<div className={classes.container}>
 					<GridContainer>
 						<GridItem
