@@ -271,7 +271,11 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 											color: 'transparent',
 										}}
 										dropdownList={[ 'Sign out' ]}
-										onClick={e => signout()}
+										onClick={async e => {
+											await signout();
+											await client.resetStore();
+											Router.push('/joinus');
+										}}
 									/>
 								</ListItem>
 							);
