@@ -255,7 +255,12 @@ const Nav = ({ classes, color, router, href }) => {
 										}
 									/>
 								</ListItem>
-								<Mutation mutation={SIGNOUT_MUTATION}>
+								<Mutation
+									mutation={SIGNOUT_MUTATION}
+									// refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
+									// awaitRefetchQueries
+									//onCompleted={() => }
+								>
 									{(signout, { called, client }) => {
 										{
 											/* if (called) Router.push('/joinus'); */
@@ -275,6 +280,7 @@ const Nav = ({ classes, color, router, href }) => {
 													buttonText={
 														<img
 															src={
+																currentUser &&
 																currentUser.img.find(
 																	img => img.default,
 																).img_url
@@ -291,8 +297,8 @@ const Nav = ({ classes, color, router, href }) => {
 														color: 'transparent',
 													}}
 													dropdownList={[ 'Sign out' ]}
-													onClick={async e => {
-														await signout();
+													onClick={e => {
+														signout();
 														client.resetStore();
 														Router.push('/joinus');
 													}}
