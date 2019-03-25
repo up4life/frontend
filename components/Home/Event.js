@@ -209,7 +209,7 @@ const Event = ({ event, classes, user }) => {
 								</div>
 							</CardHeader>
 						)}
-						<CardBody className={classes.cardBodyRotate}>
+						<CardBody className={classes.cardBodyRotate} style={{ paddingBottom: 0 }}>
 							<Typography variant='h4' className={classes.cardTitle}>
 								{event.title}
 							</Typography>
@@ -249,8 +249,8 @@ const Event = ({ event, classes, user }) => {
 													)
 												}
 												style={{
-													width: '30px',
-													height: '30px',
+													width: '40px',
+													height: '40px',
 													borderRadius: '6px',
 													border: '1px solid #cabac8',
 												}}
