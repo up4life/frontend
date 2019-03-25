@@ -78,7 +78,7 @@ import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSecti
 // 	),
 // });
 
-const Events = React.memo(({ classes, router, href, getEvents, currentUser, ...props }) => {
+const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => {
 	const [ drawer, setDrawer ] = useState(false);
 	const [ page, setPage ] = useState(0);
 	const [ location, setLocation ] = useState(currentUser.location || 'Los Angeles, CA');
@@ -252,6 +252,6 @@ const Events = React.memo(({ classes, router, href, getEvents, currentUser, ...p
 	// 		}}
 	// 	</Composed>
 	// );
-});
+};
 
 export default withRouter(withStyles(styles, { withTheme: true })(Events));

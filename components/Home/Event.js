@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mutation } from 'react-apollo';
 import moment from 'moment';
 import NProgress from 'nprogress';
 import { useMutation } from '../Mutations/useMutation';
@@ -41,8 +40,15 @@ import getAge from '../../utils/getAge';
 //styles
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
-const Event = React.memo(({ event, classes, user }) => {
-	// console.log(event, user, "event & user");
+const Event = ({ event, classes, user }) => {
+	let [ isSaved, setIsSaved ] = useState(false);
+
+	useEffect(() => {
+		setIsSaved(
+			user.events.find(e => e.id === event.id || e.tmID === event.tmID) ? true : false,
+		);
+	}, []);
+
 	const [ deleteEvent ] = useMutation(DELETE_EVENT_MUTATION, {
 		update: (cache, { data }) => {
 			const { currentUser } = cache.readQuery({
@@ -60,8 +66,52 @@ const Event = React.memo(({ event, classes, user }) => {
 			});
 		},
 		variables: { id: event.id },
-		onCompleted: e => console.log(e),
+		onCompleted: e => {
+			setIsSaved(false);
+			NProgress.done();
+		},
 		onError: e => console.log(e),
+	});
+
+	const [ addEvent ] = useMutation(ADD_EVENT_MUTATION, {
+		variables: {
+			tmID: event.tmID,
+			title: event.title,
+			venue: event.venue,
+			image_url: event.image_url,
+			times: event.times,
+			city: event.city,
+			category: event.category,
+			genre: event.genre,
+		},
+		update: (cache, { data: { addEvent } }) => {
+			try {
+				const { currentUser } = cache.readQuery({
+					query: CURRENT_USER_QUERY,
+				});
+				console.log(addEvent);
+				cache.writeQuery({
+					query: CURRENT_USER_QUERY,
+					data: {
+						currentUser: {
+							...currentUser,
+							events: [ ...currentUser.events, addEvent ],
+						},
+					},
+				});
+			} catch (err) {
+				console.log(err);
+			}
+		},
+		onError: e => {
+			NProgress.done();
+			console.error(e);
+			setError(e);
+		},
+		onCompleted: () => {
+			setIsSaved(true);
+			NProgress.done();
+		},
 	});
 	const [ error, setError ] = useState(null);
 	const [ rotate, setRotate ] = useState('');
@@ -69,7 +119,6 @@ const Event = React.memo(({ event, classes, user }) => {
 	const [ val, set ] = useState(false);
 	const divEl = useRef(null);
 	const imgEl = useRef(null);
-	let isSaved = user ? user.events.find(e => e.id === event.id) : false;
 
 	useEffect(
 		() => {
@@ -132,80 +181,33 @@ const Event = React.memo(({ event, classes, user }) => {
 										opacity: '1',
 									}}
 								/>
-								<Mutation
-									mutation={ADD_EVENT_MUTATION}
-									variables={{
-										tmID: event.tmID,
-										title: event.title,
-										venue: event.venue,
-										image_url: event.image_url,
-										times: event.times,
-										city: event.city,
-										category: event.category,
-										genre: event.genre,
-									}}
-									update={(cache, { data: { addEvent } }) => {
-										console.log(addEvent, 'addEvent value update fn');
-										try {
-											const { currentUser } = cache.readQuery({
-												query: CURRENT_USER_QUERY,
-											});
 
-											cache.writeQuery({
-												query: CURRENT_USER_QUERY,
-												data: {
-													currentUser: {
-														...currentUser,
-														events: [ ...currentUser.events, addEvent ],
-													},
-												},
-											});
-										} catch (err) {
-											console.log(err);
-										}
-									}}
-									onError={e => {
-										NProgress.done();
-										console.error(e);
-										setError(e);
-									}}
-									onCompleted={() => {
-										NProgress.done();
-									}}
+								<div
+									className={
+										isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4
+									}
 								>
-									{(addEvent, { error, loading, called, data }) => {
-										if (error) console.log(error);
-										if (called) NProgress.start();
-
-										return (
+									<div style={{ cursor: 'pointer' }}>
+										{isSaved ? (
 											<div
-												className={
-													isSaved ? (
-														`${classes.up4} ${classes.up4Saved}`
-													) : (
-														classes.up4
-													)
-												}
+												onClick={() => {
+													NProgress.start();
+													deleteEvent();
+												}}
 											>
-												<div style={{ cursor: 'pointer' }}>
-													{isSaved ? (
-														<div onClick={() => deleteEvent()}>
-															<img
-																className={classes.arrow}
-																src={Arrow}
-															/>
-														</div>
-													) : (
-														<Up4
-															handleClick={() => addEvent()}
-															justFour
-														/>
-													)}
-												</div>
+												<img className={classes.arrow} src={Arrow} />
 											</div>
-										);
-									}}
-								</Mutation>
+										) : (
+											<Up4
+												handleClick={() => {
+													NProgress.start();
+													addEvent();
+												}}
+												justFour
+											/>
+										)}
+									</div>
+								</div>
 							</CardHeader>
 						)}
 						<CardBody className={classes.cardBodyRotate}>
@@ -420,6 +422,6 @@ const Event = React.memo(({ event, classes, user }) => {
 			</div>
 		</div>
 	);
-});
+};
 
 export default withStyles(CardStyles)(Event);

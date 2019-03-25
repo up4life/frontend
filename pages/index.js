@@ -11,12 +11,11 @@ const Index = ({ currentUser, getEvents }) => {
 
 Index.getInitialProps = async ctx => {
 	const { currentUser } = await isLoggedIn(ctx.apolloClient);
-
+	console.log(currentUser);
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
 	} else {
 		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
-		console.log(getEvents);
 		return { currentUser, getEvents };
 	}
 };

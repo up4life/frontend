@@ -13,7 +13,7 @@ import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
 export default withApollo(
 	({ headers }) => {
 		const ssrMode = !process.browser;
-		console.log('headers withData', headers);
+
 		const httpLink = createHttpLink({
 			uri:
 				process.env.NODE_ENV === 'development'
@@ -39,7 +39,7 @@ export default withApollo(
 			},
 			headers: {
 				...headers,
-				host: 'api.up4.life',
+				host: process.env.NODE_ENV === 'development' ? 'localhost' : 'api.up4.life',
 				cookie: headers && headers.cookie,
 			},
 		}));

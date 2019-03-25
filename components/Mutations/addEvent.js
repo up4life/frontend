@@ -28,10 +28,10 @@ export const ADD_EVENT_MUTATION = gql`
 		) {
 			id
 			tmID
-			attending {
-				id
-				firstName
-			}
+			# attending {
+			# 	id
+			# 	firstName
+			# }
 		}
 	}
 `;
