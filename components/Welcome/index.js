@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { withRouter } from 'next/router';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -96,7 +96,10 @@ function getImage(stepIndex) {
 	}
 }
 
-const Welcome = ({ classes, user, router: { query } }) => {
+const Welcome = ({ classes, user, router: { prefetch, query } }) => {
+	useEffect(() => {
+		prefetch('/home');
+	}, []);
 	const steps = getSteps();
 	// console.log(parseInt(query.slug));
 
