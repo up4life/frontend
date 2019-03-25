@@ -92,7 +92,7 @@ function getImage(stepIndex) {
 		case 9:
 			return triangle9;
 		default:
-			return null;
+			return triangle1;
 	}
 }
 
