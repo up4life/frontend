@@ -163,17 +163,16 @@ const Event = ({ event, classes, user }) => {
 					<div ref={divEl} className={`${classes.front} ${classes.eventBorder}`}>
 						{event.image_url && (
 							<CardHeader style={{ position: 'relative' }} image>
-								<a href='#' onClick={e => e.preventDefault()}>
-									<img
-										style={{ border: '1px solid #cabac8' }}
-										ref={imgEl}
-										src={event.image_url}
-										alt='...'
-										onLoad={() => {
-											set(true);
-										}}
-									/>
-								</a>
+								<img
+									style={{ border: '1px solid #cabac8' }}
+									ref={imgEl}
+									src={event.image_url}
+									alt='...'
+									onLoad={() => {
+										set(true);
+									}}
+								/>
+
 								<div
 									className={`${classes.coloredShadow} `}
 									style={{
