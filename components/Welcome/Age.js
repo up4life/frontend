@@ -12,11 +12,12 @@ import MomentUtils from '@date-io/moment';
 //import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import moment from 'moment';
 import { Paper } from '@material-ui/core/';
-
+import { withStyles } from '@material-ui/core';
+import styles from '../../static/jss/Welcome/welcomeStyles';
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
 
-const GenderPrefs = () => {
+const GenderPrefs = ({ classes }) => {
 	const [ selectedDate, setSelectedDate ] = useState(null);
 
 	return (
@@ -34,28 +35,8 @@ const GenderPrefs = () => {
 			}}
 		>
 			{updateUser => (
-				<div
-					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-				>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
-							padding: '40px',
-							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
-						}}
-					>
+				<div className={classes.pageWrapper}>
+					<div className={classes.innerWrapper}>
 						<h2>My birthday is...</h2>
 
 						<MuiPickersUtilsProvider utils={MomentUtils}>
@@ -105,4 +86,4 @@ const GenderPrefs = () => {
 	);
 };
 
-export default GenderPrefs;
+export default withStyles(styles)(GenderPrefs);

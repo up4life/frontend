@@ -2,11 +2,12 @@ import React from 'react';
 import Router, { Link } from 'next/router';
 import NProgress from 'nprogress';
 import { Mutation } from 'react-apollo';
-
+import { withStyles } from '@material-ui/core';
+import styles from '../../static/jss/Welcome/welcomeStyles';
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
 
-const Gender = ({ user }) => {
+const Gender = ({ user, classes }) => {
 	const handleSelect = (value, updateUser) => {
 		NProgress.start();
 		updateUser({ variables: { gender: value } });
@@ -25,29 +26,21 @@ const Gender = ({ user }) => {
 			}}
 		>
 			{updateUser => (
-				<div
-					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-				>
+				<div className={classes.pageWrapper}>
 					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							// alignItems: "center",
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
+						className={classes.innerWrapper}
+						// style={{
+						// 	display: 'flex',
+						// 	flexDirection: 'column',
+						// 	// alignItems: "center",
+						// 	justifyContent: 'center',
+						// 	backgroundColor: 'rgb(0,0,0,.6)',
 
-							padding: '90px',
+						// 	padding: '90px',
 
-							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
-						}}
+						// 	//   border: '2px solid #ff101f',
+						// 	borderRadius: '6px',
+						// }}
 					>
 						<h2>I am a...</h2>
 						<Button
@@ -78,4 +71,4 @@ const Gender = ({ user }) => {
 	);
 };
 
-export default Gender;
+export default withStyles(styles)(Gender);

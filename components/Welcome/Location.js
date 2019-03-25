@@ -11,6 +11,8 @@ import Button from '../../styledComponents/CustomButtons/Button';
 import { LOCATION_SUGGESTION_QUERY } from '../Queries/LocationSuggestion';
 import Downshift from 'downshift';
 
+import styles from '../../static/jss/Welcome/welcomeStyles';
+
 const GenderPrefs = ({ classes }) => {
 	const [ location, setLocation ] = useState('');
 	const [ items, setItems ] = useState([]);
@@ -33,26 +35,10 @@ const GenderPrefs = ({ classes }) => {
 			}}
 		>
 			{(updateUser, { client }) => (
-				<div
-					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-				>
+				<div className={classes.pageWrapper}>
 					<div
+						className={classes.innerWrapper}
 						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
-							padding: '40px',
-							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
 							zIndex: '1',
 							width: '400px',
 						}}
@@ -127,4 +113,4 @@ const GenderPrefs = ({ classes }) => {
 	);
 };
 
-export default withStyles(Styles)(GenderPrefs);
+export default withStyles({ ...Styles, ...styles })(GenderPrefs);

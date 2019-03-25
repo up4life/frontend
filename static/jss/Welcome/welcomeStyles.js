@@ -67,16 +67,28 @@ const styles = {
 			color: '#fafafa',
 		},
 	},
+	proIcon: {
+		width: '100px',
+		height: '100px',
+	},
 	favorite: {
+		width: '100px',
+		height: '100px',
 		fill: 'url(#favoriteID) #ff101f',
 	},
 	chat: {
+		width: '100px',
+		height: '100px',
 		fill: 'url(#chatID) #15C0DA',
 	},
 	event: {
+		width: '100px',
+		height: '100px',
 		fill: 'url(#eventID) #B661AB',
 	},
 	receipt: {
+		width: '100px',
+		height: '100px',
 		fill: 'url(#receiptID) #4CB5AE',
 	},
 	proButton: {
@@ -95,6 +107,30 @@ const styles = {
 	},
 	dotActive: {
 		backgroundColor: '#ff101f',
+	},
+	pageWrapper: {
+		height: '100%',
+		width: '100%',
+		color: 'white',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		flexGrow: 1,
+	},
+	innerWrapper: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: 'rgb(0,0,0,.6)',
+		padding: '40px',
+		//   border: '2px solid #ff101f',
+		borderRadius: '6px',
+	},
+	center: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
 	},
 };
 

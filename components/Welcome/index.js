@@ -124,7 +124,7 @@ const Welcome = ({ classes, user, router: { query } }) => {
 					minHeight: '100vh',
 					display: 'flex',
 					flexDirection: 'column',
-					justifyContent: 'space-between',
+					justifyContent: 'center',
 				}}
 				className={classes.container}
 			>

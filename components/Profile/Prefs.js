@@ -33,7 +33,7 @@ const Prefs = ({ classes, currentUser }) => {
 				htmlFor='multiple-select'
 				className={classes.selectLabel}
 			>
-				Interested in
+				Up4 meeting
 			</InputLabel>
 			<Select
 				multiple

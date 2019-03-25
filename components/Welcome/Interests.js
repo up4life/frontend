@@ -14,6 +14,7 @@ import GridContainer from '../../styledComponents/Grid/GridContainer';
 import Accordion from '../../styledComponents/Accordion/Accordion.jsx';
 import { MusicNote, LocalActivity, FitnessCenter } from '@material-ui/icons';
 import style from '../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
+import styles from '../../static/jss/Welcome/welcomeStyles';
 
 const UPDATE_INTERESTS_MUTATION = gql`
 	mutation UPDATE_INTERESTS_MUTATION($data: [GenreWhereUniqueInput!]) {
@@ -139,27 +140,19 @@ const Interests = ({ classes }) => {
 			onError={e => console.log(e)}
 		>
 			{updateUser => (
-				<div
-					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-				>
+				<div className={classes.pageWrapper}>
 					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							// alignItems: "center",
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
-							padding: '90px',
-							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
-						}}
+						className={classes.innerWrapper}
+						// style={{
+						// 	display: 'flex',
+						// 	flexDirection: 'column',
+						// 	// alignItems: "center",
+						// 	justifyContent: 'center',
+						// 	backgroundColor: 'rgb(0,0,0,.6)',
+						// 	padding: '90px',
+						// 	//   border: '2px solid #ff101f',
+						// 	borderRadius: '6px',
+						// }}
 					>
 						<h2>I am interested in...</h2>
 						<p>Please select at least 3.</p>
@@ -201,4 +194,4 @@ const Interests = ({ classes }) => {
 	);
 };
 
-export default withStyles(style)(Interests);
+export default withStyles({ ...style, ...styles })(Interests);

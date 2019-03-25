@@ -4,31 +4,13 @@ import Link from 'next/link';
 import Button from '../../styledComponents/CustomButtons/Button';
 import Logo from '../Header/UpFor';
 import Verify from '../verifyPhone';
+import { withStyles } from '@material-ui/core';
+import styles from '../../static/jss/Welcome/welcomeStyles';
 
-const Main = ({ user }) => {
+const Main = ({ user, classes }) => {
 	return (
-		<div
-			style={{
-				height: '100%',
-				width: '100%',
-				color: 'white',
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-			}}
-		>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					justifyContent: 'center',
-					backgroundColor: 'rgb(0,0,0,.6)',
-					padding: '40px',
-					//   border: '2px solid #ff101f',
-					borderRadius: '6px',
-				}}
-			>
+		<div className={classes.pageWrapper}>
+			<div className={classes.innerWrapper}>
 				<h2 style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 					<span style={{ marginRight: '20px' }}>Welcome to</span>
 					{<Logo />}
@@ -55,4 +37,4 @@ const Main = ({ user }) => {
 	);
 };
 
-export default Main;
+export default withStyles(styles)(Main);

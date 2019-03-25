@@ -6,6 +6,8 @@ import InputRange from 'react-input-range';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
+
+import styles from '../../static/jss/Welcome/welcomeStyles';
 import style from '../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
 const GenderPrefs = ({ classes }) => {
 	const [ agePref, setAgePref ] = useState({
@@ -31,28 +33,8 @@ const GenderPrefs = ({ classes }) => {
 			}}
 		>
 			{updateUser => (
-				<div
-					style={{
-						height: '100%',
-						width: '100%',
-						color: 'white',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-					}}
-				>
-					<div
-						style={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'center',
-							justifyContent: 'center',
-							backgroundColor: 'rgb(0,0,0,.6)',
-							padding: '40px',
-							//   border: '2px solid #ff101f',
-							borderRadius: '6px',
-						}}
-					>
+				<div className={classes.pageWrapper}>
+					<div className={classes.innerWrapper}>
 						<h2>Between the ages of...</h2>
 						<div className={classes.inputRange} style={{ width: '100%' }}>
 							<InputRange
@@ -81,4 +63,4 @@ const GenderPrefs = ({ classes }) => {
 	);
 };
 
-export default withStyles(style)(GenderPrefs);
+export default withStyles({ ...style, ...styles })(GenderPrefs);
