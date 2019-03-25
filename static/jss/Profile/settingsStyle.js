@@ -23,7 +23,7 @@ const style = {
 		height: '180px',
 		width: '180px',
 		borderRadius: '6px',
-		cursor: 'pointer',
+		//cursor: 'pointer',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',

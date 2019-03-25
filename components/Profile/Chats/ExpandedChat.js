@@ -146,9 +146,9 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 								title={
 									<span style={{ color: '#fafafa' }}>
 										{msg.from.firstName}{' '}
-										<small style={{ fontSize: '12px' }}>
+										{/* <small style={{ fontSize: '12px' }}>
 											· {moment(msg.createdAt).fromNow()}
-										</small>
+										</small> */}
 									</span>
 								}
 								body={
