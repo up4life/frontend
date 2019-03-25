@@ -8,7 +8,7 @@ import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
 
 import styles from '../../static/jss/Welcome/welcomeStyles';
-import style from '../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
+
 const GenderPrefs = ({ classes }) => {
 	const [ agePref, setAgePref ] = useState({
 		min: 18,
@@ -25,8 +25,8 @@ const GenderPrefs = ({ classes }) => {
 			onCompleted={() => {
 				NProgress.done();
 				Router.push(
-					`/welcome?slug=5`,
-					`/welcome/profile/location`,
+					`/welcome?slug=7`,
+					`/welcome/profile/about`,
 					{ shallow: true },
 					{ scroll: false },
 				);
@@ -34,8 +34,8 @@ const GenderPrefs = ({ classes }) => {
 		>
 			{updateUser => (
 				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper}>
-						<h2>Between the ages of...</h2>
+					<div className={classes.innerWrapper} style={{ position: 'relative' }}>
+						<h2 style={{ marginBottom: '20px' }}>Between the ages of...</h2>
 						<div className={classes.inputRange} style={{ width: '100%' }}>
 							<InputRange
 								minLabel='range-label'
@@ -48,13 +48,21 @@ const GenderPrefs = ({ classes }) => {
 						</div>
 						<Button
 							color='danger'
-							style={{ zIndex: '1' }}
+							style={{ zIndex: 1 }}
 							onClick={() => {
 								NProgress.start();
 								updateUser();
 							}}
 						>
 							Next
+						</Button>
+						<Button
+							size='sm'
+							simple
+							style={{ position: 'absolute', bottom: 0, right: 0 }}
+							onClick={() => Router.push('/home')}
+						>
+							Skip For Now
 						</Button>
 					</div>
 				</div>
@@ -63,4 +71,4 @@ const GenderPrefs = ({ classes }) => {
 	);
 };
 
-export default withStyles({ ...style, ...styles })(GenderPrefs);
+export default withStyles(styles)(GenderPrefs);

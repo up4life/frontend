@@ -37,9 +37,10 @@ const Bio = ({ user, classes }) => {
 			{updateUser => (
 				<div className={classes.pageWrapper}>
 					<div
-						className={{ ...classes.innerWrapper, ...classes.textArea }}
+						className={classes.innerWrapper}
 						style={{
 							zIndex: '1',
+							position: 'relative',
 						}}
 					>
 						<h2>What I'd like you to know about me is...</h2>
@@ -63,6 +64,7 @@ const Bio = ({ user, classes }) => {
 							style={{
 								marginBottom: '10px',
 								textAlign: 'end',
+								alignSelf: 'flex-end',
 								color: charsLeft <= 20 ? 'red' : 'auto',
 							}}
 							htmlFor='textarea-input'
@@ -80,6 +82,14 @@ const Bio = ({ user, classes }) => {
 							}}
 						>
 							Next
+						</Button>
+						<Button
+							size='sm'
+							simple
+							style={{ position: 'absolute', bottom: 0, right: 0 }}
+							onClick={() => Router.push('/home')}
+						>
+							Skip For Now
 						</Button>
 					</div>
 				</div>

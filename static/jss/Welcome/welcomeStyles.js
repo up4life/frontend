@@ -1,9 +1,13 @@
 import { container } from '../material-kit-pro-react';
 import customSelectStyle from '../material-kit-pro-react/customSelectStyle';
+import chipStyles from '../material-kit-pro-react/chipStyles';
+import inputRangeStyles from '../material-kit-pro-react/inputRangeStyles';
 // import { url } from "inspector";
 const styles = {
 	container,
 	...customSelectStyle,
+	...chipStyles,
+	...inputRangeStyles,
 	pageHeader: {
 		minHeight: '100vh',
 		height: 'auto',
@@ -49,14 +53,7 @@ const styles = {
 	completed: {
 		color: '#da6068 !important',
 	},
-	textArea: {
-		'& textarea': {
-			color: '#fafafa',
-		},
-		'& ::after': {
-			borderBottomColor: '#ff101f',
-		},
-	},
+	textArea: {},
 	verifyInput: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -70,6 +67,15 @@ const styles = {
 	proIcon: {
 		width: '100px',
 		height: '100px',
+	},
+	downshiftContainer: {
+		width: '100%',
+	},
+	downshiftPaper: {
+		position: 'absolute',
+		zIndex: 2,
+		maxWidth: '310px',
+		width: '100%',
 	},
 	favorite: {
 		width: '100px',
@@ -126,6 +132,12 @@ const styles = {
 		padding: '40px',
 		//   border: '2px solid #ff101f',
 		borderRadius: '6px',
+		'& textarea': {
+			color: '#fafafa',
+		},
+		'& ::after': {
+			borderBottomColor: '#ff101f',
+		},
 	},
 	center: {
 		display: 'flex',

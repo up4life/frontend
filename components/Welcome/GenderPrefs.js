@@ -25,8 +25,8 @@ const GenderPrefs = ({ classes }) => {
 			onCompleted={() => {
 				NProgress.done();
 				Router.push(
-					`/welcome?slug=4`,
-					`/welcome/profile/age/preferences`,
+					`/welcome?slug=6`,
+					`/welcome/profile/preferences/age`,
 					{ shallow: true },
 					{ scroll: false },
 				);
@@ -34,7 +34,7 @@ const GenderPrefs = ({ classes }) => {
 		>
 			{updateUser => (
 				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper}>
+					<div className={classes.innerWrapper} style={{ position: 'relative' }}>
 						<h2>I would like to meet...</h2>
 						<Button
 							color='danger'
@@ -74,6 +74,14 @@ const GenderPrefs = ({ classes }) => {
 							}}
 						>
 							Next
+						</Button>
+						<Button
+							size='sm'
+							simple
+							style={{ position: 'absolute', bottom: 0, right: 0 }}
+							onClick={() => Router.push('/home')}
+						>
+							Skip For Now
 						</Button>
 					</div>
 				</div>

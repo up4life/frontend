@@ -29,18 +29,7 @@ const Gender = ({ user, classes }) => {
 				<div className={classes.pageWrapper}>
 					<div
 						className={classes.innerWrapper}
-						// style={{
-						// 	display: 'flex',
-						// 	flexDirection: 'column',
-						// 	// alignItems: "center",
-						// 	justifyContent: 'center',
-						// 	backgroundColor: 'rgb(0,0,0,.6)',
-
-						// 	padding: '90px',
-
-						// 	//   border: '2px solid #ff101f',
-						// 	borderRadius: '6px',
-						// }}
+						style={{ alignItems: 'stretch', padding: '90px' }}
 					>
 						<h2>I am a...</h2>
 						<Button

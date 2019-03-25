@@ -8,7 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '../../styledComponents/CustomButtons/Button';
 import '../../styles/Profile/index.scss';
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
-import defaultImage from '../../static/img/placeholder.jpg';
+
 import { openUploadWidget } from '../../utils/cloudinary';
 import Styles from '../../static/jss/Welcome/welcomeStyles';
 const UPLOAD_IMAGE_MUTATION = gql`
@@ -48,7 +48,12 @@ const GenderPrefs = ({ user, classes }) => {
 		>
 			{uploadImage => (
 				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper}>
+					<div
+						className={classes.innerWrapper}
+						style={{
+							position: 'relative',
+						}}
+					>
 						<h2>I look like...</h2>
 						<div className={'thumbnail'}>
 							{user.img.length ? (
@@ -69,8 +74,8 @@ const GenderPrefs = ({ user, classes }) => {
 									color='danger'
 									onClick={() =>
 										Router.push(
-											`/welcome?slug=7`,
-											`/welcome/profile/about`,
+											`/welcome?slug=5`,
+											`/welcome/profile/preferences/gender`,
 											{ shallow: true },
 											{ scroll: false },
 										)}
@@ -78,6 +83,14 @@ const GenderPrefs = ({ user, classes }) => {
 									Next
 								</Button>
 							) : null}
+							<Button
+								size='sm'
+								simple
+								style={{ position: 'absolute', bottom: 0, right: 0 }}
+								onClick={() => Router.push('/home')}
+							>
+								Skip For Now
+							</Button>
 						</div>
 					</div>
 				</div>

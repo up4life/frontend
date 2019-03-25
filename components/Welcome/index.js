@@ -32,10 +32,10 @@ function getSteps() {
 		'Welcome',
 		'Gender',
 		'Age',
-		'Gender Preference',
-		'Age Preference',
 		'Location',
 		'Images',
+		'Gender Preference',
+		'Age Preference',
 		'Bio',
 		'Interests',
 		'Go Pro',
@@ -51,13 +51,13 @@ function getStepContent(stepIndex, user) {
 		case 2:
 			return <Age />;
 		case 3:
-			return <GenderPrefs />;
-		case 4:
-			return <AgePrefs />;
-		case 5:
 			return <Location />;
-		case 6:
+		case 4:
 			return <Images user={user} />;
+		case 5:
+			return <GenderPrefs />;
+		case 6:
+			return <AgePrefs />;
 		case 7:
 			return <Bio />;
 		case 8:

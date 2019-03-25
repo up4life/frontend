@@ -5,7 +5,7 @@ import { Mutation } from 'react-apollo';
 import { Paper, MenuItem } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Input from '../../styledComponents/CustomInput/CustomInput';
-import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
+
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
 import { LOCATION_SUGGESTION_QUERY } from '../Queries/LocationSuggestion';
@@ -27,7 +27,7 @@ const GenderPrefs = ({ classes }) => {
 			onCompleted={() => {
 				NProgress.done();
 				Router.push(
-					`/welcome?slug=6`,
+					`/welcome?slug=4`,
 					`/welcome/profile/images`,
 					{ shallow: true },
 					{ scroll: false },
@@ -77,7 +77,7 @@ const GenderPrefs = ({ classes }) => {
 									{isOpen ? (
 										<Paper
 											className={classes.downshiftPaper}
-											style={{ maxWidth: '242px' }}
+											//style={{ maxWidth: '242px' }}
 										>
 											{items.map((result, index) => {
 												return (
@@ -113,4 +113,4 @@ const GenderPrefs = ({ classes }) => {
 	);
 };
 
-export default withStyles({ ...Styles, ...styles })(GenderPrefs);
+export default withStyles(styles)(GenderPrefs);

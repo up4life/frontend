@@ -19,7 +19,7 @@ const Main = ({ user, classes }) => {
 				<h3 style={{ textAlign: 'center' }}>Tell us a little about yourself...</h3>
 				<Button
 					color='danger'
-					style={{ zIndex: 1 }}
+					style={{ zIndex: 1, marginBottom: '15px' }}
 					onClick={() => {
 						Router.push(
 							`/welcome?slug=1`,

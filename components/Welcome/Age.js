@@ -28,7 +28,7 @@ const GenderPrefs = ({ classes }) => {
 				NProgress.done();
 				Router.push(
 					`/welcome?slug=3`,
-					`/welcome/profile/gender/preferences`,
+					`/welcome/profile/location`,
 					{ shallow: true },
 					{ scroll: false },
 				);
@@ -70,7 +70,7 @@ const GenderPrefs = ({ classes }) => {
 						</MuiPickersUtilsProvider>
 
 						<Button
-							style={{ zIndex: 1 }}
+							style={{ zIndex: 1, marginTop: '10px' }}
 							color='danger'
 							disabled={!selectedDate}
 							onClick={() => {

@@ -143,16 +143,7 @@ const Interests = ({ classes }) => {
 				<div className={classes.pageWrapper}>
 					<div
 						className={classes.innerWrapper}
-						// style={{
-						// 	display: 'flex',
-						// 	flexDirection: 'column',
-						// 	// alignItems: "center",
-						// 	justifyContent: 'center',
-						// 	backgroundColor: 'rgb(0,0,0,.6)',
-						// 	padding: '90px',
-						// 	//   border: '2px solid #ff101f',
-						// 	borderRadius: '6px',
-						// }}
+						style={{ position: 'relative', padding: '90px' }}
 					>
 						<h2>I am interested in...</h2>
 						<p>Please select at least 3.</p>
@@ -179,13 +170,21 @@ const Interests = ({ classes }) => {
 						<Button
 							disabled={interestedList.length < 3}
 							color='danger'
-							style={{ zIndex: '2', alignSelf: 'flex-end' }}
+							style={{ zIndex: '2' }}
 							onClick={() => {
 								NProgress.start();
 								updateUser();
 							}}
 						>
 							Next
+						</Button>
+						<Button
+							size='sm'
+							simple
+							style={{ position: 'absolute', bottom: 0, right: 0 }}
+							onClick={() => Router.push('/home')}
+						>
+							Skip For Now
 						</Button>
 					</div>
 				</div>
@@ -194,4 +193,4 @@ const Interests = ({ classes }) => {
 	);
 };
 
-export default withStyles({ ...style, ...styles })(Interests);
+export default withStyles(styles)(Interests);
