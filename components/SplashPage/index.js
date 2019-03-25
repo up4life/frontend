@@ -14,6 +14,7 @@ import Button from '../../styledComponents/CustomButtons/Button';
 import Styles from '../../static/jss/material-kit-pro-react/views/landingPageStyle';
 import { spacing } from '@material-ui/system';
 import Logo from '../Header/UpFor';
+import bgImg from '../../static/img/splash.jpeg';
 
 const Splash = ({ classes }) => {
 	const [ registerShowing, setRegisterShowing ] = useState(false);
@@ -22,7 +23,7 @@ const Splash = ({ classes }) => {
 		window.scrollTo(0, 0);
 	}, []);
 	return (
-		<Parallax image='https://images.unsplash.com/photo-1534085838602-9624ac7ab9e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80'>
+		<Parallax image={bgImg}>
 			<div className={classes.container}>
 				<GridContainer>
 					<GridItem
