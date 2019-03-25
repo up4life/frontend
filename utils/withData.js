@@ -27,6 +27,9 @@ export default withApollo(
 				uri: process.env.NODE_ENV === 'development' ? wsEndpoint : wsProdEndpoint,
 				options: {
 					reconnect: true,
+					reconnectionAttempts: 50,
+					lazy: true,
+					timeout: 20000,
 				},
 			});
 
