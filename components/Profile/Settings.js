@@ -43,7 +43,7 @@ const Settings = ({ classes, currentUser }) => {
 							margin: '0 20px',
 						}}
 					>
-						<h2 style={{ color: '#fafafa', display: 'inline' }}>
+						<h2 style={{ color: '#fafafa', display: 'inline', marginBottom: '2px' }}>
 							{currentUser.firstName}{' '}
 							<span style={{ padding: '0 0px' }}>&#8226;</span>{' '}
 							{getAge(currentUser.dob)}

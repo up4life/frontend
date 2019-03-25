@@ -5,14 +5,14 @@ const style = {
 	container,
 
 	profileHeader: {
-		height: '190px',
+		height: '175px',
 		width: '100%',
 		backgroundColor: 'rgba(0,0,0,0.32)',
 		marginBottom: '60px',
 	},
 	innerHeader: {
 		margin: '0 auto',
-		padding: '40px 60px 0',
+		padding: '30px 60px 0',
 		maxWidth: '1200px',
 		display: 'flex',
 		justifyContent: 'flex-start',
