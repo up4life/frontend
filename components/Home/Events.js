@@ -92,17 +92,7 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 	useEffect(() => {
 		NProgress.start();
 	}, []);
-	// return (
-	// 	<Composed>
-	// 		{({
-	// 			//getEvents: { data, refetch, loading },
-	// 			updateUser,
-	// 			drawer,
-	// 			location,
-	// 			filters,
-	// 			user: { data: { currentUser } },
-	// 		}) => {
-	// 			console.log(getEvents);
+
 	getEvents = getEvents && getEvents.data ? getEvents.data.getEvents : [];
 
 	return (

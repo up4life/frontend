@@ -235,10 +235,8 @@ const Event = ({ event, classes, user }) => {
 							</div>
 						</CardBody>
 
-						{event.attending.length ? (
-							<CardFooter
-								style={{ display: 'flex', justifyContent: 'space-between' }}
-							>
+						<CardFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
+							{event.attending.length ? (
 								<div style={{ display: 'flex' }}>
 									{event.attending.filter(x => x.id !== user.id).map(usr => {
 										return (
@@ -261,19 +259,16 @@ const Event = ({ event, classes, user }) => {
 										);
 									})}
 								</div>
-								<div
-									onClick={() => setRotate(classes.activateRotate)}
-									className={classes.flip}
-								>
-									<Flipper
-										className={classes.flipper}
-										style={{ fontSize: '36px' }}
-									/>
-								</div>
-							</CardFooter>
-						) : (
-							''
-						)}
+							) : (
+								''
+							)}
+							<div
+								onClick={() => setRotate(classes.activateRotate)}
+								className={classes.flip}
+							>
+								<Flipper className={classes.flipper} style={{ fontSize: '36px' }} />
+							</div>
+						</CardFooter>
 					</div>
 					<GridContainer
 						style={{
