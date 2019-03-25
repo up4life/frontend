@@ -46,6 +46,8 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 		},
 	);
 
+	const handleSignOut = client => {};
+
 	const formattedChats = (newMessages, user) => {
 		return newMessages
 			.filter(msg => msg.messages)
@@ -235,12 +237,7 @@ const Nav = ({ classes, color, router, href, currentUser }) => {
 							}
 						/>
 					</ListItem>
-					<Mutation
-						mutation={SIGNOUT_MUTATION}
-						refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
-						awaitRefetchQueries
-						onCompleted={() => Router.push('/joinus')}
-					>
+					<Mutation mutation={SIGNOUT_MUTATION} onCompleted={e => console.log(e)}>
 						{(signout, { called, client }) => {
 							{
 								/* if (called) Router.push('/joinus'); */
