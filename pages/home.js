@@ -5,6 +5,7 @@ import { getAllEvents } from '../components/Queries/AllEvents';
 import redirect from "../utils/redirect";
 
 const Home = ({ query, currentUser, getEvents }) => {
+	
 	return (
 		<>
 			<Header color="primary" currentUser={currentUser} />

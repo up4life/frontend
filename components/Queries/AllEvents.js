@@ -64,7 +64,7 @@ export const getAllEvents = async (client, user) => {
 				location: user.location || 'Los Angeles, CA',
 				page: 0,
 				categories: [],
-				genres: [],
+				genres: user.interests.map(x => x.tmID) || [],
 				dates: [],
 			},
 		});
