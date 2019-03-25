@@ -22,11 +22,12 @@ const UpFor = ({ main, justFour, classes }) => {
 		<div
 			className={main ? classes.mainContainer : classes.container}
 			onMouseEnter={() => {
-				setHovering(true);
+				setHovering(!hovering);
+				setInterval(()=> setHovering(false), 5000);
 			}}
-			onMouseLeave={() => {
-				setHovering(false);
-			}}
+			// onMouseLeave={() => {
+			// 	setHovering(false);
+			// }}
 		>
 			{!justFour ? <div className={main ? classes.mainUp : classes.up}>Up</div> : null}
 			<div className={main ? classes.mainFours : classes.fours}>
