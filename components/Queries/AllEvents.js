@@ -56,4 +56,26 @@ const Events = ({ children, variables }) => {
 	);
 };
 
+export const getAllEvents = async (client, user) => {
+	try {
+		const response = await client.query({
+			query: ALL_EVENTS_QUERY,
+			variables: {
+				location: user.location || 'Los Angeles, CA',
+				page: 0,
+				categories: [],
+				genres: [],
+				dates: [],
+			},
+		});
+		if (response) {
+			console.log(response.data);
+			return response;
+		}
+	} catch (e) {
+		console.log('hello', e);
+		return {};
+	}
+};
+
 export default Events;

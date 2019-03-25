@@ -41,7 +41,7 @@ import getAge from '../../utils/getAge';
 //styles
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
-const Event = React.memo(({ event, classes, user, refetch }) => {
+const Event = React.memo(({ event, classes, user }) => {
 	// console.log(event, user, "event & user");
 	const [ deleteEvent ] = useMutation(DELETE_EVENT_MUTATION, {
 		update: (cache, { data }) => {
@@ -170,7 +170,6 @@ const Event = React.memo(({ event, classes, user, refetch }) => {
 										setError(e);
 									}}
 									onCompleted={() => {
-										refetch();
 										NProgress.done();
 									}}
 								>

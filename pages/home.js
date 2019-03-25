@@ -3,12 +3,12 @@ import Header from "../components/Header";
 import { isLoggedIn } from "../components/Queries/User";
 import redirect from "../utils/redirect";
 
-const Home = ({ query, currentUser }) => {
-	console.log(query, currentUser)
+const Home = ({ query, currentUser, getEvents }) => {
+	console.log(getEvents)
 	return (
 		<>
 			<Header color="primary" currentUser={currentUser} />
-			<Events />
+	<Events getEvents={getEvents} currentUser={currentUser}/>
 		</>
 	)
 };
@@ -19,9 +19,11 @@ Home.getInitialProps = async ctx => {
 	console.log(currentUser)
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
+	}else {
+		const  getEvents  = await getAllEvents(ctx.apolloClient, currentUser);
+		console.log(getEvents);
+		return { currentUser, getEvents };
 	}
-
-	return { currentUser };
 };
 
 export default Home;

@@ -28,7 +28,7 @@ import accordionStyle from '../../static/jss/material-kit-pro-react/components/a
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 import { mis, music, sports, performing } from '../../utils/genres';
 
-const Filters = ({ classes, filters, user }) => {
+const Filters = ({ classes, filters, setFilters, user }) => {
 	const { data } = useQuery(ALL_GENRE_QUERY);
 	const [ categoryFilters, setCategeoryFilters ] = useState([]);
 	const [ dateFilters, setDateFilters ] = useState([]);
@@ -75,7 +75,7 @@ const Filters = ({ classes, filters, user }) => {
 
 	useEffect(
 		() => {
-			filters.setState({ cats: categoryFilters, dates: dateFilters, genres: genreFilters });
+			setFilters({ cats: categoryFilters, dates: dateFilters, genres: genreFilters });
 		},
 		[ categoryFilters, dateFilters, genreFilters ],
 	);
