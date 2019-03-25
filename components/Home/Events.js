@@ -12,7 +12,7 @@ import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
 import { Menu, ChevronLeft } from '@material-ui/icons';
 //Q&M
 import { ALL_EVENTS_QUERY } from '../Queries/AllEvents';
-import { CURRENT_USER_QUERY } from '../Queries/User';
+import User, { CURRENT_USER_QUERY } from '../Queries/User';
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 //components
 import Filters from './Filters';
@@ -29,7 +29,7 @@ import backgroundImg from '../../static/img/shattered-dark.png';
 import drawerbgImg from '../../static/img/dark-fish-skin.png';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 
-const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => {
+const Events = ({ classes, router, href, getEvents, ...props }) => {
 	const [ drawer, setDrawer ] = useState(false);
 	const [ page, setPage ] = useState(getEvents.data.getEvents.page_number);
 	const [ events, setEvents ] = useState(getEvents.data.getEvents.events);
@@ -42,96 +42,107 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION);
 
 	return (
-		<div className={classes.background} style={{ backgroundImage: `url(${backgroundImg})` }}>
-			{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
-			<svg
-				style={{ width: 0, height: 0, position: 'absolute' }}
-				aria-hidden='true'
-				focusable='false'
-			>
-				<linearGradient id='favoriteID' x2='1' y2='1'>
-					<stop offset='0%' stopColor='#FF8A8A' />
-					<stop offset='50%' stopColor='#FF545F' />
-					<stop offset='100%' stopColor='#ff101f' />
-				</linearGradient>
-			</svg>
-			<svg
-				style={{ width: 0, height: 0, position: 'absolute' }}
-				aria-hidden='true'
-				focusable='false'
-			>
-				<linearGradient id='chatID' x2='1' y2='1'>
-					<stop offset='0%' stopColor='#81d6e3' />
-					<stop offset='50%' stopColor='#15C0DA' />
-					<stop offset='100%' stopColor='#81d6e3' />
-				</linearGradient>
-			</svg>
-			{/* {newUser && <NewUser />} */}
-			<div className={classes.container}>
-				<Fragment>
-					<IconButton
-						style={{
-							color: 'white',
-							backgroundColor: 'transparent !important',
-						}}
-						aria-label='Open drawer'
-						onClick={() => setDrawer(true)}
-						className={classNames(classes.menuButton, drawer && classes.hide)}
+		<User>
+			{({ data: { currentUser } }) => (
+				<div
+					className={classes.background}
+					style={{ backgroundImage: `url(${backgroundImg})` }}
+				>
+					{router.query.user && (
+						<UserModal user={router.query.user} currentUser={currentUser} />
+					)}
+					<svg
+						style={{ width: 0, height: 0, position: 'absolute' }}
+						aria-hidden='true'
+						focusable='false'
 					>
-						<Menu />
-					</IconButton>
-					<ClickAwayListener onClickAway={() => setDrawer(false)}>
-						<Drawer
-							classes={{ paper: classes.metaDrawer }}
-							variant='persistent'
-							anchor='left'
-							open={drawer}
-						>
-							<div className={classes.drawer}>
-								<IconButton
-									className={classes.transparentButton}
-									onClick={() => setDrawer(false)}
+						<linearGradient id='favoriteID' x2='1' y2='1'>
+							<stop offset='0%' stopColor='#FF8A8A' />
+							<stop offset='50%' stopColor='#FF545F' />
+							<stop offset='100%' stopColor='#ff101f' />
+						</linearGradient>
+					</svg>
+					<svg
+						style={{ width: 0, height: 0, position: 'absolute' }}
+						aria-hidden='true'
+						focusable='false'
+					>
+						<linearGradient id='chatID' x2='1' y2='1'>
+							<stop offset='0%' stopColor='#81d6e3' />
+							<stop offset='50%' stopColor='#15C0DA' />
+							<stop offset='100%' stopColor='#81d6e3' />
+						</linearGradient>
+					</svg>
+					{/* {newUser && <NewUser />} */}
+					<div className={classes.container}>
+						<Fragment>
+							<IconButton
+								style={{
+									color: 'white',
+									backgroundColor: 'transparent !important',
+								}}
+								aria-label='Open drawer'
+								onClick={() => setDrawer(true)}
+								className={classNames(classes.menuButton, drawer && classes.hide)}
+							>
+								<Menu />
+							</IconButton>
+							<ClickAwayListener onClickAway={() => setDrawer(false)}>
+								<Drawer
+									classes={{ paper: classes.metaDrawer }}
+									variant='persistent'
+									anchor='left'
+									open={drawer}
 								>
-									<ChevronLeft />
-								</IconButton>
-								<LocationSearch setLocation={val => setLocation(val)} />
-								<p style={{ margin: 0 }}>Showing events near {location}.</p>
-								<div
-									className={classes.drawerContainer}
-									style={{ backgroundImage: `url(${drawerbgImg})` }}
-								>
-									{currentUser && currentUser.location !== location ? (
-										<Primary>
-											<b
-												onClick={() => {
-													NProgress.start();
-													updateUser({
-														variables: {
-															location: location,
-														},
-													});
-												}}
-												style={{
-													cursor: 'pointer',
-												}}
-											>
-												make default location?
-											</b>
-										</Primary>
-									) : (
-										<div style={{ height: '21px' }} />
-									)}
-								</div>
-							</div>
-							<Filters filters={filters} setFilters={setFilters} user={currentUser} />
-						</Drawer>
-					</ClickAwayListener>
-					<GridContainer>
-						<GridItem sm={12} md={12} sm={12}>
-							{events ? (
-								<GridContainer>
-									<GridItem sm={12} md={6} lg={6}>
-										{/* <InfiniteScroll
+									<div className={classes.drawer}>
+										<IconButton
+											className={classes.transparentButton}
+											onClick={() => setDrawer(false)}
+										>
+											<ChevronLeft />
+										</IconButton>
+										<LocationSearch setLocation={val => setLocation(val)} />
+										<p style={{ margin: 0 }}>Showing events near {location}.</p>
+										<div
+											className={classes.drawerContainer}
+											style={{ backgroundImage: `url(${drawerbgImg})` }}
+										>
+											{currentUser && currentUser.location !== location ? (
+												<Primary>
+													<b
+														onClick={() => {
+															NProgress.start();
+															updateUser({
+																variables: {
+																	location: location,
+																},
+															});
+														}}
+														style={{
+															cursor: 'pointer',
+														}}
+													>
+														make default location?
+													</b>
+												</Primary>
+											) : (
+												<div style={{ height: '21px' }} />
+											)}
+										</div>
+									</div>
+									<Filters
+										filters={filters}
+										setFilters={setFilters}
+										user={currentUser}
+									/>
+								</Drawer>
+							</ClickAwayListener>
+							<GridContainer>
+								<GridItem sm={12} md={12} sm={12}>
+									{events ? (
+										<GridContainer>
+											<GridItem sm={12} md={6} lg={6}>
+												{/* <InfiniteScroll
 														pageStart={getEvents.page_number}
 														loadMore={async p => {
 															console.log(p, getEvents.page_count);
@@ -143,16 +154,16 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 														threshold={400}
 														loader={<div key={0} />}
 													> */}
-										{events.filter((e, i) => i % 2 === 0).map(event => (
-											<Event
-												event={event}
-												key={event.id}
-												//refetch={refetch}
-												user={currentUser}
-											/>
-										))}
+												{events.filter((e, i) => i % 2 === 0).map(event => (
+													<Event
+														event={event}
+														key={event.id}
+														//refetch={refetch}
+														user={currentUser}
+													/>
+												))}
 
-										{/* {getEvents.events.map(event => (
+												{/* {getEvents.events.map(event => (
 															<Event
 																event={event}
 																key={event.id}
@@ -161,28 +172,30 @@ const Events = ({ classes, router, href, getEvents, currentUser, ...props }) => 
 																location={location}
 															/>
 														))} */}
-										{/* </InfiniteScroll> */}
-									</GridItem>
+												{/* </InfiniteScroll> */}
+											</GridItem>
 
-									<GridItem sm={12} md={6} lg={6}>
-										{events.filter((e, i) => i % 2 !== 0).map(event => (
-											<Event
-												event={event}
-												key={event.id}
-												//refetch={refetch}
-												user={currentUser}
-											/>
-										))}
-									</GridItem>
-								</GridContainer>
-							) : (
-								<div />
-							)}
-						</GridItem>
-					</GridContainer>
-				</Fragment>
-			</div>
-		</div>
+											<GridItem sm={12} md={6} lg={6}>
+												{events.filter((e, i) => i % 2 !== 0).map(event => (
+													<Event
+														event={event}
+														key={event.id}
+														//refetch={refetch}
+														user={currentUser}
+													/>
+												))}
+											</GridItem>
+										</GridContainer>
+									) : (
+										<div />
+									)}
+								</GridItem>
+							</GridContainer>
+						</Fragment>
+					</div>
+				</div>
+			)}
+		</User>
 	);
 	// 		}}
 	// 	</Composed>

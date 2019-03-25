@@ -9,6 +9,7 @@ import { IconButton } from '@material-ui/core';
 import { Menu } from '@material-ui/icons';
 
 //Q&M
+import User from '../Queries/User';
 
 //components
 
@@ -26,6 +27,7 @@ import Footer from '../Footer';
 //styles
 import style from '../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
 import '../../styles/Profile/index.scss';
+import bgImg from '../../static/img/shattered-dark.png';
 
 function getContent(slug, user) {
 	switch (slug) {
@@ -42,43 +44,50 @@ function getContent(slug, user) {
 	}
 }
 
-const Profile = ({ classes, theme, router: { query }, currentUser }) => {
+const Profile = ({ classes, theme, router: { query } }) => {
 	const [ drawerOpen, setDrawerOpen ] = useState(false);
 
 	return (
-		<div
-			style={{
-				backgroundColor: '#000',
-				height: '100%',
+		<User>
+			{({ data: { currentUser } }) => (
+				<div
+					style={{
+						backgroundColor: '#000',
+						height: '100%',
 
-				backgroundImage:
-					'url(https://www.transparenttextures.com/patterns/shattered-dark.png)',
-			}}
-		>
-			{query.user && <UserModal user={query.user} currentUser={currentUser} />}
-			<MenuDrawer user={currentUser} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-			{/* <IconButton
+						backgroundImage: `url(${bgImg})`,
+					}}
+				>
+					{query.user && <UserModal user={query.user} currentUser={currentUser} />}
+					<MenuDrawer
+						user={currentUser}
+						drawerOpen={drawerOpen}
+						setDrawerOpen={setDrawerOpen}
+					/>
+					{/* <IconButton
 				// color="inherit"
 				style={{ color: 'white', position: 'absolute' }}
 				aria-label='Open drawer'
 				onClick={() => setDrawerOpen(!drawerOpen)}
 				className={classNames(classes.menuButton)}
 			> */}
-			{/* <Menu />
+					{/* <Menu />
 			</IconButton> */}
-			<div
-				style={{
-					minHeight: 'calc(100vh - 95px)',
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'space-between',
-					marginLeft: '80px',
-				}}
-			>
-				{getContent(query.slug, currentUser)}
-				<Footer />
-			</div>
-		</div>
+					<div
+						style={{
+							minHeight: 'calc(100vh - 95px)',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'space-between',
+							marginLeft: '80px',
+						}}
+					>
+						{getContent(query.slug, currentUser)}
+						<Footer />
+					</div>
+				</div>
+			)}
+		</User>
 	);
 };
 
