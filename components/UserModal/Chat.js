@@ -226,6 +226,7 @@ const Chat = ({
 													</div>
 													{currentUser.permissions !== 'FREE' &&
 													!fromMatch &&
+													lastSeenMessage &&
 													lastSeenMessage.id === m.id ? (
 														<div>
 															<small>
