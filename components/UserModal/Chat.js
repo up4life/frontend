@@ -160,7 +160,8 @@ const Chat = ({
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>
 				{messages ? (
-					messages.map(msg => {
+					messages.map((msg, i) => {
+						console.log(i);
 						let fromMatch = msg[0].from.id === id;
 						let unseen = !msg[0].seen && msg[0].from.id !== currentUser.id;
 						let img = msg[0].from.img.find(img => img.default).img_url;
@@ -222,10 +223,12 @@ const Chat = ({
 												</div>
 											</div>
 										))}
-										{currentUser.permissions !== 'FREE' && msg.seen ? (
+										{currentUser.permissions !== 'FREE' && !fromMatch ? (
 											<small>
 												<span style={{ marginRight: '2px' }}>seen</span>
-												{moment(msg.UpdatedAt).format('M/D/YY h:mm a')}
+												{moment(msg[msg.length - 1].updatedAt).format(
+													'M/D/YY h:mm a',
+												)}
 											</small>
 										) : null}
 									</span>
@@ -248,7 +251,7 @@ const Chat = ({
 					NProgress.done();
 				}}
 				onError={e => {
-					// console.log(e);
+					console.log(e);
 					NProgress.done();
 				}}
 			>
@@ -275,23 +278,6 @@ const Chat = ({
 								setMessage('');
 							}}
 						>
-							{/* <CustomInput
-								id='logged'
-								className={classes.inputWidth}
-								formControlProps={{
-									fullWidth: true,
-								}}
-								inputProps={{
-									multiline: true,
-									rows: 6,
-									placeholder: data.getConversation
-										? `Respond to ${match.firstName}`
-										: `Send ${match.firstName} a message.`,
-									value: message,
-									onChange: e => setMessage(e.target.value),
-								}}
-							/> */}
-
 							<TextareaAutosize
 								className={classes.textareaAutosize}
 								onChange={e => setMessage(e.target.value)}

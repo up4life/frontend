@@ -121,10 +121,13 @@ const javascriptStyles = theme => {
 			},
 		},
 		chatBorder: {
+			height: '100%',
 			border: '4px solid #cabac8',
 			borderRadius: '6px',
 			width: '100%',
 			padding: '10px',
+			display: 'flex',
+			flexDirection: 'column',
 			backgroundColor: '#1b1b1b59',
 			backgroundImage: 'url("https://www.transparenttextures.com/patterns/ag-square.png")',
 			'& p': {
@@ -143,7 +146,7 @@ const javascriptStyles = theme => {
 		},
 
 		chat: {
-			height: '600px',
+			flexGrow: 1,
 			overflowY: 'scroll',
 			backgroundColor: '#373737',
 			backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)',
