@@ -18,7 +18,7 @@ const CommonEvents = ({ classes, id }) => {
 	const { data } = useQuery(SHARED_EVENTS_QUERY, { variables: { id } });
 	if (!data.getSharedEvents) return <div>loading</div>;
 	return (
-		<GridContainer style={{ maxHeight: '50%' }}>
+		<GridContainer style={{ maxHeight: '50%', overflow: 'scroll' }}>
 			{/* <h4 style={{textAlign: 'center'}}className={classes.title}>Events in common</h4> */}
 			{/* <GridContainer style={{ display: 'flex' }}> */}
 
