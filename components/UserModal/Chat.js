@@ -155,15 +155,15 @@ const Chat = ({
 		data.getConversation && data.getConversation.messages.length
 			? groupByUser(data.getConversation.messages)
 			: null;
-
+	let lastSeenMessage = [ ...data.getConversation.messages ]
+		.reverse()
+		.find(x => x.from.id === currentUser.id && x.seen);
+	console.log(lastSeenMessage);
 	return (
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>
 				{messages ? (
 					messages.map((msg, i) => {
-						let seenMsgs = msg.map(x => x.seen);
-						let lastSeen = seenMsgs.lastIndexOf(true);
-						console.log(lastSeen);
 						let fromMatch = msg[0].from.id === id;
 						let unseen = !msg[0].seen && msg[0].from.id !== currentUser.id;
 						let img = msg[0].from.img.find(img => img.default).img_url;
@@ -193,7 +193,6 @@ const Chat = ({
 								body={
 									<span>
 										{msg.map((m, i) => {
-											let lastSeenMsg = i === lastSeen;
 											return (
 												<div>
 													<div
@@ -227,7 +226,7 @@ const Chat = ({
 													</div>
 													{currentUser.permissions !== 'FREE' &&
 													!fromMatch &&
-													lastSeenMsg ? (
+													lastSeenMessage.id === m.id ? (
 														<div>
 															<small>
 																<span
@@ -236,7 +235,7 @@ const Chat = ({
 																	seen
 																</span>
 																{moment(
-																	msg[msg.length - 1].updatedAt,
+																	lastSeenMessage.updatedAt,
 																).format('M/D/YY h:mm a')}
 															</small>
 														</div>
