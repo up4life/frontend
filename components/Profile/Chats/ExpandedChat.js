@@ -116,6 +116,30 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	if (chat) {
 		friend = chat.users.find(user => user.id !== currentUser.id);
 	}
+
+	function groupByUser(messages) {
+		const grouped = [];
+		let fromSameUser = [ messages[0] ];
+		let user = messages[0].from.id;
+
+		for (let i = 1; i < messages.length; i++) {
+			if (messages[i].from.id !== user) {
+				grouped.push(fromSameUser);
+				fromSameUser = [ messages[i] ];
+				user = messages[i].from.id;
+			} else {
+				fromSameUser.push(messages[i]);
+			}
+		}
+
+		grouped.push(fromSameUser);
+		return grouped;
+	}
+
+	let messages = chat && chat.messages.length ? groupByUser(chat.messages) : null;
+	let lastSeenMessage = chat
+		? [ ...chat.messages ].reverse().find(x => x.from.id === currentUser.id && x.seen)
+		: null;
 	return (
 		<div
 			style={{
@@ -129,44 +153,83 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 		>
 			<div className={classes.messageList} ref={msgRef}>
 				{chat &&
-					chat.messages.map(msg => {
-						const img = msg.from.img.find(x => x.default).img_url;
+					messages.map(msg => {
+						let fromMatch = msg[0].from.id !== currentUser.id;
+						const img = msg[0].from.img.find(x => x.default).img_url;
 						return (
 							<Media
-								currentUser={currentUser && msg.from.id === currentUser.id}
-								key={msg.id}
+								currentUser={!fromMatch}
+								key={msg[0].id}
 								avatar={img}
 								avatarClick={() =>
 									Router.push(
-										`/profile?slug=chats&user=${msg.from.id}`,
-										`/profile/chat/user/${msg.from.id}`,
+										`/profile?slug=chats&user=${msg[0].from.id}`,
+										`/profile/chat/user/${msg[0].from.id}`,
 										{ shallow: true },
 										{ scroll: false },
 									)}
 								title={
 									<span style={{ color: '#fafafa' }}>
-										{msg.from.firstName}{' '}
+										{msg[0].from.firstName}{' '}
 										{/* <small style={{ fontSize: '12px' }}>
 											· {moment(msg.createdAt).fromNow()}
 										</small> */}
 									</span>
 								}
 								body={
-									<span
-										style={{
-											maxWidth: '300px',
-											wordBreak: 'break-word',
-										}}
-									>
-										<p style={{ color: '#fafafa', fontSize: '14px' }}>
-											{msg.text}
-										</p>
-										{currentUser.permissions !== 'FREE' && msg.seen ? (
-											<small>
-												<span style={{ marginRight: '2px' }}>seen</span>
-												{moment(msg.UpdatedAt).format('M/D/YY h:mm a')}
-											</small>
-										) : null}
+									<span>
+										{msg.map((m, i) => {
+											return (
+												<div>
+													<div
+														style={{
+															display: 'inline-flex',
+															alignItems: 'center',
+															flexDirection: fromMatch
+																? 'row'
+																: 'row-reverse',
+														}}
+													>
+														<p
+															style={{
+																wordBreak: 'break-word',
+																fontSize: '14px',
+															}}
+														>
+															{m.text}
+														</p>{' '}
+														<small
+															style={{
+																marginBottom: '10px',
+																marginLeft: '5px',
+																marginRight: '5px',
+																display: 'none',
+															}}
+														>
+															{' '}
+															{moment(msg.createdAt).fromNow()}
+														</small>
+													</div>
+													{currentUser.permissions !== 'FREE' &&
+													!fromMatch &&
+													lastSeenMessage &&
+													lastSeenMessage.id === m.id ? (
+														<div>
+															<small>
+																<span
+																	style={{ marginRight: '2px' }}
+																>
+																	seen
+																</span>
+																{moment(
+																	lastSeenMessage.updatedAt,
+																).format('M/D/YY h:mm a')}
+															</small>
+														</div>
+													) : null}
+												</div>
+											);
+										})}
 									</span>
 								}
 							/>
