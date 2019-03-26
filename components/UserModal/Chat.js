@@ -158,7 +158,7 @@ const Chat = ({
 	let lastSeenMessage = [ ...data.getConversation.messages ]
 		.reverse()
 		.find(x => x.from.id === currentUser.id && x.seen);
-	console.log(lastSeenMessage);
+
 	return (
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>

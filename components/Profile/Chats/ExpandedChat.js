@@ -162,12 +162,14 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 								key={msg[0].id}
 								avatar={img}
 								avatarClick={() =>
-									Router.push(
-										`/profile?slug=chats&user=${msg[0].from.id}`,
-										`/profile/chat/user/${msg[0].from.id}`,
-										{ shallow: true },
-										{ scroll: false },
-									)}
+									fromMatch
+										? Router.push(
+												`/profile?slug=chats&user=${msg[0].from.id}`,
+												`/profile/chat/user/${msg[0].from.id}`,
+												{ shallow: true },
+												{ scroll: false },
+											)
+										: null}
 								title={
 									<span style={{ color: '#fafafa' }}>
 										{msg[0].from.firstName}{' '}
