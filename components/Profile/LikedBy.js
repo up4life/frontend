@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
 
 const LikedBy = ({ user, classes }) => {
-	const { data } = useQuery(LIKED_BY_QUERY);
+	const { data } = useQuery(LIKED_BY_QUERY, { pollInterval: 6000 });
 
 	const hidden = user.permissions === 'FREE';
 	if (!data.getLikedByList || !data.getLikedByList.length) return null;

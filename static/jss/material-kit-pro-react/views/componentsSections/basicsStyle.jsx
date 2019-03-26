@@ -1,6 +1,8 @@
 import { container, title, mlAuto, mrAuto } from '../../../material-kit-pro-react';
 import customCheckboxRadioSwitch from '../../../material-kit-pro-react/customCheckboxRadioSwitchStyle';
 import customSelectStyle from '../../../material-kit-pro-react/customSelectStyle';
+import chipStyles from '../../../material-kit-pro-react/chipStyles';
+import inputRangeStyles from '../../../material-kit-pro-react/inputRangeStyles';
 
 const drawerWidth = 'auto';
 
@@ -10,6 +12,7 @@ const basicsStyle = theme => ({
 	container,
 	...customSelectStyle,
 	...customCheckboxRadioSwitch,
+	...chipStyles,
 	sections: {
 		padding: '70px 0',
 	},
@@ -105,15 +108,6 @@ const basicsStyle = theme => ({
 			duration: theme.transitions.duration.enteringScreen,
 		}),
 		marginLeft: 0,
-	},
-	chip: {
-		margin: '5px',
-		fontSize: '12px',
-	},
-	interestedChip: {
-		margin: '5px',
-		fontSize: '12px',
-		color: '#fafafa',
 	},
 	inputRange: {
 		marginBottom: '13px',
@@ -259,12 +253,12 @@ const basicsStyle = theme => ({
 	},
 	interests: {
 		'& span': {
-			color: '#fafafa'
+			color: '#fafafa',
 		},
 		'& svg': {
-			color: '#fafafa'
-		}
-	}
+			color: '#fafafa',
+		},
+	},
 });
 
 export default basicsStyle;
