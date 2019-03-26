@@ -39,12 +39,9 @@ const SIGNOUT_MUTATION = gql`
 	}
 `;
 const Nav = ({ classes, color, router, href }) => {
-	const { data, loading, refetch } = useQuery(
-		ALL_CHATS_QUERY,
-		{
-			// pollInterval: 600
-		},
-	);
+	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
+		pollInterval: 600,
+	});
 
 	const handleSignOut = client => {};
 
