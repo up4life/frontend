@@ -155,13 +155,15 @@ const Chat = ({
 		data.getConversation && data.getConversation.messages.length
 			? groupByUser(data.getConversation.messages)
 			: null;
-	console.log(messages);
+
 	return (
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>
 				{messages ? (
 					messages.map((msg, i) => {
-						console.log(i);
+						let seenMsgs = msg.map(x => x.seen);
+						let lastSeen = seenMsgs.lastIndexOf(true);
+						console.log(lastSeen);
 						let fromMatch = msg[0].from.id === id;
 						let unseen = !msg[0].seen && msg[0].from.id !== currentUser.id;
 						let img = msg[0].from.img.find(img => img.default).img_url;
@@ -190,47 +192,58 @@ const Chat = ({
 								}
 								body={
 									<span>
-										{msg.map(m => (
-											<div>
-												<div
-													style={{
-														display: 'inline-flex',
-														alignItems: 'center',
-														flexDirection: fromMatch
-															? 'row'
-															: 'row-reverse',
-													}}
-												>
-													<p
+										{msg.map((m, i) => {
+											let lastSeenMsg = i === lastSeen;
+											return (
+												<div>
+													<div
 														style={{
-															wordBreak: 'break-word',
-															fontSize: '14px',
+															display: 'inline-flex',
+															alignItems: 'center',
+															flexDirection: fromMatch
+																? 'row'
+																: 'row-reverse',
 														}}
 													>
-														{m.text}
-													</p>{' '}
-													<small
-														style={{
-															marginBottom: '10px',
-															marginLeft: '5px',
-															marginRight: '5px',
-															display: 'none',
-														}}
-													>
-														{' '}
-														{moment(msg.createdAt).fromNow()}
-													</small>
+														<p
+															style={{
+																wordBreak: 'break-word',
+																fontSize: '14px',
+															}}
+														>
+															{m.text}
+														</p>{' '}
+														<small
+															style={{
+																marginBottom: '10px',
+																marginLeft: '5px',
+																marginRight: '5px',
+																display: 'none',
+															}}
+														>
+															{' '}
+															{moment(msg.createdAt).fromNow()}
+														</small>
+													</div>
+													{currentUser.permissions !== 'FREE' &&
+													!fromMatch &&
+													lastSeenMsg ? (
+														<div>
+															<small>
+																<span
+																	style={{ marginRight: '2px' }}
+																>
+																	seen
+																</span>
+																{moment(
+																	msg[msg.length - 1].updatedAt,
+																).format('M/D/YY h:mm a')}
+															</small>
+														</div>
+													) : null}
 												</div>
-											</div>
-										))}
-										{currentUser.permissions !== 'FREE' && !fromMatch ? (
-											<small>
-												<span style={{ marginRight: '2px' }}>seen</span>
-												{moment(msg[msg.length - 1].updatedAt).format(
-													'M/D/YY h:mm a',
-												)}
-											</small>
-										) : null}
+											);
+										})}
 									</span>
 								}
 							/>

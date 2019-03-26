@@ -146,7 +146,9 @@ const javascriptStyles = theme => {
 		},
 
 		chat: {
-			flexGrow: 1,
+			//flexGrow: 1,
+			maxHeight: '75%',
+			height: '75%',
 			overflowY: 'scroll',
 			backgroundColor: '#373737',
 			backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)',
