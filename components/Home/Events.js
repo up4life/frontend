@@ -253,12 +253,10 @@ const Events = ({ classes, router, href, user, ...props }) => {
 									</GridItem>
 								</GridContainer>
 							</Fragment>
-							{getEvents.data.getEvents.page_number <
-							getEvents.data.getEvents.page_total ? (
-								<div className={classes.centerButton}>
-									<Button onClick={() => setPage(page + 1)}>Load More</Button>
-								</div>
-							) : null}
+
+							<div className={classes.centerButton}>
+								<Button onClick={() => setPage(page + 1)}>Load More</Button>
+							</div>
 						</div>
 					</div>
 					<Footer />
