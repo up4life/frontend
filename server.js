@@ -8,7 +8,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
 	const server = express();
 
-	app.use(sslRedirect());
+	server.use(sslRedirect());
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
