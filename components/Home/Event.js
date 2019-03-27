@@ -343,7 +343,7 @@ const Event = ({ event, classes, user }) => {
 										</h6>
 									</div>
 								</div>
-								<GridContainer style={{ justifyContent: 'space-around' }}>
+								<GridContainer>
 									{event.attending.map(usr => {
 										let chat = user
 											? user.chats.find(x =>
@@ -360,7 +360,7 @@ const Event = ({ event, classes, user }) => {
 										let liked = user
 											? user.liked.find(x => x.id === usr.id)
 											: false;
-										console.log(newChat);
+
 										return (
 											<GridItem
 												key={usr.id}

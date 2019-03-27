@@ -47,7 +47,10 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 		skip,
 		fetchPolicy: 'network-only',
 	});
-	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION);
+	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION, {
+		onCompleted: () => NProgress.done(),
+		onError: () => NProgress.done(),
+	});
 
 	useEffect(
 		() => {

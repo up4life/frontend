@@ -271,6 +271,7 @@ const styles = {
 	cardBodyRotate: {
 		overflow: 'auto',
 		'& .genderPreference': {
+			paddingLeft: '4px',
 			color: '#ff101f',
 		},
 		'& .agePreference': {
