@@ -6,19 +6,19 @@ import Welcome from './welcome';
 
 const Index = ({ currentUser }) => {
 	if (!currentUser.gender) return <Welcome currentUser={currentUser} query={{ slug: 0 }} />;
-	else return <Home user={currentUser} />;
+	else return <Home currentUser={currentUser} />;
 };
 
 Index.getInitialProps = async ctx => {
 	const { currentUser } = await isLoggedIn(ctx.apolloClient);
-
+	console.log(currentUser);
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
+		return {};
 	} else {
 		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
 		return { currentUser, getEvents };
 	}
-	return {};
 };
 
 export default Index;
