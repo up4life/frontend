@@ -20,9 +20,9 @@ Home.getInitialProps = async ctx => {
 		redirect(ctx, '/joinus');
 	// }else {
 	// 	const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
-		return { currentUser};
-	}
 	
+	}
+	return { currentUser};
 };
 
 export default Home;
