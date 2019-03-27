@@ -32,24 +32,23 @@ import backgroundImg from '../../static/img/shattered-dark.png';
 import drawerbgImg from '../../static/img/dark-fish-skin.png';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 
-const Events = ({ classes, router, href, getEvents, ...props }) => {
+const Events = ({ classes, router, href, user, ...props }) => {
 	const client = useApolloClient();
 	const [ drawer, setDrawer ] = useState(false);
 	const [ skip, setSkip ] = useState(true);
 	const [ page, setPage ] = useState(0);
-	const [ events, setEvents ] = useState(getEvents.data.getEvents.events);
-	const [ location, setLocation ] = useState(getEvents.data.getEvents.location);
+	const [ events, setEvents ] = useState(data.getEvents.events);
+	const [ location, setLocation ] = useState(user.location);
 	const [ filters, setFilters ] = useState({
-		categories: getEvents.data.getEvents.categories,
-		genres: getEvents.data.getEvents.genres,
-		dates: getEvents.data.getEvents.dates,
+		categories: [],
+		genres: user.interests.map(x => x.tmID),
+		dates: [],
 	});
 	const variables = { page, location, ...filters };
 	async function fetchEvents() {
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
-			skip,
 			fetchPolicy: 'network-only',
 		});
 		return data;

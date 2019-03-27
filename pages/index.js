@@ -4,9 +4,9 @@ import redirect from '../utils/redirect';
 import Home from './home';
 import Welcome from './welcome';
 
-const Index = ({ currentUser, getEvents }) => {
+const Index = ({ currentUser }) => {
 	if (!currentUser.gender) return <Welcome currentUser={currentUser} query={{ slug: 0 }} />;
-	else return <Home currentUser={currentUser} getEvents={getEvents} />;
+	else return <Home user={currentUser} />;
 };
 
 Index.getInitialProps = async ctx => {
@@ -14,10 +14,8 @@ Index.getInitialProps = async ctx => {
 
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
-	} else {
-		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
-		return { currentUser, getEvents };
 	}
+	return { currentUser };
 };
 
 export default Index;
