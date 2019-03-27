@@ -37,7 +37,7 @@ const Events = ({ classes, router, href, user, ...props }) => {
 	const [ drawer, setDrawer ] = useState(false);
 	const [ skip, setSkip ] = useState(true);
 	const [ page, setPage ] = useState(0);
-	const [ events, setEvents ] = useState(data.getEvents.events);
+	const [ events, setEvents ] = useState([]);
 	const [ location, setLocation ] = useState(user.location);
 	const [ filters, setFilters ] = useState({
 		categories: [],
