@@ -54,6 +54,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 		console.log(getEvents, data.getEvents);
 		return data;
 	}
+	console.log(page);
 
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION, {
 		onCompleted: () => NProgress.done(),
@@ -71,7 +72,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 
 	useEffect(
 		() => {
-			if (page !== getEvents.data.getEvents.page_number) {
+			if (page > getEvents.data.getEvents.page_number) {
 				fetchEvents()
 					.then(({ getEvents }) => {
 						let newEvents = getEvents.events.filter(
