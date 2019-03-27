@@ -130,7 +130,7 @@ const javascriptStyles = theme => {
 			width: '100%',
 			padding: '10px',
 			display: 'flex',
-			height: 'calc(100vh - 150px)',
+			height: 'calc(100vh - 160px)',
 			flexDirection: 'column',
 			backgroundColor: '#1b1b1b59',
 			backgroundImage: 'url("https://www.transparenttextures.com/patterns/ag-square.png")',
