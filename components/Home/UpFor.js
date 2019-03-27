@@ -34,7 +34,7 @@ const UpFor = ({ main, justFour, handleClick, classes }) => {
       className={main ? classes.mainContainer : classes.container}
       onClick={handleClick}
       onMouseEnter={() => {
-        setHovering(!hovering);
+        setHovering(true);
         setInterval(() => setHovering(false), 5000);
       }}
     >
