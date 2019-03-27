@@ -23,6 +23,9 @@ export const ALL_EVENTS_QUERY = gql`
 			page_number
 			page_total
 			location
+			genres
+			categories
+			dates
 			events {
 				id
 				tmID
@@ -57,7 +60,6 @@ const Events = ({ children, variables }) => {
 };
 
 export const getAllEvents = async (client, user) => {
-	console.log('events client', client);
 	try {
 		const response = await client.query({
 			query: ALL_EVENTS_QUERY,
@@ -70,7 +72,6 @@ export const getAllEvents = async (client, user) => {
 			},
 		});
 		if (response) {
-			console.log(response.data);
 			return response;
 		}
 	} catch (e) {

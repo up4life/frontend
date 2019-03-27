@@ -28,57 +28,46 @@ import accordionStyle from '../../static/jss/material-kit-pro-react/components/a
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 import { mis, music, sports, performing } from '../../utils/genres';
 
-const Filters = ({ classes, filters, setFilters, user }) => {
+const Filters = ({ classes, filters, setFilters, refetch }) => {
 	const { data } = useQuery(ALL_GENRE_QUERY);
-	const [ categoryFilters, setCategeoryFilters ] = useState([]);
-	const [ dateFilters, setDateFilters ] = useState([]);
-	const [ genreFilters, setGenreFilters ] = useState([]);
+	const [ categoryFilters, setCategeoryFilters ] = useState(filters.categories);
+	const [ dateFilters, setDateFilters ] = useState(filters.dates);
+	const [ genreFilters, setGenreFilters ] = useState(filters.genres);
 	const [ selectedDate, setSelectedDate ] = useState(null);
 
 	const handleCategoryFilters = ({ target: { id } }) => {
-		categoryFilters.indexOf(id) !== -1
-			? setCategeoryFilters(categoryFilters.filter(i => i !== id))
-			: setCategeoryFilters([ ...categoryFilters, id ]);
+		filters.categories.indexOf(id) !== -1
+			? setFilters({ ...filters, categories: filters.categories.filter(i => i !== id) })
+			: setFilters({ ...filters, categories: [ ...filters.categories, id ] });
 	};
 
 	const handleDateFilters = ({ target: { id } }) => {
-		dateFilters.indexOf(id) !== -1
-			? setDateFilters(dateFilters.filter(i => i !== id))
-			: setDateFilters([ ...dateFilters, id ]);
+		filters.dates.indexOf(id) !== -1
+			? setFilters({ ...filters, dates: filters.dates.filter(i => i !== id) })
+			: setFilters({ ...filters, dates: [ ...filters.dates, id ] });
 	};
 
 	const handleGenreFilters = ({ target: { id } }) => {
-		genreFilters.indexOf(id) !== -1
-			? setGenreFilters(genreFilters.filter(i => i !== id))
-			: setGenreFilters([ ...genreFilters, id ]);
+		filters.genres.indexOf(id) !== -1
+			? setFilters({ ...filters, genres: filters.genres.filter(i => i !== id) })
+			: setFilters({ ...filters, genres: [ ...filters.genres, id ] });
 	};
 	const handleDateChange = date => {
 		setSelectedDate(date);
 	};
 
-	useEffect(() => {
-		if (user.interests.length) {
-			setGenreFilters(user.interests.map(x => x.tmID));
-		}
-	}, []);
-
 	useEffect(
 		() => {
 			if (selectedDate) {
-				setDateFilters([ selectedDate ]);
+				setFilters({ ...filters, dates: [ selectedDate ] });
+				//refetch();
 			} else {
-				setDateFilters([]);
+				setFilters({ ...filters, dates: [] });
 			}
 		},
 		[ selectedDate ],
 	);
 
-	useEffect(
-		() => {
-			setFilters({ cats: categoryFilters, dates: dateFilters, genres: genreFilters });
-		},
-		[ categoryFilters, dateFilters, genreFilters ],
-	);
 	return (
 		<Card plain style={{ marginTop: 0 }}>
 			<CardBody className={classes.cardBodyRefine}>
@@ -150,7 +139,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																categoryFilters.indexOf(
+																filters.categories.indexOf(
 																	'KZFzniwnSyZfZ7v7nJ',
 																) !== -1 ? (
 																	true
@@ -203,7 +192,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 																				handleGenreFilters
 																			}
 																			checked={
-																				genreFilters.indexOf(
+																				filters.genres.indexOf(
 																					i.tmID,
 																				) !== -1 ? (
 																					true
@@ -270,7 +259,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																categoryFilters.indexOf(
+																filters.categories.indexOf(
 																	'KZFzniwnSyZfZ7v7na',
 																) !== -1 ? (
 																	true
@@ -323,7 +312,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 																		tabIndex={-1}
 																		onClick={handleGenreFilters}
 																		checked={
-																			genreFilters.indexOf(
+																			filters.genres.indexOf(
 																				i.tmID,
 																			) !== -1 ? (
 																				true
@@ -386,7 +375,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																categoryFilters.indexOf(
+																filters.categories.indexOf(
 																	'KZFzniwnSyZfZ7v7nE',
 																) !== -1 ? (
 																	true
@@ -438,7 +427,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 																		tabIndex={-1}
 																		onClick={handleGenreFilters}
 																		checked={
-																			genreFilters.indexOf(
+																			filters.genres.indexOf(
 																				i.tmID,
 																			) !== -1 ? (
 																				true
@@ -513,7 +502,8 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 													tabIndex={-1}
 													onClick={handleDateFilters}
 													checked={
-														dateFilters.indexOf('this week') !== -1 ? (
+														filters.dates.indexOf('this week') !==
+														-1 ? (
 															true
 														) : (
 															false
@@ -541,7 +531,7 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 													tabIndex={-1}
 													onClick={handleDateFilters}
 													checked={
-														dateFilters.indexOf('this weekend') !==
+														filters.dates.indexOf('this weekend') !==
 														-1 ? (
 															true
 														) : (
@@ -570,7 +560,8 @@ const Filters = ({ classes, filters, setFilters, user }) => {
 													tabIndex={-1}
 													onClick={handleDateFilters}
 													checked={
-														dateFilters.indexOf('next week') !== -1 ? (
+														filters.dates.indexOf('next week') !==
+														-1 ? (
 															true
 														) : (
 															false
