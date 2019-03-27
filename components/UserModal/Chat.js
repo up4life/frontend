@@ -4,7 +4,7 @@ import moment from 'moment';
 import Router from 'next/router';
 import gql from 'graphql-tag';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+//import withStyles from '@material-ui/core/styles/withStyles';
 import { Send } from '@material-ui/icons';
 
 import { Mutation, withApollo } from 'react-apollo';
@@ -15,7 +15,7 @@ import Verify from '../verifyPhone';
 import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx';
 import Media from '../../styledComponents/Media/Media.jsx';
 import Button from '../../styledComponents/CustomButtons/Button';
-import { ButtonBase } from '@material-ui/core';
+import { ButtonBase, Tooltip, withStyles } from '@material-ui/core';
 import TextareaAutosize from 'react-autosize-textarea';
 
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
@@ -210,14 +210,22 @@ const Chat = ({
 																: 'row-reverse',
 														}}
 													>
-														<p
-															style={{
-																wordBreak: 'break-word',
-																fontSize: '14px',
-															}}
+														<Tooltip
+															title={moment(msg.createdAt).format(
+																'MMM Do h:mm a',
+															)}
+															placement='bottom'
 														>
-															{m.text}
-														</p>{' '}
+															<p
+																style={{
+																	wordBreak: 'break-word',
+																	fontSize: '14px',
+																	cursor: 'default',
+																}}
+															>
+																{m.text}
+															</p>
+														</Tooltip>
 														<small
 															style={{
 																marginBottom: '10px',
@@ -227,7 +235,7 @@ const Chat = ({
 															}}
 														>
 															{' '}
-															{moment(msg.createdAt).fromNow()}
+															{/* //{moment(msg.createdAt).fromNow()} */}
 														</small>
 													</div>
 													{currentUser.permissions !== 'FREE' &&

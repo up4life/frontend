@@ -108,6 +108,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 									formattedChats(data.getUserChats).map((chat, i) => (
 										<div
 											key={chat.id}
+											style={{ cursor: 'pointer' }}
 											onClick={() => {
 												setChatId(chat.id);
 											}}

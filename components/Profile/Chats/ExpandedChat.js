@@ -5,7 +5,7 @@ import { useMutation } from 'react-apollo-hooks';
 import Router from 'next/router';
 import moment from 'moment';
 import gql from 'graphql-tag';
-import { withStyles, ButtonBase } from '@material-ui/core';
+import { withStyles, ButtonBase, Tooltip } from '@material-ui/core';
 import Verify from '../../verifyPhone';
 import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 import Button from '../../../styledComponents/CustomButtons/Button';
@@ -195,14 +195,22 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 																: 'row-reverse',
 														}}
 													>
-														<p
-															style={{
-																wordBreak: 'break-word',
-																fontSize: '14px',
-															}}
+														<Tooltip
+															title={moment(msg.createdAt).format(
+																'MMM Do h:mm a',
+															)}
+															placement='bottom'
 														>
-															{m.text}
-														</p>{' '}
+															<p
+																style={{
+																	wordBreak: 'break-word',
+																	fontSize: '14px',
+																	cursor: 'default',
+																}}
+															>
+																{m.text}
+															</p>
+														</Tooltip>
 														<small
 															style={{
 																marginBottom: '10px',
