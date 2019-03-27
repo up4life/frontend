@@ -22,7 +22,7 @@ const UpFor = ({ main, justFour, classes }) => {
 		<div
 			className={main ? classes.mainContainer : classes.container}
 			onMouseEnter={() => {
-				setHovering(!hovering);
+				setHovering(true);
 				setInterval(()=> setHovering(false), 5000);
 			}}
 			// onMouseLeave={() => {
