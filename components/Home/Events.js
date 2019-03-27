@@ -51,6 +51,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 			variables,
 			fetchPolicy: 'network-only',
 		});
+		console.log(events, data.getEvents);
 		return data;
 	}
 
@@ -58,18 +59,6 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 		onCompleted: () => NProgress.done(),
 		onError: () => NProgress.done(),
 	});
-
-	// 	() => {
-	// 		if (loading) {
-	// 			NProgress.start();
-	// 		}
-	// 		if (data && data.getEvents) {
-	// 			setEvents(data.getEvents.events);
-	// 			NProgress.done(true);
-	// 		}
-	// 	},
-	// 	[ data ],
-	// );
 
 	useEffect(
 		() => {
