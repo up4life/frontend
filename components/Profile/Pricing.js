@@ -15,7 +15,7 @@ import Button from "../../styledComponents/CustomButtons/Button.jsx";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import Stripe from "./Stripe";
-import "../../styles/Billing/Billing.scss";
+
 import style from "../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards.jsx";
 const CANCEL_SUBSCRIPTION = gql`
   mutation cancelSubscription($id: String!) {
