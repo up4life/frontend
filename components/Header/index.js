@@ -1,10 +1,10 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment, useRef } from 'react';
 import Router from 'next/router';
 import gql from 'graphql-tag';
 import { Mutation, Query } from 'react-apollo';
 import NProgress from 'nprogress';
 import moment from 'moment';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery, useSubscription } from 'react-apollo-hooks';
 import { withRouter } from 'next/router';
 
 //MUI
@@ -24,12 +24,38 @@ import Header from '../../styledComponents/Header/Header.jsx';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 //assets
-
+import notification from '../../static/quiet-knock.mp3';
 import profileStandIn from '../../static/img/placeholder.jpg';
 
 Router.onRouteChangeComplete = () => {
 	NProgress.done(true);
 };
+const MY_MESSAGE_SUBSCRIPTION = gql`
+	subscription($id: String!) {
+		myMessages(id: $id) {
+			mutation
+			node {
+				chat {
+					id
+				}
+				id
+				text
+				seen
+				createdAt
+				from {
+					id
+					firstName
+					img {
+						id
+						img_url
+						default
+					}
+				}
+				updatedAt
+			}
+		}
+	}
+`;
 
 const SIGNOUT_MUTATION = gql`
 	mutation SIGNOUT_MUTATION {
@@ -38,12 +64,26 @@ const SIGNOUT_MUTATION = gql`
 		}
 	}
 `;
-const Nav = ({ classes, color, router, href }) => {
+
+const Nav = ({ classes, color, router, href, user }) => {
+	const audioRef = useRef(null);
+	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
+		variables: { id: user.id },
+		onSubscriptionData: async ({ client, subscriptionData }) => {
+			console.log(subscriptionData);
+			if (subscriptionData.data.myMessages.node.from.id !== user.id) {
+				try {
+					await audioRef.current.play();
+				} catch (e) {
+					console.log(e);
+				}
+			}
+		},
+	});
+	console.log(audioRef.current);
 	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
 		pollInterval: 600,
 	});
-
-	const handleSignOut = client => {};
 
 	const formattedChats = (newMessages, user) => {
 		return newMessages
@@ -92,6 +132,7 @@ const Nav = ({ classes, color, router, href }) => {
 				let newMessages = data.getUserChats
 					? newMessageCount(data.getUserChats, currentUser)
 					: [];
+
 				return (
 					<Header
 						color={color}
@@ -107,6 +148,14 @@ const Nav = ({ classes, color, router, href }) => {
 						}
 						links={
 							<List className={classes.list + ' ' + classes.mlAuto}>
+								<div>
+									<audio
+										ref={audioRef}
+										src={notification}
+										controls
+										style={{ display: 'none' }}
+									/>
+								</div>
 								<ListItem className={classes.listItem}>
 									<Button
 										className={classes.navLink}
@@ -169,83 +218,95 @@ const Nav = ({ classes, color, router, href }) => {
 										}}
 										dropdownList={
 											chats ? (
-												chats.map(chat => (
-													<Fragment>
-														{/* <Divider className={classes.dropdownDividerItem} /> */}
-														<div
-															onClick={() =>
-																Router.push(
-																	{
-																		pathname:
-																			router.pathname === '/'
-																				? '/home'
-																				: router.pathname,
-																		query: {
-																			slug: router.query.slug,
-																			user: chat.fromId,
+												chats.map(chat => {
+													return (
+														<Fragment>
+															{/* <Divider className={classes.dropdownDividerItem} /> */}
+															<div
+																onClick={() =>
+																	Router.push(
+																		{
+																			pathname:
+																				router.pathname ===
+																				'/'
+																					? '/home'
+																					: router.pathname,
+																			query: {
+																				slug:
+																					router.query
+																						.slug,
+																				user: chat.fromId,
+																			},
 																		},
-																	},
-																	router.query.slug
-																		? `${router.pathname}/${router
-																				.query
-																				.slug}/user/${chat.fromId}`
-																		: router.pathname === '/'
-																			? `/user/${chat.fromId}`
-																			: `${router.pathname}/user/${chat.fromId}`,
-																	{ shallow: true },
-																	{ scroll: false },
-																)}
-															style={{
-																display: 'flex',
-																padding: '5px',
-																borderBottom:
-																	newMessages.some(
+																		router.query.slug
+																			? `${router.pathname}/${router
+																					.query
+																					.slug}/user/${chat.fromId}`
+																			: router.pathname ===
+																				'/'
+																				? `/user/${chat.fromId}`
+																				: `${router.pathname}/user/${chat.fromId}`,
+																		{ shallow: true },
+																		{ scroll: false },
+																	)}
+																style={{
+																	display: 'flex',
+																	padding: '5px',
+																	borderBottom: newMessages.some(
 																		msg =>
 																			msg.chat.id === chat.id,
-																	) && '1 px solid #fb6f7870',
-															}}
-														>
-															<img
-																src={chat.img}
-																style={{
-																	width: '40px',
-																	height: '40px',
-																	borderRadius: '6px',
-																	marginRight: '15px',
-																	boxShadow:
-																		'0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+																	)
+																		? '1px solid #fb6f7870'
+																		: 'none',
 																}}
-															/>
-															<div style={{ flexGrow: 1 }}>
-																<div
+															>
+																<img
+																	src={chat.img}
 																	style={{
-																		display: 'flex',
-																		justifyContent:
-																			'space-between',
+																		width: '40px',
+																		height: '40px',
+																		borderRadius: '6px',
+																		marginRight: '15px',
+																		boxShadow:
+																			'0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
 																	}}
-																>
-																	<p className={classes.title}>
-																		{chat.from}
-																	</p>
-																	<small>
-																		{moment(
-																			chat.time,
-																		).fromNow()}
-																	</small>
-																</div>
-																<div
-																	style={{
-																		maxWidth: '300px',
-																		overflow: 'hidden',
-																		textOverflow: 'ellipsis',
-																	}}
-																>
-																	{chat.text}
+																/>
+																<div style={{ flexGrow: 1 }}>
+																	<div
+																		style={{
+																			display: 'flex',
+																			justifyContent:
+																				'space-between',
+																		}}
+																	>
+																		<p
+																			className={
+																				classes.title
+																			}
+																		>
+																			{chat.from}
+																		</p>
+																		<small>
+																			{moment(
+																				chat.time,
+																			).fromNow()}
+																		</small>
+																	</div>
+																	<div
+																		style={{
+																			maxWidth: '300px',
+																			overflow: 'hidden',
+																			textOverflow:
+																				'ellipsis',
+																		}}
+																	>
+																		{chat.text}
+																	</div>
 																</div>
 															</div>
-														</div>
-													</Fragment>
-												))
+														</Fragment>
+													);
+												})
 											) : (
 												[]
 											)

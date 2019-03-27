@@ -8,7 +8,7 @@ const Home = ({ query, currentUser, getEvents }) => {
 	
 	return (
 		<>
-			<Header color="primary" currentUser={currentUser} />
+			<Header color="primary" user={currentUser} />
 			<Events getEvents={getEvents} currentUser={currentUser}/>
 		</>
 	)

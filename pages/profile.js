@@ -5,7 +5,7 @@ import Header from "../components/Header";
 
 const ProfilePage = ({currentUser}) => (
 	<>
-		<Header color="warning" currentUser={currentUser} />
+		<Header color="warning" user={currentUser} />
 		<Profile currentUser={currentUser} />
 	</>	
 );
