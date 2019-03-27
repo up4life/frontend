@@ -24,7 +24,7 @@ import Header from '../../styledComponents/Header/Header.jsx';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 //assets
-import notification from '../../static/quiet-knock.mp3';
+//import notification from '';
 import profileStandIn from '../../static/img/placeholder.jpg';
 
 Router.onRouteChangeComplete = () => {
@@ -71,11 +71,12 @@ const Nav = ({ classes, color, router, href, user }) => {
 		variables: { id: user.id },
 		onSubscriptionData: async ({ client, subscriptionData }) => {
 			console.log(subscriptionData);
+
 			if (subscriptionData.data.myMessages.node.from.id !== user.id) {
 				try {
 					await audioRef.current.play();
 				} catch (e) {
-					console.log(e);
+					console.log(e.message);
 				}
 			}
 		},
@@ -149,12 +150,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 						links={
 							<List className={classes.list + ' ' + classes.mlAuto}>
 								<div>
-									<audio
-										ref={audioRef}
-										src={notification}
-										controls
-										style={{ display: 'none' }}
-									/>
+									<audio ref={audioRef} src='/static/quiet-knock.mp3' />
 								</div>
 								<ListItem className={classes.listItem}>
 									<Button
