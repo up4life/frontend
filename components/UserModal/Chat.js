@@ -123,7 +123,11 @@ const Chat = ({
 		}
 	});
 	const getRemainingMessages = async () => {
-		let messagesRemaining = await client.query({ query: REMAINING_MESSAGES });
+		let messagesRemaining = await client.query({
+			query: REMAINING_MESSAGES,
+			fetchPolicy: 'no-cache',
+		});
+		console.log(messagesRemaining);
 		if (messagesRemaining.data.remainingMessages === 0) {
 			setError({
 				msg: 'You are out of weekly messages allowed on a free account!',
@@ -155,9 +159,11 @@ const Chat = ({
 		data.getConversation && data.getConversation.messages.length
 			? groupByUser(data.getConversation.messages)
 			: null;
-	let lastSeenMessage = [ ...data.getConversation.messages ]
-		.reverse()
-		.find(x => x.from.id === currentUser.id && x.seen);
+	let lastSeenMessage = data.getConversation
+		? [ ...data.getConversation.messages ]
+				.reverse()
+				.find(x => x.from.id === currentUser.id && x.seen)
+		: null;
 
 	return (
 		<div className={classes.chatBorder}>
@@ -260,7 +266,12 @@ const Chat = ({
 				mutation={SEND_MESSAGE_MUTATION}
 				variables={{ id, message }}
 				onCompleted={e => {
+					if (currentUser.permissions === 'FREE') {
+						console.log('hi');
+						getRemainingMessages();
+					}
 					refetch();
+
 					NProgress.done();
 				}}
 				onError={e => {

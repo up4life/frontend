@@ -102,7 +102,10 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 		[ chat ],
 	);
 	const getRemainingMessages = async () => {
-		let messagesRemaining = await client.query({ query: REMAINING_MESSAGES });
+		let messagesRemaining = await client.query({
+			query: REMAINING_MESSAGES,
+			fetchPolicy: 'no-cache',
+		});
 		if (messagesRemaining.data.remainingMessages === 0) {
 			setError({
 				msg: 'You are out of weekly messages allowed on a free account!',
@@ -242,8 +245,22 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 				<Mutation
 					mutation={SEND_MESSAGE_MUTATION}
 					variables={{ id: friend.id, message }}
-					onCompleted={() => NProgress.done()}
-					onError={() => NProgress.done()}
+					onCompleted={() => {
+						NProgress.done();
+						if (currentUser.permissions === 'FREE') {
+							getRemainingMessages();
+						}
+					}}
+					onError={e => {
+						NProgress.done();
+						// e.message.includes('free')
+						// 	? setError({
+						// 			msg: 'You are out of weekly messages allowed on a free account!',
+						// 			link: '/profile/billing',
+						// 			linkText: 'Go Pro?',
+						// 		})
+						// 	: null;
+					}}
 				>
 					{sendMessage =>
 						error ? !error.link ? (
