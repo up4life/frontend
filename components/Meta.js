@@ -2,10 +2,8 @@ import Head from 'next/head';
 
 const Meta = () => (
 	<Head>
-		<meta name='viewport' content='width=device-width, initial-scale=1' />
-		<meta charSet='utf-8' />
+		<meta name='viewport' content='width=device-width, initial-scale=1' charSet='utf-8' />
 		<link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,500' rel='stylesheet' />
-		<script src='https://unpkg.com/nprogress@0.2.0/nprogress.js' />
 		<link rel='stylesheet' href='/static/nprogress.css' />
 		<link href='https://use.fontawesome.com/releases/v5.0.10/css/all.css' rel='stylesheet' />
 		<link href='https://fonts.googleapis.com/css?family=Baumans' rel='stylesheet' />
@@ -28,7 +26,6 @@ const Meta = () => (
 		<meta name='msapplication-TileColor' content='#00aba9' />
 		<meta name='msapplication-config' content='/static/icons/browserconfig.xml' />
 		<meta name='theme-color' content='#ffffff' />
-		<script src='//widget.cloudinary.com/v2.0/global/all.js' type='text/javascript' />
 		<link
 			rel='stylesheet'
 			type='text/css'
@@ -40,8 +37,8 @@ const Meta = () => (
 			type='text/css'
 			href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'
 		/>
-		{/* <link rel='shortcut icon' href='/static/favicon.png' /> */}
-		{/* <link rel='stylesheet' type='text/css' href='/static/nprogress.css' /> */}
+		<script src='//widget.cloudinary.com/v2.0/global/all.js' type='text/javascript' async />
+		<script src='https://unpkg.com/nprogress@0.2.0/nprogress.js' />
 		<title>Up 4</title>
 	</Head>
 );
