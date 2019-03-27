@@ -46,9 +46,11 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 	});
 	const variables = { page, location, ...filters };
 	async function fetchEvents() {
+		console.log(variables);
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
+			skip,
 			fetchPolicy: 'network-only',
 		});
 		console.log(getEvents, data.getEvents);
@@ -63,6 +65,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 
 	useEffect(
 		() => {
+			setSkip(false);
 			fetchEvents()
 				.then(({ getEvents }) => setEvents(getEvents.events))
 				.catch(e => console.log(e));
@@ -73,6 +76,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 	useEffect(
 		() => {
 			if (page > getEvents.data.getEvents.page_number) {
+				setSkip(false);
 				fetchEvents()
 					.then(({ getEvents }) => {
 						let newEvents = getEvents.events.filter(
