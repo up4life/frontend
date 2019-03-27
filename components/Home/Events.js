@@ -42,7 +42,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 		dates: getEvents.data.getEvents.dates,
 	});
 	const variables = { page, location, ...filters };
-	const { data, error, loading, refetch } = useQuery(ALL_EVENTS_QUERY, {
+	const { data, error, loading } = useQuery(ALL_EVENTS_QUERY, {
 		variables,
 		skip,
 		fetchPolicy: 'network-only',
@@ -161,7 +161,6 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 										filters={filters}
 										setFilters={setFilters}
 										user={currentUser}
-										refetch={refetch}
 									/>
 								</Drawer>
 							</ClickAwayListener>

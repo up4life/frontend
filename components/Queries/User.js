@@ -37,6 +37,12 @@ const CURRENT_USER_QUERY = gql`
 				users {
 					id
 				}
+				messages {
+					seen
+					from {
+						id
+					}
+				}
 			}
 			interests {
 				id

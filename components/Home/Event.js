@@ -16,7 +16,7 @@ import {
 	SubdirectoryArrowRightRounded as Flipper,
 	SubdirectoryArrowLeftRounded as Flopper,
 } from '@material-ui/icons';
-import { Typography, Avatar } from '@material-ui/core';
+import { Typography, Avatar, Badge } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 //Images
@@ -238,23 +238,38 @@ const Event = ({ event, classes, user }) => {
 							{event.attending.length ? (
 								<div style={{ display: 'flex' }}>
 									{event.attending.filter(x => x.id !== user.id).map(usr => {
+										let chat = user
+											? user.chats.find(x =>
+													x.messages.some(
+														y => y.from.id === usr.id && !y.seen,
+													),
+												)
+											: false;
+
 										return (
-											<img
-												key={usr.id}
-												src={
-													usr.img.length ? (
-														usr.img.find(img => img.default).img_url
-													) : (
-														standIn
-													)
-												}
-												style={{
-													width: '40px',
-													height: '40px',
-													borderRadius: '6px',
-													border: '1px solid #cabac8',
-												}}
-											/>
+											<Badge
+												invisible={!chat}
+												color='primary'
+												variant='dot'
+												classes={{ badge: classes.smallBadge }}
+											>
+												<img
+													key={usr.id}
+													src={
+														usr.img.length ? (
+															usr.img.find(img => img.default).img_url
+														) : (
+															standIn
+														)
+													}
+													style={{
+														width: '40px',
+														height: '40px',
+														borderRadius: '6px',
+														border: '1px solid #cabac8',
+													}}
+												/>
+											</Badge>
 										);
 									})}
 								</div>
@@ -335,10 +350,17 @@ const Event = ({ event, classes, user }) => {
 													x.users.some(y => y.id === usr.id),
 												)
 											: false;
+										let newChat = user
+											? user.chats.find(x =>
+													x.messages.some(
+														y => y.from.id === usr.id && !y.seen,
+													),
+												)
+											: false;
 										let liked = user
 											? user.liked.find(x => x.id === usr.id)
 											: false;
-
+										console.log(newChat);
 										return (
 											<GridItem
 												key={usr.id}
@@ -353,7 +375,19 @@ const Event = ({ event, classes, user }) => {
 												}}
 											>
 												{liked && <Favorite className={classes.favorite} />}
-												{chat && <Chat className={classes.chat} />}
+												{chat && (
+													<Badge
+														invisible={!newChat}
+														color='primary'
+														variant='dot'
+														classes={{
+															root: classes.newChat,
+															badge: classes.chatBadge,
+														}}
+													>
+														<Chat className={classes.chat} />
+													</Badge>
+												)}
 												<div
 													onClick={() => {
 														NProgress.start();
