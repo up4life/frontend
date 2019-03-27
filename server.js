@@ -1,4 +1,3 @@
-var sslRedirect = require("heroku-ssl-redirect");
 const express = require("express");
 const next = require("next");
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -7,8 +6,6 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
-
-	server.use(sslRedirect());
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {

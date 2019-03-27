@@ -43,7 +43,6 @@
 		"graphql": "^14.2.0",
 		"graphql-tag": "^2.10.1",
 		"graphql-tools": "^4.0.4",
-		"heroku-ssl-redirect": "0.0.4",
 		"http": "0.0.0",
 		"isomorphic-unfetch": "^3.0.0",
 		"jss": "^9.8.7",
