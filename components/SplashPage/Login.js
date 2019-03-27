@@ -31,7 +31,7 @@ import CustomInput from '../../styledComponents/CustomInput/CustomInput';
 //q&m
 import { CURRENT_USER_QUERY } from '../Queries/User';
 //styles
-import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
+import Styles from '../../static/jss/Splash';
 //utils
 import { auth } from '../../utils/firebaseProd';
 
@@ -128,7 +128,7 @@ const Login = ({ classes, showing, setShowing }) => {
 					aria-labelledby='signup-modal-slide-title'
 					aria-describedby='signup-modal-slide-description'
 				>
-					<Card plain className={classes.modalLoginCard + ' ' + classes.login}>
+					<Card plain className={classes.modalLoginCard + ' ' + classes.register}>
 						<DialogTitle
 							id='login-modal-slide-title'
 							disableTypography
@@ -217,13 +217,12 @@ const Login = ({ classes, showing, setShowing }) => {
 							awaitRefetchQueries
 						>
 							{(signin, { called }) => {
-								//if (called) NProgress.start();
 								return (
 									<form
 										disabled
 										onSubmit={async e => {
 											e.preventDefault();
-											// console.log(user);
+
 											NProgress.start();
 											await signin({
 												variables: {
@@ -237,11 +236,7 @@ const Login = ({ classes, showing, setShowing }) => {
 											id='login-modal-slide-description'
 											className={classes.modalBody}
 										>
-											<p
-												className={`${classes.description} ${classes.textCenter}`}
-											>
-												Or Be Classical
-											</p>
+											<h4 className={classes.textCenter}>Or Be Classical</h4>
 											<CardBody className={classes.cardLoginBody}>
 												<CustomInput
 													id='login-modal-email'

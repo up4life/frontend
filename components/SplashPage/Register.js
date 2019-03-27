@@ -45,7 +45,7 @@ import InfoArea from '../../styledComponents/InfoArea/InfoArea';
 import TheaterMasks from '../../static/icons/TheatreMask';
 import Futbol from '../../static/icons/futbol-solid.js';
 //styles
-import Styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
+import Styles from '../../static/jss/Splash';
 //utils
 import { auth } from '../../utils/firebaseProd';
 
@@ -162,7 +162,7 @@ const Register = ({ classes, showing, setShowing }) => {
 	return (
 		<Fragment>
 			<GridItem xs={12} sm={6} md={6} lg={6}>
-				<div className={`${classes.section} cd-section`} id='javascriptComponents'>
+				<div className={classes.section}>
 					<Dialog
 						classes={{
 							root: classes.modalRoot,
@@ -325,7 +325,7 @@ const Register = ({ classes, showing, setShowing }) => {
 														}}
 													</Mutation>
 
-													<h4 className={classes.socialTitle}>
+													<h4 className={classes.textCenter}>
 														or be classical
 													</h4>
 												</div>
@@ -565,7 +565,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																		<ButtonBase type='submit'>
 																			<Button
 																				className={
-																					classes.registerModalButton
+																					classes.loginButton
 																				}
 																				round='true'
 																				// disabled

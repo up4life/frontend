@@ -1,8 +1,8 @@
 import { container, title, mlAuto, mrAuto } from '../../../material-kit-pro-react';
 import customCheckboxRadioSwitch from '../../../material-kit-pro-react/customCheckboxRadioSwitchStyle';
 import customSelectStyle from '../../../material-kit-pro-react/customSelectStyle';
-import chipStyles from '../../../material-kit-pro-react/chipStyles';
-import inputRangeStyles from '../../../material-kit-pro-react/inputRangeStyles';
+import chipStyles from '../../../chipStyles';
+import inputRangeStyles from '../../../inputRangeStyles';
 
 const drawerWidth = 'auto';
 
