@@ -46,19 +46,31 @@ const MESSAGE_SUBSCRIPTION = gql`
 			mutation
 			node {
 				id
-				text
-				seen
-				createdAt
-				from {
+				users {
 					id
 					firstName
 					img {
 						id
-						img_url
 						default
+						img_url
 					}
 				}
-				updatedAt
+				messages {
+					id
+					text
+					seen
+					updatedAt
+					from {
+						id
+						firstName
+						img {
+							id
+							default
+							img_url
+						}
+					}
+					createdAt
+				}
 			}
 		}
 	}

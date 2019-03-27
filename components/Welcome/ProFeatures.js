@@ -44,7 +44,7 @@ const Pro = ({ classes }) => {
 						Go Pro!
 					</Button>
 				</Link>
-				<Link href='/home'>
+				<Link prefetch href='/home'>
 					<Button style={{ zIndex: 1 }}>Skip</Button>
 				</Link>
 			</div>

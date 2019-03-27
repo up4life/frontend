@@ -5,6 +5,7 @@ import { withRouter } from 'next/router';
 import NProgress from 'nprogress';
 import InfiniteScroll from 'react-infinite-scroller';
 import classNames from 'classnames';
+import { useQuery } from 'react-apollo-hooks';
 import { useMutation } from '../Mutations/useMutation';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -31,16 +32,42 @@ import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSecti
 
 const Events = ({ classes, router, href, getEvents, ...props }) => {
 	const [ drawer, setDrawer ] = useState(false);
-	const [ page, setPage ] = useState(getEvents.data.getEvents.page_number);
+	const [ skip, setSkip ] = useState(true);
+	const [ page, setPage ] = useState(0);
 	const [ events, setEvents ] = useState(getEvents.data.getEvents.events);
 	const [ location, setLocation ] = useState(getEvents.data.getEvents.location);
 	const [ filters, setFilters ] = useState({
-		cats: [],
-		genres: [],
-		dates: [],
+		categories: getEvents.data.getEvents.categories,
+		genres: getEvents.data.getEvents.genres,
+		dates: getEvents.data.getEvents.dates,
+	});
+	const variables = { page, location, ...filters };
+	const { data, error, loading, refetch } = useQuery(ALL_EVENTS_QUERY, {
+		variables,
+		skip,
+		fetchPolicy: 'network-only',
 	});
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION);
 
+	useEffect(
+		() => {
+			if (loading) {
+				NProgress.start();
+			}
+			if (data && data.getEvents) {
+				setEvents(data.getEvents.events);
+				NProgress.done(true);
+			}
+		},
+		[ data ],
+	);
+
+	useEffect(
+		() => {
+			setSkip(false);
+		},
+		[ filters, location ],
+	);
 	return (
 		<User>
 			{({ data: { currentUser } }) => (
@@ -134,6 +161,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 										filters={filters}
 										setFilters={setFilters}
 										user={currentUser}
+										refetch={refetch}
 									/>
 								</Drawer>
 							</ClickAwayListener>

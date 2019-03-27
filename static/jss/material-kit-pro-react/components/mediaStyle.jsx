@@ -7,7 +7,7 @@ const mediaStyle = {
 		'& p': {
 			color: '#999999',
 			fontSize: '1rem',
-			lineHeight: '1.6em',
+			lineHeight: '1.1rem',
 		},
 		'& $media $mediaBody': {
 			paddingRight: '0px',
@@ -52,7 +52,7 @@ const mediaStyle = {
 	mediaHeading: {
 		...title,
 		marginTop: '10px',
-		marginBottom: '10px',
+		marginBottom: '0',
 		'& small': {
 			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
 		},

@@ -4,7 +4,7 @@ import moment from 'moment';
 import Router from 'next/router';
 import gql from 'graphql-tag';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+//import withStyles from '@material-ui/core/styles/withStyles';
 import { Send } from '@material-ui/icons';
 
 import { Mutation, withApollo } from 'react-apollo';
@@ -15,7 +15,7 @@ import Verify from '../verifyPhone';
 import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx';
 import Media from '../../styledComponents/Media/Media.jsx';
 import Button from '../../styledComponents/CustomButtons/Button';
-import { ButtonBase } from '@material-ui/core';
+import { ButtonBase, Tooltip, withStyles } from '@material-ui/core';
 import TextareaAutosize from 'react-autosize-textarea';
 
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
@@ -123,7 +123,11 @@ const Chat = ({
 		}
 	});
 	const getRemainingMessages = async () => {
-		let messagesRemaining = await client.query({ query: REMAINING_MESSAGES });
+		let messagesRemaining = await client.query({
+			query: REMAINING_MESSAGES,
+			fetchPolicy: 'no-cache',
+		});
+		console.log(messagesRemaining);
 		if (messagesRemaining.data.remainingMessages === 0) {
 			setError({
 				msg: 'You are out of weekly messages allowed on a free account!',
@@ -132,34 +136,58 @@ const Chat = ({
 			});
 		}
 	};
+	function groupByUser(messages) {
+		const grouped = [];
+		let fromSameUser = [ messages[0] ];
+		let user = messages[0].from.id;
+
+		for (let i = 1; i < messages.length; i++) {
+			if (messages[i].from.id !== user) {
+				grouped.push(fromSameUser);
+				fromSameUser = [ messages[i] ];
+				user = messages[i].from.id;
+			} else {
+				fromSameUser.push(messages[i]);
+			}
+		}
+
+		grouped.push(fromSameUser);
+		return grouped;
+	}
+
 	let messages =
 		data.getConversation && data.getConversation.messages.length
-			? data.getConversation.messages
+			? groupByUser(data.getConversation.messages)
 			: null;
+	let lastSeenMessage = data.getConversation
+		? [ ...data.getConversation.messages ]
+				.reverse()
+				.find(x => x.from.id === currentUser.id && x.seen)
+		: null;
 
 	return (
 		<div className={classes.chatBorder}>
 			<div className={classes.chat} ref={msgRef}>
 				{messages ? (
-					messages.map(msg => {
-						let fromMatch = msg.from.id === id;
-						let unseen = !msg.seen && msg.from.id !== currentUser.id;
-						let img = msg.from.img.find(img => img.default).img_url;
+					messages.map((msg, i) => {
+						let fromMatch = msg[0].from.id === id;
+						let unseen = !msg[0].seen && msg[0].from.id !== currentUser.id;
+						let img = msg[0].from.img.find(img => img.default).img_url;
 						return (
 							<Media
 								currentUser={!fromMatch}
-								key={msg.id}
+								key={msg[0].id}
 								avatar={img}
 								title={
 									<span style={{ color: '#fafafa' }}>
-										{msg.from.firstName}
+										{msg[0].from.firstName}
 										<small
 											style={{
 												fontWeight: unseen && 'bold',
 												fontSize: '12px',
 											}}
 										>
-											· {moment(msg.createdAt).fromNow()}
+											{/* · {moment(msg.createdAt).fromNow()} */}
 											{unseen ? (
 												<span style={{ color: 'red', marginLeft: '6px' }}>
 													new
@@ -170,15 +198,66 @@ const Chat = ({
 								}
 								body={
 									<span>
-										<p style={{ wordBreak: 'break-word', fontSize: '14px' }}>
-											{msg.text}
-										</p>
-										{currentUser.permissions !== 'FREE' && msg.seen ? (
-											<small>
-												<span style={{ marginRight: '2px' }}>seen</span>
-												{moment(msg.UpdatedAt).format('M/D/YY h:mm a')}
-											</small>
-										) : null}
+										{msg.map((m, i) => {
+											return (
+												<div>
+													<div
+														style={{
+															display: 'inline-flex',
+															alignItems: 'center',
+															flexDirection: fromMatch
+																? 'row'
+																: 'row-reverse',
+														}}
+													>
+														<Tooltip
+															title={moment(msg.createdAt).format(
+																'MMM Do h:mm a',
+															)}
+															placement='bottom'
+														>
+															<p
+																style={{
+																	wordBreak: 'break-word',
+																	fontSize: '14px',
+																	cursor: 'default',
+																}}
+															>
+																{m.text}
+															</p>
+														</Tooltip>
+														<small
+															style={{
+																marginBottom: '10px',
+																marginLeft: '5px',
+																marginRight: '5px',
+																display: 'none',
+															}}
+														>
+															{' '}
+															{/* //{moment(msg.createdAt).fromNow()} */}
+														</small>
+													</div>
+													{currentUser.permissions !== 'FREE' &&
+													!fromMatch &&
+													lastSeenMessage &&
+													lastSeenMessage.id === m.id ? (
+														<div>
+															<small>
+																<span
+																	style={{ marginRight: '2px' }}
+																>
+																	seen
+																</span>
+																{moment(
+																	lastSeenMessage.updatedAt,
+																).format('M/D/YY h:mm a')}
+															</small>
+														</div>
+													) : null}
+												</div>
+											);
+										})}
 									</span>
 								}
 							/>
@@ -195,11 +274,16 @@ const Chat = ({
 				mutation={SEND_MESSAGE_MUTATION}
 				variables={{ id, message }}
 				onCompleted={e => {
+					if (currentUser.permissions === 'FREE') {
+						console.log('hi');
+						getRemainingMessages();
+					}
 					refetch();
+
 					NProgress.done();
 				}}
 				onError={e => {
-					// console.log(e);
+					console.log(e);
 					NProgress.done();
 				}}
 			>
@@ -226,23 +310,6 @@ const Chat = ({
 								setMessage('');
 							}}
 						>
-							{/* <CustomInput
-								id='logged'
-								className={classes.inputWidth}
-								formControlProps={{
-									fullWidth: true,
-								}}
-								inputProps={{
-									multiline: true,
-									rows: 6,
-									placeholder: data.getConversation
-										? `Respond to ${match.firstName}`
-										: `Send ${match.firstName} a message.`,
-									value: message,
-									onChange: e => setMessage(e.target.value),
-								}}
-							/> */}
-
 							<TextareaAutosize
 								className={classes.textareaAutosize}
 								onChange={e => setMessage(e.target.value)}

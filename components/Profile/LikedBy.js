@@ -6,8 +6,8 @@ import { LIKED_BY_QUERY } from '../Queries/LikedBy';
 import withStyles from '@material-ui/core/styles/withStyles';
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles';
 
-const LikedBy = ({ user, setSelected, classes }) => {
-	const { data } = useQuery(LIKED_BY_QUERY);
+const LikedBy = ({ user, classes }) => {
+	const { data } = useQuery(LIKED_BY_QUERY, { pollInterval: 6000 });
 
 	const hidden = user.permissions === 'FREE';
 	if (!data.getLikedByList || !data.getLikedByList.length) return null;
@@ -73,7 +73,12 @@ const LikedBy = ({ user, setSelected, classes }) => {
 						}}
 						onClick={() => {
 							if (!hidden) {
-								setSelected(usr);
+								Router.push(
+									`/profile?slug=chats&user=${usr.id}`,
+									`/profile/chat/user/${usr.id}`,
+									{ shallow: true },
+									{ scroll: false },
+								);
 							}
 						}}
 					/>

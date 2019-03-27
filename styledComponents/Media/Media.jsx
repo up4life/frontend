@@ -32,7 +32,7 @@ function Media({ ...props }) {
 		<div {...rest} className={yayclasses}>
 			<div className={classes.mediaLink}>
 				<div
-					style={{ cursor: avatarClick ? 'pointer' : 'default' }}
+					style={{ cursor: !currentUser ? 'pointer' : 'default' }}
 					className={classes.mediaAvatar}
 					onClick={avatarClick}
 				>

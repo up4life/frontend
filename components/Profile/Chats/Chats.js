@@ -9,26 +9,24 @@ import styles from '../../../static/jss/material-kit-pro-react/views/componentsS
 import ExpandedChat from './ExpandedChat';
 import SmallChat from './SideView';
 
-const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser, classes }) => {
+const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 	const [ chatId, setChatId ] = useState(undefined);
-	const [ newChatUser, setNewChatUser ] = useState(undefined);
 
 	useEffect(() => {
 		subscribeToNewChats();
-		subscribetoNewMessages();
 	}, []);
 
-	const handleSelectUser = usr => {
-		let chat;
-		if (data.getUserChats && data.getUserChats.length) {
-			chat = data.getUserChats.find(chat => chat.users.some(x => x.id === usr.id));
-		}
-		if (chat) setChatId(chat.id);
-		else {
-			setChatId(undefined);
-			setNewChatUser(usr);
-		}
-	};
+	// const handleSelectUser = usr => {
+	// 	let chat;
+	// 	if (data.getUserChats && data.getUserChats.length) {
+	// 		chat = data.getUserChats.find(chat => chat.users.some(x => x.id === usr.id));
+	// 	}
+	// 	if (chat) setChatId(chat.id);
+	// 	else {
+	// 		setChatId(undefined);
+	// 		setNewChatUser(usr);
+	// 	}
+	// };
 
 	const formattedChats = userChats => {
 		return userChats
@@ -68,7 +66,7 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 	return (
 		<div className={classes.container} style={{ padding: '30px 0' }}>
 			<GridContainer style={{ height: '100%', flexDirection: 'column', width: '100%' }}>
-				<LikedBy user={currentUser} setSeleccted={handleSelectUser} />
+				<LikedBy user={currentUser} />
 				<GridContainer
 					style={{ height: 'calc(100vh - 300px)', overflow: 'scroll', width: '100%' }}
 				>
@@ -110,6 +108,7 @@ const Chats = ({ subscribeToNewChats, subscribetoNewMessages, data, currentUser,
 									formattedChats(data.getUserChats).map((chat, i) => (
 										<div
 											key={chat.id}
+											style={{ cursor: 'pointer' }}
 											onClick={() => {
 												setChatId(chat.id);
 											}}
