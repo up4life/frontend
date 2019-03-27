@@ -49,6 +49,7 @@ const FIREBASE_LOGIN = gql`
 	mutation FIREBASE_LOGIN($idToken: String!) {
 		firebaseAuth(idToken: $idToken) {
 			token
+			newUser
 			user {
 				id
 				firstName
@@ -155,10 +156,19 @@ const Login = ({ classes, showing, setShowing }) => {
 										refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 										awaitRefetchQueries
 										onError={handleError}
-										onCompleted={() => Router.push('/home')}
+										onCompleted={({ firebaseAuth }) => {
+											NProgress.done();
+											if (firebaseAuth.newUser) {
+												Router.push(
+													'/welcome?slug=0',
+													'/welcome/profile/getstarted',
+												);
+											} else {
+												Router.push('/home');
+											}
+										}}
 									>
-										{(firebaseAuth, { called }) => {
-											//if (called) NProgress.start();
+										{firebaseAuth => {
 											return (
 												<Fragment>
 													<Button

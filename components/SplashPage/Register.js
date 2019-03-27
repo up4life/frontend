@@ -68,6 +68,7 @@ const FIREBASE_SIGNUP = gql`
 	mutation FIREBASE_LOGIN($idToken: String!) {
 		firebaseAuth(idToken: $idToken) {
 			token
+			newUser
 			user {
 				id
 				firstName
@@ -107,8 +108,8 @@ const Register = ({ classes, showing, setShowing }) => {
 	);
 
 	const firebaseSignup = async (e, firebaseAuth, company) => {
+		NProgress.start();
 		e.preventDefault();
-
 		try {
 			let provider;
 			switch (company) {
@@ -268,16 +269,19 @@ const Register = ({ classes, showing, setShowing }) => {
 															NProgress.done();
 															setServerError(error);
 														}}
-														onCompleted={() => {
+														onCompleted={({ firebaseAuth }) => {
 															NProgress.done();
-															Router.push(
-																'/welcome?slug=0',
-																'/welcome/profile/getstarted',
-															);
+															if (firebaseAuth.newUser) {
+																Router.push(
+																	'/welcome?slug=0',
+																	'/welcome/profile/getstarted',
+																);
+															} else {
+																Router.push('/home');
+															}
 														}}
 													>
-														{(firebaseAuth, { called }) => {
-															if (called) NProgress.start();
+														{firebaseAuth => {
 															return (
 																<Fragment>
 																	<Button
