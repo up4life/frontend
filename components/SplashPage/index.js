@@ -13,7 +13,6 @@ import Button from '../../styledComponents/CustomButtons/Button';
 //styles
 import Styles from '../../static/jss/Splash';
 import Logo from '../Header/UpFor';
-import bgImg from '../../static/img/splash.jpeg';
 
 const Splash = ({ classes }) => {
 	const [ registerShowing, setRegisterShowing ] = useState(false);
@@ -22,7 +21,7 @@ const Splash = ({ classes }) => {
 		window.scrollTo(0, 0);
 	}, []);
 	return (
-		<Parallax image={bgImg}>
+		<Parallax>
 			<div className={classes.container}>
 				<GridContainer>
 					<GridItem

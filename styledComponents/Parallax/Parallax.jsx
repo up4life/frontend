@@ -38,7 +38,7 @@ const Parallax = ({ classes, filter, className, children, style, small, image })
 			className={parallaxClasses}
 			style={{
 				...style,
-				backgroundImage: `url(${image})`,
+				backgroundImage: `url(/static/img/splash.jpeg)`,
 				transform: 'translate3d(0,' + windowScrollTop + 'px,0)',
 			}}
 			// ref='parallax'
