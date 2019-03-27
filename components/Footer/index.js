@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -8,6 +8,7 @@ import styles from '../../static/jss/material-kit-pro-react/views/componentsSect
 import List from '@material-ui/core/List';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 import ListItem from '@material-ui/core/ListItem';
+import Terms from './TermsModal';
 
 const DELETE_USER = gql`
 	mutation {
@@ -18,6 +19,7 @@ const DELETE_USER = gql`
 `;
 
 const Footer = ({ classes }) => {
+	const [ termsShowing, setTermsShowing ] = useState(false);
 	const [ deleteUser ] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
 
 	return (
@@ -38,6 +40,10 @@ const Footer = ({ classes }) => {
 							<span style={{ color: '#4cb5ae' }}>Up</span>4
 						</div>
 					</div>
+					<Button simple onClick={() => setTermsShowing(true)}>
+						Our terms and privacy policy
+					</Button>
+					<Terms showing={termsShowing} setShowing={setTermsShowing} />
 					{/* <div className={classes.pullCenter}>
 						<List className={classes.list}>
 							<ListItem className={classes.inlineBlock}>
@@ -75,7 +81,7 @@ const Footer = ({ classes }) => {
 									href='https://github.com/Lambda-School-Labs/labs10-date-planning'
 									color='twitter'
 									justIcon
-									simple="true"
+									simple='true'
 								>
 									<i className='fab fa-github' />
 								</Button>

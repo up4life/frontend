@@ -11,6 +11,13 @@ WelcomePage.getInitialProps = async ctx => {
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
 	}
+	if (!currentUser.gender) {
+		return { currentUser, query: { slug: 1 } };
+	} else if (!currentUser.dob) {
+		return { currentUser, query: { slug: 2 } };
+	} else if (!currentUser.location) {
+		return { currentUser, query: { slug: 3 } };
+	}
 
 	return { currentUser, query: ctx.query };
 };

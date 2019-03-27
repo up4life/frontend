@@ -16,13 +16,14 @@ const Home = ({ query, currentUser  }) => {
 
 Home.getInitialProps = async ctx => {
 	const { currentUser } = await isLoggedIn(ctx.apolloClient);
-	console.log(currentUser)
+
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
-		return {}
-	}else {
+	}else if (!currentUser.dob || !currentUser.location || !currentUser.gender){
+		redirect(ctx, '/welcome')
+	} else {
 		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
-		return { currentUser, getEvents};
+		return { currentUser, getEvents, query: ctx.query};
 	}
 	
 };

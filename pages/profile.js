@@ -15,9 +15,11 @@ ProfilePage.getInitialProps = async ctx => {
 
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
+	} else if (!currentUser.dob || !currentUser.location || !currentUser.gender){
+		redirect(ctx, '/welcome')
 	}
 
-	return { currentUser };
+	return { currentUser, query: ctx.query };
 };
 
 export default ProfilePage;
