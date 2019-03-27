@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import moment from 'moment';
 import NProgress from 'nprogress';
 import { useMutation } from '../Mutations/useMutation';
@@ -16,7 +16,7 @@ import {
 	SubdirectoryArrowRightRounded as Flipper,
 	SubdirectoryArrowLeftRounded as Flopper,
 } from '@material-ui/icons';
-import { Typography, Avatar, Badge } from '@material-ui/core';
+import { Typography, Avatar, Badge, Tooltip } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 //Images
@@ -40,7 +40,7 @@ import getAge from '../../utils/getAge';
 //styles
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
-const Event = ({ event, classes, user }) => {
+const Event = ({ event, classes, user, first }) => {
 	let [ isSaved, setIsSaved ] = useState(false);
 
 	useEffect(() => {
@@ -197,13 +197,23 @@ const Event = ({ event, classes, user }) => {
 												<img className={classes.arrow} src={Arrow} />
 											</div>
 										) : (
-											<Up4
-												handleClick={() => {
-													NProgress.start();
-													addEvent();
+											<Tooltip
+												open={first && !user.events.length}
+												classes={{
+													tooltip: classes.tooltippy,
 												}}
-												justFour
-											/>
+												placement='top'
+												title='Click here to express your interest in
+															an event!'
+											>
+												<Up4
+													handleClick={() => {
+														NProgress.start();
+														addEvent();
+													}}
+													justFour
+												/>
+											</Tooltip>
 										)}
 									</div>
 								</div>

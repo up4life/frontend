@@ -199,7 +199,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 															title={moment(msg.createdAt).format(
 																'MMM Do h:mm a',
 															)}
-															placement='bottom'
+															placement='bottom-end'
 														>
 															<p
 																style={{

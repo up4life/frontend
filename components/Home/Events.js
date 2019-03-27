@@ -213,8 +213,9 @@ const Events = ({ classes, router, href, user, ...props }) => {
 													> */}
 													{events
 														.filter((e, i) => i % 2 === 0)
-														.map(event => (
+														.map((event, i) => (
 															<Event
+																first={i === 0}
 																event={event}
 																key={event.id}
 																//refetch={refetch}

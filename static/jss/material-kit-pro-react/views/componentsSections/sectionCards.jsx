@@ -464,6 +464,38 @@ const styles = {
 			color: 'transparent',
 		},
 	},
+	tooltippy: {
+		width: '100px',
+		backgroundColor: 'black',
+		display: 'flex',
+		fontSize: '14px',
+		justifyContent: 'center',
+	},
+	poparrow: {
+		position: 'absolute',
+		fontSize: 6,
+		width: '3em',
+		height: '3em',
+		'&::before': {
+			content: '""',
+			margin: 'auto',
+			display: 'block',
+			width: 0,
+			height: 0,
+			borderStyle: 'solid',
+		},
+	},
+	// 'popper $arrow': {
+	// 	bottom: 0,
+	// 	left: 0,
+	// 	marginBottom: '-0.95em',
+	// 	width: '3em',
+	// 	height: '1em',
+	// 	'&::before': {
+	// 		borderWidth: '1em 1em 0 1em',
+	// 		borderColor: 'gray transparent transparent transparent',
+	// 	},
+	// },
 };
 
 export default styles;
