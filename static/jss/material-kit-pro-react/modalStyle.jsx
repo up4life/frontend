@@ -60,6 +60,9 @@ const modalStyle = theme => ({
 		paddingLeft: '24px',
 		position: 'relative',
 		overflow: 'visible',
+		'& button':{
+			opacity: '1 !important'
+		}
 	},
 	modalFooter: {
 		padding: '15px',
