@@ -6,8 +6,6 @@ import User from '../Queries/User';
 import ResetPassword from './ResetPassword';
 import Divider from '@material-ui/core/Divider';
 
-import '../../styles/Settings/Sidebar.scss'
-
 const Sidebar = () => {
 	return (
 		<User>

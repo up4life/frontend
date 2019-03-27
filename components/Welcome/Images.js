@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '../../styledComponents/CustomButtons/Button';
-import '../../styles/Profile/index.scss';
+
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
 import { openUploadWidget } from '../../utils/cloudinary';

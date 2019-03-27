@@ -13,7 +13,7 @@ import Button from '../../styledComponents/CustomButtons/Button';
 import getAge from '../../utils/getAge';
 import withStyles from '@material-ui/core/styles/withStyles';
 import style from '../../static/jss/Profile/settingsStyle';
-import '../../styles/Profile/index.scss';
+
 import Preferences from './Prefs';
 import Bio from './Bio';
 import Interests from './Interests';

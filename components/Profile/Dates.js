@@ -17,7 +17,7 @@ import User from '../Queries/User';
 import Date from './Date';
 //styles
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
-import '../../styles/Settings/Snackbar.scss';
+
 import { timeline } from 'popmotion';
 
 const Dates = ({ classes, user }) => {
