@@ -51,7 +51,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 			variables,
 			fetchPolicy: 'network-only',
 		});
-		console.log(events, data.getEvents);
+		console.log(getEvents, data.getEvents);
 		return data;
 	}
 
