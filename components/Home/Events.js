@@ -36,7 +36,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 	const client = useApolloClient();
 	const [ drawer, setDrawer ] = useState(false);
 	const [ skip, setSkip ] = useState(true);
-	const [ page, setPage ] = useState(getEvents.data.getEvents.page_number);
+	const [ page, setPage ] = useState(0);
 	const [ events, setEvents ] = useState(getEvents.data.getEvents.events);
 	const [ location, setLocation ] = useState(getEvents.data.getEvents.location);
 	const [ filters, setFilters ] = useState({
@@ -75,7 +75,7 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 
 	useEffect(
 		() => {
-			if (page > getEvents.data.getEvents.page_number) {
+			if (page > 0) {
 				setSkip(false);
 				fetchEvents()
 					.then(({ getEvents }) => {
