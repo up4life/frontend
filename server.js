@@ -1,11 +1,14 @@
-const express = require("express");
-const next = require("next");
+const sslRedirect = require('heroku-ssl-redirect');
+const express = require('express');
+const next = require('next');
 const port = parseInt(process.env.PORT, 10) || 3000;
-const app = next({ dev: process.env.NODE_ENV !== "production" });
+const app = next({ dev: process.env.NODE_ENV !== 'production' });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
 	const server = express();
+
+	app.use(sslRedirect());
 
 	const errorHandler = (err, req, res, next) => {
 		if (res.headersSent) {
@@ -17,57 +20,57 @@ app.prepare().then(() => {
 
 	server.use(errorHandler);
 
-	server.get("/welcome/profile/:page/:subPage", (req, res) => {
+	server.get('/welcome/profile/:page/:subPage', (req, res) => {
 		const { page, subPage } = req.params;
 		const slug = subPage ? getSlug(page, subPage) : getSlug(page);
 		app.render(req, res, `/welcome`, { slug });
 	});
 
-	server.get("/welcome/profile/:page", (req, res) => {
+	server.get('/welcome/profile/:page', (req, res) => {
 		const slug = getSlug(req.params.page);
 		app.render(req, res, `/welcome`, { slug });
 	});
 
-	server.get("/welcome/:page", (req, res) => {
+	server.get('/welcome/:page', (req, res) => {
 		const slug = getSlug(req.params.page);
 		app.render(req, res, `/welcome`, { slug });
 	});
 
-	server.get("/user/:userId", (req, res) => {
+	server.get('/user/:userId', (req, res) => {
 		const { userId } = req.params;
 		app.render(req, res, `/home`, { user: userId });
 	});
 
-	server.get("/profile/user/:userId", (req, res) => {
+	server.get('/profile/user/:userId', (req, res) => {
 		const { userId } = req.params;
-		app.render(req, res, "/profile", { user: userId });
+		app.render(req, res, '/profile', { user: userId });
 	});
 
-	server.get("/profile/:category/user/:userId", (req, res) => {
+	server.get('/profile/:category/user/:userId', (req, res) => {
 		const { category, userId } = req.params;
-		const slug = category === "chat" ? "chats" : category;
-		app.render(req, res, "/profile", { slug, user: userId });
+		const slug = category === 'chat' ? 'chats' : category;
+		app.render(req, res, '/profile', { slug, user: userId });
 	});
 
-	server.get("/profile/:slug", (req, res) => {
+	server.get('/profile/:slug', (req, res) => {
 		const { slug } = req.params;
 		const slugObj = {
-			slug: slug === "chat" ? "chats" : slug
+			slug: slug === 'chat' ? 'chats' : slug
 		};
 		app.render(req, res, `/profile`, slugObj);
 	});
 
-	server.get("/home/user/:userId", (req, res) => {
+	server.get('/home/user/:userId', (req, res) => {
 		const { userId } = req.params;
-		app.render(req, res, "/home", { user: userId });
+		app.render(req, res, '/home', { user: userId });
 	});
 
-	server.get("/reset/:token", (req, res) => {
+	server.get('/reset/:token', (req, res) => {
 		const { token } = req.params;
-		app.render(req, res, "/reset", { token });
+		app.render(req, res, '/reset', { token });
 	});
 
-	server.get("*", (req, res) => {
+	server.get('*', (req, res) => {
 		return handle(req, res);
 	});
 
@@ -82,25 +85,25 @@ const getSlug = (page, subPage = null) => {
 		page = `${page}/${subPage}`;
 	}
 	switch (page) {
-		case "getstarted":
+		case 'getstarted':
 			return 0;
-		case "preferences/gender":
+		case 'preferences/gender':
 			return 5;
-		case "gender":
+		case 'gender':
 			return 1;
-		case "preferences/age":
+		case 'preferences/age':
 			return 6;
-		case "age":
+		case 'age':
 			return 2;
-		case "location":
+		case 'location':
 			return 3;
-		case "images":
+		case 'images':
 			return 4;
-		case "about":
+		case 'about':
 			return 7;
-		case "interests":
+		case 'interests':
 			return 8;
-		case "goPro":
+		case 'goPro':
 			return 9;
 	}
 };
