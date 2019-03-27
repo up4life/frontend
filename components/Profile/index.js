@@ -26,7 +26,7 @@ import Footer from '../Footer';
 
 //styles
 import style from '../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
-import '../../styles/Profile/index.scss';
+
 import bgImg from '../../static/img/shattered-dark.png';
 
 function getContent(slug, user) {
