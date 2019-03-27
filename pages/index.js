@@ -14,8 +14,11 @@ Index.getInitialProps = async ctx => {
 
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
+	} else {
+		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
+		return { currentUser, getEvents };
 	}
-	return { currentUser };
+	return {};
 };
 
 export default Index;

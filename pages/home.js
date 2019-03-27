@@ -18,11 +18,11 @@ Home.getInitialProps = async ctx => {
 	const { currentUser } = await isLoggedIn(ctx.apolloClient);
 	if (!currentUser) {
 		redirect(ctx, '/joinus');
-	// }else {
-	// 	const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
-	
+	}else {
+		const getEvents = await getAllEvents(ctx.apolloClient, currentUser);
+		return { currentUser, getEvents};
 	}
-	return { currentUser};
+	return {}
 };
 
 export default Home;
