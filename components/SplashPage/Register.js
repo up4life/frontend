@@ -32,7 +32,7 @@ import {
 import { CURRENT_USER_QUERY } from '../Queries/User';
 //Components
 import ErrorModal from './ErrorModal';
-import Terms from '../../components/SplashPage/Terms';
+//import Terms from '../../components/SplashPage/Terms';
 import Transition from '../Transistion';
 //styled components
 import Button from '../../styledComponents/CustomButtons/Button';

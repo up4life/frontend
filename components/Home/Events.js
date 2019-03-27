@@ -46,17 +46,14 @@ const Events = ({ classes, router, href, getEvents, ...props }) => {
 	});
 	const variables = { page, location, ...filters };
 	async function fetchEvents() {
-		console.log(variables);
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
 			skip,
 			fetchPolicy: 'network-only',
 		});
-		console.log(getEvents, data.getEvents);
 		return data;
 	}
-	console.log(page);
 
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION, {
 		onCompleted: () => NProgress.done(),
