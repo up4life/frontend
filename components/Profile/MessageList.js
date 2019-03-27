@@ -44,7 +44,7 @@ const MessageList = ({ classes, selectedChat, currentUser, selectedChatId, newCh
 						style={{
 							flexGrow: 1,
 							height: "100%",
-							overflow: "scroll",
+							overflowY: "scroll",
 							display: "flex",
 							flexDirection: "column"
 						}}

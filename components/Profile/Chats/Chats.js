@@ -74,7 +74,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 						<Paper
 							style={{
 								height: '100%',
-								overflow: 'scroll',
+								overflowY: 'scroll',
 								minWidth: '250px',
 								backgroundColor: '#1f1e1e',
 								backgroundImage:
@@ -101,7 +101,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 								style={{
 									padding: '20px 5px 20px',
 									maxHeight: '100%',
-									overflow: 'scroll',
+									overflowY: 'scroll',
 								}}
 							>
 								{data.getUserChats &&

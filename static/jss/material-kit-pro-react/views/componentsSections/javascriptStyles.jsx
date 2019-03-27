@@ -101,6 +101,9 @@ const javascriptStyles = theme => {
 			flexDirection: 'column',
 			alignItems: 'center',
 		},
+		modalBody: {
+			...modalStyle(theme).modalBody,
+		},
 		userModalHeader: {
 			backgroundImage:
 				'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
@@ -127,6 +130,7 @@ const javascriptStyles = theme => {
 			width: '100%',
 			padding: '10px',
 			display: 'flex',
+			height: 'calc(100vh - 150px)',
 			flexDirection: 'column',
 			backgroundColor: '#1b1b1b59',
 			backgroundImage: 'url("https://www.transparenttextures.com/patterns/ag-square.png")',
@@ -146,9 +150,9 @@ const javascriptStyles = theme => {
 		},
 
 		chat: {
-			//flexGrow: 1,
-			maxHeight: '75%',
-			height: '75%',
+			flexGrow: 1,
+			// maxHeight: '75%',
+			// height: '75%',
 			overflowY: 'scroll',
 			backgroundColor: '#373737',
 			backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)',

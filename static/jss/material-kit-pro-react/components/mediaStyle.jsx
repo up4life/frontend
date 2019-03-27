@@ -43,10 +43,8 @@ const mediaStyle = {
 		WebkitBoxFlex: '1',
 		flex: '1',
 		textAlign: 'end',
-		height: '0px',
 	},
 	mediaBody: {
-		height: '0px',
 		paddingRight: '10px',
 		WebkitBoxFlex: '1',
 		flex: '1',
