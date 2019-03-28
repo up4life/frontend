@@ -333,7 +333,8 @@ const Event = ({ event, classes, user, first }) => {
                   borderTopRightRadius: "0px",
                   borderTopLeftRadius: "6px",
                   borderBottomRightRadius: "6px",
-                  zIndex: "700"
+                  zIndex: "700",
+                  opacity: ".9"
                 }}
                 className={
                   isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4
