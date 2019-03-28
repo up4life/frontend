@@ -359,7 +359,7 @@ const styles = {
     boxShadow: "none !important",
     width: "47px !important",
     height: "60px !important",
-    transition: "all .3s",
+    transition: "all .3s"
   },
 
   up4Logo: {
@@ -420,14 +420,14 @@ const styles = {
     alignItems: "center",
     borderTopLeftRadius: "6px",
     cursor: "pointer",
-	zIndex: 7,
-	
-	'& svg':{
-		transition: 'all .3s',
-		'&:hover':{
-			transform: 'scale(1.4)',
-		}
-	}
+    zIndex: 7,
+
+    "& svg": {
+      transition: "all .3s",
+      "&:hover": {
+        transform: "scale(1.4)"
+      }
+    }
     // '&:hover': {
     //   backgroundImage:
     //     "linear-gradient(to right bottom, #a0d5d1, #8dcdc8, #79c5c0, #64bdb7, #4cb5ae)",
@@ -494,6 +494,21 @@ const styles = {
       height: 0,
       borderStyle: "solid"
     }
+  },
+  reversedImage: {
+    border: "1px solid #cabac8",
+    borderTopLeftRadius: '6px',
+    borderTopRightRadius: '6px',
+    overflow: "hidden",
+    position: "absolute",
+    width: "96%",
+    top: "-25px",
+    left: "11px",
+    height: "21px",
+    objectFit: "cover",
+    objectPosition: "top",
+    filter:'blur(1px)',
+    transform: 'rotateY(180deg)',
   }
   // 'popper $arrow': {
   // 	bottom: 0,
