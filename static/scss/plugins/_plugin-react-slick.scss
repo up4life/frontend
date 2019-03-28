@@ -167,11 +167,11 @@ button.slick-arrow.slick-next {
   outline: none;
   background: transparent;
   width: 15%;
-  z-index: 2;
+  z-index: 700 !important;
   opacity: 0.5;
 }
 .slick-prev {
-  left: 0;
+  left: -30px !important;
   &::before {
     content: "\f053";
     font-weight: 600;
@@ -189,7 +189,7 @@ button.slick-arrow.slick-next {
   }
 }
 .slick-next {
-  right: 0;
+  right: -30px !important;
   &::before {
     content: "\f054";
     font-weight: 600;
