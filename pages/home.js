@@ -4,12 +4,12 @@ import { isLoggedIn } from "../components/Queries/User";
 import { getAllEvents } from '../components/Queries/AllEvents';
 import redirect from "../utils/redirect";
 
-const Home = ({ query, currentUser  }) => {
+const Home = ({ query, currentUser, getEvents  }) => {
 	
 	return (
 		<>
 			<Header color="primary" user={currentUser} />
-			<Events  user={currentUser}/>
+			<Events  getEvents={getEvents.data} user={currentUser}/>
 		</>
 	)
 };

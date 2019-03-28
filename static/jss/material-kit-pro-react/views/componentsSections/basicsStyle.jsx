@@ -146,12 +146,19 @@ const basicsStyle = theme => ({
 		color: '#fafafa',
 	},
 	interests: {
+		height: '40%',
+		border: '4px solid #b2ddf7',
+		borderRadius: '6px',
+		padding: '10px',
 		'& span': {
 			color: '#fafafa',
 		},
 		'& svg': {
 			color: '#fafafa',
 		},
+	},
+	bigChip: {
+		fontSize: '14px',
 	},
 });
 

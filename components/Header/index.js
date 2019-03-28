@@ -81,7 +81,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 			}
 		},
 	});
-	console.log(audioRef.current);
+
 	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
 		pollInterval: 600,
 	});

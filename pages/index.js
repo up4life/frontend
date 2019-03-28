@@ -4,9 +4,9 @@ import redirect from '../utils/redirect';
 import Home from './home';
 import Welcome from './welcome';
 
-const Index = ({ currentUser, query }) => {
+const Index = ({ currentUser, getEvents, query }) => {
 	if (!currentUser.gender) return <Welcome currentUser={currentUser} query={{ slug: 0 }} />;
-	else return <Home currentUser={currentUser} />;
+	else return <Home getEvents={getEvents} currentUser={currentUser} />;
 };
 
 Index.getInitialProps = async ctx => {

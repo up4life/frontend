@@ -37,7 +37,7 @@ const CommonInterests = ({ match, user, classes }) => {
 						}
 						label={genre.name}
 						key={genre.id}
-						className={classes.chip}
+						className={classes.chip + ' ' + classes.bigChip}
 						color='primary'
 						variant='default'
 					/>

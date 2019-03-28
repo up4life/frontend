@@ -157,7 +157,6 @@ const Login = ({ classes, showing, setShowing }) => {
 										awaitRefetchQueries
 										onError={handleError}
 										onCompleted={({ firebaseAuth }) => {
-											NProgress.done();
 											if (firebaseAuth.newUser) {
 												Router.push(
 													'/welcome?slug=0',

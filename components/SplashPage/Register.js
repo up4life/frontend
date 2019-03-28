@@ -270,7 +270,6 @@ const Register = ({ classes, showing, setShowing }) => {
 															setServerError(error);
 														}}
 														onCompleted={({ firebaseAuth }) => {
-															NProgress.done();
 															if (firebaseAuth.newUser) {
 																Router.push(
 																	'/welcome?slug=0',

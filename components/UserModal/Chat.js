@@ -211,10 +211,16 @@ const Chat = ({
 														}}
 													>
 														<Tooltip
-															title={moment(msg.createdAt).format(
+															title={moment(m.createdAt).format(
 																'MMM Do h:mm a',
 															)}
-															placement='bottom-end'
+															placement={
+																fromMatch ? (
+																	'bottom-start'
+																) : (
+																	'bottom-end'
+																)
+															}
 														>
 															<p
 																style={{

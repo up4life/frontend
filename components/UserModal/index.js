@@ -303,7 +303,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 								}}
 								className={classes.modalBody}
 							>
-								<GridContainer>
+								<GridContainer style={{ height: 'calc(100vh - 160px)' }}>
 									<GridItem
 										sm={7}
 										md={8}
@@ -312,11 +312,16 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											display: 'flex',
 											flexDirection: 'column',
 											justifyContent: 'space-between',
+											height: '100%',
 										}}
 									>
-										<GridContainer>
+										<GridContainer style={{ height: '100%' }}>
 											<GridItem
-												style={{ display: 'flex', flexDirection: 'column' }}
+												style={{
+													display: 'flex',
+													flexDirection: 'column',
+													height: '100%',
+												}}
 												md={7}
 												lg={7}
 											>
@@ -352,7 +357,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 															'url("https://www.transparenttextures.com/patterns/dark-matter.png")',
 														color: '#fafafa',
 														flexGrow: 1,
-														marginBottom: '10px',
+														margin: '10px auto 0',
 														display: 'flex',
 														alignItems: 'flex-start',
 													}}
@@ -367,9 +372,18 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 													</div>
 												</div>
 											</GridItem>
-											<GridItem sm={12} md={5} lg={5}>
-												<CommonEvents id={user} />
+											<GridItem
+												sm={12}
+												md={5}
+												lg={5}
+												style={{
+													display: 'flex',
+													flexDirection: 'column',
+													justifyContent: 'space-between',
+												}}
+											>
 												<CommonInterests match={match} user={currentUser} />
+												<CommonEvents id={user} />
 											</GridItem>
 										</GridContainer>
 									</GridItem>

@@ -18,7 +18,13 @@ const CommonEvents = ({ classes, id }) => {
 	const { data } = useQuery(SHARED_EVENTS_QUERY, { variables: { id } });
 	if (!data.getSharedEvents) return <div>loading</div>;
 	return (
-		<GridContainer style={{ maxHeight: '50%', overflowY: 'scroll' }}>
+		<GridContainer
+			style={{
+				maxHeight: '55%',
+				overflowY: 'scroll',
+				marginBottom: '10px',
+			}}
+		>
 			{/* <h4 style={{textAlign: 'center'}}className={classes.title}>Events in common</h4> */}
 			{/* <GridContainer style={{ display: 'flex' }}> */}
 
@@ -29,7 +35,7 @@ const CommonEvents = ({ classes, id }) => {
 						md={6}
 						lg={6}
 						key={event.id}
-						//style={{ maxWidth: '280px' }}
+						style={{ paddingLeft: '5px', paddingRight: '5px' }}
 					>
 						<Card
 							background
@@ -39,6 +45,7 @@ const CommonEvents = ({ classes, id }) => {
 								borderRadius: '11px',
 								backgroundImage: `url(${event.image_url})`,
 								marginTop: '0',
+								marginBottom: '10px',
 								//marginBottom: '',
 							}}
 						>
@@ -49,7 +56,7 @@ const CommonEvents = ({ classes, id }) => {
 									padding: '10px',
 									display: 'flex',
 									alignItems: 'center',
-									minHeight: '110px',
+									minHeight: '150px',
 								}}
 							>
 								{' '}
