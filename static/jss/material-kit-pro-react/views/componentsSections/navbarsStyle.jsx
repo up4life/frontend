@@ -51,7 +51,7 @@ const navbarsStyle = theme => ({
     width: "60px",
     height: "60px",
 	borderRadius: "50%",
-	transition: 'all .8s',
+	transition: 'all .4s',
     "&:hover": {
       boxShadow: "0 0 1rem rgba(255, 255, 255, 0.61)"
     }

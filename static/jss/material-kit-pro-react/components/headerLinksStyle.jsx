@@ -53,7 +53,7 @@ const headerLinksStyle = theme => ({
       }
     },
     "& svg": {
-      transition: "all .8s",
+      transition: "all .4s",
       "&:hover": {
         fill: "rgba(65, 65, 65, .5)"
       }
