@@ -51,6 +51,7 @@ const Profile = ({ classes, theme, router: { query } }) => {
 		<User>
 			{({ data: { currentUser } }) => (
 				<div
+				className={classes.profileDrawer}
 					style={{
 						backgroundColor: '#000',
 						height: '100%',
