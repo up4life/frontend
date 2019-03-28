@@ -153,6 +153,14 @@ const basicsStyle = theme => ({
 			color: '#fafafa',
 		},
 	},
+	profileDrawer:{
+		'& svg': {
+			transition: 'all .4s',
+			'&:hover':{
+				fill: '#df9bbe'
+			}
+		}
+	}
 });
 
 export default basicsStyle;
