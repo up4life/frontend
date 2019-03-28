@@ -44,7 +44,7 @@ const Events = ({ classes, router, href, user, getEvents, ...props }) => {
 		genres: getEvents.genres || [],
 		dates: getEvents.dates || [],
 	});
-	console.log(getEvents);
+
 	const variables = { page, location, ...filters };
 	async function fetchEvents() {
 		let { data, error, loading } = await client.query({

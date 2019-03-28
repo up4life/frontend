@@ -200,7 +200,7 @@ const Chat = ({
 									<span>
 										{msg.map((m, i) => {
 											return (
-												<div>
+												<div key={m.id}>
 													<div
 														style={{
 															display: 'inline-flex',

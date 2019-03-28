@@ -264,6 +264,15 @@ const Event = ({ event, classes, user, first }) => {
 												classes={{ badge: classes.smallBadge }}
 											>
 												<img
+													onClick={() => {
+														NProgress.start();
+														Router.push(
+															`/home?user=${usr.id}`,
+															`/home/user/${usr.id}`,
+															{ shallow: true },
+															{ scroll: false },
+														);
+													}}
 													key={usr.id}
 													src={
 														usr.img.length ? (
@@ -277,6 +286,7 @@ const Event = ({ event, classes, user, first }) => {
 														height: '40px',
 														borderRadius: '6px',
 														border: '1px solid #cabac8',
+														cursor: 'pointer',
 													}}
 												/>
 											</Badge>
