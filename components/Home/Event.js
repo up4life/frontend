@@ -244,7 +244,13 @@ const Event = ({ event, classes, user, first }) => {
 							</div>
 						</CardBody>
 
-						<CardFooter style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<CardFooter
+							style={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								paddingBottom: '10px',
+							}}
+						>
 							{event.attending.length ? (
 								<div style={{ display: 'flex' }}>
 									{event.attending.filter(x => x.id !== user.id).map(usr => {
@@ -281,13 +287,7 @@ const Event = ({ event, classes, user, first }) => {
 															standIn
 														)
 													}
-													style={{
-														width: '40px',
-														height: '40px',
-														borderRadius: '6px',
-														border: '1px solid #cabac8',
-														cursor: 'pointer',
-													}}
+													className={classes.lilImg}
 												/>
 											</Badge>
 										);
@@ -418,7 +418,7 @@ const Event = ({ event, classes, user, first }) => {
 										</h6>
 									</div>
 								</div>
-								<GridContainer>
+								<GridContainer style={{ maxHeight: '335px', overflow: 'scroll' }}>
 									{event.attending.map(usr => {
 										let chat = user
 											? user.chats.find(x =>
@@ -517,6 +517,7 @@ const Event = ({ event, classes, user, first }) => {
 								<div
 									onClick={() => setRotate('')}
 									className={` ${classes.flip} ${classes.flop}`}
+									style={{ bottom: 0 }}
 								>
 									<Flopper
 										className={classes.flipper}
