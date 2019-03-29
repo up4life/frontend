@@ -66,13 +66,16 @@ const navbarsStyle = theme => ({
     backgroundColor: "red"
   },
   newIndicator: {
-    backgroundColor: "#81010a82",
+    backgroundColor: "#ff101f",
     marginRight: "-5px",
-    marginLeft: "-24px",
+    marginLeft: "-3px",
     paddingLeft: "30px",
-    paddingTop: "5px",
-    borderBottomLeftRadius: "6px",
-    borderTopLeftRadius: "6px"
+    paddingTop: "2px",
+    borderBottomLeftRadius: "3px",
+    borderTopLeftRadius: "3px",
+    marginBottom: "10px",
+    fontWeight: "700",
+    textTransform: "uppercase"
   }
 });
 
