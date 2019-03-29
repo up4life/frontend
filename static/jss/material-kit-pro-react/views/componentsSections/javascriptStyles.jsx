@@ -313,7 +313,6 @@ const javascriptStyles = theme => {
 			borderBottom: '1px solid gray',
 		},
 		fire60: {
-			marginLeft: '35px',
 			'& svg': {
 				height: '60px',
 				width: '60px',
@@ -321,7 +320,6 @@ const javascriptStyles = theme => {
 			},
 		},
 		fire80: {
-			marginLeft: '35px',
 			'& svg': {
 				height: '60px',
 				width: '60px',
@@ -329,7 +327,6 @@ const javascriptStyles = theme => {
 			},
 		},
 		fire90: {
-			marginLeft: '35px',
 			'& svg': {
 				height: '60px',
 				width: '60px',

@@ -10,7 +10,7 @@ import { withRouter } from 'next/router';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { List, ListItem, Badge, Divider } from '@material-ui/core';
-import { AccountCircle, Explore, Mail, LocationCityOutlined } from '@material-ui/icons';
+import { AccountCircle, Explore, Mail, LocationCityOutlined, Home } from '@material-ui/icons';
 import navbarsStyle from '../../static/jss/material-kit-pro-react/views/componentsSections/navbarsStyle.jsx';
 //Q&M
 
@@ -162,7 +162,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 										color='transparent'
 									>
 										{/* <Explore /> Discover */}
-										<LocationCityOutlined
+										<Home
 											style={{ height: '30px', width: '30px' }}
 										/>
 									</Button>
@@ -339,7 +339,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 																	img => img.default,
 																).img_url
 															}
-															className={classes.img}
+															className={classes.img + " " + classes.imageProfile}
 															alt='profile'
 														/>
 													}

@@ -160,6 +160,14 @@ const basicsStyle = theme => ({
 	bigChip: {
 		fontSize: '14px',
 	},
+	profileDrawer: {
+		'& svg': {
+			transition: 'all .4s',
+			'&:hover': {
+				fill: '#df9bbe',
+			},
+		},
+	},
 });
 
 export default basicsStyle;

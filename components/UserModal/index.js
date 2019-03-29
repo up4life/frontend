@@ -216,6 +216,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 										style={{
 											display: 'flex',
 											alignItems: 'center',
+											width: '100%',
 										}}
 									>
 										<h4
