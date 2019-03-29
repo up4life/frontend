@@ -41,6 +41,7 @@ import getAge from '../../utils/getAge';
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
 const Event = ({ event, classes, user, first }) => {
+	const useIsomorphicLayoutEffect = process.Browser ? useLayoutEffect : useEffect;
 	let [ isSaved, setIsSaved ] = useState(false);
 
 	useEffect(() => {
@@ -120,7 +121,7 @@ const Event = ({ event, classes, user, first }) => {
 	const divEl = useRef(null);
 	const imgEl = useRef(null);
 
-	useEffect(
+	useIsomorphicLayoutEffect(
 		() => {
 			NProgress.start();
 			if (imgEl.current) {
@@ -130,7 +131,7 @@ const Event = ({ event, classes, user, first }) => {
 		[ imgEl ],
 	);
 
-	useEffect(
+	useIsomorphicLayoutEffect(
 		() => {
 			if (val) {
 				setHeight(`${divEl.current.clientHeight}px`);

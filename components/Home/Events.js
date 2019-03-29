@@ -53,7 +53,6 @@ const Events = props => {
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
-
 			fetchPolicy: 'network-only',
 		});
 		return data;
