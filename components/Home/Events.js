@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { Mutation, Query } from 'react-apollo';
 import _ from 'lodash';
 import { withRouter } from 'next/router';
@@ -32,17 +32,20 @@ import backgroundImg from '../../static/img/shattered-dark.png';
 import drawerbgImg from '../../static/img/dark-fish-skin.png';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 
-const Events = ({ classes, router, href, user, getEvents, ...props }) => {
+const Events = props => {
+	let { classes, router, href, user, getEvents } = props;
+
 	const client = useApolloClient();
 	const [ drawer, setDrawer ] = useState(false);
 	const [ skip, setSkip ] = useState(true);
 	const [ page, setPage ] = useState(0);
-	const [ events, setEvents ] = useState(getEvents.events);
+	const firstUpdate = useRef(true);
+	const [ events, setEvents ] = useState(getEvents.getEvents.events);
 	const [ location, setLocation ] = useState(user.location);
 	const [ filters, setFilters ] = useState({
-		categories: getEvents.categories || [],
-		genres: getEvents.genres || [],
-		dates: getEvents.dates || [],
+		categories: getEvents.getEvents.categories,
+		genres: getEvents.getEvents.genres,
+		dates: getEvents.getEvents.dates,
 	});
 
 	const variables = { page, location, ...filters };
@@ -50,6 +53,7 @@ const Events = ({ classes, router, href, user, getEvents, ...props }) => {
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
+
 			fetchPolicy: 'network-only',
 		});
 		return data;
@@ -62,6 +66,10 @@ const Events = ({ classes, router, href, user, getEvents, ...props }) => {
 
 	useEffect(
 		() => {
+			if (firstUpdate.current) {
+				firstUpdate.current = false;
+				return;
+			}
 			setSkip(false);
 			fetchEvents()
 				.then(({ getEvents }) => setEvents(getEvents.events))
@@ -150,12 +158,7 @@ const Events = ({ classes, router, href, user, getEvents, ...props }) => {
 											>
 												<ChevronLeft />
 											</IconButton>
-											<LocationSearch
-												setLocation={async val => {
-													await setSkip(false);
-													setLocation(val);
-												}}
-											/>
+											<LocationSearch setLocation={setLocation} />
 											<p style={{ margin: 0 }}>
 												Showing events near {location}.
 											</p>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Cached from '@material-ui/icons/Cached';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
@@ -28,11 +28,11 @@ import accordionStyle from '../../static/jss/material-kit-pro-react/components/a
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
 import { mis, music, sports, performing } from '../../utils/genres';
 
-const Filters = ({ classes, filters, setFilters, setSkip }) => {
+const Filters = props => {
+	let { classes, filters, setFilters, setSkip } = props;
+
+	const firstUpdate = useRef(true);
 	const { data } = useQuery(ALL_GENRE_QUERY);
-	const [ categoryFilters, setCategeoryFilters ] = useState(filters.categories);
-	const [ dateFilters, setDateFilters ] = useState(filters.dates);
-	const [ genreFilters, setGenreFilters ] = useState(filters.genres);
 	const [ selectedDate, setSelectedDate ] = useState(null);
 
 	const handleCategoryFilters = ({ target: { id } }) => {
@@ -58,6 +58,10 @@ const Filters = ({ classes, filters, setFilters, setSkip }) => {
 
 	useEffect(
 		() => {
+			if (firstUpdate.current) {
+				firstUpdate.current = false;
+				return;
+			}
 			if (selectedDate) {
 				setFilters({ ...filters, dates: [ selectedDate ] });
 			} else {
@@ -83,9 +87,7 @@ const Filters = ({ classes, filters, setFilters, setSkip }) => {
 							justIcon
 							size='sm'
 							onClick={() => {
-								setCategeoryFilters([]);
-								setDateFilters([]);
-								setGenreFilters([]);
+								setFilters({ categories: [], genres: [], dates: [] });
 							}}
 							className={`${classes.pullRight} ${classes.refineButton}`}
 						>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect, Fragment } from 'react';
 import moment from 'moment';
 import NProgress from 'nprogress';
 import { useMutation } from '../Mutations/useMutation';

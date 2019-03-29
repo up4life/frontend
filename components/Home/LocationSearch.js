@@ -1,98 +1,100 @@
-import React, { useState } from "react";
-import Downshift from "downshift";
-import { ApolloConsumer } from "react-apollo";
+import React, { useState, useEffect, useRef } from 'react';
+import Downshift from 'downshift';
+import { ApolloConsumer } from 'react-apollo';
 //MUI
-import { Paper, MenuItem } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import { Paper, MenuItem } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 //Q&M
-import { LOCATION_SUGGESTION_QUERY } from "../Queries/LocationSuggestion";
+import { LOCATION_SUGGESTION_QUERY } from '../Queries/LocationSuggestion';
 //styled components
-import Input from "../../styledComponents/CustomInput/CustomInput";
-import Button from "../../styledComponents/CustomButtons/Button";
+import Input from '../../styledComponents/CustomInput/CustomInput';
+import Button from '../../styledComponents/CustomButtons/Button';
 
-const Search = ({ setLocation }) => {
-  const [input, setInput] = useState("");
-  const [items, setItems] = useState([]);
-  const onChange = selectedItem => {
-    setInput(selectedItem);
-  };
+const Search = props => {
+	let { setLocation } = props;
 
-  return (
-    <ApolloConsumer>
-      {client => (
-        <Downshift
-          inputValue={input}
-          onChange={onChange}
-          onInputValueChange={async e => {
-            setInput(e);
-            const { data } = await client.query({
-              query: LOCATION_SUGGESTION_QUERY,
-              variables: { city: e }
-            });
+	const [ input, setInput ] = useState('');
+	const [ items, setItems ] = useState([]);
+	const onChange = selectedItem => {
+		setInput(selectedItem);
+	};
 
-            setItems(data.locationSearch);
-          }}
-        >
-          {({
-            getInputProps,
-            getItemProps,
+	return (
+		<ApolloConsumer>
+			{client => (
+				<Downshift
+					inputValue={input}
+					onChange={onChange}
+					onInputValueChange={async e => {
+						setInput(e);
+						const { data } = await client.query({
+							query: LOCATION_SUGGESTION_QUERY,
+							variables: { city: e },
+						});
 
-            isOpen,
+						setItems(data.locationSearch);
+					}}
+				>
+					{({
+						getInputProps,
+						getItemProps,
 
-            highlightedIndex,
-            selectedItem
-          }) => (
-            <div>
-              <Input
-                inputProps={{
-                  placeholder: "Search for a city name...",
-                  ...getInputProps()
-                }}
-                formControlProps={{
-                  style: { paddingTop: "12px", width: "78%" }
-                }}
-              />
-              <Button
-                justIcon
-                round="true"
-                disabled={!selectedItem}
-                onClick={() => {
-                  let city = input.slice(0, -5);
+						isOpen,
 
-                  setLocation(city);
-                }}
-              >
-                <SearchIcon />
-              </Button>
+						highlightedIndex,
+						selectedItem,
+					}) => (
+						<div>
+							<Input
+								inputProps={{
+									placeholder: 'Search for a city name...',
+									...getInputProps(),
+								}}
+								formControlProps={{
+									style: { paddingTop: '12px', width: '78%' },
+								}}
+							/>
+							<Button
+								justIcon
+								round='true'
+								disabled={!selectedItem}
+								onClick={() => {
+									let city = input.slice(0, -5);
 
-              {isOpen ? (
-                <Paper
-                  style={{
-                    position: "absolute",
-                    zIndex: 2,
+									setLocation(city);
+								}}
+							>
+								<SearchIcon />
+							</Button>
 
-                    width: "200px",
-                    background: "#3c3c3c"
-                  }}
-                >
-                  {items.map((result, index) => {
-                    return (
-                      <MenuItem
-                        key={index}
-                        {...getItemProps({ item: result.city })}
-                      >
-                        {result.city}
-                      </MenuItem>
-                    );
-                  })}
-                </Paper>
-              ) : null}
-            </div>
-          )}
-        </Downshift>
-      )}
-    </ApolloConsumer>
-  );
+							{isOpen ? (
+								<Paper
+									style={{
+										position: 'absolute',
+										zIndex: 2,
+
+										width: '200px',
+										background: '#3c3c3c',
+									}}
+								>
+									{items.map((result, index) => {
+										return (
+											<MenuItem
+												key={index}
+												{...getItemProps({ item: result.city })}
+											>
+												{result.city}
+											</MenuItem>
+										);
+									})}
+								</Paper>
+							) : null}
+						</div>
+					)}
+				</Downshift>
+			)}
+		</ApolloConsumer>
+	);
 };
 
 export default Search;
