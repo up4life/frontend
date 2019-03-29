@@ -5,14 +5,14 @@ const style = {
 	container,
 
 	profileHeader: {
-		height: '175px',
+		height: '165px',
 		width: '100%',
 		backgroundColor: 'rgba(0,0,0,0.32)',
 		marginBottom: '60px',
 	},
 	innerHeader: {
 		margin: '0 auto',
-		padding: '30px 60px 0',
+		padding: '20px 60px 0',
 		maxWidth: '1200px',
 		display: 'flex',
 		justifyContent: 'flex-start',
@@ -20,8 +20,8 @@ const style = {
 
 	profileImg: {
 		backgroundSize: '100%',
-		height: '180px',
-		width: '180px',
+		height: '170px',
+		width: '170px',
 		borderRadius: '6px',
 		//cursor: 'pointer',
 		display: 'flex',

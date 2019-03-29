@@ -48,13 +48,41 @@ const Events = props => {
 		dates: getEvents.getEvents.dates,
 	});
 
-	const variables = { page, location, ...filters };
-	async function fetchEvents() {
+	async function fetchEvents(more) {
+		const variables = { page, location, ...filters };
+
 		let { data, error, loading } = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables,
-			fetchPolicy: 'network-only',
+			fetchPolicy: 'no-cache',
 		});
+
+		if (more) {
+			let { getEvents } = client.readQuery({
+				query: ALL_EVENTS_QUERY,
+				variables: {
+					...variables,
+					page: page - 1,
+				},
+			});
+			console.log(getEvents);
+			let uniqueEvents = getEvents.events.filter(
+				x => !events.some(y => x.tmID === y.tmID || y.id === x.id),
+			);
+			let newEvents = [ ...getEvents.events, ...uniqueEvents ];
+			client.writeQuery({
+				query: ALL_EVENTS_QUERY,
+				variables,
+				data: {
+					getEvents: {
+						...getEvents,
+						events: newEvents,
+					},
+				},
+			});
+			return newEvents;
+		}
+
 		return data;
 	}
 
@@ -69,6 +97,7 @@ const Events = props => {
 				firstUpdate.current = false;
 				return;
 			}
+			NProgress.start();
 			setSkip(false);
 			fetchEvents()
 				.then(({ getEvents }) => setEvents(getEvents.events))
@@ -80,13 +109,14 @@ const Events = props => {
 	useEffect(
 		() => {
 			if (page > 0) {
+				NProgress.start();
 				setSkip(false);
-				fetchEvents()
-					.then(({ getEvents }) => {
-						let newEvents = getEvents.events.filter(
-							x => !events.some(y => x.tmID === y.tmID || y.id === x.id),
-						);
-						setEvents([ ...events, ...newEvents ]);
+
+				fetchEvents(true)
+					.then(newEvents => {
+						console.log(newEvents);
+						setEvents(newEvents);
+						NProgress.done();
 					})
 					.catch(e => console.log(e));
 			}

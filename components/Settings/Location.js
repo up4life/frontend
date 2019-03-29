@@ -57,7 +57,8 @@ const Location = ({ user, classes }) => {
 					onClick={() => showModal(true)}
 				>
 					<EditLocation className={classes.location} />
-				</IconButton>
+				</IconButton>{' '}
+				<small style={{}}>Edit Location</small>
 			</div>
 			<Dialog
 				classes={{
