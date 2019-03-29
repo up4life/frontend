@@ -420,100 +420,122 @@ const Event = ({ event, classes, user, first }) => {
 									</div>
 								</div>
 								<GridContainer style={{ maxHeight: '335px', overflow: 'scroll' }}>
-									{event.attending.map(usr => {
-										let chat = user
-											? user.chats.find(x =>
-													x.users.some(y => y.id === usr.id),
-												)
-											: false;
-										let newChat = user
-											? user.chats.find(x =>
-													x.messages.some(
-														y => y.from.id === usr.id && !y.seen,
-													),
-												)
-											: false;
-										let liked = user
-											? user.liked.find(x => x.id === usr.id)
-											: false;
-
-										return (
-											<GridItem
-												key={usr.id}
-												xs={6}
-												sm={6}
-												md={4}
+									{!event.attending.length > 0 ? (
+										<div style={{ width: '100%' }}>
+											<div>
+												<p>Be the First to be Up For this Event</p>
+											</div>
+											<img
 												style={{
-													padding: '5px',
-													position: 'relative',
-													minWidth: '150px',
-													maxWidth: '170px',
+													filter: 'grayscale(50%)',
+													opacity: '.5',
+													height: '260px',
 												}}
-											>
-												{liked && <Favorite className={classes.favorite} />}
-												{chat && (
-													<Badge
-														invisible={!newChat}
-														color='primary'
-														variant='dot'
-														classes={{
-															root: classes.newChat,
-															badge: classes.chatBadge,
-														}}
-													>
-														<Chat className={classes.chat} />
-													</Badge>
-												)}
-												<div
-													onClick={() => {
-														NProgress.start();
-														Router.push(
-															`/home?user=${usr.id}`,
-															`/home/user/${usr.id}`,
-															{ shallow: true },
-															{ scroll: false },
-														);
+												src={Arrow}
+											/>
+											<small style={{ display: 'block' }}>
+												In fashion you are what is known as a trendsetter
+											</small>
+										</div>
+									) : (
+										event.attending.map(usr => {
+											let chat = user
+												? user.chats.find(x =>
+														x.users.some(y => y.id === usr.id),
+													)
+												: false;
+											let newChat = user
+												? user.chats.find(x =>
+														x.messages.some(
+															y => y.from.id === usr.id && !y.seen,
+														),
+													)
+												: false;
+											let liked = user
+												? user.liked.find(x => x.id === usr.id)
+												: false;
+
+											return (
+												<GridItem
+													key={usr.id}
+													xs={6}
+													sm={6}
+													md={4}
+													style={{
+														padding: '5px',
+														position: 'relative',
+														minWidth: '150px',
+														maxWidth: '170px',
 													}}
-													style={{}}
 												>
-													<div
-														className={` ${classes.gradientBorder}  ${classes.userCard}`}
-													>
-														<Avatar
-															src={
-																usr.img.length ? (
-																	usr.img.find(img => img.default)
-																		.img_url
-																) : (
-																	standIn
-																)
-															}
-															imgProps={{ height: 70, width: 70 }}
-															style={{
-																width: '100%',
-																height: '124px',
-																borderRadius: '6px',
-															}}
-														/>
-														<div
-															style={{
-																display: 'flex',
-																justifyContent: 'center',
+													{liked && (
+														<Favorite className={classes.favorite} />
+													)}
+													{chat && (
+														<Badge
+															invisible={!newChat}
+															color='primary'
+															variant='dot'
+															classes={{
+																root: classes.newChat,
+																badge: classes.chatBadge,
 															}}
 														>
-															<p style={{ margin: 0 }}>
-																{usr.firstName}{' '}
-																<span style={{ padding: '0 3px' }}>&#8226;</span>
-															</p>
-															<p style={{ margin: '0 0 0 2px' }}>
-																{getAge(usr.dob)}
-															</p>
+															<Chat className={classes.chat} />
+														</Badge>
+													)}
+													<div
+														onClick={() => {
+															NProgress.start();
+															Router.push(
+																`/home?user=${usr.id}`,
+																`/home/user/${usr.id}`,
+																{ shallow: true },
+																{ scroll: false },
+															);
+														}}
+														style={{}}
+													>
+														<div
+															className={` ${classes.gradientBorder}  ${classes.userCard}`}
+														>
+															<Avatar
+																src={
+																	usr.img.length ? (
+																		usr.img.find(
+																			img => img.default,
+																		).img_url
+																	) : (
+																		standIn
+																	)
+																}
+																imgProps={{ height: 70, width: 70 }}
+																style={{
+																	width: '100%',
+																	height: '124px',
+																	borderRadius: '6px',
+																}}
+															/>
+															<div
+																style={{
+																	display: 'flex',
+																	justifyContent: 'center',
+																}}
+															>
+																<p style={{ margin: 0 }}>
+																	{usr.firstName}{' '}
+																	<span style={{ padding: '0 3px' }}>&#8226;</span>
+																</p>
+																<p style={{ margin: '0 0 0 2px' }}>
+																	{getAge(usr.dob)}
+																</p>
+															</div>
 														</div>
 													</div>
-												</div>
-											</GridItem>
-										);
-									})}
+												</GridItem>
+											);
+										})
+									)}
 								</GridContainer>
 								<div
 									onClick={() => setRotate('')}
