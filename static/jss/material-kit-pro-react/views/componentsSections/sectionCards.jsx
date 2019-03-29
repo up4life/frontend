@@ -526,7 +526,7 @@ const styles = {
 		border: '1px solid #cabac8',
 		cursor: 'pointer',
 		'&:hover': {
-			border: '1px solid #4cb5ae',
+			border: '2px solid #4cb5ae',
 		},
 	},
 };
