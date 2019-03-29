@@ -247,11 +247,11 @@ const Nav = ({ classes, color, router, href, user }) => {
 																style={{
 																	display: 'flex',
 																	padding: '5px',
-																	borderBottom: newMessages.some(
+																	borderRight: newMessages.some(
 																		msg =>
 																			msg.chat.id === chat.id,
 																	)
-																		? '1px solid #fb6f7870'
+																		? '4px solid #81010a82'
 																		: 'none',
 																}}
 															>
@@ -285,9 +285,9 @@ const Nav = ({ classes, color, router, href, user }) => {
 																			{moment(
 																				chat.time,
 																			).fromNow()}
-																			<div>
+																			<div className={classes.newIndicator}>
 																				{chat.newMsgs ? (
-																					chat.newMsgs
+																					chat.newMsgs + " new"
 																				) : null}
 																			</div>
 																		</small>

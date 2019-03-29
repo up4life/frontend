@@ -50,8 +50,8 @@ const navbarsStyle = theme => ({
   img: {
     width: "60px",
     height: "60px",
-	borderRadius: "50%",
-	transition: 'all .4s',
+    borderRadius: "50%",
+    transition: "all .4s",
     "&:hover": {
       boxShadow: "0 0 1rem rgba(255, 255, 255, 0.61)"
     }
@@ -64,6 +64,15 @@ const navbarsStyle = theme => ({
   },
   messageDropdown: {
     backgroundColor: "red"
+  },
+  newIndicator: {
+    backgroundColor: "#81010a82",
+    marginRight: "-5px",
+    marginLeft: "-24px",
+    paddingLeft: "30px",
+    paddingTop: "5px",
+    borderBottomLeftRadius: "6px",
+    borderTopLeftRadius: "6px"
   }
 });
 
