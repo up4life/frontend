@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
-import moment from "moment";
-import NProgress from "nprogress";
-import { useMutation } from "../Mutations/useMutation";
-import Router from "next/router";
+import React, { useState, useEffect, useRef, useLayoutEffect, Fragment } from 'react';
+import moment from 'moment';
+import NProgress from 'nprogress';
+import { useMutation } from '../Mutations/useMutation';
+import Router from 'next/router';
 
 //query& M
 import { CURRENT_USER_QUERY } from "../Queries/User";
@@ -439,7 +439,7 @@ const Event = ({ event, classes, user, first }) => {
                         style={{
                           filter: "grayscale(50%)",
                           opacity: ".5",
-                          height: "50%"
+                          height: "260px"
                         }}
                         src={Arrow}
                       />
