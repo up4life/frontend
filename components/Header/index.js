@@ -93,7 +93,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 				let len = chatObj.messages.length - 1;
 				const { messages, users } = chatObj;
 				let [ usr ] = users.filter(usr => usr.id !== user.id);
-
+				let newMsgs = messages.filter(msg => !msg.seen && msg.from.id !== user.id);
 				let img =
 					usr && usr.img.length
 						? usr.img.find(img => img.default).img_url
@@ -102,6 +102,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 					id: chatObj.id,
 					from: usr && usr.firstName,
 					fromId: usr && usr.id,
+					newMsgs: newMsgs.length,
 					text: messages[len] ? messages[len].text : null,
 					img: img,
 					time: messages[len] ? messages[len].createdAt : null,
@@ -133,7 +134,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 				let newMessages = data.getUserChats
 					? newMessageCount(data.getUserChats, currentUser)
 					: [];
-
+				console.log(chats);
 				return (
 					<Header
 						color={color}
@@ -162,9 +163,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 										color='transparent'
 									>
 										{/* <Explore /> Discover */}
-										<Home
-											style={{ height: '30px', width: '30px' }}
-										/>
+										<Home style={{ height: '30px', width: '30px' }} />
 									</Button>
 								</ListItem>
 								<ListItem className={classes.listItem}>
@@ -286,6 +285,11 @@ const Nav = ({ classes, color, router, href, user }) => {
 																			{moment(
 																				chat.time,
 																			).fromNow()}
+																			<div>
+																				{chat.newMsgs ? (
+																					chat.newMsgs
+																				) : null}
+																			</div>
 																		</small>
 																	</div>
 																	<div
@@ -339,7 +343,11 @@ const Nav = ({ classes, color, router, href, user }) => {
 																	img => img.default,
 																).img_url
 															}
-															className={classes.img + " " + classes.imageProfile}
+															className={
+																classes.img +
+																' ' +
+																classes.imageProfile
+															}
 															alt='profile'
 														/>
 													}
