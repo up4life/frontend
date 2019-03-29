@@ -338,6 +338,29 @@ const javascriptStyles = theme => {
 				backgroundColor: '#2c2b2b !important',
 			},
 		},
+		likedUserImg: {
+			height: '100%',
+			borderRadius: '6px',
+			margin: '5px',
+			cursor: 'pointer',
+			border: '2px solid #cabac8',
+			cursor: 'pointer',
+			'&:hover': {
+				border: '2px solid #4cb5ae',
+			},
+		},
+		likedUserHiddenImg: {
+			height: '100%',
+			borderRadius: '6px',
+			margin: '5px',
+			filter: 'blur(3px)',
+		},
+		likedByWrapper: {
+			height: '60px',
+			margin: '20px 0',
+			display: 'flex',
+			alignItems: 'center',
+		},
 	};
 };
 

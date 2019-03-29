@@ -53,24 +53,11 @@ const LikedBy = ({ user, classes }) => {
 					's you!
 				</h5>
 			)}
-			<div
-				style={{
-					height: '60px',
-					margin: '20px',
-					display: 'flex',
-					alignItems: 'center',
-				}}
-			>
+			<div className={classes.likedByWrapper}>
 				{data.getLikedByList.map(usr => (
 					<img
 						src={usr.img.find(x => x.default).img_url}
-						style={{
-							height: '100%',
-							borderRadius: '6px',
-							margin: '5px',
-							cursor: hidden ? 'default' : 'pointer',
-							filter: hidden ? 'blur(3px)' : 'blur(0)',
-						}}
+						className={hidden ? classes.likedUserHiddenImg : classes.likedUserImg}
 						onClick={() => {
 							if (!hidden) {
 								Router.push(

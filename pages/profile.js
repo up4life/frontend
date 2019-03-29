@@ -1,4 +1,5 @@
 import { isLoggedIn } from "../components/Queries/User";
+import {genres} from '../components/Queries/Genres'
 import redirect from "../utils/redirect";
 import Profile from "../components/Profile";
 import Header from "../components/Header";
@@ -18,6 +19,8 @@ ProfilePage.getInitialProps = async ctx => {
 	} else if (!currentUser.dob || !currentUser.location || !currentUser.gender){
 		redirect(ctx, '/welcome')
 	}
+
+	await genres(ctx.apolloClient);
 
 	return { currentUser, query: ctx.query };
 };

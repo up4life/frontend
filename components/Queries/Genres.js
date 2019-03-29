@@ -10,3 +10,17 @@ export const ALL_GENRE_QUERY = gql`
 		}
 	}
 `;
+
+export const genres = async client => {
+	try {
+		const response = await client.query({
+			query: ALL_GENRE_QUERY,
+		});
+		if (response) {
+			return response;
+		}
+	} catch (e) {
+		console.log('hello', e);
+		return {};
+	}
+};
