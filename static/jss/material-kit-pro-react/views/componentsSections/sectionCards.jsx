@@ -505,7 +505,8 @@ const styles = {
 		height: '21px',
 		objectFit: 'cover',
 		objectPosition: 'top',
-		filter: 'blur(1px)',
+		// filter: 'blur(1px)',
+		filter: 'invert(100)',
 		transform: 'rotateY(180deg)',
 	},
 	// 'popper $arrow': {
