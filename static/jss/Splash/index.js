@@ -39,6 +39,7 @@ const styles = theme => {
 			},
 			'& input': {
 				color: '#fafafa',
+				height: '19px',
 			},
 		},
 
