@@ -1,4 +1,12 @@
-import { container, mlAuto, mrAuto, cardTitle, description } from '../material-kit-pro-react';
+import {
+	container,
+	mlAuto,
+	mrAuto,
+	cardTitle,
+	description,
+	main,
+	mainRaised,
+} from '../material-kit-pro-react';
 import modalStyle from '../material-kit-pro-react/modalStyle';
 
 const styles = theme => {
@@ -9,9 +17,10 @@ const styles = theme => {
 		description,
 		mlAuto,
 		mrAuto,
+		main,
+		mainRaised,
 		registerButton: {
-			backgroundImage:
-				'linear-gradient(to right, #f6655a, #f9574c, #fc473e, #fe332f, #ff101f)',
+			backgroundImage: 'linear-gradient(to right, #f6655a, #f9574c, #fc473e, #fe332f, #ff101f)',
 			fontSize: [ [ '30px' ], '!important' ],
 		},
 		tagline: {
@@ -29,8 +38,7 @@ const styles = theme => {
 
 		register: {
 			backgroundColor: '#262323',
-			backgroundImage:
-				'url("https://www.transparenttextures.com/theme/images/transparent.png")',
+			backgroundImage: 'url("https://www.transparenttextures.com/theme/images/transparent.png")',
 			color: '#fafafa',
 			border: '2px solid #81d6e3',
 			'& h3': {
@@ -41,8 +49,10 @@ const styles = theme => {
 			},
 			'& input': {
 				color: '#fafafa',
+				height: '19px',
 			},
 		},
+
 		textCenter: {
 			textAlign: 'center',
 		},

@@ -104,7 +104,7 @@ const Register = ({ classes, showing, setShowing }) => {
 				setError({ ...err, password: undefined });
 			}
 		},
-		[ user.password ],
+		[ user.password ]
 	);
 
 	const firebaseSignup = async (e, firebaseAuth, company) => {
@@ -199,31 +199,18 @@ const Register = ({ classes, showing, setShowing }) => {
 											{' '}
 											<Close className={classes.modalClose} />
 										</Button>
-										<h3
-											className={`${classes.cardTitle} ${classes.modalTitle}`}
-										>
-											Register
-										</h3>
+										<h3 className={`${classes.cardTitle} ${classes.modalTitle}`}>Register</h3>
 									</DialogTitle>
-									<DialogContent
-										id='signup-modal-slide-description'
-										className={classes.modalBody}
-									>
+									<DialogContent id='signup-modal-slide-description' className={classes.modalBody}>
 										<GridContainer>
-											<GridItem
-												xs={12}
-												sm={5}
-												md={5}
-												className={classes.mlAuto}
-											>
+											<GridItem xs={12} sm={5} md={5} className={classes.mlAuto}>
 												<InfoArea
 													className={classes.infoArea}
 													title='Music'
 													description={
 														<p>
-															From the biggest acts in town to more
-															intimate venues, find out who's playing
-															in your area.
+															From the biggest acts in town to more intimate venues, find out who's
+															playing in your area.
 														</p>
 													}
 													icon={MusicNote}
@@ -234,9 +221,8 @@ const Register = ({ classes, showing, setShowing }) => {
 													title='Theater'
 													description={
 														<p>
-															Comedy, musicals, classical productions.
-															Discover the productions on offer near
-															you.
+															Comedy, musicals, classical productions. Discover the productions on
+															offer near you.
 														</p>
 													}
 													icon={TheaterMasks}
@@ -245,25 +231,16 @@ const Register = ({ classes, showing, setShowing }) => {
 												<InfoArea
 													className={classes.infoArea}
 													title='Sports'
-													description={
-														<p>Sports ball. If you're into that.</p>
-													}
+													description={<p>Sports ball. If you're into that.</p>}
 													icon={Futbol}
 													iconColor='info'
 												/>
 											</GridItem>
-											<GridItem
-												xs={12}
-												sm={5}
-												md={5}
-												className={classes.mrAuto}
-											>
+											<GridItem xs={12} sm={5} md={5} className={classes.mrAuto}>
 												<div className={classes.textCenter}>
 													<Mutation
 														mutation={FIREBASE_SIGNUP}
-														refetchQueries={[
-															{ query: CURRENT_USER_QUERY },
-														]}
+														refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 														awaitRefetchQueries
 														onError={error => {
 															NProgress.done();
@@ -271,10 +248,7 @@ const Register = ({ classes, showing, setShowing }) => {
 														}}
 														onCompleted={({ firebaseAuth }) => {
 															if (firebaseAuth.newUser) {
-																Router.push(
-																	'/welcome?slug=0',
-																	'/welcome/profile/getstarted',
-																);
+																Router.push('/welcome?slug=0', '/welcome/profile/getstarted');
 															} else {
 																Router.push('/home');
 															}
@@ -287,12 +261,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																		justIcon
 																		round='true'
 																		color='google'
-																		onClick={e =>
-																			firebaseSignup(
-																				e,
-																				firebaseAuth,
-																				'google',
-																			)}
+																		onClick={e => firebaseSignup(e, firebaseAuth, 'google')}
 																	>
 																		<i className='fab fa-google' />
 																	</Button>
@@ -301,12 +270,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																		justIcon
 																		round='true'
 																		color='facebook'
-																		onClick={e =>
-																			firebaseSignup(
-																				e,
-																				firebaseAuth,
-																				'facebook',
-																			)}
+																		onClick={e => firebaseSignup(e, firebaseAuth, 'facebook')}
 																	>
 																		<i className='fab fa-facebook-f' />
 																	</Button>
@@ -314,12 +278,7 @@ const Register = ({ classes, showing, setShowing }) => {
 																		justIcon
 																		round='true'
 																		color='instagram'
-																		onClick={e =>
-																			firebaseSignup(
-																				e,
-																				firebaseAuth,
-																				'twitter',
-																			)}
+																		onClick={e => firebaseSignup(e, firebaseAuth, 'twitter')}
 																	>
 																		<i className='fab fa-twitter' />
 																	</Button>
@@ -328,21 +287,14 @@ const Register = ({ classes, showing, setShowing }) => {
 														}}
 													</Mutation>
 
-													<h4 className={classes.textCenter}>
-														or be classical
-													</h4>
+													<h4 className={classes.textCenter}>or be classical</h4>
 												</div>
 												<Mutation
 													mutation={REGISTER_USER}
-													refetchQueries={[
-														{ query: CURRENT_USER_QUERY },
-													]}
+													refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
 													onCompleted={() => {
 														NProgress.done();
-														Router.push(
-															'/welcome?slug=0',
-															'/welcome/profile/getstarted',
-														);
+														Router.push('/welcome?slug=0', '/welcome/profile/getstarted');
 													}}
 													onError={handleError}
 													awaitRefetchQueries
@@ -354,8 +306,7 @@ const Register = ({ classes, showing, setShowing }) => {
 															<form
 																disabled
 																className={classes.form}
-																onSubmit={e =>
-																	handleSubmit(e, signup)}
+																onSubmit={e => handleSubmit(e, signup)}
 															>
 																<fieldset
 																	style={{ border: 'none' }}
@@ -367,26 +318,18 @@ const Register = ({ classes, showing, setShowing }) => {
 																		id='name'
 																		formControlProps={{
 																			fullWidth: true,
-																			className:
-																				classes.customFormControlClasses,
+																			className: classes.customFormControlClasses,
 																		}}
 																		inputProps={{
 																			startAdornment: (
 																				<InputAdornment
 																					position='start'
-																					className={
-																						classes.inputAdornment
-																					}
+																					className={classes.inputAdornment}
 																				>
-																					<Face
-																						className={
-																							classes.inputAdornmentIcon
-																						}
-																					/>
+																					<Face className={classes.inputAdornmentIcon} />
 																				</InputAdornment>
 																			),
-																			placeholder:
-																				'Full Name...',
+																			placeholder: 'Full Name...',
 																			autoComplete: 'name',
 																			autoFocus: true,
 																			required: true,
@@ -404,22 +347,15 @@ const Register = ({ classes, showing, setShowing }) => {
 																		id='email'
 																		formControlProps={{
 																			fullWidth: true,
-																			className:
-																				classes.customFormControlClasses,
+																			className: classes.customFormControlClasses,
 																		}}
 																		inputProps={{
 																			startAdornment: (
 																				<InputAdornment
 																					position='start'
-																					className={
-																						classes.inputAdornment
-																					}
+																					className={classes.inputAdornment}
 																				>
-																					<Email
-																						className={
-																							classes.inputAdornmentIcon
-																						}
-																					/>
+																					<Email className={classes.inputAdornmentIcon} />
 																				</InputAdornment>
 																			),
 																			placeholder: 'Email...',
@@ -438,26 +374,20 @@ const Register = ({ classes, showing, setShowing }) => {
 																		id='password'
 																		formControlProps={{
 																			fullWidth: true,
-																			className:
-																				classes.customFormControlClasses,
+																			className: classes.customFormControlClasses,
 																		}}
 																		inputProps={{
 																			endAdornment: (
 																				<InputAdornment position='end'>
 																					<IconButton
 																						aria-label='Toggle password visibility'
-																						onClick={() =>
-																							setPasswordShowing(
-																								!passwordShowing,
-																							)}
+																						onClick={() => setPasswordShowing(!passwordShowing)}
 																					>
 																						{!err.password &&
 																							(passwordShowing ? (
-																								<Visibility
-																								/>
+																								<Visibility />
 																							) : (
-																								<VisibilityOff
-																								/>
+																								<VisibilityOff />
 																							))}
 																					</IconButton>
 																				</InputAdornment>
@@ -465,37 +395,23 @@ const Register = ({ classes, showing, setShowing }) => {
 																			startAdornment: (
 																				<InputAdornment
 																					position='start'
-																					className={
-																						classes.inputAdornment
-																					}
+																					className={classes.inputAdornment}
 																				>
-																					<LockOutlined
-																						className={
-																							classes.inputAdornmentIcon
-																						}
-																					/>
+																					<LockOutlined className={classes.inputAdornmentIcon} />
 																				</InputAdornment>
 																			),
-																			placeholder:
-																				'Password...',
-																			autoComplete:
-																				'new-password',
+																			placeholder: 'Password...',
+																			autoComplete: 'new-password',
 																			required: true,
 																			name: 'password',
-																			type: passwordShowing
-																				? 'text'
-																				: 'password',
+																			type: passwordShowing ? 'text' : 'password',
 																			value: user.password,
 																			onChange: handleChange,
-																			error:
-																				err.password &&
-																				true,
+																			error: err.password && true,
 																		}}
 																		labelText='Must be at least 8 characters including a number.'
 																		labelProps={{
-																			error: err.password
-																				? true
-																				: false,
+																			error: err.password ? true : false,
 																		}}
 																	/>
 																	<span
@@ -503,22 +419,14 @@ const Register = ({ classes, showing, setShowing }) => {
 																			color: '#fafafa',
 																		}}
 																	>
-																		By registering you are
-																		agreeing to
-																		<a
-																			onClick={() =>
-																				setTermsShowing(
-																					true,
-																				)}
-																			href='#'
-																		>
+																		By registering you are agreeing to
+																		<a onClick={() => setTermsShowing(true)} href='#'>
 																			{' '}
-																			our terms and conditions
-																			and privacy policy
+																			our terms and conditions and privacy policy
 																		</a>
 																		.
 																	</span>
-																	} />
+
 																	{/* <FormControlLabel
 																		classes={{
 																			label: classes.label,
@@ -581,16 +489,10 @@ const Register = ({ classes, showing, setShowing }) => {
 																			</span>
 																		}
 																	/> */}
-																	<div
-																		className={
-																			classes.textCenter
-																		}
-																	>
+																	<div className={classes.textCenter}>
 																		<ButtonBase type='submit'>
 																			<Button
-																				className={
-																					classes.loginButton
-																				}
+																				className={classes.loginButton}
 																				round='true'
 																				// disabled
 																				//disabled={!terms}
