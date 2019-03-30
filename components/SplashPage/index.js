@@ -21,47 +21,55 @@ const Splash = ({ classes }) => {
 		window.scrollTo(0, 0);
 	}, []);
 	return (
-		<Parallax>
-			<div className={classes.container}>
-				<GridContainer>
-					<GridItem
-						container
-						justify='center'
-						alignItems='center'
-						direction='column'
-						xs={12}
-						sm={8}
-						md={12}
-					>
-						<Logo main />
+		<div>
+			<Parallax>
+				<div className={classes.container}>
+					<GridContainer>
+						<GridItem
+							container
+							justify='center'
+							alignItems='center'
+							direction='column'
+							xs={12}
+							sm={8}
+							md={12}
+						>
+							<Logo main='true' />
 
-						<div className={classes.tagline}>
-							<Typography color='inherit' variant='h2'>
-								Meet People. Go Places.
-							</Typography>
-						</div>
-						<div>
-							<GridContainer className={classes.centerGrid}>
-								<Button
-									className={classes.registerButton}
-									color='danger'
-									size='lg'
-									onClick={() => setRegisterShowing(true)}
-								>
-									Sign Up
-								</Button>
+							<div className={classes.tagline}>
+								<Typography color='inherit' variant='h2'>
+									Meet People. Go Places.
+								</Typography>
+							</div>
+							<div>
+								<GridContainer className={classes.centerGrid}>
+									<Button
+										className={classes.registerButton}
+										color='danger'
+										size='lg'
+										onClick={() => setRegisterShowing(true)}
+									>
+										Sign Up
+									</Button>
 
-								<Button color='info' onClick={() => setLoginShowing(true)}>
-									Log In
-								</Button>
-							</GridContainer>
-						</div>
-					</GridItem>
-					<Register showing={registerShowing} setShowing={setRegisterShowing} />
-					<Login showing={loginShowing} setShowing={setLoginShowing} />
-				</GridContainer>
+									<Button color='info' onClick={() => setLoginShowing(true)}>
+										Log In
+									</Button>
+								</GridContainer>
+							</div>
+						</GridItem>
+						<Register showing={registerShowing} setShowing={setRegisterShowing} />
+						<Login showing={loginShowing} setShowing={setLoginShowing} />
+					</GridContainer>
+				</div>
+			</Parallax>
+			<div className={`${classes.main} ${classes.mainRaised}`}>
+				<div className={classes.container}>
+					<h1>Hellooo</h1>
+					<div>Helloooo</div>
+				</div>
 			</div>
-		</Parallax>
+		</div>
 	);
 };
 
