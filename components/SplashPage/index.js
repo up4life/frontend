@@ -33,7 +33,7 @@ const Splash = ({ classes }) => {
 						sm={8}
 						md={12}
 					>
-						<Logo main />
+						<Logo main='true' />
 
 						<div className={classes.tagline}>
 							<Typography color='inherit' variant='h2'>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import posed from 'react-pose';
 import withStyles from '@material-ui/core/styles/withStyles';
 import styles from '../../static/jss/logoStyles';
+import PropTypes from 'prop-types';
 
 const MirroredFour = posed.div({
 	unhovered: { transform: 'rotateY(0deg)', delay: 5000 },
@@ -23,7 +24,7 @@ const UpFor = ({ main, justFour, classes }) => {
 			className={main ? classes.mainContainer : classes.container}
 			onMouseEnter={() => {
 				setHovering(true);
-				setInterval(()=> setHovering(false), 5000);
+				setInterval(() => setHovering(false), 5000);
 			}}
 			// onMouseLeave={() => {
 			// 	setHovering(false);
@@ -34,10 +35,7 @@ const UpFor = ({ main, justFour, classes }) => {
 				<div className={classes.redFirstFour} main={main}>
 					4
 				</div>
-				<MirroredFour
-					className={classes.redSecondFour}
-					pose={hovering ? 'hovered' : 'unhovered'}
-				>
+				<MirroredFour className={classes.redSecondFour} pose={hovering ? 'hovered' : 'unhovered'}>
 					4
 				</MirroredFour>
 			</div>

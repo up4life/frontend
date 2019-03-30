@@ -69,8 +69,15 @@ const customInputStyle = {
 			borderBottomColor: '#FFFFFF',
 		},
 	},
+	// 	'input:-webkit-autofill,
+	// input:-webkit-autofill:hover,
+	// input:-webkit-autofill:focus,
+	// input:-webkit-autofill:active':  {
+	// 		'-webkit-background-color': 'transparent !important'
+	// },
 	input: {
 		color: '#495057',
+
 		'&,&::placeholder': {
 			fontSize: '14px',
 			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -80,6 +87,21 @@ const customInputStyle = {
 		},
 		'&::placeholder': {
 			color: '#AAAAAA',
+		},
+		'&:-webkit-autofill': {
+			backgroundColor: [ [ '#262323' ], '!important' ],
+			'&:selected': {
+				backgroundColor: [ [ '#262323' ], '!important' ],
+			},
+			'&:focus': {
+				backgroundColor: [ [ '#262323' ], '!important' ],
+			},
+			'&:active': {
+				backgroundColor: [ [ '#262323' ], '!important' ],
+			},
+		},
+		'&:-webkit-autofill-selected': {
+			backgroundColor: [ [ '#262323' ], '!important' ],
 		},
 	},
 	whiteInput: {
