@@ -133,9 +133,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 			{({ like, unlike, block, potentialMatch }) => {
 				let match = potentialMatch.data ? potentialMatch.data.user : null;
 				let isLiked = currentUser ? currentUser.liked.find(usr => usr.id === user) : false;
-				let userImgs = match
-					? match.img.sort((a, b) => (a.default ? -1 : b.default ? 1 : 0))
-					: [];
+				let userImgs = match ? match.img.sort((a, b) => (a.default ? -1 : b.default ? 1 : 0)) : [];
 				if (!match) return <div />;
 				else {
 					NProgress.done();
@@ -144,10 +142,8 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 							classes={{
 								root: classes.modalRoot,
 							}}
-							style={{ maxHeight: '100vh' }}
 							open={user ? true : false}
-							fullWidth
-							fullScreen
+							maxWidth='md'
 							TransitionComponent={Transition}
 							scroll='body'
 							onClose={() =>
@@ -158,7 +154,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 									},
 									`${router.pathname}/${router.query.slug}`,
 									{ shallow: true },
-									{ scroll: false },
+									{ scroll: false }
 								)}
 							aria-labelledby='notice-modal-slide-title'
 							aria-describedby='notice-modal-slide-description'
@@ -195,22 +191,19 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 												? `${router.pathname}/${router.query.slug}`
 												: router.pathname,
 											{ shallow: true },
-											{ scroll: false },
+											{ scroll: false }
 										);
 									}}
 								>
-									<Close
-										style={{ color: '#fafafa' }}
-										className={classes.modalClose}
-									/>
+									<Close style={{ color: '#fafafa' }} className={classes.modalClose} />
 								</Button>
 
 								<div
-									style={{
-										display: 'flex',
-										alignItems: 'center',
-										justifyContent: 'space-between',
-									}}
+								// style={{
+								// 	display: 'flex',
+								// 	alignItems: 'center',
+								// 	justifyContent: 'space-between',
+								// }}
 								>
 									<div
 										style={{
@@ -253,16 +246,13 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											<div>
 												<Tooltip
 													style={{ fontSize: '18px' }}
-													title={`${(match.score *
-														0.01).toFixed()} % match!`}
+													title={`${(match.score * 0.01).toFixed()} % match!`}
 													placement='right'
 												>
 													<div
 														className={`${match.score > 9000
 															? classes.fire90
-															: match.score > 8000
-																? classes.fire80
-																: classes.fire60}`}
+															: match.score > 8000 ? classes.fire80 : classes.fire60}`}
 													>
 														<Fire />
 													</div>
@@ -277,20 +267,12 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											buttonText={<MoreHoriz />}
 											buttonProps={{
 												className:
-													classes.navLink +
-													' ' +
-													classes.imageDropdownButton +
-													' ' +
-													classes.dots,
+													classes.navLink + ' ' + classes.imageDropdownButton + ' ' + classes.dots,
 												style: { marginBottom: 0 },
 												color: 'transparent',
 											}}
-											dropdownList={[
-												`Block ${match.firstName}`,
-												`Report ${match.firstName}`,
-											]}
-											onClick={e =>
-												e.includes('Block') ? block() : handleReport(true)}
+											dropdownList={[ `Block ${match.firstName}`, `Report ${match.firstName}` ]}
+											onClick={e => (e.includes('Block') ? block() : handleReport(true))}
 										/>
 									</div>
 								</div>
@@ -304,139 +286,97 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 								}}
 								className={classes.modalBody}
 							>
-								<GridContainer style={{ height: 'calc(100vh - 160px)' }}>
-									<GridItem
-										sm={7}
-										md={8}
-										lg={8}
+								{/* <div
 										style={{
 											display: 'flex',
 											flexDirection: 'column',
 											justifyContent: 'space-between',
 											height: '100%',
 										}}
-									>
-										<GridContainer style={{ height: '100%' }}>
-											<GridItem
-												style={{
-													display: 'flex',
-													flexDirection: 'column',
-													height: '100%',
-												}}
-												md={7}
-												lg={7}
-											>
-												<div
-													style={{
-														width: '100%',
-													}}
-												>
-													<Slider
-														{...settings}
-														className={classes.slicky}
-													>
-														{userImgs.map(img => (
-															<div key={img.img_url}>
-																<img
-																	src={img.img_url}
-																	style={{
-																		overflow: 'hidden',
-																		height: '100%',
-																		width: '100%',
-																		border: '4px solid #b2ddf7',
-																		borderRadius: '6px',
-																	}}
-																/>
-															</div>
-														))}
-													</Slider>
-												</div>
-												<div
-													style={{
-														backgroundColor: '#1b1b1b59',
-														backgroundImage:
-															'url("https://www.transparenttextures.com/patterns/dark-matter.png")',
-														color: '#fafafa',
-														flexGrow: 1,
-														margin: '10px auto 0',
-														display: 'flex',
-														alignItems: 'flex-start',
-													}}
-													className={classes.gradientBox}
-												>
-													<div>
-														{match.biography ? (
-															match.biography
-														) : (
-															'Hi der This is my lil fill in bio guy'
-														)}
-													</div>
-												</div>
-											</GridItem>
-											<GridItem
-												sm={12}
-												md={5}
-												lg={5}
-												style={{
-													display: 'flex',
-													flexDirection: 'column',
-													justifyContent: 'space-between',
-												}}
-											>
-												<CommonInterests match={match} user={currentUser} />
-												<CommonEvents id={user} />
-											</GridItem>
-										</GridContainer>
-									</GridItem>
-
-									<GridItem sm={5} md={4} lg={4}>
-										<Query
-											query={GET_CONVERSATION_QUERY}
-											variables={{ id: user }}
-										>
-											{({
-												loading,
-												error,
-												data,
-												subscribeToMore,
-												refetch,
-											}) => {
-												if (loading) return <div />;
-												if (error) return <div>Error</div>;
-												return (
-													<Chat
-														data={data}
-														id={user}
-														match={match}
-														currentUser={currentUser}
-														refetch={refetch}
-														subscribeToNewMessages={() => {
-															data &&
-																data.getConversation &&
-																subscribeToMore({
-																	document: MESSAGE_SUBSCRIPTION,
-																	variables: {
-																		chatId:
-																			data.getConversation.id,
-																	},
-																	updateQuery: (
-																		prev,
-																		{ subscriptionData },
-																	) => {
-																		if (!subscriptionData)
-																			return prev;
-																		return {
-																			...prev,
-																		};
-																	},
-																});
+									> */}
+								<GridContainer>
+									<GridItem sm={6} md={6} lg={7} xl={7}>
+										<Slider {...settings} className={classes.slicky}>
+											{userImgs.map(img => (
+												<div key={img.img_url}>
+													<img
+														src={img.img_url}
+														style={{
+															overflow: 'hidden',
+															height: '100%',
+															width: '100%',
+															border: '4px solid #b2ddf7',
+															borderRadius: '6px',
 														}}
 													/>
-												);
+												</div>
+											))}
+										</Slider>
+									</GridItem>
+									<GridItem sm={6} md={6} lg={5} xl={5}>
+										<div
+											style={{
+												backgroundColor: '#1b1b1b59',
+												backgroundImage:
+													'url("https://www.transparenttextures.com/patterns/dark-matter.png")',
+												color: '#fafafa',
+												width: '100%',
 											}}
-										</Query>
+											className={classes.gradientBox}
+										>
+											{match.biography ? match.biography : 'Hi der This is my lil fill in bio guy'}
+										</div>
+										<CommonInterests match={match} user={currentUser} />
 									</GridItem>
 								</GridContainer>
+								<GridItem
+									sm={12}
+									md={5}
+									lg={5}
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										justifyContent: 'space-between',
+									}}
+								>
+									<CommonEvents id={user} />
+								</GridItem>
+								{/* </GridItem> */}
+
+								<GridItem sm={5} md={4} lg={4}>
+									<Query query={GET_CONVERSATION_QUERY} variables={{ id: user }}>
+										{({ loading, error, data, subscribeToMore, refetch }) => {
+											if (loading) return <div />;
+											if (error) return <div>Error</div>;
+											return (
+												<Chat
+													data={data}
+													id={user}
+													match={match}
+													currentUser={currentUser}
+													refetch={refetch}
+													subscribeToNewMessages={() => {
+														data &&
+															data.getConversation &&
+															subscribeToMore({
+																document: MESSAGE_SUBSCRIPTION,
+																variables: {
+																	chatId: data.getConversation.id,
+																},
+																updateQuery: (prev, { subscriptionData }) => {
+																	if (!subscriptionData) return prev;
+																	return {
+																		...prev,
+																	};
+																},
+															});
+													}}
+												/>
+											);
+										}}
+									</Query>
+								</GridItem>
+								{/* </GridContainer> */}
 							</DialogContent>
 						</Dialog>
 					);

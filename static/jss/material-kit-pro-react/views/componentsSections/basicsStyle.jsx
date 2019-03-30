@@ -146,10 +146,9 @@ const basicsStyle = theme => ({
 		color: '#fafafa',
 	},
 	interests: {
-		height: '40%',
 		border: '4px solid #b2ddf7',
 		borderRadius: '6px',
-		padding: '10px',
+		padding: '5px',
 		'& span': {
 			color: '#fafafa',
 		},
