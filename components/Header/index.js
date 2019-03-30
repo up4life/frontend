@@ -110,37 +110,6 @@ const Nav = ({ classes, color, router, href, user }) => {
 			});
 	};
 
-<<<<<<< HEAD
-  const formattedChats = (newMessages, user) => {
-    return newMessages
-      .filter(msg => msg.messages)
-      .map(chatObj => {
-        let len = chatObj.messages.length - 1;
-        const { messages, users } = chatObj;
-        let [usr] = users.filter(usr => usr.id !== user.id);
-        let newMsgs = messages.filter(msg => !msg.seen && msg.from.id !== user.id);
-        let img = usr && usr.img.length ? usr.img.find(img => img.default).img_url : profileStandIn;
-        return {
-          id: chatObj.id,
-          from: usr && usr.firstName,
-          fromId: usr && usr.id,
-          newMsgs: newMsgs.length,
-          text: messages[len] ? messages[len].text : null,
-          img: img,
-          time: messages[len] ? messages[len].createdAt : null
-        };
-      })
-      .sort((a, b) => {
-        let dateA = new Date(a.time);
-        let dateB = new Date(b.time);
-        return dateB - dateA;
-      });
-  };
-
-  const newMessageCount = (newMessages, user) => {
-    return newMessages.reduce((count, mess) => {
-      let newcount = mess.messages.filter(msg => !msg.seen && msg.from.id !== user.id);
-=======
 	const newMessageCount = (newMessages, user) => {
 		return newMessages.reduce((count, mess) => {
 			let newcount = mess.messages.filter(msg => !msg.seen && msg.from.id !== user.id);
@@ -148,7 +117,6 @@ const Nav = ({ classes, color, router, href, user }) => {
 			return [ ...count, ...newcount ];
 		}, []);
 	};
->>>>>>> 3b9f815e1f7d72d77733ee0f55c548ff5faa0af7
 
 	// let profileImage =
 	// 	currentUser && currentUser.img.length
@@ -160,218 +128,6 @@ const Nav = ({ classes, color, router, href, user }) => {
 				let chats = data.getUserChats ? formattedChats(data.getUserChats, currentUser) : [];
 				let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, currentUser) : [];
 
-<<<<<<< HEAD
-  // let profileImage =
-  // 	currentUser && currentUser.img.length
-  // 		?
-  // 		: profileStandIn;
-  return (
-    <User>
-      {({ data: { currentUser } }) => {
-        let chats = data.getUserChats ? formattedChats(data.getUserChats, currentUser) : [];
-        let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, currentUser) : [];
-        console.log(chats);
-        return (
-          <Header
-            color={color}
-            //brand={Logo}
-            fixed={color === 'transparent'}
-            changeColorOnScroll={
-              color === 'transparent'
-                ? {
-                    height: 300,
-                    color: 'warning'
-                  }
-                : null
-            }
-            links={
-              <List className={classes.list + ' ' + classes.mlAuto}>
-                <div>
-                  <audio ref={audioRef} src='/static/quiet-knock.mp3' />
-                </div>
-                <ListItem className={classes.listItem}>
-                  <Button
-                    className={classes.navLink}
-                    onClick={e => {
-                      e.preventDefault();
-                      Router.push('/home');
-                    }}
-                    color='transparent'
-                  >
-                    {/* <Explore /> Discover */}
-                    <Home style={{ height: '30px', width: '30px' }} />
-                  </Button>
-                </ListItem>
-                <ListItem className={classes.listItem}>
-                  <Button
-                    className={classes.navLink}
-                    onClick={e => {
-                      e.preventDefault();
-                      Router.push('/profile');
-                    }}
-                    color='transparent'
-                  >
-                    <AccountCircle style={{ height: '30px', width: '30px' }} />
-                  </Button>
-                </ListItem>
-
-                <ListItem style={{ bottom: '5px' }} className={classes.listItem}>
-                  <CustomDropdown
-                  style={{boxShadow: '3rem 3rem rgba(0,0,0)'}}
-                    dropPlacement='bottom-end'
-                    caret={false}
-                    messages
-                    // hoverColor='dark'
-                    dropdownHeader={
-                      newMessages.length
-                        ? newMessages.length + ' new messages!'
-                        : 'no new messages.'
-                    }
-                    buttonText={
-                      <Badge badgeContent={newMessages.length} color='error'>
-                        <Mail
-                          style={{
-                            height: '30px',
-                            width: '30px',
-                            marginLeft: '10px',
-                            position: 'relative',
-                            top: 2
-                          }}
-                        />
-                      </Badge>
-                    }
-                    buttonProps={{
-                      className: classes.navLink + ' ' + classes.imageDropdownButton,
-                      color: 'transparent'
-                    }}
-                    dropdownList={
-                      chats
-                        ? chats.map(chat => {
-                            return (
-                              <Fragment>
-                                {/* <Divider className={classes.dropdownDividerItem} /> */}
-                                <div
-                                  onClick={() =>
-                                    Router.push(
-                                      {
-                                        pathname:
-                                          router.pathname === '/' ? '/home' : router.pathname,
-                                        query: {
-                                          slug: router.query.slug,
-                                          user: chat.fromId
-                                        }
-                                      },
-                                      router.query.slug
-                                        ? `${router.pathname}/${router.query.slug}/user/${
-                                            chat.fromId
-                                          }`
-                                        : router.pathname === '/'
-                                        ? `/user/${chat.fromId}`
-                                        : `${router.pathname}/user/${chat.fromId}`,
-                                      { shallow: true },
-                                      { scroll: false }
-                                    )
-                                  }
-                                  style={{
-                                    display: 'flex',
-                                    padding: '5px',
-                                    borderRight: newMessages.some(msg => msg.chat.id === chat.id)
-                                      ? '4px solid #ff101f'
-                                      : 'none',
-                                    borderTopRightRadius: '3px',
-                                    borderBottomRightRadius: '3px'
-                                  }}
-                                >
-                                  <img
-                                    src={chat.img}
-                                    style={{
-                                      width: '40px',
-                                      height: '40px',
-                                      borderRadius: '6px',
-                                      marginRight: '15px',
-                                      boxShadow:
-                                        '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)'
-                                    }}
-                                  />
-                                  <div style={{ flexGrow: 1 }}>
-                                    <div
-                                      style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-between'
-                                      }}
-                                    >
-                                      <p className={classes.title}>{chat.from}</p>
-                                      <small>
-                                        {moment(chat.time).fromNow()}
-                                        <div className={chat.newMsgs ? classes.newIndicator : null}>
-                                          {chat.newMsgs ? chat.newMsgs + ' new' : null}
-                                        </div>
-                                      </small>
-                                    </div>
-                                    <div
-                                      style={{
-                                        maxWidth: '300px',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis'
-                                      }}
-                                    >
-                                      {chat.text}
-                                    </div>
-                                  </div>
-                                </div>
-                              </Fragment>
-                            );
-                          })
-                        : []
-                    }
-                  />
-                </ListItem>
-                <Mutation
-                  mutation={SIGNOUT_MUTATION}
-                  // refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
-                  // awaitRefetchQueries
-                  onCompleted={() => Router.push('/joinus')}
-                >
-                  {(signout, { called, client }) => {
-                    {
-                      /* if (called) Router.push('/joinus'); */
-                    }
-                    return (
-                      <ListItem style={{ marginLeft: '10px' }} className={classes.listItem}>
-                        <CustomDropdown
-                          left
-                          caret={false}
-                          hoverColor='dark'
-                          dropdownHeader={currentUser && currentUser.firstName}
-                          buttonText={
-                            <img
-                              src={currentUser && currentUser.img.find(img => img.default).img_url}
-                              className={classes.img + ' ' + classes.imageProfile}
-                              alt='profile'
-                            />
-                          }
-                          buttonProps={{
-                            className: classes.navLink + ' ' + classes.imageDropdownButton,
-                            color: 'transparent'
-                          }}
-                          dropdownList={['Sign out']}
-                          onClick={e => {
-                            signout();
-                            client.clearStore();
-                          }}
-                        />
-                      </ListItem>
-                    );
-                  }}
-                </Mutation>
-              </List>
-            }
-          />
-        );
-      }}
-    </User>
-  );
-=======
 				return (
 					<Header
 						color={color}
@@ -573,7 +329,6 @@ const Nav = ({ classes, color, router, href, user }) => {
 			}}
 		</User>
 	);
->>>>>>> 3b9f815e1f7d72d77733ee0f55c548ff5faa0af7
 };
 
 export default withRouter(withStyles(navbarsStyle)(Nav));
