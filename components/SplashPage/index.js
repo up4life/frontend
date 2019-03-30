@@ -63,12 +63,12 @@ const Splash = ({ classes }) => {
 					</GridContainer>
 				</div>
 			</Parallax>
-			<div className={`${classes.main} ${classes.mainRaised}`}>
+			{/* <div className={`${classes.main} ${classes.mainRaised}`}>
 				<div className={classes.container}>
 					<h1>Hellooo</h1>
 					<div>Helloooo</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
