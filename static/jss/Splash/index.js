@@ -1,4 +1,12 @@
-import { container, mlAuto, mrAuto, cardTitle, description } from '../material-kit-pro-react';
+import {
+	container,
+	mlAuto,
+	mrAuto,
+	cardTitle,
+	description,
+	main,
+	mainRaised,
+} from '../material-kit-pro-react';
 import modalStyle from '../material-kit-pro-react/modalStyle';
 
 const styles = theme => {
@@ -9,6 +17,8 @@ const styles = theme => {
 		description,
 		mlAuto,
 		mrAuto,
+		main,
+		mainRaised,
 		registerButton: {
 			backgroundImage: 'linear-gradient(to right, #f6655a, #f9574c, #fc473e, #fe332f, #ff101f)',
 			fontSize: [ [ '30px' ], '!important' ],

@@ -127,7 +127,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 			{({ data: { currentUser } }) => {
 				let chats = data.getUserChats ? formattedChats(data.getUserChats, currentUser) : [];
 				let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, currentUser) : [];
-				console.log(chats);
+
 				return (
 					<Header
 						color={color}
