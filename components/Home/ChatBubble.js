@@ -1,14 +1,17 @@
 import React, { useEffect, useState, Fragment, useRef } from 'react';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import gql from 'graphql-tag';
 import { SEND_MESSAGE_MUTATION } from '../Mutations/sendMessage';
 import { useMutation } from '../Mutations/useMutation';
 import { useQuery, useSubscription } from 'react-apollo-hooks';
 import NProgress from 'nprogress';
-import { Drawer, IconButton, ClickAwayListener, Badge, Fab } from '@material-ui/core';
+import TextareaAutosize from 'react-autosize-textarea';
+import { withSnackbar } from 'notistack';
+import { Drawer, IconButton, ClickAwayListener, Badge, Fab, Tooltip } from '@material-ui/core';
 import { Menu, ChevronLeft, ChatBubbleRounded } from '@material-ui/icons';
 import styles from '../../static/jss/Home/eventsStyles';
 import User, { CURRENT_USER_QUERY } from '../Queries/User';
+import Media from '../../styledComponents/Media/Media.jsx';
 import { ALL_CHATS_QUERY } from '../Queries/AllChats';
 import date from '../../utils/formatDate';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
@@ -42,8 +45,9 @@ const MY_MESSAGE_SUBSCRIPTION = gql`
 	}
 `;
 
-const Chat = ({ classes, enqueueSnackbar, user }) => {
+const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 	const audioRef = useRef(null);
+	const [ chatPage, showChat ] = useState(false);
 	const [ message, setMessage ] = useState(undefined);
 	const [ sendMessage ] = useMutation(SEND_MESSAGE_MUTATION, {
 		onCompleted: () => {
@@ -65,7 +69,7 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 					preventDuplicate: true,
 					anchorOrigin: {
 						vertical: 'bottom',
-						horizontal: 'right',
+						horizontal: 'left',
 					},
 					action: (
 						<Button
@@ -102,10 +106,29 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 			}
 		},
 	});
+	function groupByUser(messages) {
+		const grouped = [];
+		let fromSameUser = [ messages[0] ];
+		let user = messages[0].from.id;
+
+		for (let i = 1; i < messages.length; i++) {
+			if (messages[i].from.id !== user) {
+				grouped.push(fromSameUser);
+				fromSameUser = [ messages[i] ];
+				user = messages[i].from.id;
+			} else {
+				fromSameUser.push(messages[i]);
+			}
+		}
+
+		grouped.push(fromSameUser);
+		return grouped;
+	}
 
 	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
 		pollInterval: 600,
 	});
+	console.log(data);
 	const formattedChats = (newMessages, user) => {
 		return newMessages
 			.filter(msg => msg.messages)
@@ -139,14 +162,54 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 			return [ ...count, ...newcount ];
 		}, []);
 	};
-
+	let messages = chatPage
+		? groupByUser(data.getUserChats.find(x => x.id === chatPage).messages)
+		: null;
 	let chats = data.getUserChats ? formattedChats(data.getUserChats, user) : [];
 	let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, user) : [];
+	let lastSeenMessage = chatPage
+		? [ ...data.getUserChats.find(x => x.id === chatPage).messages ]
+				.reverse()
+				.find(x => x.from.id === user.id && x.seen)
+		: null;
+	console.log(messages);
 	return (
 		<CustomDropdown
 			left
 			dropUp
 			caret={false}
+			dropdownHeader={
+				chatPage ? (
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+						<h5 style={{ margin: 0 }}>
+							{
+								data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
+									.firstName
+							}
+						</h5>
+						<Button
+							simple
+							style={{ padding: 0 }}
+							onClick={e => {
+								e.stopPropagation();
+								showChat(false);
+							}}
+						>
+							Back
+						</Button>
+					</div>
+				) : (
+					<Button
+						simple
+						style={{ padding: 0 }}
+						onClick={() => {
+							Router.push('/profile?slug=chats', '/profile/chat');
+						}}
+					>
+						Go to your messages
+					</Button>
+				)
+			}
 			messages
 			dropPlacement='top-end'
 			//className={classes.fabButton}
@@ -166,29 +229,16 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 				color: 'transparent',
 			}}
 			dropdownList={
-				chats ? (
+				chats && !chatPage ? (
 					chats.map(chat => {
 						return (
 							<Fragment>
 								{/* <Divider className={classes.dropdownDividerItem} /> */}
 								<div
-									onClick={() =>
-										Router.push(
-											{
-												pathname: router.pathname === '/' ? '/home' : router.pathname,
-												query: {
-													slug: router.query.slug,
-													user: chat.fromId,
-												},
-											},
-											router.query.slug
-												? `${router.pathname}/${router.query.slug}/user/${chat.fromId}`
-												: router.pathname === '/'
-													? `/user/${chat.fromId}`
-													: `${router.pathname}/user/${chat.fromId}`,
-											{ shallow: true },
-											{ scroll: false }
-										)}
+									onClick={e => {
+										e.stopPropagation();
+										showChat(chat.id);
+									}}
 									style={{
 										display: 'flex',
 										padding: '5px',
@@ -260,6 +310,143 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 							</Fragment>
 						);
 					})
+				) : chats && chatPage && messages ? (
+					[
+						messages.map(msg => {
+							let fromMatch = msg[0].from.id !== user.id;
+							const img = msg[0].from.img.find(x => x.default).img_url;
+							return (
+								<Media
+									currentUser={!fromMatch}
+									key={msg[0].id}
+									avatar={img}
+									avatarClick={() =>
+										fromMatch
+											? Router.push(
+													{
+														pathname: router.pathname === '/' ? '/home' : router.pathname,
+														query: {
+															slug: router.query.slug,
+															user: chat.fromId,
+														},
+													},
+													router.query.slug
+														? `${router.pathname}/${router.query.slug}/user/${chat.fromId}`
+														: router.pathname === '/'
+															? `/user/${chat.fromId}`
+															: `${router.pathname}/user/${chat.fromId}`,
+													{ shallow: true },
+													{ scroll: false }
+												)
+											: null}
+									title={
+										<span style={{ color: '#fafafa' }}>
+											{msg[0].from.firstName}{' '}
+											{/* <small style={{ fontSize: '12px' }}>
+											· {moment(msg.createdAt).fromNow()}
+										</small> */}
+										</span>
+									}
+									body={
+										<span>
+											{msg.map((m, i) => {
+												return (
+													<div key={m.id}>
+														<div
+															style={{
+																display: 'inline-flex',
+																alignItems: 'center',
+																flexDirection: fromMatch ? 'row' : 'row-reverse',
+															}}
+														>
+															<Tooltip
+																title={date(m.createdAt)}
+																placement={fromMatch ? 'bottom-start' : 'bottom-end'}
+															>
+																<p
+																	style={{
+																		wordBreak: 'break-word',
+																		fontSize: '14px',
+																		cursor: 'default',
+																	}}
+																>
+																	{m.text}
+																</p>
+															</Tooltip>
+															<small
+																style={{
+																	marginBottom: '10px',
+																	marginLeft: '5px',
+																	marginRight: '5px',
+																	display: 'none',
+																}}
+															>
+																{' '}
+																{date(msg.createdAt)}
+															</small>
+														</div>
+														{user.permissions !== 'FREE' &&
+														!fromMatch &&
+														lastSeenMessage &&
+														lastSeenMessage.id === m.id ? (
+															<div>
+																<small>
+																	<span style={{ marginRight: '2px' }}>seen</span>
+																	{date(lastSeenMessage.updatedAt)}
+																</small>
+															</div>
+														) : null}
+													</div>
+												);
+											})}
+										</span>
+									}
+								/>
+							);
+						}),
+						<form
+							className={classes.expandedChat}
+							onSubmit={e => {
+								e.preventDefault();
+								NProgress.start();
+								sendMessage({
+									variables: {
+										id: data.getUserChats
+											.find(x => x.id === chatPage)
+											.users.find(x => x.id !== user.id).id,
+										message,
+									},
+								});
+								setMessage(undefined);
+							}}
+						>
+							<TextareaAutosize
+								className={classes.textareaAutosize}
+								onChange={e => {
+									setMessage(e.target.value);
+								}}
+								placeholder={`Respond to ${data.getUserChats
+									.find(x => x.id === chatPage)
+									.users.find(x => x.id !== user.id).firstName}`}
+								rows={1}
+								maxRows={4}
+								value={message}
+								onKeyDown={e => {
+									if (e.keyCode === 13) {
+										sendMessage({
+											variables: {
+												id: data.getUserChats
+													.find(x => x.id === chatPage)
+													.users.find(x => x.id !== user.id).id,
+												message,
+											},
+										});
+										setMessage(undefined);
+									}
+								}}
+							/>
+						</form>,
+					]
 				) : (
 					[]
 				)
@@ -268,4 +455,23 @@ const Chat = ({ classes, enqueueSnackbar, user }) => {
 	);
 };
 
-export default withStyles(styles)(Chat);
+export default withSnackbar(withRouter(withStyles(styles)(Chat)));
+
+{
+	/* Router.push(
+											{
+												pathname: router.pathname === '/' ? '/home' : router.pathname,
+												query: {
+													slug: router.query.slug,
+													user: chat.fromId,
+												},
+											},
+											router.query.slug
+												? `${router.pathname}/${router.query.slug}/user/${chat.fromId}`
+												: router.pathname === '/'
+													? `/user/${chat.fromId}`
+													: `${router.pathname}/user/${chat.fromId}`,
+											{ shallow: true },
+											{ scroll: false }
+										)} */
+}

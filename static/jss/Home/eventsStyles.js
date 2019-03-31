@@ -109,6 +109,37 @@ const styles = {
 		color: '#fafafa',
 		padding: '10px 10px 5px',
 	},
+	expandedChat: {
+		display: 'flex',
+		justifyContent: 'flex-end',
+		alignItems: 'flex-end',
+		marginTop: '20px',
+		// borderTop: "2px solid #b2ddf7",
+		'& textarea': {
+			color: '#fafafa',
+		},
+		'& ::after': {
+			borderBottomColor: '#81d6e3',
+		},
+		'& button': {
+			backgroundImage: 'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
+			background: 'transparent',
+			borderRadius: '6px',
+			marginLeft: '20px',
+			// position: 'relative',
+			// bottom: '16px'
+		},
+	},
+	textareaAutosize: {
+		width: '100%',
+		background: 'transparent',
+		border: 'none',
+		resize: 'none',
+		fontSize: '16px',
+		userSelect: 'all',
+		color: '#fafafa',
+		borderBottom: '1px solid gray',
+	},
 };
 
 export default styles;

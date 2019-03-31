@@ -82,7 +82,7 @@ class CustomDropdown extends React.Component {
 				{dropdownHeader !== undefined ? (
 					<MenuItem
 						onClick={() => this.handleCloseMenu(dropdownHeader)}
-						className={classes.dropdownHeader}
+						className={messages ? classes.messagesHeader : classes.dropdownHeader}
 					>
 						{dropdownHeader}
 					</MenuItem>

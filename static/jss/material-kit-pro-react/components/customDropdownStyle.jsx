@@ -46,8 +46,9 @@ const customDropdownStyle = theme => ({
 		'& > div > button:first-child > span:first-child, & > div > a:first-child > span:first-child': {
 			width: '100%',
 		},
-		position: 'absolute',
+		position: 'fixed',
 		right: '30px',
+		zIndex: 10,
 		bottom: '30px',
 	},
 	innerManager: {
@@ -98,8 +99,8 @@ const customDropdownStyle = theme => ({
 	},
 	msgdd: {
 		color: '#fafafa !important',
-		minWidth: '240px',
-		maxWidth: '240px',
+		minWidth: '200px',
+		maxWidth: '200px',
 		borderRadius: '3px',
 		border: '0',
 		overflowY: 'scroll',
@@ -115,7 +116,7 @@ const customDropdownStyle = theme => ({
 		textAlign: 'left',
 		listStyle: 'none',
 		backgroundColor: '#242121',
-		minWidth: '400px',
+		minWidth: '350px',
 		backgroundImage: 'url(https://www.transparenttextures.com/theme/images/transparent.png)',
 		'& div': {
 			color: '#fafafa',
@@ -268,6 +269,23 @@ const customDropdownStyle = theme => ({
 		whiteSpace: 'nowrap',
 		fontWeight: 'inherit',
 		marginTop: '10px',
+		'&:hover,&:focus': {
+			backgroundColor: 'transparent',
+			cursor: 'auto',
+		},
+	},
+	messagesHeader: {
+		display: 'block',
+		padding: '0.1875rem 1.25rem',
+		fontSize: '0.75rem',
+		lineHeight: '1.428571',
+		color: '#777',
+		whiteSpace: 'nowrap',
+		fontWeight: 'inherit',
+		//marginTop: '10px',
+		backgroundImage:
+			'linear-gradient(to right, #81d6e3, #78d5e3, #6ed4e3, #63d2e4, #57d1e4, #4fd0e4, #45cee4, #3acde4, #32cce4, #28cbe5, #1ac9e5, #02c8e6)',
+		background: 'transparent',
 		'&:hover,&:focus': {
 			backgroundColor: 'transparent',
 			cursor: 'auto',
