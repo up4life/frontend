@@ -46,7 +46,7 @@ const Gender = ({ user, classes }) => {
 								color='danger'
 								className={classes.genderBtn}
 								onClick={() => setGender('MALE')}
-								simple={gender !== 'MAlE'}
+								simple={gender !== 'MALE'}
 							>
 								Man
 							</Button>
