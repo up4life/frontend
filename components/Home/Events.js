@@ -127,7 +127,7 @@ const Events = props => {
 			{({ data: { currentUser } }) => (
 				<Fragment>
 					<div className={classes.background}>
-						<JoyRide steps={steps} continuous showSkipButton />
+						<JoyRide run={!currentUser.events.length} steps={steps} continuous showSkipButton />
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
 						<Gradients />
 						{/* {newUser && <NewUser />} */}
