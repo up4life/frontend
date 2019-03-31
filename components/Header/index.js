@@ -5,7 +5,6 @@ import { Mutation } from 'react-apollo';
 import NProgress from 'nprogress';
 
 import { withRouter } from 'next/router';
-
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { List, ListItem } from '@material-ui/core';
@@ -14,10 +13,9 @@ import navbarsStyle from '../../static/jss/material-kit-pro-react/views/componen
 
 import User from '../Queries/User';
 // styled components
-// import GridContainer from '../../styledComponents/Grid/GridContainer.jsx';
-// import GridItem from '../../styledComponents/Grid/GridItem.jsx';
+
 import Header from '../../styledComponents/Header/Header.jsx';
-// import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx';
+
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 
 Router.onRouteChangeComplete = () => {

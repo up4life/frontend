@@ -17,6 +17,7 @@ import date from '../../utils/formatDate';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 import withStyles from '@material-ui/core/styles/withStyles';
+import formatChats from '../../utils/formatChats';
 
 const MY_MESSAGE_SUBSCRIPTION = gql`
 	subscription($id: String!) {
@@ -129,31 +130,6 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 		pollInterval: 600,
 	});
 	console.log(data);
-	const formattedChats = (newMessages, user) => {
-		return newMessages
-			.filter(msg => msg.messages)
-			.map(chatObj => {
-				let len = chatObj.messages.length - 1;
-				const { messages, users } = chatObj;
-				let [ usr ] = users.filter(usr => usr.id !== user.id);
-				let newMsgs = messages.filter(msg => !msg.seen && msg.from.id !== user.id);
-				let img = usr && usr.img.length ? usr.img.find(img => img.default).img_url : profileStandIn;
-				return {
-					id: chatObj.id,
-					from: usr && usr.firstName,
-					fromId: usr && usr.id,
-					newMsgs: newMsgs.length,
-					text: messages[len] ? messages[len].text : null,
-					img: img,
-					time: messages[len] ? messages[len].createdAt : null,
-				};
-			})
-			.sort((a, b) => {
-				let dateA = new Date(a.time);
-				let dateB = new Date(b.time);
-				return dateB - dateA;
-			});
-	};
 
 	const newMessageCount = (newMessages, user) => {
 		return newMessages.reduce((count, mess) => {
@@ -165,7 +141,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 	let messages = chatPage
 		? groupByUser(data.getUserChats.find(x => x.id === chatPage).messages)
 		: null;
-	let chats = data.getUserChats ? formattedChats(data.getUserChats, user) : [];
+	let chats = data.getUserChats ? formatChats(data.getUserChats, user) : [];
 	let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, user) : [];
 	let lastSeenMessage = chatPage
 		? [ ...data.getUserChats.find(x => x.id === chatPage).messages ]
