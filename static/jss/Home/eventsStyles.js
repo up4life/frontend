@@ -77,9 +77,9 @@ const styles = {
 		//backgroundColor: '#ff101f',
 	},
 	chatIcon: {
-		margin: 0,
-		width: '25px',
-		height: '25px',
+		margin: '0 !important',
+		width: '25px !important',
+		height: '25px !important',
 	},
 	imageDropdownButton: {
 		padding: '0px',
