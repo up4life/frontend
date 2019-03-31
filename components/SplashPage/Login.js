@@ -75,7 +75,7 @@ const Login = ({ classes, showing, setShowing }) => {
 				setError({ email: undefined, password: undefined });
 			}
 		},
-		[ user.password ],
+		[ user.password ]
 	);
 	const firebaseLogin = async (e, firebaseAuth, company) => {
 		NProgress.start();
@@ -158,10 +158,7 @@ const Login = ({ classes, showing, setShowing }) => {
 										onError={handleError}
 										onCompleted={({ firebaseAuth }) => {
 											if (firebaseAuth.newUser) {
-												Router.push(
-													'/welcome?slug=0',
-													'/welcome/profile/getstarted',
-												);
+												Router.push('/welcome?slug=0', '/welcome/profile/getstarted');
 											} else {
 												Router.push('/home');
 											}
@@ -174,12 +171,7 @@ const Login = ({ classes, showing, setShowing }) => {
 														justIcon
 														link
 														className={classes.socialLineButton}
-														onClick={e =>
-															firebaseLogin(
-																e,
-																firebaseAuth,
-																'google',
-															)}
+														onClick={e => firebaseLogin(e, firebaseAuth, 'google')}
 													>
 														<i className='fab fa-google' />
 													</Button>
@@ -187,12 +179,7 @@ const Login = ({ classes, showing, setShowing }) => {
 														justIcon
 														link
 														className={classes.socialLineButton}
-														onClick={e =>
-															firebaseLogin(
-																e,
-																firebaseAuth,
-																'facebook',
-															)}
+														onClick={e => firebaseLogin(e, firebaseAuth, 'facebook')}
 													>
 														<i className='fab fa-facebook-square' />
 													</Button>
@@ -201,12 +188,7 @@ const Login = ({ classes, showing, setShowing }) => {
 														justIcon
 														link
 														className={classes.socialLineButton}
-														onClick={e =>
-															firebaseLogin(
-																e,
-																firebaseAuth,
-																'twitter',
-															)}
+														onClick={e => firebaseLogin(e, firebaseAuth, 'twitter')}
 													>
 														<i className='fab fa-twitter' />
 													</Button>
@@ -241,16 +223,15 @@ const Login = ({ classes, showing, setShowing }) => {
 											});
 										}}
 									>
-										<DialogContent
-											id='login-modal-slide-description'
-											className={classes.modalBody}
-										>
+										<DialogContent id='login-modal-slide-description' className={classes.modalBody}>
 											<h4 className={classes.textCenter}>Or Be Classical</h4>
 											<CardBody className={classes.cardLoginBody}>
 												<CustomInput
 													id='login-modal-email'
 													formControlProps={{
 														fullWidth: true,
+														className:
+															classes.customFormControlClasses + ' ' + classes.autofillOverride,
 													}}
 													inputProps={{
 														startAdornment: (
@@ -272,31 +253,24 @@ const Login = ({ classes, showing, setShowing }) => {
 													id='login-modal-pass'
 													formControlProps={{
 														fullWidth: true,
+														className:
+															classes.customFormControlClasses + ' ' + classes.autofillOverride,
 													}}
 													inputProps={{
 														endAdornment: (
 															<InputAdornment position='end'>
 																<IconButton
 																	aria-label='Toggle password visibility'
-																	onClick={() =>
-																		setPasswordShowing(
-																			!passwordShowing,
-																		)}
+																	onClick={() => setPasswordShowing(!passwordShowing)}
 																>
 																	{!err.password &&
-																		(passwordShowing ? (
-																			<Visibility />
-																		) : (
-																			<VisibilityOff />
-																		))}
+																		(passwordShowing ? <Visibility /> : <VisibilityOff />)}
 																</IconButton>
 															</InputAdornment>
 														),
 														startAdornment: (
 															<InputAdornment position='start'>
-																<LockOutlined
-																	className={classes.icon}
-																/>
+																<LockOutlined className={classes.icon} />
 															</InputAdornment>
 														),
 														placeholder: 'Password...',
