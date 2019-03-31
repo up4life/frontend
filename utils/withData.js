@@ -79,7 +79,7 @@ export default withApollo(
 		}
 
 		const cache = new InMemoryCache({
-			dataIdFromObject: ({ id, __typename }) => (id && __typename ? __typename + id : null),
+			dataIdFromObject: (data) => (data && data.id && data.__typename ? data.__typename + data.id : null),
 		});
 
 		return new ApolloClient({
