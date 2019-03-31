@@ -149,7 +149,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 								<div>
 									<audio ref={audioRef} src='/static/quiet-knock.mp3' />
 								</div>
-								<ListItem className={classes.listItem}>
+								{/* <ListItem className={classes.listItem}>
 									<Button
 										className={classes.navLink}
 										onClick={e => {
@@ -159,10 +159,9 @@ const Nav = ({ classes, color, router, href, user }) => {
 										color='transparent'
 									>
 										{/* <Explore /> Discover */}
-										<Home style={{ height: '30px', width: '30px' }} />
+								{/* <Home style={{ height: '30px', width: '30px' }} />
 									</Button>
-								</ListItem>
-
+								</ListItem> */}{' '}
 								<Mutation
 									mutation={SIGNOUT_MUTATION}
 									// refetchQueries={[ { query: CURRENT_USER_QUERY } ]}

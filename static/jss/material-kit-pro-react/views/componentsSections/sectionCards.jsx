@@ -447,6 +447,7 @@ const styles = {
 
 	flipper: {
 		fill: 'url(#chatID) #81d6e3',
+		fontSize: '36px',
 	},
 	eventUserCard: {
 		cursor: 'pointer',

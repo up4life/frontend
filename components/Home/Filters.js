@@ -26,7 +26,6 @@ import GridItem from '../../styledComponents/Grid/GridItem';
 //styles
 import accordionStyle from '../../static/jss/material-kit-pro-react/components/accordionStyle.jsx';
 import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
-import { mis, music, sports, performing } from '../../utils/genres';
 
 const Filters = props => {
 	let { classes, filters, setFilters, setSkip } = props;
@@ -68,7 +67,7 @@ const Filters = props => {
 				setFilters({ ...filters, dates: [] });
 			}
 		},
-		[ selectedDate ],
+		[ selectedDate ]
 	);
 
 	return (
@@ -105,11 +104,7 @@ const Filters = props => {
 							content: (
 								<div className={classes.customExpandPanel}>
 									<div
-										className={
-											classes.checkboxAndRadio +
-											' ' +
-											classes.checkboxAndRadioHorizontal
-										}
+										className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}
 									>
 										<ExpansionPanel
 											root={{
@@ -122,16 +117,13 @@ const Filters = props => {
 												style={{ padding: 0, margin: 0 }}
 												classes={{
 													root: `${classes.expansionPanelSummary} ${classes[
-														'primary' +
-															'ExpansionPanelSummary' +
-															'border: none'
+														'primary' + 'ExpansionPanelSummary' + 'border: none'
 													]}`,
 													expanded: `${classes.expansionPanelSummaryExpaned} ${classes[
 														'primary' + 'ExpansionPanelSummaryExpaned'
 													]}`,
 													content: classes.expansionPanelSummaryContent,
-													expandIcon:
-														classes.expansionPanelSummaryExpandIcon,
+													expandIcon: classes.expansionPanelSummaryExpandIcon,
 												}}
 											>
 												<FormControlLabel
@@ -140,27 +132,15 @@ const Filters = props => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																filters.categories.indexOf(
-																	'KZFzniwnSyZfZ7v7nJ',
-																) !== -1 ? (
+																filters.categories.indexOf('KZFzniwnSyZfZ7v7nJ') !== -1 ? (
 																	true
 																) : (
 																	false
 																)
 															}
 															id='KZFzniwnSyZfZ7v7nJ'
-															checkedIcon={
-																<Check
-																	className={classes.checkedIcon}
-																/>
-															}
-															icon={
-																<Check
-																	className={
-																		classes.uncheckedIcon
-																	}
-																/>
-															}
+															checkedIcon={<Check className={classes.checkedIcon} />}
+															icon={<Check className={classes.uncheckedIcon} />}
 															classes={{
 																checked: classes.checked,
 																root: classes.checkRoot,
@@ -180,65 +160,37 @@ const Filters = props => {
 												}}
 											>
 												{data.genres ? (
-													data.genres
-														.filter(genre => genre.category === 'MUSIC')
-														.map(i => {
-															return (
-																<FormControlLabel
-																	key={i.id}
-																	control={
-																		<Checkbox
-																			tabIndex={-1}
-																			onClick={
-																				handleGenreFilters
-																			}
-																			checked={
-																				filters.genres.indexOf(
-																					i.tmID,
-																				) !== -1 ? (
-																					true
-																				) : (
-																					false
-																				)
-																			}
-																			id={i.tmID}
-																			checkedIcon={
-																				<Check
-																					className={
-																						classes.checkedIcon
-																					}
-																				/>
-																			}
-																			icon={
-																				<Check
-																					className={
-																						classes.uncheckedIcon
-																					}
-																				/>
-																			}
-																			classes={{
-																				checked:
-																					classes.checked,
-																				root:
-																					classes.checkRoot,
-																			}}
-																		/>
-																	}
-																	classes={{
-																		label: classes.label,
-																	}}
-																	label={i.name}
-																/>
-															);
-														})
+													data.genres.filter(genre => genre.category === 'MUSIC').map(i => {
+														return (
+															<FormControlLabel
+																key={i.id}
+																control={
+																	<Checkbox
+																		tabIndex={-1}
+																		onClick={handleGenreFilters}
+																		checked={filters.genres.indexOf(i.tmID) !== -1 ? true : false}
+																		id={i.tmID}
+																		checkedIcon={<Check className={classes.checkedIcon} />}
+																		icon={<Check className={classes.uncheckedIcon} />}
+																		classes={{
+																			checked: classes.checked,
+																			root: classes.checkRoot,
+																		}}
+																	/>
+																}
+																classes={{
+																	label: classes.label,
+																}}
+																label={i.name}
+															/>
+														);
+													})
 												) : (
 													[]
 												)}
 											</ExpansionPanelDetails>
 										</ExpansionPanel>
-										<ExpansionPanel
-											style={{ boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.1)' }}
-										>
+										<ExpansionPanel style={{ boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.1)' }}>
 											<ExpansionPanelSummary
 												expandIcon={<ExpandMore />}
 												style={{ padding: 0, margin: 0 }}
@@ -250,8 +202,7 @@ const Filters = props => {
 														'primary' + 'ExpansionPanelSummaryExpaned'
 													]}`,
 													content: classes.expansionPanelSummaryContent,
-													expandIcon:
-														classes.expansionPanelSummaryExpandIcon,
+													expandIcon: classes.expansionPanelSummaryExpandIcon,
 												}}
 											>
 												<FormControlLabel
@@ -260,27 +211,15 @@ const Filters = props => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																filters.categories.indexOf(
-																	'KZFzniwnSyZfZ7v7na',
-																) !== -1 ? (
+																filters.categories.indexOf('KZFzniwnSyZfZ7v7na') !== -1 ? (
 																	true
 																) : (
 																	false
 																)
 															}
 															id='KZFzniwnSyZfZ7v7na'
-															checkedIcon={
-																<Check
-																	className={classes.checkedIcon}
-																/>
-															}
-															icon={
-																<Check
-																	className={
-																		classes.uncheckedIcon
-																	}
-																/>
-															}
+															checkedIcon={<Check className={classes.checkedIcon} />}
+															icon={<Check className={classes.uncheckedIcon} />}
 															classes={{
 																checked: classes.checked,
 																root: classes.checkRoot,
@@ -300,61 +239,33 @@ const Filters = props => {
 												}}
 											>
 												{data.genres ? (
-													data.genres
-														.filter(
-															genre =>
-																genre.category === 'ARTS_THEATRE',
-														)
-														.map(i => (
-															<FormControlLabel
-																key={i.id}
-																control={
-																	<Checkbox
-																		tabIndex={-1}
-																		onClick={handleGenreFilters}
-																		checked={
-																			filters.genres.indexOf(
-																				i.tmID,
-																			) !== -1 ? (
-																				true
-																			) : (
-																				false
-																			)
-																		}
-																		id={i.tmID}
-																		checkedIcon={
-																			<Check
-																				className={
-																					classes.checkedIcon
-																				}
-																			/>
-																		}
-																		icon={
-																			<Check
-																				className={
-																					classes.uncheckedIcon
-																				}
-																			/>
-																		}
-																		classes={{
-																			checked:
-																				classes.checked,
-																			root: classes.checkRoot,
-																		}}
-																	/>
-																}
-																classes={{ label: classes.label }}
-																label={i.name}
-															/>
-														))
+													data.genres.filter(genre => genre.category === 'ARTS_THEATRE').map(i => (
+														<FormControlLabel
+															key={i.id}
+															control={
+																<Checkbox
+																	tabIndex={-1}
+																	onClick={handleGenreFilters}
+																	checked={filters.genres.indexOf(i.tmID) !== -1 ? true : false}
+																	id={i.tmID}
+																	checkedIcon={<Check className={classes.checkedIcon} />}
+																	icon={<Check className={classes.uncheckedIcon} />}
+																	classes={{
+																		checked: classes.checked,
+																		root: classes.checkRoot,
+																	}}
+																/>
+															}
+															classes={{ label: classes.label }}
+															label={i.name}
+														/>
+													))
 												) : (
 													[]
 												)}
 											</ExpansionPanelDetails>
 										</ExpansionPanel>
-										<ExpansionPanel
-											style={{ boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.1)' }}
-										>
+										<ExpansionPanel style={{ boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.1)' }}>
 											<ExpansionPanelSummary
 												expandIcon={<ExpandMore />}
 												style={{ padding: 0, margin: 0 }}
@@ -366,8 +277,7 @@ const Filters = props => {
 														'primary' + 'ExpansionPanelSummaryExpaned'
 													]}`,
 													content: classes.expansionPanelSummaryContent,
-													expandIcon:
-														classes.expansionPanelSummaryExpandIcon,
+													expandIcon: classes.expansionPanelSummaryExpandIcon,
 												}}
 											>
 												<FormControlLabel
@@ -376,27 +286,15 @@ const Filters = props => {
 															tabIndex={-1}
 															onClick={handleCategoryFilters}
 															checked={
-																filters.categories.indexOf(
-																	'KZFzniwnSyZfZ7v7nE',
-																) !== -1 ? (
+																filters.categories.indexOf('KZFzniwnSyZfZ7v7nE') !== -1 ? (
 																	true
 																) : (
 																	false
 																)
 															}
 															id='KZFzniwnSyZfZ7v7nE'
-															checkedIcon={
-																<Check
-																	className={classes.checkedIcon}
-																/>
-															}
-															icon={
-																<Check
-																	className={
-																		classes.uncheckedIcon
-																	}
-																/>
-															}
+															checkedIcon={<Check className={classes.checkedIcon} />}
+															icon={<Check className={classes.uncheckedIcon} />}
 															classes={{
 																checked: classes.checked,
 																root: classes.checkRoot,
@@ -416,52 +314,27 @@ const Filters = props => {
 												}}
 											>
 												{data.genres ? (
-													data.genres
-														.filter(
-															genre => genre.category === 'SPORTS',
-														)
-														.map(i => (
-															<FormControlLabel
-																key={i.id}
-																control={
-																	<Checkbox
-																		tabIndex={-1}
-																		onClick={handleGenreFilters}
-																		checked={
-																			filters.genres.indexOf(
-																				i.tmID,
-																			) !== -1 ? (
-																				true
-																			) : (
-																				false
-																			)
-																		}
-																		id={i.tmID}
-																		checkedIcon={
-																			<Check
-																				className={
-																					classes.checkedIcon
-																				}
-																			/>
-																		}
-																		icon={
-																			<Check
-																				className={
-																					classes.uncheckedIcon
-																				}
-																			/>
-																		}
-																		classes={{
-																			checked:
-																				classes.checked,
-																			root: classes.checkRoot,
-																		}}
-																	/>
-																}
-																classes={{ label: classes.label }}
-																label={i.name}
-															/>
-														))
+													data.genres.filter(genre => genre.category === 'SPORTS').map(i => (
+														<FormControlLabel
+															key={i.id}
+															control={
+																<Checkbox
+																	tabIndex={-1}
+																	onClick={handleGenreFilters}
+																	checked={filters.genres.indexOf(i.tmID) !== -1 ? true : false}
+																	id={i.tmID}
+																	checkedIcon={<Check className={classes.checkedIcon} />}
+																	icon={<Check className={classes.uncheckedIcon} />}
+																	classes={{
+																		checked: classes.checked,
+																		root: classes.checkRoot,
+																	}}
+																/>
+															}
+															classes={{ label: classes.label }}
+															label={i.name}
+														/>
+													))
 												) : (
 													[]
 												)}
@@ -477,11 +350,7 @@ const Filters = props => {
 								<div className={classes.customExpandPanel}>
 									<div
 										style={{ marginTop: 0 }}
-										className={
-											classes.checkboxAndRadio +
-											' ' +
-											classes.checkboxAndRadioHorizontal
-										}
+										className={classes.checkboxAndRadio + ' ' + classes.checkboxAndRadioHorizontal}
 									>
 										<MuiPickersUtilsProvider utils={MomentUtils}>
 											<DatePicker
@@ -502,21 +371,10 @@ const Filters = props => {
 												<Checkbox
 													tabIndex={-1}
 													onClick={handleDateFilters}
-													checked={
-														filters.dates.indexOf('this week') !==
-														-1 ? (
-															true
-														) : (
-															false
-														)
-													}
+													checked={filters.dates.indexOf('this week') !== -1 ? true : false}
 													id='this week'
-													checkedIcon={
-														<Check className={classes.checkedIcon} />
-													}
-													icon={
-														<Check className={classes.uncheckedIcon} />
-													}
+													checkedIcon={<Check className={classes.checkedIcon} />}
+													icon={<Check className={classes.uncheckedIcon} />}
 													classes={{
 														checked: classes.checked,
 														root: classes.checkRoot,
@@ -531,21 +389,10 @@ const Filters = props => {
 												<Checkbox
 													tabIndex={-1}
 													onClick={handleDateFilters}
-													checked={
-														filters.dates.indexOf('this weekend') !==
-														-1 ? (
-															true
-														) : (
-															false
-														)
-													}
+													checked={filters.dates.indexOf('this weekend') !== -1 ? true : false}
 													id='this weekend'
-													checkedIcon={
-														<Check className={classes.checkedIcon} />
-													}
-													icon={
-														<Check className={classes.uncheckedIcon} />
-													}
+													checkedIcon={<Check className={classes.checkedIcon} />}
+													icon={<Check className={classes.uncheckedIcon} />}
 													classes={{
 														checked: classes.checked,
 														root: classes.checkRoot,
@@ -560,21 +407,10 @@ const Filters = props => {
 												<Checkbox
 													tabIndex={-1}
 													onClick={handleDateFilters}
-													checked={
-														filters.dates.indexOf('next week') !==
-														-1 ? (
-															true
-														) : (
-															false
-														)
-													}
+													checked={filters.dates.indexOf('next week') !== -1 ? true : false}
 													id='next week'
-													checkedIcon={
-														<Check className={classes.checkedIcon} />
-													}
-													icon={
-														<Check className={classes.uncheckedIcon} />
-													}
+													checkedIcon={<Check className={classes.checkedIcon} />}
+													icon={<Check className={classes.uncheckedIcon} />}
 													classes={{
 														checked: classes.checked,
 														root: classes.checkRoot,

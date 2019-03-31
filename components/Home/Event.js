@@ -316,7 +316,7 @@ const Event = ({ event, classes, user, first }) => {
 							</div>
 
 							<div onClick={() => setRotate(classes.activateRotate)} className={classes.flip}>
-								<Flipper className={classes.flipper} style={{ fontSize: '36px' }} />
+								<Flipper className={classes.flipper} />
 							</div>
 						</CardFooter>
 					</div>
@@ -512,7 +512,7 @@ const Event = ({ event, classes, user, first }) => {
 									className={` ${classes.flip} ${classes.flop}`}
 									style={{ bottom: 0 }}
 								>
-									<Flopper className={classes.flipper} style={{ fontSize: '36px' }} />
+									<Flopper className={classes.flipper} />
 								</div>
 							</CardBody>
 						</GridItem>
