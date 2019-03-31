@@ -55,6 +55,9 @@ const MESSAGE_SUBSCRIPTION = gql`
 						img_url
 					}
 				}
+				typing {
+					firstName
+				}
 				messages {
 					id
 					text
