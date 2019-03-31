@@ -15,6 +15,18 @@ import { Send } from '@material-ui/icons';
 import TextareaAutosize from 'react-autosize-textarea';
 import scrollbar from '../../../static/jss/ScrollbarStyles';
 
+
+const TOGGLE_TYPING_MUTATION = gql`
+	mutation TOGGLE_TYPING_MUTATION($chatId: String!, $isTyping: Boolean!) {
+		toggleTyping(chatId: $chatId, isTyping: $isTyping) {
+			typing {
+				id
+				firstName
+			}
+		}
+	}
+`;
+
 const SEND_MESSAGE_MUTATION = gql`
 	mutation SEND_MESSAGE_MUTATION($id: String!, $message: String!) {
 		sendMessage(id: $id, message: $message) {
@@ -62,10 +74,33 @@ const REMAINING_MESSAGES = gql`
 `;
 
 const Chat = ({ chat, currentUser, classes, client }) => {
-	const [ message, setMessage ] = useState('');
+	const [message, setMessage] = useState('');
 	const msgRef = useRef(null);
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
+	const [isTyping, setIsTyping] = useState(false);
+	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
+
+	useEffect(() => {
+		if (chat && isTyping && !message.trim()) {
+			toggleTyping({
+				variables: {
+					chatId: chat.id,
+					isTyping: false
+				},
+			});
+			setIsTyping(false)
+		}
+		if (chat && !isTyping && message.trim()) {
+			toggleTyping({
+				variables: {
+					chatId: chat.id,
+					isTyping: true
+				}
+			})
+			setIsTyping(true)
+		}
+	}, [message])
 
 	useEffect(() => {
 		// if (!currentUser.verified) {
@@ -311,19 +346,19 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 										style: { color: '#fafafa', width: '80%' },
 									}}
 								/> */}
-								<TextareaAutosize
-									className={classes.textareaAutosize}
-									onChange={e => setMessage(e.target.value)}
-									placeholder={`Respond to ${friend.firstName}`}
-									rows={1}
-									maxRows={4}
-									value={message}
-									onKeyDown={e => {
-										if (e.keyCode === 13) {
-											sendMessage();
-											setMessage('');
-										}
-									}}
+									<TextareaAutosize
+										className={classes.textareaAutosize}
+										onChange={e => {setMessage(e.target.value)}}
+										placehotruncatelder={`Respond to ${friend.firstName}`}
+										rows={1}
+										maxRows={4}
+										value={message}
+										onKeyDown={e => {
+											if (e.keyCode === 13) {
+												sendMessage();
+												setMessage('');
+											}
+										}}
 								/>
 								<ButtonBase type='submit'>
 									<Button
@@ -342,6 +377,9 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 						)}
 				</Mutation>
 			)}
+			{
+				chat && <div>{chat.typing.find(user => user.firstName === friend.firstName) ? `${friend.firstName} is typing...` : ''}</div>
+			}
 		</div>
 	);
 };

@@ -89,7 +89,7 @@ const Nav = ({ classes, color, router, href, user }) => {
   });
 
   const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
-    pollInterval: 600
+    // pollInterval: 600
   });
 
   const formattedChats = (newMessages, user) => {

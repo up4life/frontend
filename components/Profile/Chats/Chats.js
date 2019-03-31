@@ -50,6 +50,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 					img: img,
 					time: messages[len].createdAt,
 					newMsgs: newMsgs.length,
+					typing: chatObj.typing.map(user => user.firstName)
 				};
 			})
 			.sort((a, b) => {

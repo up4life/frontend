@@ -53,7 +53,7 @@ const Chat = ({ chat, setChat, selectedChat, classes }) => {
 						color: '#fafafa',
 					}}
 				>
-					{chat.text}
+					{`${chat.text}${chat.typing.includes(chat.from) ? '- is typing ...': ''}`}
 				</p>
 			</div>
 		</div>
