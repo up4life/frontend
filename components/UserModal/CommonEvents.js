@@ -21,8 +21,9 @@ const CommonEvents = ({ classes, id }) => {
 		<GridContainer
 			style={{
 				maxHeight: '55%',
-				overflowY: 'scroll',
-				marginBottom: '10px',
+				overflowX: 'scroll',
+				margin: '10px 0',
+				flexWrap: 'nowrap',
 			}}
 		>
 			{/* <h4 style={{textAlign: 'center'}}className={classes.title}>Events in common</h4> */}
@@ -30,13 +31,7 @@ const CommonEvents = ({ classes, id }) => {
 
 			{data.getSharedEvents.length ? (
 				data.getSharedEvents.map(event => (
-					<GridItem
-						sm={6}
-						md={6}
-						lg={6}
-						key={event.id}
-						style={{ paddingLeft: '5px', paddingRight: '5px' }}
-					>
+					<GridItem md={4} lg={4}>
 						<Card
 							background
 							style={{
@@ -46,6 +41,7 @@ const CommonEvents = ({ classes, id }) => {
 								backgroundImage: `url(${event.image_url})`,
 								marginTop: '0',
 								marginBottom: '10px',
+								minWidth: '200px',
 								//marginBottom: '',
 							}}
 						>

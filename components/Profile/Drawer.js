@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Router, { withRouter } from 'next/router';
-
+import Link from 'next/link';
 import { useQuery } from 'react-apollo-hooks';
 import { useMutation } from '../Mutations/useMutation';
 import InputRange from 'react-input-range';
@@ -39,30 +39,25 @@ const Preferences = ({ classes, drawerOpen, setDrawerOpen, router: { query } }) 
 		>
 			<ListItem>
 				<IconButton
-					onClick={() =>
-						Router.push('/profile?slug=me', '/profile/me', { shallow: true })}
+					onClick={() => Router.push('/profile?slug=me', '/profile/me', { shallow: true })}
 				>
 					<AccountCircle color={query.slug === 'me' ? 'primary' : 'inherit'} />
 				</IconButton>
 			</ListItem>
 			<ListItem>
 				<IconButton
-					onClick={() =>
-						Router.push('/profile?slug=chats', '/profile/chat', { shallow: true })}
+					onClick={() => Router.push('/profile?slug=chats', '/profile/chat', { shallow: true })}
 				>
 					<ChatBubbleOutline color={query.slug === 'chats' ? 'primary' : 'inherit'} />
 				</IconButton>
 			</ListItem>
-
 			<ListItem>
 				<IconButton
-					onClick={() =>
-						Router.push('/profile?slug=events', '/profile/events', { shallow: true })}
+					onClick={() => Router.push('/profile?slug=events', '/profile/events', { shallow: true })}
 				>
 					<Event color={query.slug === 'events' ? 'primary' : 'inherit'} />
 				</IconButton>
 			</ListItem>
-
 			<ListItem>
 				<IconButton
 					onClick={() =>

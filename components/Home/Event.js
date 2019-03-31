@@ -3,6 +3,7 @@ import moment from 'moment';
 import NProgress from 'nprogress';
 import { useMutation } from '../Mutations/useMutation';
 import Router from 'next/router';
+import posed from 'react-pose';
 
 //query& M
 import { CURRENT_USER_QUERY } from '../Queries/User';
@@ -40,14 +41,31 @@ import getAge from '../../utils/getAge';
 //styles
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
+const UserImage = posed.img({
+	hidden: {
+		opacity: 0,
+		y: '40px',
+	},
+	liked: {
+		opacity: 1,
+		y: 0,
+	},
+});
+
+const LikedBy = posed.div({
+	liked: {
+		x: 0,
+	},
+	unliked: {
+		x: '-40px',
+	},
+});
 const Event = ({ event, classes, user, first }) => {
 	const useIsomorphicLayoutEffect = process.Browser ? useLayoutEffect : useEffect;
 	let [ isSaved, setIsSaved ] = useState(false);
 
 	useEffect(() => {
-		setIsSaved(
-			user.events.find(e => e.id === event.id || e.tmID === event.tmID) ? true : false,
-		);
+		setIsSaved(user.events.find(e => e.id === event.id || e.tmID === event.tmID) ? true : false);
 	}, []);
 
 	const [ deleteEvent ] = useMutation(DELETE_EVENT_MUTATION, {
@@ -128,7 +146,7 @@ const Event = ({ event, classes, user, first }) => {
 				if (imgEl.current.complete) set(true);
 			}
 		},
-		[ imgEl ],
+		[ imgEl ]
 	);
 
 	useIsomorphicLayoutEffect(
@@ -138,7 +156,7 @@ const Event = ({ event, classes, user, first }) => {
 				NProgress.done();
 			}
 		},
-		[ val ],
+		[ val ]
 	);
 
 	event.times = event.times.sort((a, b) => {
@@ -182,11 +200,7 @@ const Event = ({ event, classes, user, first }) => {
 									}}
 								/>
 
-								<div
-									className={
-										isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4
-									}
-								>
+								<div className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}>
 									<div style={{ cursor: 'pointer' }}>
 										{isSaved ? (
 											<div
@@ -227,19 +241,14 @@ const Event = ({ event, classes, user, first }) => {
 
 							<div className={classes.gradientBorder}>
 								{event.venue}
-								<div
-									className={`${classes.stats} ${classes.mlAuto}`}
-									style={{ display: 'block' }}
-								>
+								<div className={`${classes.stats} ${classes.mlAuto}`} style={{ display: 'block' }}>
 									{event.times.length > 2 ? (
 										<div>
 											{moment(event.times[0]).calendar()} -{' '}
 											{moment(event.times[event.times.length - 1]).calendar()}
 										</div>
 									) : (
-										event.times.map((time, i) => (
-											<div key={i}>{moment(time).calendar()}</div>
-										))
+										event.times.map((time, i) => <div key={i}>{moment(time).calendar()}</div>)
 									)}
 								</div>
 							</div>
@@ -252,60 +261,60 @@ const Event = ({ event, classes, user, first }) => {
 								paddingBottom: '10px',
 							}}
 						>
-							{event.attending.length ? (
-								<div style={{ display: 'flex' }}>
-									{event.attending.filter(x => x.id !== user.id).map(usr => {
-										let chat = user
-											? user.chats.find(x =>
-													x.messages.some(
-														y => y.from.id === usr.id && !y.seen,
-													),
-												)
-											: false;
-
-										return (
-											<Badge
-												invisible={!chat}
-												color='primary'
-												variant='dot'
-												classes={{ badge: classes.smallBadge }}
-											>
-												<img
-													onClick={() => {
-														NProgress.start();
-														Router.push(
-															`/home?user=${usr.id}`,
-															`/home/user/${usr.id}`,
-															{ shallow: true },
-															{ scroll: false },
-														);
-													}}
-													key={usr.id}
-													src={
-														usr.img.length ? (
-															usr.img.find(img => img.default).img_url
-														) : (
-															standIn
-														)
-													}
-													className={classes.lilImg}
-												/>
-											</Badge>
-										);
-									})}
-								</div>
-							) : (
-								<div
-									style={{
-										width: '40px',
-										height: '40px',
-									}}
+							<div style={{ display: 'flex' }}>
+								{/* {isSaved ? ( */}
+								<UserImage
+									src={user.img.find(img => img.default).img_url}
+									className={classes.lilImg}
+									pose={isSaved ? 'liked' : 'hidden'}
 								/>
-							)}
-							<div
-								onClick={() => setRotate(classes.activateRotate)}
-								className={classes.flip}
-							>
+								{event.attending.length ? (
+									<LikedBy style={{ display: 'flex' }} pose={isSaved ? 'liked' : 'unliked'}>
+										{event.attending.filter(x => x.id !== user.id).map(usr => {
+											let chat = user
+												? user.chats.find(x =>
+														x.messages.some(y => y.from.id === usr.id && !y.seen)
+													)
+												: false;
+
+											return (
+												<Badge
+													invisible={!chat}
+													color='primary'
+													variant='dot'
+													key={usr.id}
+													classes={{ badge: classes.smallBadge }}
+												>
+													<img
+														onClick={() => {
+															NProgress.start();
+															Router.push(
+																`/home?user=${usr.id}`,
+																`/home/user/${usr.id}`,
+																{ shallow: true },
+																{ scroll: false }
+															);
+														}}
+														src={
+															usr.img.length ? usr.img.find(img => img.default).img_url : standIn
+														}
+														className={classes.lilImg}
+													/>
+												</Badge>
+											);
+										})}
+									</LikedBy>
+								) : (
+									<div
+										style={{
+											width: '40px',
+											height: '40px',
+										}}
+									/>
+								)}
+							</div>
+
+							<div onClick={() => setRotate(classes.activateRotate)} className={classes.flip}>
 								<Flipper className={classes.flipper} style={{ fontSize: '36px' }} />
 							</div>
 						</CardFooter>
@@ -338,9 +347,7 @@ const Event = ({ event, classes, user, first }) => {
 									zIndex: '700',
 									opacity: '.9',
 								}}
-								className={
-									isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4
-								}
+								className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}
 							>
 								<div style={{ cursor: 'pointer' }}>
 									{isSaved ? (
@@ -375,9 +382,7 @@ const Event = ({ event, classes, user, first }) => {
 							</div>
 							<CardBody
 								style={{
-									height: divEl.current
-										? `${divEl.current.clientHeight}px`
-										: height,
+									height: divEl.current ? `${divEl.current.clientHeight}px` : height,
 								}}
 								className={`${classes.cardBodyRotate} ${classes.cardBodyReverse}`}
 							>
@@ -390,26 +395,19 @@ const Event = ({ event, classes, user, first }) => {
 										</h3>
 										<h6 style={{ color: '#263238', fontSize: '15px' }}>
 											Showing
-											{!user ||
-											!user.genderPrefs.length ||
-											user.genderPrefs.length === 3 ? (
+											{!user || !user.genderPrefs.length || user.genderPrefs.length === 3 ? (
 												<span className='genderPreference'>everyone</span>
-											) : user.genderPrefs.includes(
-												'MALE',
-											) ? user.genderPrefs.includes('FEMALE') ? (
-												<span className='genderPreference'>
-													men and women
-												</span>
+											) : user.genderPrefs.includes('MALE') ? user.genderPrefs.includes(
+												'FEMALE'
+											) ? (
+												<span className='genderPreference'>men and women</span>
 											) : (
 												<span className='genderPreference'>men</span>
 											) : (
 												<span className='genderPreference'>women</span>
 											)}{' '}
 											between the ages of{' '}
-											<span
-												style={{ marginRight: '3px' }}
-												className='agePreference'
-											>
+											<span style={{ marginRight: '3px' }} className='agePreference'>
 												{user && user.minAgePref ? user.minAgePref : '18'}
 											</span>
 											and{' '}
@@ -440,20 +438,14 @@ const Event = ({ event, classes, user, first }) => {
 									) : (
 										event.attending.map(usr => {
 											let chat = user
-												? user.chats.find(x =>
-														x.users.some(y => y.id === usr.id),
-													)
+												? user.chats.find(x => x.users.some(y => y.id === usr.id))
 												: false;
 											let newChat = user
 												? user.chats.find(x =>
-														x.messages.some(
-															y => y.from.id === usr.id && !y.seen,
-														),
+														x.messages.some(y => y.from.id === usr.id && !y.seen)
 													)
 												: false;
-											let liked = user
-												? user.liked.find(x => x.id === usr.id)
-												: false;
+											let liked = user ? user.liked.find(x => x.id === usr.id) : false;
 
 											return (
 												<GridItem
@@ -468,9 +460,7 @@ const Event = ({ event, classes, user, first }) => {
 														maxWidth: '170px',
 													}}
 												>
-													{liked && (
-														<Favorite className={classes.favorite} />
-													)}
+													{liked && <Favorite className={classes.favorite} />}
 													{chat && (
 														<Badge
 															invisible={!newChat}
@@ -491,20 +481,16 @@ const Event = ({ event, classes, user, first }) => {
 																`/home?user=${usr.id}`,
 																`/home/user/${usr.id}`,
 																{ shallow: true },
-																{ scroll: false },
+																{ scroll: false }
 															);
 														}}
 														style={{}}
 													>
-														<div
-															className={` ${classes.gradientBorder}  ${classes.userCard}`}
-														>
+														<div className={` ${classes.gradientBorder}  ${classes.userCard}`}>
 															<Avatar
 																src={
 																	usr.img.length ? (
-																		usr.img.find(
-																			img => img.default,
-																		).img_url
+																		usr.img.find(img => img.default).img_url
 																	) : (
 																		standIn
 																	)
@@ -523,12 +509,9 @@ const Event = ({ event, classes, user, first }) => {
 																}}
 															>
 																<p style={{ margin: 0 }}>
-																	{usr.firstName}{' '}
-																	<span style={{ padding: '0 3px' }}>&#8226;</span>
+																	{usr.firstName} <span style={{ padding: '0 3px' }}>&#8226;</span>
 																</p>
-																<p style={{ margin: '0 0 0 2px' }}>
-																	{getAge(usr.dob)}
-																</p>
+																<p style={{ margin: '0 0 0 2px' }}>{getAge(usr.dob)}</p>
 															</div>
 														</div>
 													</div>
@@ -542,10 +525,7 @@ const Event = ({ event, classes, user, first }) => {
 									className={` ${classes.flip} ${classes.flop}`}
 									style={{ bottom: 0 }}
 								>
-									<Flopper
-										className={classes.flipper}
-										style={{ fontSize: '36px' }}
-									/>
+									<Flopper className={classes.flipper} style={{ fontSize: '36px' }} />
 								</div>
 							</CardBody>
 						</GridItem>

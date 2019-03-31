@@ -38,7 +38,7 @@ const Search = props => {
 					{({
 						getInputProps,
 						getItemProps,
-
+						getMenuProps,
 						isOpen,
 
 						highlightedIndex,
@@ -76,12 +76,16 @@ const Search = props => {
 										width: '200px',
 										background: '#3c3c3c',
 									}}
+									{...getMenuProps()}
 								>
 									{items.map((result, index) => {
 										return (
 											<MenuItem
 												key={index}
-												{...getItemProps({ item: result.city })}
+												style={{
+													backgroundColor: highlightedIndex === index ? '#81d6e3' : '#3c3c3c',
+												}}
+												{...getItemProps({ item: result.city, index, key: index })}
 											>
 												{result.city}
 											</MenuItem>

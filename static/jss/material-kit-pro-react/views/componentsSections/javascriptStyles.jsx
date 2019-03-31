@@ -105,8 +105,7 @@ const javascriptStyles = theme => {
 			...modalStyle(theme).modalBody,
 		},
 		userModalHeader: {
-			backgroundImage:
-				'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
+			backgroundImage: 'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
 			paddingBottom: '24px',
 		},
 		liked: {
@@ -139,8 +138,7 @@ const javascriptStyles = theme => {
 			},
 			'& button': {
 				backgroundColor: 'none !important',
-				backgroundImage:
-					'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
+				backgroundImage: 'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
 			},
 
 			'& ::after': {
@@ -196,8 +194,7 @@ const javascriptStyles = theme => {
 				zIndex: -1,
 				margin: '-3px',
 				borderRadius: 'inherit',
-				backgroundImage:
-					'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
+				backgroundImage: 'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
 			},
 		},
 		favorite: {
@@ -210,8 +207,7 @@ const javascriptStyles = theme => {
 		},
 		register: {
 			backgroundColor: '#262323',
-			backgroundImage:
-				'url("https://www.transparenttextures.com/theme/images/transparent.png")',
+			backgroundImage: 'url("https://www.transparenttextures.com/theme/images/transparent.png")',
 			color: '#fafafa',
 			border: '2px solid #81d6e3',
 			'& h3': {
@@ -232,8 +228,7 @@ const javascriptStyles = theme => {
 		},
 		login: {
 			backgroundColor: '#262323',
-			backgroundImage:
-				'url("https://www.transparenttextures.com/theme/images/transparent.png")',
+			backgroundImage: 'url("https://www.transparenttextures.com/theme/images/transparent.png")',
 			border: '2px solid #81d6e3',
 			'& input': {
 				color: '#fafafa',
@@ -250,8 +245,7 @@ const javascriptStyles = theme => {
 			color: '#fafafa !important',
 		},
 		registerModalButton: {
-			backgroundImage:
-				'linear-gradient(to right, #8dd2cd, #7ecbc5, #6ec3bd, #5ebcb6, #4cb5ae)',
+			backgroundImage: 'linear-gradient(to right, #8dd2cd, #7ecbc5, #6ec3bd, #5ebcb6, #4cb5ae)',
 			color: '#fafafa !important',
 		},
 		expandedChat: {
@@ -267,8 +261,7 @@ const javascriptStyles = theme => {
 				borderBottomColor: '#81d6e3',
 			},
 			'& button': {
-				backgroundImage:
-					'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
+				backgroundImage: 'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
 				background: 'transparent',
 				borderRadius: '6px',
 				marginLeft: '20px',
@@ -360,6 +353,30 @@ const javascriptStyles = theme => {
 			margin: '20px 0',
 			display: 'flex',
 			alignItems: 'center',
+		},
+		editLocation: {
+			cursor: 'pointer',
+			'& button': {
+				paddingLeft: '5px',
+				paddingTop: '10px',
+				'& svg': {
+					width: '25px',
+					height: '25px',
+				},
+				'& small': {
+					marginTop: '4px',
+				},
+			},
+			'&:hover': {
+				'& button': {
+					'& svg': {
+						fill: 'url(#indexID) #4CB5AE',
+					},
+					'& small': {
+						color: '#fafafa',
+					},
+				},
+			},
 		},
 	};
 };
