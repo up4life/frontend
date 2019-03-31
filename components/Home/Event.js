@@ -261,15 +261,11 @@ const Event = ({ event, classes, user, first }) => {
 								paddingBottom: '10px',
 							}}
 						>
-							<div style={{ display: 'flex' }}>
+							<div style={{ display: 'flex', flexWrap: 'wrap', maxWidth: '435px' }}>
 								{/* {isSaved ? ( */}
-								<UserImage
-									src={user.img.find(img => img.default).img_url}
-									className={classes.meImg}
-									pose={isSaved ? 'liked' : 'hidden'}
-								/>
+
 								{event.attending.length ? (
-									<LikedBy style={{ display: 'flex' }} pose={isSaved ? 'liked' : 'unliked'}>
+									<Fragment>
 										{event.attending.filter(x => x.id !== user.id).map(usr => {
 											let chat = user
 												? user.chats.find(x =>
@@ -303,7 +299,12 @@ const Event = ({ event, classes, user, first }) => {
 												</Badge>
 											);
 										})}
-									</LikedBy>
+										<UserImage
+											src={user.img.find(img => img.default).img_url}
+											className={classes.meImg}
+											pose={isSaved ? 'liked' : 'hidden'}
+										/>
+									</Fragment>
 								) : (
 									<div
 										style={{
