@@ -21,6 +21,17 @@ import date from '../../utils/formatDate';
 
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
+const TOGGLE_TYPING_MUTATION = gql`
+	mutation TOGGLE_TYPING_MUTATION($chatId: String!, $isTyping: Boolean!) {
+		toggleTyping(chatId: $chatId, isTyping: $isTyping) {
+			typing {
+				id
+				firstName
+			}
+		}
+	}
+`;
+
 const SEND_MESSAGE_MUTATION = gql`
 	mutation SEND_MESSAGE_MUTATION($id: String!, $message: String!) {
 		sendMessage(id: $id, message: $message) {
@@ -85,6 +96,33 @@ const Chat = ({
 
 	//Flip flop this lil guy
 	currentUser.verified = true;
+	
+	const [isTyping, setIsTyping] = useState(false);
+	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION)
+
+	useEffect(
+		() => {
+			if (isTyping && !message.trim()) {
+				toggleTyping({
+					variables: {
+						chatId: data.getConversation.id,
+						isTyping: false,
+					},
+				});
+				setIsTyping(false);
+			}
+			if (!isTyping && message.trim()) {
+				toggleTyping({
+					variables: {
+						chatId: data.getConversation.id,
+						isTyping: true,
+					},
+				});
+				setIsTyping(true);
+			}
+		},
+		[ message ]
+	);
 
 	useEffect(() => {
 		subscribeToNewMessages();
@@ -331,6 +369,16 @@ const Chat = ({
 						</form>
 					)}
 			</Mutation>
+			{
+				data.getConversation &&
+				<div>
+					{data.getConversation.typing.find(user => user.firstName === match.firstName) ? (
+						`${match.firstName} is typing...`
+					) : (
+						''
+					)}
+				</div>
+			}
 		</div>
 	);
 };
