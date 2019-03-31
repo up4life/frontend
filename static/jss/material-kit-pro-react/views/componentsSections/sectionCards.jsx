@@ -392,9 +392,18 @@ const styles = {
 		boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
 		backgroundImage: 'linear-gradient(to right, #efecef, #e9e3e9, #e3dbe3, #ded2dc, #d8cad6)',
 		position: 'absolute',
-
+		top: 0,
 		right: 0,
 		transition: 'all 3s ease-in-out',
+
+		'&:hover': {
+			backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
+		},
+	},
+	up4Saved: {
+		backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
+	},
+	flippedUp4: {
 		left: '12px',
 		top: '-25px',
 		borderTopRightRadius: '0px',
@@ -402,12 +411,6 @@ const styles = {
 		borderBottomRightRadius: '6px',
 		zIndex: '700',
 		opacity: '.9',
-		'&:hover': {
-			backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
-		},
-	},
-	up4Saved: {
-		backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
 	},
 	flip: {
 		// backgroundImage: 'linear-gradient(to right, #cdcece, #c0c8c8, #b4c2c2, #a7bdbc, #9bb7b5)',

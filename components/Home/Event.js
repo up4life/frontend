@@ -330,7 +330,6 @@ const Event = ({ event, classes, user, first }) => {
 						<GridItem sm={12} md={12}>
 							<img
 								className={classes.reversedImage}
-								// style={{ border: "1px solid #cabac8", position: "absolute", width: '100%', top: '-20px', left: 0 }}
 								ref={imgEl}
 								src={event.image_url}
 								alt='...'
@@ -338,7 +337,15 @@ const Event = ({ event, classes, user, first }) => {
 									set(true);
 								}}
 							/>
-							<div className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}>
+							<div
+								className={
+									isSaved ? (
+										`${classes.up4} ${classes.flippedUp4} ${classes.up4Saved}`
+									) : (
+										`${classes.up4} ${classes.flippedUp4}`
+									)
+								}
+							>
 								<div style={{ cursor: 'pointer' }}>
 									{isSaved ? (
 										<div
@@ -350,23 +357,13 @@ const Event = ({ event, classes, user, first }) => {
 											<img className={classes.arrow} src={Arrow} />
 										</div>
 									) : (
-										<Tooltip
-											open={first && !user.events.length}
-											classes={{
-												tooltip: classes.tooltippy,
+										<Up4
+											handleClick={() => {
+												NProgress.start();
+												addEvent();
 											}}
-											placement='top'
-											title='Click here to express your interest in
-															an event!'
-										>
-											<Up4
-												handleClick={() => {
-													NProgress.start();
-													addEvent();
-												}}
-												justFour
-											/>
-										</Tooltip>
+											justFour
+										/>
 									)}
 								</div>
 							</div>
