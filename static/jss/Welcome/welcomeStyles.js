@@ -74,7 +74,7 @@ const styles = {
 	downshiftPaper: {
 		position: 'absolute',
 		zIndex: 2,
-		maxWidth: '310px',
+		maxWidth: '382px',
 		width: '100%',
 	},
 	favorite: {

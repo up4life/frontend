@@ -14,7 +14,7 @@ import styles from '../../static/jss/Welcome/welcomeStyles';
 const Pro = ({ classes }) => {
 	return (
 		<div className={classes.pageWrapper}>
-			<div className={classes.innerWrapper}>
+			<div className={classes.innerWrapper} style={{ position: 'relative' }}>
 				<h2>Our awesome pro features</h2>
 				<GridContainer>
 					<GridItem className={classes.center} sm={4} md={3} lg={3}>
@@ -35,17 +35,14 @@ const Pro = ({ classes }) => {
 					</GridItem>
 				</GridContainer>
 				<Link href='/profile?slug=billing' as='/profile/billing'>
-					<Button
-						className={classes.proButton}
-						color='danger'
-						size='lg'
-						style={{ zIndex: 1 }}
-					>
+					<Button className={classes.proButton} color='danger' size='lg' style={{ zIndex: 1 }}>
 						Go Pro!
 					</Button>
 				</Link>
 				<Link prefetch href='/home'>
-					<Button style={{ zIndex: 1 }}>Skip</Button>
+					<Button size='sm' simple style={{ position: 'absolute', bottom: 0, right: 0 }}>
+						Skip For Now
+					</Button>
 				</Link>
 			</div>
 		</div>

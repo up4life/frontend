@@ -8,7 +8,7 @@ import { ALL_GENRE_QUERY } from '../Queries/Genres';
 //import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 import Button from '../../styledComponents/CustomButtons/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Paper, Chip } from '@material-ui/core';
+import { Paper, Chip, Tooltip } from '@material-ui/core';
 import GridItem from '../../styledComponents/Grid/GridItem';
 import GridContainer from '../../styledComponents/Grid/GridContainer';
 import Accordion from '../../styledComponents/Accordion/Accordion.jsx';
@@ -50,9 +50,7 @@ const Interests = ({ classes }) => {
 							className={interested ? classes.interestedChip : classes.chip}
 							onClick={() =>
 								interested
-									? setInterestedList(
-											interestedList.filter(x => x.id !== genre.id),
-										)
+									? setInterestedList(interestedList.filter(x => x.id !== genre.id))
 									: setInterestedList([ ...interestedList, { id: genre.id } ])}
 							color='primary'
 							variant={interested ? 'default' : 'outlined'}
@@ -80,9 +78,7 @@ const Interests = ({ classes }) => {
 							color='primary'
 							onClick={() =>
 								interested
-									? setInterestedList(
-											interestedList.filter(x => x.id !== genre.id),
-										)
+									? setInterestedList(interestedList.filter(x => x.id !== genre.id))
 									: setInterestedList([ ...interestedList, { id: genre.id } ])}
 							variant={interested ? 'default' : 'outlined'}
 						/>
@@ -109,9 +105,7 @@ const Interests = ({ classes }) => {
 							color='primary'
 							onClick={() =>
 								interested
-									? setInterestedList(
-											interestedList.filter(x => x.id !== genre.id),
-										)
+									? setInterestedList(interestedList.filter(x => x.id !== genre.id))
 									: setInterestedList([ ...interestedList, { id: genre.id } ])}
 							variant={interested ? 'default' : 'outlined'}
 						/>
@@ -130,21 +124,13 @@ const Interests = ({ classes }) => {
 			onCompleted={e => {
 				NProgress.done();
 				// console.log(e);
-				Router.push(
-					`/welcome?slug=9`,
-					`/welcome/goPro`,
-					{ shallow: true },
-					{ scroll: false },
-				);
+				Router.push(`/welcome?slug=6`, `/welcome/goPro`, { shallow: true }, { scroll: false });
 			}}
 			onError={e => console.log(e)}
 		>
 			{updateUser => (
 				<div className={classes.pageWrapper}>
-					<div
-						className={classes.innerWrapper}
-						style={{ position: 'relative', padding: '90px' }}
-					>
+					<div className={classes.innerWrapper} style={{ position: 'relative', padding: '90px' }}>
 						<h2>I am interested in...</h2>
 						<p>Please select at least 3.</p>
 						<GridContainer>
@@ -178,14 +164,22 @@ const Interests = ({ classes }) => {
 						>
 							Next
 						</Button>
-						<Button
-							size='sm'
-							simple
-							style={{ position: 'absolute', bottom: 0, right: 0 }}
-							onClick={() => Router.push('/home')}
-						>
-							Skip For Now
-						</Button>
+						<Tooltip title='You can edit these later in your profile page.'>
+							<Button
+								size='sm'
+								simple
+								style={{ position: 'absolute', bottom: 0, right: 0 }}
+								onClick={() =>
+									Router.push(
+										`/welcome?slug=6`,
+										`/welcome/goPro`,
+										{ shallow: true },
+										{ scroll: false }
+									)}
+							>
+								Skip For Now
+							</Button>
+						</Tooltip>
 					</div>
 				</div>
 			)}

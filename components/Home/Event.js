@@ -265,7 +265,7 @@ const Event = ({ event, classes, user, first }) => {
 								{/* {isSaved ? ( */}
 								<UserImage
 									src={user.img.find(img => img.default).img_url}
-									className={classes.lilImg}
+									className={classes.meImg}
 									pose={isSaved ? 'liked' : 'hidden'}
 								/>
 								{event.attending.length ? (

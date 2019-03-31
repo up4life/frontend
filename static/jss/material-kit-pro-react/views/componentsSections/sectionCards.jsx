@@ -238,8 +238,7 @@ const styles = {
 			zIndex: '-1',
 			margin: '-3px',
 			borderRadius: 'inherit',
-			backgroundImage:
-				'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
+			backgroundImage: 'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
 		},
 	},
 	cardFooter: {
@@ -285,8 +284,7 @@ const styles = {
 		margin: '5px auto',
 		flexDirection: 'column',
 		'&:hover': {
-			backgroundImage:
-				'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
+			backgroundImage: 'linear-gradient(to right, #81d6e3, #98ceea, #b1c5e5, #c4bed7, #cabac8)',
 			borderRadius: '6px',
 			boxShadow:
 				'0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)',
@@ -399,8 +397,7 @@ const styles = {
 		right: 0,
 		transition: 'all 3s ease-in-out',
 		'&:hover': {
-			backgroundImage:
-				'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
+			backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
 		},
 	},
 	up4Saved: {
@@ -529,6 +526,13 @@ const styles = {
 		'&:hover': {
 			border: '2px solid #4cb5ae',
 		},
+	},
+
+	meImg: {
+		width: '40px',
+		height: '40px',
+		borderRadius: '6px',
+		border: '1px solid #cabac8',
 	},
 };
 

@@ -5,14 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Stepper, Step, StepLabel, MobileStepper, Hidden } from '@material-ui/core';
 import User, { CURRENT_USER_QUERY } from '../Queries/User';
 import Main from './Main';
-import Gender from './Gender';
-import GenderPrefs from './GenderPrefs';
+import Info from './Info';
+import Prefs from './Prefs';
 import Age from './Age';
-import AgePrefs from './AgePrefs';
-import Location from './Location';
-import Images from './Images';
+import More from './More';
 import Interests from './Interests';
-import Bio from './Bio';
 import Pro from './ProFeatures';
 
 import style from '../../static/jss/Welcome/welcomeStyles';
@@ -28,18 +25,7 @@ import triangle8 from '../../static/img/triangle8.svg';
 import triangle9 from '../../static/img/triangle9.svg';
 
 function getSteps() {
-	return [
-		'Welcome',
-		'Gender',
-		'Age',
-		'Location',
-		'Images',
-		'Gender Preference',
-		'Age Preference',
-		'Bio',
-		'Interests',
-		'Go Pro',
-	];
+	return [ 'Welcome', 'Info', 'Age', 'More', 'Preferences', 'Interests', 'Go Pro' ];
 }
 
 function getStepContent(stepIndex, user) {
@@ -47,22 +33,16 @@ function getStepContent(stepIndex, user) {
 		case 0:
 			return <Main user={user} />;
 		case 1:
-			return <Gender />;
+			return <Info />;
 		case 2:
 			return <Age />;
 		case 3:
-			return <Location />;
+			return <More user={user} />;
 		case 4:
-			return <Images user={user} />;
+			return <Prefs />;
 		case 5:
-			return <GenderPrefs />;
-		case 6:
-			return <AgePrefs />;
-		case 7:
-			return <Bio />;
-		case 8:
 			return <Interests />;
-		case 9:
+		case 6:
 			return <Pro />;
 		default:
 			return <Main user={user} />;
@@ -101,7 +81,7 @@ const Welcome = ({ classes, user, router: { prefetch, query } }) => {
 		() => {
 			if (query.slug === 3) prefetch('/home');
 		},
-		[ query.slug ],
+		[ query.slug ]
 	);
 	const steps = getSteps();
 	// console.log(parseInt(query.slug));
@@ -109,15 +89,7 @@ const Welcome = ({ classes, user, router: { prefetch, query } }) => {
 	return (
 		<User>
 			{({ data: { currentUser } }) => (
-				<div
-					className={classes.pageHeader}
-					style={{
-						// backgroundImage: `url(${getImage(parseInt(query.slug))})`,
-						// backgroundImage: `url(../../Assets/triangle1.svg)`,
-						// backgroundSize: "cover",
-						// backgroundPosition: "top center"
-					}}
-				>
+				<div className={classes.pageHeader}>
 					<img
 						style={{
 							height: '100%',

@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
-import Router from 'next/router';
+import Router, { Link } from 'next/router';
 import NProgress from 'nprogress';
-import { Mutation } from 'react-apollo';
-import { Paper, MenuItem } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Input from '../../styledComponents/CustomInput/CustomInput';
-
-import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
-import Button from '../../styledComponents/CustomButtons/Button';
-import { LOCATION_SUGGESTION_QUERY } from '../Queries/LocationSuggestion';
 import Downshift from 'downshift';
+import { Paper, MenuItem } from '@material-ui/core';
+import { Mutation } from 'react-apollo';
+import { withStyles } from '@material-ui/core';
 
+import GridContainer from '../../styledComponents/Grid/GridContainer';
+import GridItem from '../../styledComponents/Grid/GridItem';
 import styles from '../../static/jss/Welcome/welcomeStyles';
+import Input from '../../styledComponents/CustomInput/CustomInput';
+import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
+import { LOCATION_SUGGESTION_QUERY } from '../Queries/LocationSuggestion';
+import Button from '../../styledComponents/CustomButtons/Button';
 
-const GenderPrefs = ({ classes }) => {
+const Gender = ({ user, classes }) => {
+	const [ gender, setGender ] = useState(undefined);
 	const [ location, setLocation ] = useState('');
 	const [ items, setItems ] = useState([]);
 
 	const handleLocationChange = selectedItem => {
 		setLocation(selectedItem.slice(0, -5));
 	};
+
 	return (
 		<Mutation
 			mutation={UPDATE_USER_MUTATION}
-			variables={{ location }}
+			variables={{ gender, location }}
 			onCompleted={() => {
 				NProgress.done();
 				Router.push(
-					`/welcome?slug=4`,
-					`/welcome/profile/images`,
+					`/welcome?slug=2`,
+					`/welcome/profile/age`,
 					{ shallow: true },
 					{ scroll: false }
 				);
@@ -36,14 +39,41 @@ const GenderPrefs = ({ classes }) => {
 		>
 			{(updateUser, { client }) => (
 				<div className={classes.pageWrapper}>
-					<div
-						className={classes.innerWrapper}
-						style={{
-							zIndex: '1',
-							width: '400px',
-						}}
-					>
-						<h2>I live in...</h2>
+					<div className={classes.innerWrapper} style={{ padding: '90px' }}>
+						<h2>I am a...</h2>
+						<GridContainer>
+							<GridItem md={4} lg={4}>
+								<Button
+									color='danger'
+									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
+									onClick={() => setGender('MALE')}
+									simple={gender !== 'MAlE'}
+								>
+									Man
+								</Button>
+							</GridItem>
+							<GridItem md={4} lg={4}>
+								<Button
+									color='danger'
+									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
+									onClick={() => setGender('FEMALE')}
+									simple={gender !== 'FEMALE'}
+								>
+									Woman
+								</Button>
+							</GridItem>
+							<GridItem md={4} lg={4}>
+								<Button
+									color='danger'
+									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
+									onClick={() => setGender('OTHER')}
+									simple={gender !== 'OTHER'}
+								>
+									Non-Binary
+								</Button>
+							</GridItem>
+						</GridContainer>
+						<h2>in...</h2>
 						<Downshift
 							inputValue={location}
 							onChange={handleLocationChange}
@@ -75,10 +105,7 @@ const GenderPrefs = ({ classes }) => {
 									/>
 
 									{isOpen ? (
-										<Paper
-											className={classes.downshiftPaper}
-											//style={{ maxWidth: '242px' }}
-										>
+										<Paper className={classes.downshiftPaper}>
 											{items.map((result, index) => {
 												return (
 													<MenuItem
@@ -103,6 +130,7 @@ const GenderPrefs = ({ classes }) => {
 						<Button
 							color='danger'
 							style={{ zIndex: 1 }}
+							disabled={!gender || !location}
 							onClick={() => {
 								NProgress.start();
 								updateUser();
@@ -117,4 +145,4 @@ const GenderPrefs = ({ classes }) => {
 	);
 };
 
-export default withStyles(styles)(GenderPrefs);
+export default withStyles(styles)(Gender);

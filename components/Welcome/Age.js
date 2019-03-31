@@ -28,9 +28,9 @@ const GenderPrefs = ({ classes }) => {
 				NProgress.done();
 				Router.push(
 					`/welcome?slug=3`,
-					`/welcome/profile/location`,
+					`/welcome/profile/more`,
 					{ shallow: true },
-					{ scroll: false },
+					{ scroll: false }
 				);
 			}}
 		>
