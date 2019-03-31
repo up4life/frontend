@@ -5,7 +5,6 @@ import { SEND_MESSAGE_MUTATION } from '../Mutations/sendMessage';
 import { useMutation } from '../Mutations/useMutation';
 import { useQuery, useSubscription } from 'react-apollo-hooks';
 import NProgress from 'nprogress';
-import TextareaAutosize from 'react-autosize-textarea';
 import { withSnackbar } from 'notistack';
 import { Drawer, IconButton, ClickAwayListener, Badge, Fab, Tooltip } from '@material-ui/core';
 import { Menu, ChevronLeft, ChatBubbleRounded } from '@material-ui/icons';
@@ -18,6 +17,7 @@ import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 import withStyles from '@material-ui/core/styles/withStyles';
 import formatChats from '../../utils/formatChats';
+import ChatPage from './ChatPage';
 
 const MY_MESSAGE_SUBSCRIPTION = gql`
 	subscription($id: String!) {
@@ -64,12 +64,11 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 
 	useEffect(
 		() => {
-			console.log(msgRef);
-			if (msgRef.current) {
-				msgRef.current.scrollTop = msgRef.current.scrollHeight;
+			if (chatPage) {
+				msgRef.current.focus();
 			}
 		},
-		[ msgRef ]
+		[ chatPage ]
 	);
 
 	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
@@ -170,6 +169,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 		<CustomDropdown
 			left
 			dropUp
+			forwardRef={msgRef}
 			caret={false}
 			dropdownHeader={
 				chatPage ? (
@@ -304,103 +304,12 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 					})
 				) : chats && chatPage && messages ? (
 					[
-						<div>
-							{messages.map(msg => {
-								let fromMatch = msg[0].from.id !== user.id;
-								const img = msg[0].from.img.find(x => x.default).img_url;
-								return (
-									<Media
-										currentUser={!fromMatch}
-										key={msg[0].id}
-										small
-										avatar={img}
-										avatarClick={e => {
-											e.stopPropagation();
-											fromMatch
-												? Router.push(
-														{
-															pathname: router.pathname === '/' ? '/home' : router.pathname,
-															query: {
-																slug: router.query.slug,
-																user: fromUser.id,
-															},
-														},
-														router.query.slug
-															? `${router.pathname}/${router.query.slug}/user/${fromUser.id}`
-															: router.pathname === '/'
-																? `/user/${fromUser.id}`
-																: `${router.pathname}/user/${fromUser.id}`,
-														{ shallow: true },
-														{ scroll: false }
-													)
-												: null;
-										}}
-										title={
-											<span style={{ color: '#fafafa', fontSize: '14px' }}>
-												{msg[0].from.firstName}{' '}
-												{/* <small style={{ fontSize: '12px' }}>
-											· {moment(msg.createdAt).fromNow()}
-										</small> */}
-											</span>
-										}
-										body={
-											<span>
-												{msg.map((m, i) => {
-													return (
-														<div key={m.id}>
-															<div
-																style={{
-																	display: 'inline-flex',
-																	alignItems: 'center',
-																	flexDirection: fromMatch ? 'row' : 'row-reverse',
-																}}
-															>
-																<Tooltip
-																	title={date(m.createdAt)}
-																	placement={fromMatch ? 'bottom-start' : 'bottom-end'}
-																>
-																	<p
-																		style={{
-																			wordBreak: 'break-word',
-																			fontSize: '13px',
-																			cursor: 'default',
-																		}}
-																	>
-																		{m.text}
-																	</p>
-																</Tooltip>
-																<small
-																	style={{
-																		marginBottom: '10px',
-																		marginLeft: '5px',
-																		marginRight: '5px',
-																		display: 'none',
-																	}}
-																>
-																	{' '}
-																	{date(msg.createdAt)}
-																</small>
-															</div>
-															{user.permissions !== 'FREE' &&
-															!fromMatch &&
-															lastSeenMessage &&
-															lastSeenMessage.id === m.id ? (
-																<div>
-																	<small>
-																		<span style={{ marginRight: '2px' }}>seen</span>
-																		{date(lastSeenMessage.updatedAt)}
-																	</small>
-																</div>
-															) : null}
-														</div>
-													);
-												})}
-											</span>
-										}
-									/>
-								);
-							})}
-						</div>,
+						<ChatPage
+							messages={messages}
+							user={user}
+							fromUser={fromUser}
+							lastSeenMessage={lastSeenMessage}
+						/>,
 						<form
 							className={classes.expandedChat}
 							onSubmit={e => {
@@ -418,6 +327,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 							}}
 						>
 							<input
+								ref={msgRef}
 								className={classes.textareaAutosize}
 								onClick={e => e.stopPropagation()}
 								onChange={e => {
