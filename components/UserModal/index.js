@@ -331,8 +331,8 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 								</GridContainer>
 								<GridItem
 									sm={12}
-									md={5}
-									lg={5}
+									md={12}
+									lg={12}
 									style={{
 										display: 'flex',
 										flexDirection: 'column',
@@ -343,7 +343,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 								</GridItem>
 								{/* </GridItem> */}
 
-								<GridItem sm={5} md={4} lg={4}>
+								<GridItem sm={5} md={12} lg={12}>
 									<Query query={GET_CONVERSATION_QUERY} variables={{ id: user }}>
 										{({ loading, error, data, subscribeToMore, refetch }) => {
 											if (loading) return <div />;

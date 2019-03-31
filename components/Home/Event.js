@@ -3,6 +3,7 @@ import moment from 'moment';
 import NProgress from 'nprogress';
 import { useMutation } from '../Mutations/useMutation';
 import Router from 'next/router';
+import posed from 'react-pose';
 
 //query& M
 import { CURRENT_USER_QUERY } from '../Queries/User';
@@ -40,6 +41,25 @@ import getAge from '../../utils/getAge';
 //styles
 import CardStyles from '../../static/jss/material-kit-pro-react/views/componentsSections/sectionCards';
 
+const UserImage = posed.img({
+	hidden: {
+		opacity: 0,
+		y: '40px',
+	},
+	liked: {
+		opacity: 1,
+		y: 0,
+	},
+});
+
+const LikedBy = posed.div({
+	liked: {
+		x: 0,
+	},
+	unliked: {
+		x: '-40px',
+	},
+});
 const Event = ({ event, classes, user, first }) => {
 	const useIsomorphicLayoutEffect = process.Browser ? useLayoutEffect : useEffect;
 	let [ isSaved, setIsSaved ] = useState(false);
@@ -241,46 +261,59 @@ const Event = ({ event, classes, user, first }) => {
 								paddingBottom: '10px',
 							}}
 						>
-							{event.attending.length ? (
-								<div style={{ display: 'flex' }}>
-									{event.attending.filter(x => x.id !== user.id).map(usr => {
-										let chat = user
-											? user.chats.find(x => x.messages.some(y => y.from.id === usr.id && !y.seen))
-											: false;
-
-										return (
-											<Badge
-												invisible={!chat}
-												color='primary'
-												variant='dot'
-												key={usr.id}
-												classes={{ badge: classes.smallBadge }}
-											>
-												<img
-													onClick={() => {
-														NProgress.start();
-														Router.push(
-															`/home?user=${usr.id}`,
-															`/home/user/${usr.id}`,
-															{ shallow: true },
-															{ scroll: false }
-														);
-													}}
-													src={usr.img.length ? usr.img.find(img => img.default).img_url : standIn}
-													className={classes.lilImg}
-												/>
-											</Badge>
-										);
-									})}
-								</div>
-							) : (
-								<div
-									style={{
-										width: '40px',
-										height: '40px',
-									}}
+							<div style={{ display: 'flex' }}>
+								{/* {isSaved ? ( */}
+								<UserImage
+									src={user.img.find(img => img.default).img_url}
+									className={classes.lilImg}
+									pose={isSaved ? 'liked' : 'hidden'}
 								/>
-							)}
+								{event.attending.length ? (
+									<LikedBy style={{ display: 'flex' }} pose={isSaved ? 'liked' : 'unliked'}>
+										{event.attending.filter(x => x.id !== user.id).map(usr => {
+											let chat = user
+												? user.chats.find(x =>
+														x.messages.some(y => y.from.id === usr.id && !y.seen)
+													)
+												: false;
+
+											return (
+												<Badge
+													invisible={!chat}
+													color='primary'
+													variant='dot'
+													key={usr.id}
+													classes={{ badge: classes.smallBadge }}
+												>
+													<img
+														onClick={() => {
+															NProgress.start();
+															Router.push(
+																`/home?user=${usr.id}`,
+																`/home/user/${usr.id}`,
+																{ shallow: true },
+																{ scroll: false }
+															);
+														}}
+														src={
+															usr.img.length ? usr.img.find(img => img.default).img_url : standIn
+														}
+														className={classes.lilImg}
+													/>
+												</Badge>
+											);
+										})}
+									</LikedBy>
+								) : (
+									<div
+										style={{
+											width: '40px',
+											height: '40px',
+										}}
+									/>
+								)}
+							</div>
+
 							<div onClick={() => setRotate(classes.activateRotate)} className={classes.flip}>
 								<Flipper className={classes.flipper} style={{ fontSize: '36px' }} />
 							</div>
