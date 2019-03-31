@@ -319,6 +319,8 @@ const Chat = ({
 							<TextareaAutosize
 								className={classes.textareaAutosize}
 								onChange={e => setMessage(e.target.value)}
+								onFocus={() => console.log('isTyping')}
+								onBlur={() => console.log('isNotTyping')}
 								placeholder={
 									data.getConversation ? (
 										`Respond to ${match.firstName}`

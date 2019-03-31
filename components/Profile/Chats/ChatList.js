@@ -16,6 +16,10 @@ const ALL_CHATS_QUERY = gql`
 					default
 				}
 			}
+			typing {
+				id
+				firstName
+			}
 			messages {
 				id
 				text
@@ -50,6 +54,10 @@ const MY_CHAT_SUBSCRIPTION = gql`
 						img_url
 						default
 					}
+				}
+				typing {
+					id
+					firstName
 				}
 				messages {
 					id
@@ -118,7 +126,23 @@ export default ({ user }) => {
 								},
 								updateQuery: (prev, { subscriptionData }) => {
 									if (!subscriptionData) return prev;
-									if (subscriptionData.data.myChat.mutation === "UPDATED") return prev;
+
+									if (subscriptionData.data.myChat.mutation === "UPDATED") {
+										const newChats = prev.getUserChats.map(chat => {
+											if (chat.id === subscriptionData.data.myChat.node.id) {
+												return {
+													...chat,
+													typing: [...subscriptionData.data.myChat.node.typing]
+												}
+											}
+											chat
+										})
+
+										return {
+											getUserChats: newChats
+										}
+									}
+
 									const newNode = [...prev.getUserChats, subscriptionData.data.myChat.node];
 									return { getUserChats: newNode };
 								}
