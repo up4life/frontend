@@ -49,16 +49,18 @@ const Location = ({ user, classes }) => {
 				<Typography variant='h5' style={{ color: '#fafafa', marginLeft: '6px' }}>
 					{user.location ? user.location : 'Set your default location'}
 				</Typography>
-				<IconButton
-					// justIcon
-					simple='true'
-					round='true'
-					color='primary'
-					onClick={() => showModal(true)}
-				>
-					<EditLocation className={classes.location} />
-				</IconButton>{' '}
-				<small style={{}}>Edit Location</small>
+				<span onClick={() => showModal(true)} className={classes.editLocation}>
+					<Button
+						// justIcon
+						simple='true'
+						round='true'
+						color='primary'
+						size='lg'
+					>
+						<EditLocation fontSize='large' className={classes.location} />
+						<small>Edit Location</small>
+					</Button>{' '}
+				</span>
 			</div>
 			<Dialog
 				classes={{
@@ -127,8 +129,7 @@ const Location = ({ user, classes }) => {
 												<div style={{ width: '100%' }}>
 													<Input
 														inputProps={{
-															placeholder:
-																'Search for a city name...',
+															placeholder: 'Search for a city name...',
 															...getInputProps(),
 														}}
 														formControlProps={{
@@ -139,14 +140,14 @@ const Location = ({ user, classes }) => {
 														}}
 													/>
 													<Button
-														// justIcon
+														style={{ padding: '10px' }}
 														round='true'
 														disabled={!selectedItem}
 														onClick={() => {
 															updateLocation();
 														}}
 													>
-														<PersonPin />
+														<PersonPin style={{ marginRight: 0 }} />
 													</Button>
 
 													{isOpen ? (
@@ -164,6 +165,11 @@ const Location = ({ user, classes }) => {
 																		{...getItemProps({
 																			item: result.city,
 																		})}
+																		style={{
+																			backgroundColor:
+																				highlightedIndex === index ? '#4cb5ae' : '#fafafa',
+																			color: highlightedIndex === index ? '#fafafa' : '#3C4858',
+																		}}
 																	>
 																		{result.city}
 																	</MenuItem>

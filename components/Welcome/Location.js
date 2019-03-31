@@ -30,7 +30,7 @@ const GenderPrefs = ({ classes }) => {
 					`/welcome?slug=4`,
 					`/welcome/profile/images`,
 					{ shallow: true },
-					{ scroll: false },
+					{ scroll: false }
 				);
 			}}
 		>
@@ -57,7 +57,7 @@ const GenderPrefs = ({ classes }) => {
 								setItems(data.locationSearch);
 							}}
 						>
-							{({ getInputProps, getItemProps, isOpen }) => (
+							{({ getInputProps, getItemProps, isOpen, highlightedIndex }) => (
 								<div className={classes.downshiftContainer}>
 									<Input
 										white
@@ -83,6 +83,10 @@ const GenderPrefs = ({ classes }) => {
 												return (
 													<MenuItem
 														key={index}
+														style={{
+															backgroundColor: highlightedIndex === index ? '#4cb5ae' : '#fafafa',
+															color: highlightedIndex === index ? '#fafafa' : '#3C4858',
+														}}
 														{...getItemProps({
 															item: result.city,
 														})}

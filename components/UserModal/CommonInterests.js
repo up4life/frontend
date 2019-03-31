@@ -21,7 +21,6 @@ const CommonInterests = ({ match, user, classes }) => {
 					display: 'flex',
 					flexWrap: 'wrap',
 					justifyContent: 'center',
-					margin: '0 100px',
 				}}
 			>
 				{interests.map(genre => (

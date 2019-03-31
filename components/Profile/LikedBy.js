@@ -56,6 +56,7 @@ const LikedBy = ({ user, classes }) => {
 			<div className={classes.likedByWrapper}>
 				{data.getLikedByList.map(usr => (
 					<img
+						key={usr.id}
 						src={usr.img.find(x => x.default).img_url}
 						className={hidden ? classes.likedUserHiddenImg : classes.likedUserImg}
 						onClick={() => {
@@ -64,7 +65,7 @@ const LikedBy = ({ user, classes }) => {
 									`/profile?slug=chats&user=${usr.id}`,
 									`/profile/chat/user/${usr.id}`,
 									{ shallow: true },
-									{ scroll: false },
+									{ scroll: false }
 								);
 							}
 						}}

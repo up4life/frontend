@@ -159,7 +159,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 										<Home style={{ height: '30px', width: '30px' }} />
 									</Button>
 								</ListItem>
-								<ListItem className={classes.listItem}>
+								{/* <ListItem className={classes.listItem}>
 									<Button
 										className={classes.navLink}
 										onClick={e => {
@@ -170,7 +170,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 									>
 										<AccountCircle style={{ height: '30px', width: '30px' }} />
 									</Button>
-								</ListItem>
+								</ListItem> */}
 
 								<ListItem style={{ bottom: '5px' }} className={classes.listItem}>
 									<CustomDropdown
@@ -312,10 +312,14 @@ const Nav = ({ classes, color, router, href, user }) => {
 														className: classes.navLink + ' ' + classes.imageDropdownButton,
 														color: 'transparent',
 													}}
-													dropdownList={[ 'Sign out' ]}
+													dropdownList={[ 'Profile', 'Sign out' ]}
 													onClick={e => {
-														signout();
-														client.clearStore();
+														if (e === 'Sign out') {
+															signout();
+															client.clearStore();
+														} else {
+															Router.push('/profile');
+														}
 													}}
 												/>
 											</ListItem>
