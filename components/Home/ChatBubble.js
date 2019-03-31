@@ -47,6 +47,7 @@ const MY_MESSAGE_SUBSCRIPTION = gql`
 `;
 
 const Chat = ({ classes, enqueueSnackbar, router, user }) => {
+	const msgRef = useRef(null);
 	const audioRef = useRef(null);
 	const [ chatPage, showChat ] = useState(false);
 	const [ message, setMessage ] = useState(undefined);
@@ -60,6 +61,16 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 			console.log(e);
 		},
 	});
+
+	useEffect(
+		() => {
+			console.log(msgRef);
+			if (msgRef.current) {
+				msgRef.current.scrollTop = msgRef.current.scrollHeight;
+			}
+		},
+		[ msgRef ]
+	);
 
 	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
 		variables: { id: user.id },
@@ -291,101 +302,103 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 					})
 				) : chats && chatPage && messages ? (
 					[
-						messages.map(msg => {
-							let fromMatch = msg[0].from.id !== user.id;
-							const img = msg[0].from.img.find(x => x.default).img_url;
-							return (
-								<Media
-									currentUser={!fromMatch}
-									key={msg[0].id}
-									small
-									avatar={img}
-									avatarClick={e => {
-										e.stopPropagation();
-										fromMatch
-											? Router.push(
-													{
-														pathname: router.pathname === '/' ? '/home' : router.pathname,
-														query: {
-															slug: router.query.slug,
-															user: fromUser.id,
+						<div>
+							{messages.map(msg => {
+								let fromMatch = msg[0].from.id !== user.id;
+								const img = msg[0].from.img.find(x => x.default).img_url;
+								return (
+									<Media
+										currentUser={!fromMatch}
+										key={msg[0].id}
+										small
+										avatar={img}
+										avatarClick={e => {
+											e.stopPropagation();
+											fromMatch
+												? Router.push(
+														{
+															pathname: router.pathname === '/' ? '/home' : router.pathname,
+															query: {
+																slug: router.query.slug,
+																user: fromUser.id,
+															},
 														},
-													},
-													router.query.slug
-														? `${router.pathname}/${router.query.slug}/user/${fromUser.id}`
-														: router.pathname === '/'
-															? `/user/${fromUser.id}`
-															: `${router.pathname}/user/${fromUser.id}`,
-													{ shallow: true },
-													{ scroll: false }
-												)
-											: null;
-									}}
-									title={
-										<span style={{ color: '#fafafa', fontSize: '14px' }}>
-											{msg[0].from.firstName}{' '}
-											{/* <small style={{ fontSize: '12px' }}>
+														router.query.slug
+															? `${router.pathname}/${router.query.slug}/user/${fromUser.id}`
+															: router.pathname === '/'
+																? `/user/${fromUser.id}`
+																: `${router.pathname}/user/${fromUser.id}`,
+														{ shallow: true },
+														{ scroll: false }
+													)
+												: null;
+										}}
+										title={
+											<span style={{ color: '#fafafa', fontSize: '14px' }}>
+												{msg[0].from.firstName}{' '}
+												{/* <small style={{ fontSize: '12px' }}>
 											· {moment(msg.createdAt).fromNow()}
 										</small> */}
-										</span>
-									}
-									body={
-										<span>
-											{msg.map((m, i) => {
-												return (
-													<div key={m.id}>
-														<div
-															style={{
-																display: 'inline-flex',
-																alignItems: 'center',
-																flexDirection: fromMatch ? 'row' : 'row-reverse',
-															}}
-														>
-															<Tooltip
-																title={date(m.createdAt)}
-																placement={fromMatch ? 'bottom-start' : 'bottom-end'}
-															>
-																<p
-																	style={{
-																		wordBreak: 'break-word',
-																		fontSize: '13px',
-																		cursor: 'default',
-																	}}
-																>
-																	{m.text}
-																</p>
-															</Tooltip>
-															<small
+											</span>
+										}
+										body={
+											<span>
+												{msg.map((m, i) => {
+													return (
+														<div key={m.id}>
+															<div
 																style={{
-																	marginBottom: '10px',
-																	marginLeft: '5px',
-																	marginRight: '5px',
-																	display: 'none',
+																	display: 'inline-flex',
+																	alignItems: 'center',
+																	flexDirection: fromMatch ? 'row' : 'row-reverse',
 																}}
 															>
-																{' '}
-																{date(msg.createdAt)}
-															</small>
-														</div>
-														{user.permissions !== 'FREE' &&
-														!fromMatch &&
-														lastSeenMessage &&
-														lastSeenMessage.id === m.id ? (
-															<div>
-																<small>
-																	<span style={{ marginRight: '2px' }}>seen</span>
-																	{date(lastSeenMessage.updatedAt)}
+																<Tooltip
+																	title={date(m.createdAt)}
+																	placement={fromMatch ? 'bottom-start' : 'bottom-end'}
+																>
+																	<p
+																		style={{
+																			wordBreak: 'break-word',
+																			fontSize: '13px',
+																			cursor: 'default',
+																		}}
+																	>
+																		{m.text}
+																	</p>
+																</Tooltip>
+																<small
+																	style={{
+																		marginBottom: '10px',
+																		marginLeft: '5px',
+																		marginRight: '5px',
+																		display: 'none',
+																	}}
+																>
+																	{' '}
+																	{date(msg.createdAt)}
 																</small>
 															</div>
-														) : null}
-													</div>
-												);
-											})}
-										</span>
-									}
-								/>
-							);
-						}),
+															{user.permissions !== 'FREE' &&
+															!fromMatch &&
+															lastSeenMessage &&
+															lastSeenMessage.id === m.id ? (
+																<div>
+																	<small>
+																		<span style={{ marginRight: '2px' }}>seen</span>
+																		{date(lastSeenMessage.updatedAt)}
+																	</small>
+																</div>
+															) : null}
+														</div>
+													);
+												})}
+											</span>
+										}
+									/>
+								);
+							})})
+						</div>,
 						<form
 							className={classes.expandedChat}
 							onSubmit={e => {
@@ -405,6 +418,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 							<TextareaAutosize
 								className={classes.textareaAutosize}
 								onChange={e => {
+									e.preventDefault();
 									setMessage(e.target.value);
 								}}
 								placeholder={`Respond to ${data.getUserChats
@@ -414,6 +428,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 								maxRows={4}
 								value={message}
 								onKeyDown={e => {
+									e.preventDefault();
 									if (e.keyCode === 13) {
 										sendMessage({
 											variables: {
