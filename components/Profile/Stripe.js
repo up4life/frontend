@@ -59,7 +59,7 @@ const Billing = props => {
 								'One year subscription'
 							)
 						}
-						stripeKey='pk_test_cwlMq3xP1YmTHtoyiwqKNwYb'
+						stripeKey='pk_test_I2tyS9xJRaeVZluJHp9CvKcB'
 						currency='USD'
 						email={props.user.email}
 						token={res => onToken(res, props.subsType, createOrder)}
