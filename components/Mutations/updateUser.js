@@ -67,8 +67,8 @@ export const UPDATE_BLOCKS_MUTATION = gql`
 `;
 
 export const DELETE_EVENT_MUTATION = gql`
-	mutation DELETE_EVENT_MUTATION($id: ID) {
-		updateUser(data: { events: { disconnect: { id: $id } } }) {
+	mutation DELETE_EVENT_MUTATION($tmID: String) {
+		updateUser(data: { events: { disconnect: { tmID: $tmID } } }) {
 			id
 			events {
 				id
