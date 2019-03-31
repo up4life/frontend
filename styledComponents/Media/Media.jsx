@@ -16,6 +16,7 @@ function Media({ ...props }) {
 		avatar,
 		avatarAlt,
 		currentUser,
+		small,
 		title,
 		body,
 		footer,
@@ -33,7 +34,7 @@ function Media({ ...props }) {
 			<div className={classes.mediaLink}>
 				<div
 					style={{ cursor: !currentUser ? 'pointer' : 'default' }}
-					className={classes.mediaAvatar}
+					className={small ? classes.smallAvatar : classes.mediaAvatar}
 					onClick={avatarClick}
 				>
 					<img src={avatar} alt={avatarAlt} />

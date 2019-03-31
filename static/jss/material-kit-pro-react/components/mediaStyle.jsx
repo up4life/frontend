@@ -38,6 +38,19 @@ const mediaStyle = {
 			width: '100%',
 		},
 	},
+	smallAvatar: {
+		margin: '0 auto',
+		width: '40px',
+		height: '40px',
+		overflow: 'hidden',
+		borderRadius: '6px',
+		marginRight: '8px',
+		boxShadow:
+			'0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2)',
+		'& img': {
+			width: '100%',
+		},
+	},
 	otherBody: {
 		paddingRight: '10px',
 		WebkitBoxFlex: '1',

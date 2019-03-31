@@ -172,7 +172,10 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 				.reverse()
 				.find(x => x.from.id === user.id && x.seen)
 		: null;
-	console.log(messages);
+	let fromUser = chatPage
+		? data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
+		: null;
+
 	return (
 		<CustomDropdown
 			left
@@ -319,28 +322,31 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 								<Media
 									currentUser={!fromMatch}
 									key={msg[0].id}
+									small
 									avatar={img}
-									avatarClick={() =>
+									avatarClick={e => {
+										e.stopPropagation();
 										fromMatch
 											? Router.push(
 													{
 														pathname: router.pathname === '/' ? '/home' : router.pathname,
 														query: {
 															slug: router.query.slug,
-															user: chat.fromId,
+															user: fromUser.id,
 														},
 													},
 													router.query.slug
-														? `${router.pathname}/${router.query.slug}/user/${chat.fromId}`
+														? `${router.pathname}/${router.query.slug}/user/${fromUser.id}`
 														: router.pathname === '/'
-															? `/user/${chat.fromId}`
-															: `${router.pathname}/user/${chat.fromId}`,
+															? `/user/${fromUser.id}`
+															: `${router.pathname}/user/${fromUser.id}`,
 													{ shallow: true },
 													{ scroll: false }
 												)
-											: null}
+											: null;
+									}}
 									title={
-										<span style={{ color: '#fafafa' }}>
+										<span style={{ color: '#fafafa', fontSize: '14px' }}>
 											{msg[0].from.firstName}{' '}
 											{/* <small style={{ fontSize: '12px' }}>
 											· {moment(msg.createdAt).fromNow()}
@@ -366,7 +372,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 																<p
 																	style={{
 																		wordBreak: 'break-word',
-																		fontSize: '14px',
+																		fontSize: '13px',
 																		cursor: 'default',
 																	}}
 																>
