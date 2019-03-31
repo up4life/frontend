@@ -173,7 +173,11 @@ const Nav = ({ classes, color, router, href, user }) => {
 											/* if (called) Router.push('/joinus'); */
 										}
 										return (
-											<ListItem style={{ marginLeft: '10px' }} className={classes.listItem}>
+											<ListItem
+												id='button'
+												style={{ marginLeft: '10px' }}
+												className={classes.listItem}
+											>
 												<CustomDropdown
 													left
 													caret={false}

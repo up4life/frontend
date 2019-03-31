@@ -13,7 +13,7 @@ import Interests from './Interests';
 import Pro from './ProFeatures';
 
 import style from '../../static/jss/Welcome/welcomeStyles';
-import Gradients from '../../static/jss/Welcome/gradients';
+import Gradients from '../linearGradients';
 
 import triangle1 from '../../static/img/triangle1.svg';
 import triangle2 from '../../static/img/triangle2.svg';

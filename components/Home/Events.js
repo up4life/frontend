@@ -5,6 +5,8 @@ import NProgress from 'nprogress';
 import classNames from 'classnames';
 import { useApolloClient } from 'react-apollo-hooks';
 import { useMutation } from '../Mutations/useMutation';
+import JoyRide from 'react-joyride';
+
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
@@ -26,8 +28,9 @@ import GridContainer from '../../styledComponents/Grid/GridContainer';
 import GridItem from '../../styledComponents/Grid/GridItem';
 import Button from '../../styledComponents/CustomButtons/Button';
 //styles
-import Gradients from '../../static/jss/Home/linearGradients';
+import Gradients from '../linearGradients';
 import styles from '../../static/jss/Home/eventsStyles';
+import steps from './Intro';
 
 const Events = props => {
 	let { classes, router, href, user, getEvents } = props;
@@ -122,20 +125,18 @@ const Events = props => {
 		<User>
 			{({ data: { currentUser } }) => (
 				<Fragment>
+					<JoyRide steps={steps} continuous showSkipButton />
 					<div className={classes.background}>
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
 						<Gradients />
 						{/* {newUser && <NewUser />} */}
-						<div className={classes.container}>
+						<div id='body' className={classes.container}>
 							<Fragment>
 								<IconButton
 									aria-label='Open drawer'
+									id='filters'
 									onClick={() => setDrawer(true)}
-									className={classNames(
-										classes.menuButton,
-										drawer && classes.hide,
-										classes.transparentButton
-									)}
+									className={classNames(classes.menuButton, classes.transparentButton)}
 								>
 									<Menu />
 								</IconButton>

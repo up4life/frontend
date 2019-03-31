@@ -200,7 +200,10 @@ const Event = ({ event, classes, user, first }) => {
 									}}
 								/>
 
-								<div className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}>
+								<div
+									id='likeButton'
+									className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}
+								>
 									<div style={{ cursor: 'pointer' }}>
 										{isSaved ? (
 											<div
@@ -255,6 +258,7 @@ const Event = ({ event, classes, user, first }) => {
 						</CardBody>
 
 						<CardFooter
+							id='users'
 							style={{
 								display: 'flex',
 								justifyContent: 'space-between',
@@ -315,7 +319,11 @@ const Event = ({ event, classes, user, first }) => {
 								)}
 							</div>
 
-							<div onClick={() => setRotate(classes.activateRotate)} className={classes.flip}>
+							<div
+								id='flip'
+								onClick={() => setRotate(classes.activateRotate)}
+								className={classes.flip}
+							>
 								<Flipper className={classes.flipper} />
 							</div>
 						</CardFooter>

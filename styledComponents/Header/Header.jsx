@@ -69,7 +69,7 @@ class Header extends React.Component {
 			<AppBar style={{ height: '95px' }} className={appBarClasses}>
 				<Toolbar className={classes.container}>
 					<Link href='/'>
-						<Button className={classes.title}>
+						<Button id='home' className={classes.title}>
 							<Logo />
 						</Button>
 					</Link>
@@ -77,11 +77,7 @@ class Header extends React.Component {
 						<div className={classes.collapse}>{links}</div>
 					</Hidden>
 					<Hidden mdUp>
-						<IconButton
-							color='inherit'
-							aria-label='open drawer'
-							onClick={this.handleDrawerToggle}
-						>
+						<IconButton color='inherit' aria-label='open drawer' onClick={this.handleDrawerToggle}>
 							<Menu />
 						</IconButton>
 					</Hidden>
