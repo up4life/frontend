@@ -71,13 +71,13 @@ const Nav = ({ classes, color }) => {
 														className: classes.navLink + ' ' + classes.imageDropdownButton,
 														color: 'transparent',
 													}}
-													dropdownList={[ 'Profile', 'Sign out' ]}
+													dropdownList={[ 'Dashboard', 'Sign out' ]}
 													onClick={e => {
 														if (e === 'Sign out') {
 															signout();
 															client.clearStore();
 														}
-														if (e === 'Profile') {
+														if (e === 'Dashboard') {
 															Router.push('/profile');
 														}
 													}}
