@@ -7,24 +7,21 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { onError } from 'apollo-link-error';
 import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-client';
-
-import { endpoint, prodEndpoint, wsEndpoint, wsProdEndpoint } from '../config';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export default withApollo(
 	({ headers }) => {
 		const ssrMode = !process.browser;
 
 		const httpLink = createHttpLink({
-			uri:
-				process.env.NODE_ENV === 'development'
-					? 'http://localhost:4000'
-					: 'https://api.up4.life',
+			uri: publicRuntimeConfig.endpoint,
 		});
 
 		const wsLink =
 			!ssrMode &&
 			new WebSocketLink({
-				uri: process.env.NODE_ENV === 'development' ? wsEndpoint : wsProdEndpoint,
+				uri: publicRuntimeConfig.wsEndpoint,
 				options: {
 					reconnect: true,
 					reconnectionAttempts: 50,
@@ -73,12 +70,11 @@ export default withApollo(
 				({ query }) => {
 					const definition = getMainDefinition(query);
 					return (
-						definition.kind === 'OperationDefinition' &&
-						definition.operation === 'subscription'
+						definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
 					);
 				},
 				wsLink,
-				link,
+				link
 			);
 		}
 
@@ -92,5 +88,5 @@ export default withApollo(
 			cache,
 		});
 	},
-	{ getDataFromTree: 'always' },
+	{ getDataFromTree: 'always' }
 );
