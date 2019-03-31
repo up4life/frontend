@@ -79,12 +79,12 @@ const Event = ({ event, classes, user, first }) => {
 				data: {
 					currentUser: {
 						...currentUser,
-						events: currentUser.events.filter(x => x.id !== event.id),
+						events: currentUser.events.filter(x => x.tmID !== event.tmID),
 					},
 				},
 			});
 		},
-		variables: { id: event.id },
+		variables: { tmID: event.tmID },
 		onCompleted: e => {
 			setIsSaved(false);
 			NProgress.done();
