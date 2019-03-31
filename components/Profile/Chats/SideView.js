@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import moment from 'moment';
 import { Badge, Divider } from '@material-ui/core';
 import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
+import date from '../../../utils/formatDate';
 
 const Chat = ({ chat, setChat, selectedChat, classes }) => {
 	const isSelected = selectedChat ? chat.id === selectedChat.id : false;
@@ -43,7 +44,7 @@ const Chat = ({ chat, setChat, selectedChat, classes }) => {
 					<h4 style={{ margin: '0', color: '#fafafa' }} className={classes.title}>
 						{chat.from}
 					</h4>
-					<small>{moment(chat.time).fromNow()}</small>
+					<small>{date(chat.time)}</small>
 				</div>
 				<p
 					style={{
@@ -53,7 +54,7 @@ const Chat = ({ chat, setChat, selectedChat, classes }) => {
 						color: '#fafafa',
 					}}
 				>
-					{`${chat.text}${chat.typing.includes(chat.from) ? '- is typing ...': ''}`}
+					{`${chat.text}${chat.typing.includes(chat.from) ? '- is typing ...' : ''}`}
 				</p>
 			</div>
 		</div>

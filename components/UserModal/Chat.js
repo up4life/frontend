@@ -17,6 +17,7 @@ import Media from '../../styledComponents/Media/Media.jsx';
 import Button from '../../styledComponents/CustomButtons/Button';
 import { ButtonBase, Tooltip, withStyles } from '@material-ui/core';
 import TextareaAutosize from 'react-autosize-textarea';
+import date from '../../utils/formatDate';
 
 import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 
@@ -104,15 +105,13 @@ const Chat = ({
 				msgRef.current.scrollTop = msgRef.current.scrollHeight;
 			}
 		},
-		[ data.getConversation ],
+		[ data.getConversation ]
 	);
 	useEffect(() => {
 		const unSeen =
 			data &&
 			data.getConversation &&
-			data.getConversation.messages.filter(
-				msg => !msg.seen && msg.from.id !== currentUser.id,
-			);
+			data.getConversation.messages.filter(msg => !msg.seen && msg.from.id !== currentUser.id);
 
 		if (unSeen && unSeen.length > 0) {
 			markAllAsSeen({
@@ -188,11 +187,7 @@ const Chat = ({
 											}}
 										>
 											{/* · {moment(msg.createdAt).fromNow()} */}
-											{unseen ? (
-												<span style={{ color: 'red', marginLeft: '6px' }}>
-													new
-												</span>
-											) : null}
+											{unseen ? <span style={{ color: 'red', marginLeft: '6px' }}>new</span> : null}
 										</small>
 									</span>
 								}
@@ -205,22 +200,12 @@ const Chat = ({
 														style={{
 															display: 'inline-flex',
 															alignItems: 'center',
-															flexDirection: fromMatch
-																? 'row'
-																: 'row-reverse',
+															flexDirection: fromMatch ? 'row' : 'row-reverse',
 														}}
 													>
 														<Tooltip
-															title={moment(m.createdAt).format(
-																'MMM Do h:mm a',
-															)}
-															placement={
-																fromMatch ? (
-																	'bottom-start'
-																) : (
-																	'bottom-end'
-																)
-															}
+															title={date(m.createdAt)}
+															placement={fromMatch ? 'bottom-start' : 'bottom-end'}
 														>
 															<p
 																style={{
@@ -250,14 +235,8 @@ const Chat = ({
 													lastSeenMessage.id === m.id ? (
 														<div>
 															<small>
-																<span
-																	style={{ marginRight: '2px' }}
-																>
-																	seen
-																</span>
-																{moment(
-																	lastSeenMessage.updatedAt,
-																).format('M/D/YY h:mm a')}
+																<span style={{ marginRight: '2px' }}>seen</span>
+																{date(lastSeenMessage.updatedAt)}
 															</small>
 														</div>
 													) : null}
@@ -271,8 +250,8 @@ const Chat = ({
 					})
 				) : (
 					<h4 style={{ color: '#fafafa', fontStyle: 'italic' }}>
-						No message history to show with {match.firstName}.<br /> Send a message to
-						see what {match.firstName} is up4!
+						No message history to show with {match.firstName}.<br /> Send a message to see what{' '}
+						{match.firstName} is up4!
 					</h4>
 				)}
 			</div>
@@ -299,9 +278,7 @@ const Chat = ({
 					) : (
 						<div>
 							<h4>{error.msg}</h4>
-							<Button
-								onClick={() => Router.push('/profile?slug=billing', error.link)}
-							>
+							<Button onClick={() => Router.push('/profile?slug=billing', error.link)}>
 								{error.linkText}
 							</Button>
 						</div>

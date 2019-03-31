@@ -24,6 +24,7 @@ import Header from '../../styledComponents/Header/Header.jsx';
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
 import Button from '../../styledComponents/CustomButtons/Button.jsx';
 //assets
+import date from '../../utils/formatDate';
 //import notification from '';
 import profileStandIn from '../../static/img/placeholder.jpg';
 
@@ -161,131 +162,7 @@ const Nav = ({ classes, color, router, href, user }) => {
 										<Home style={{ height: '30px', width: '30px' }} />
 									</Button>
 								</ListItem>
-								{/* <ListItem className={classes.listItem}>
-									<Button
-										className={classes.navLink}
-										onClick={e => {
-											e.preventDefault();
-											Router.push('/profile');
-										}}
-										color='transparent'
-									>
-										<AccountCircle style={{ height: '30px', width: '30px' }} />
-									</Button>
-								</ListItem> */}
 
-								<ListItem style={{ bottom: '5px' }} className={classes.listItem}>
-									<CustomDropdown
-										className={classes.messageDropdown}
-										dropPlacement='bottom-end'
-										caret={false}
-										messages
-										// hoverColor='dark'
-										dropdownHeader={
-											newMessages.length ? (
-												newMessages.length + ' new messages!'
-											) : (
-												'no new messages.'
-											)
-										}
-										buttonText={
-											<Badge badgeContent={newMessages.length} color='error'>
-												<Mail
-													style={{
-														height: '30px',
-														width: '30px',
-														marginLeft: '10px',
-														position: 'relative',
-														top: 2,
-													}}
-												/>
-											</Badge>
-										}
-										buttonProps={{
-											className: classes.navLink + ' ' + classes.imageDropdownButton,
-											color: 'transparent',
-										}}
-										dropdownList={
-											chats ? (
-												chats.map(chat => {
-													return (
-														<Fragment>
-															{/* <Divider className={classes.dropdownDividerItem} /> */}
-															<div
-																onClick={() =>
-																	Router.push(
-																		{
-																			pathname: router.pathname === '/' ? '/home' : router.pathname,
-																			query: {
-																				slug: router.query.slug,
-																				user: chat.fromId,
-																			},
-																		},
-																		router.query.slug
-																			? `${router.pathname}/${router.query
-																					.slug}/user/${chat.fromId}`
-																			: router.pathname === '/'
-																				? `/user/${chat.fromId}`
-																				: `${router.pathname}/user/${chat.fromId}`,
-																		{ shallow: true },
-																		{ scroll: false }
-																	)}
-																style={{
-																	display: 'flex',
-																	padding: '5px',
-																	borderRight: newMessages.some(msg => msg.chat.id === chat.id)
-																		? '4px solid #ff101f'
-																		: 'none',
-																	borderTopRightRadius: '3px',
-																	borderBottomRightRadius: '3px',
-																}}
-															>
-																<img
-																	src={chat.img}
-																	style={{
-																		width: '40px',
-																		height: '40px',
-																		borderRadius: '6px',
-																		marginRight: '15px',
-																		boxShadow:
-																			'0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-																	}}
-																/>
-																<div style={{ flexGrow: 1 }}>
-																	<div
-																		style={{
-																			display: 'flex',
-																			justifyContent: 'space-between',
-																		}}
-																	>
-																		<p className={classes.title}>{chat.from}</p>
-																		<small>
-																			{moment(chat.time).fromNow()}
-																			<div className={chat.newMsgs ? classes.newIndicator : null}>
-																				{chat.newMsgs ? chat.newMsgs + ' new' : null}
-																			</div>
-																		</small>
-																	</div>
-																	<div
-																		style={{
-																			maxWidth: '300px',
-																			overflow: 'hidden',
-																			textOverflow: 'ellipsis',
-																		}}
-																	>
-																		{chat.text}
-																	</div>
-																</div>
-															</div>
-														</Fragment>
-													);
-												})
-											) : (
-												[]
-											)
-										}
-									/>
-								</ListItem>
 								<Mutation
 									mutation={SIGNOUT_MUTATION}
 									// refetchQueries={[ { query: CURRENT_USER_QUERY } ]}
@@ -303,22 +180,152 @@ const Nav = ({ classes, color, router, href, user }) => {
 													caret={false}
 													dropdownHeader={currentUser && currentUser.firstName}
 													buttonText={
-														<img
-															src={currentUser && currentUser.img.find(img => img.default).img_url}
-															className={classes.img + ' ' + classes.imageProfile}
-															alt='profile'
-														/>
+														<Badge badgeContent={newMessages.length} color='error'>
+															<img
+																src={
+																	currentUser && currentUser.img.find(img => img.default).img_url
+																}
+																className={classes.img + ' ' + classes.imageProfile}
+																alt='profile'
+															/>
+														</Badge>
 													}
 													buttonProps={{
 														className: classes.navLink + ' ' + classes.imageDropdownButton,
 														color: 'transparent',
 													}}
-													dropdownList={[ 'Profile', 'Sign out' ]}
+													dropdownList={[
+														<CustomDropdown
+															rep='multi'
+															className={classes.messageDropdown}
+															dropPlacement='left'
+															innerDropDown
+															//caret={false}
+															messages
+															// hoverColor='dark'
+															dropdownHeader={
+																newMessages.length ? (
+																	newMessages.length + ' new messages!'
+																) : (
+																	'no new messages.'
+																)
+															}
+															buttonText='Messages'
+															//
+															// 	Messages
+															// 	{/* <Mail
+															// 		style={{
+															// 			height: '30px',
+															// 			width: '30px',
+															// 			marginLeft: '10px',
+															// 			position: 'relative',
+															// 			top: 2,
+															// 		}}
+															// 	/> */}
+															// </Badge>
+
+															buttonProps={{
+																className: classes.navLink,
+																color: 'transparent',
+															}}
+															dropdownList={
+																chats ? (
+																	chats.map(chat => {
+																		return (
+																			<Fragment>
+																				{/* <Divider className={classes.dropdownDividerItem} /> */}
+																				<div
+																					onClick={() =>
+																						Router.push(
+																							{
+																								pathname:
+																									router.pathname === '/'
+																										? '/home'
+																										: router.pathname,
+																								query: {
+																									slug: router.query.slug,
+																									user: chat.fromId,
+																								},
+																							},
+																							router.query.slug
+																								? `${router.pathname}/${router.query
+																										.slug}/user/${chat.fromId}`
+																								: router.pathname === '/'
+																									? `/user/${chat.fromId}`
+																									: `${router.pathname}/user/${chat.fromId}`,
+																							{ shallow: true },
+																							{ scroll: false }
+																						)}
+																					style={{
+																						display: 'flex',
+																						padding: '5px',
+																						borderRight: newMessages.some(
+																							msg => msg.chat.id === chat.id
+																						)
+																							? '4px solid #ff101f'
+																							: 'none',
+																						borderTopRightRadius: '3px',
+																						borderBottomRightRadius: '3px',
+																					}}
+																				>
+																					<img
+																						src={chat.img}
+																						style={{
+																							width: '40px',
+																							height: '40px',
+																							borderRadius: '6px',
+																							marginRight: '15px',
+																							boxShadow:
+																								'0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+																						}}
+																					/>
+																					<div style={{ flexGrow: 1 }}>
+																						<div
+																							style={{
+																								display: 'flex',
+																								justifyContent: 'space-between',
+																							}}
+																						>
+																							<p className={classes.title}>{chat.from}</p>
+																							<small>
+																								{date(chat.time)}
+																								<div
+																									className={
+																										chat.newMsgs ? classes.newIndicator : null
+																									}
+																								>
+																									{chat.newMsgs ? chat.newMsgs + ' new' : null}
+																								</div>
+																							</small>
+																						</div>
+																						<div
+																							style={{
+																								maxWidth: '300px',
+																								overflow: 'hidden',
+																								textOverflow: 'ellipsis',
+																							}}
+																						>
+																							{chat.text}
+																						</div>
+																					</div>
+																				</div>
+																			</Fragment>
+																		);
+																	})
+																) : (
+																	[]
+																)
+															}
+														/>,
+														'Profile',
+														'Sign out',
+													]}
 													onClick={e => {
 														if (e === 'Sign out') {
 															signout();
 															client.clearStore();
-														} else {
+														}
+														if (e === 'Profile') {
 															Router.push('/profile');
 														}
 													}}

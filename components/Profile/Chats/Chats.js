@@ -32,15 +32,11 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 		return userChats
 			.filter(msg => msg.messages)
 			.map(chatObj => {
-				let newMsgs = chatObj.messages.filter(
-					msg => msg.from.id !== currentUser.id && !msg.seen,
-				);
+				let newMsgs = chatObj.messages.filter(msg => msg.from.id !== currentUser.id && !msg.seen);
 				let len = chatObj.messages.length - 1;
 				const { messages, users } = chatObj;
 				let [ usr ] = users.filter(usr => usr.id !== currentUser.id);
-				let img = usr.img.length
-					? usr.img.find(img => img.default).img_url
-					: profileStandIn;
+				let img = usr.img.length ? usr.img.find(img => img.default).img_url : profileStandIn;
 
 				return {
 					id: chatObj.id,
@@ -50,7 +46,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 					img: img,
 					time: messages[len].createdAt,
 					newMsgs: newMsgs.length,
-					typing: chatObj.typing.map(user => user.firstName)
+					typing: chatObj.typing.map(user => user.firstName),
 				};
 			})
 			.sort((a, b) => {
@@ -68,14 +64,12 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 		<div className={classes.container} style={{ padding: '30px 0' }}>
 			<GridContainer style={{ height: '100%', flexDirection: 'column', width: '100%' }}>
 				<LikedBy user={currentUser} />
-				<GridContainer
-					style={{ height: 'calc(100vh - 300px)', overflow: 'scroll', width: '100%' }}
-				>
+				<GridContainer style={{ height: 'calc(100vh - 300px)', overflow: 'auto', width: '100%' }}>
 					<GridItem sm={12} md={4} lg={4} style={{ height: '100%' }}>
 						<Paper
 							style={{
 								height: '100%',
-								overflowY: 'scroll',
+								overflowY: 'auto',
 								minWidth: '250px',
 								backgroundColor: '#1f1e1e',
 								backgroundImage:
@@ -114,11 +108,7 @@ const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
 												setChatId(chat.id);
 											}}
 										>
-											<SmallChat
-												chat={chat}
-												setChat={setChatId}
-												selectedChat={selectedChat}
-											/>
+											<SmallChat chat={chat} setChat={setChatId} selectedChat={selectedChat} />
 										</div>
 									))}
 							</div>

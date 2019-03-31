@@ -87,7 +87,7 @@ class CustomDropdown extends React.Component {
 						{dropdownHeader}
 					</MenuItem>
 				) : null}
-				<div style={{ maxHeight: '300px', overflow: 'scroll' }}>
+				<div style={{ maxHeight: '300px', overflow: 'visible' }}>
 					{dropdownList.map((prop, key) => {
 						if (prop.divider) {
 							return (
@@ -97,7 +97,7 @@ class CustomDropdown extends React.Component {
 									className={classes.dropdownDividerItem}
 								/>
 							);
-						} else if (prop.ref === 'multi') {
+						} else if (prop.props && prop.props.rep === 'multi') {
 							return (
 								<MenuItem
 									key={key}
@@ -157,13 +157,7 @@ class CustomDropdown extends React.Component {
 						<Grow
 							in={open}
 							id='menu-list'
-							style={
-								dropup ? (
-									{ transformOrigin: '0 100% 0' }
-								) : (
-									{ transformOrigin: '0 0 0' }
-								)
-							}
+							style={dropup ? { transformOrigin: '0 100% 0' } : { transformOrigin: '0 0 0' }}
 						>
 							<Paper className={messages ? classes.msgdd : classes.dropdown}>
 								{innerDropDown ? (

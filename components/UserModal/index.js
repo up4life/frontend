@@ -222,7 +222,7 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 											className={classes.modalTitle}
 										>
 											{match.firstName.toUpperCase()}
-											<span style={{ padding: '0 3px' }}>&#8226;</span>
+											<span style={{ padding: '0 9px' }}>&#8226;</span>
 											{getAge(match.dob)}
 										</h4>
 										<IconButton

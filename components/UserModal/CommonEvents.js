@@ -18,54 +18,53 @@ const CommonEvents = ({ classes, id }) => {
 	const { data } = useQuery(SHARED_EVENTS_QUERY, { variables: { id } });
 	if (!data.getSharedEvents) return <div>loading</div>;
 	return (
-		<GridContainer
-			style={{
-				maxHeight: '55%',
-				overflowX: 'scroll',
-				margin: '10px 0',
-				flexWrap: 'nowrap',
-			}}
-		>
-			{/* <h4 style={{textAlign: 'center'}}className={classes.title}>Events in common</h4> */}
-			{/* <GridContainer style={{ display: 'flex' }}> */}
-
+		<Fragment>
 			{data.getSharedEvents.length ? (
-				data.getSharedEvents.map(event => (
-					<GridItem md={4} lg={4}>
-						<Card
-							background
-							style={{
-								position: 'relative',
-								border: '4px solid #4cb5ae',
-								borderRadius: '11px',
-								backgroundImage: `url(${event.image_url})`,
-								marginTop: '0',
-								marginBottom: '10px',
-								minWidth: '200px',
-								//marginBottom: '',
-							}}
-						>
-							<CardBody
+				<GridContainer
+					style={{
+						maxHeight: '55%',
+						overflowX: 'auto',
+						margin: '10px 0',
+						flexWrap: 'nowrap',
+					}}
+				>
+					{data.getSharedEvents.map(event => (
+						<GridItem md={4} lg={4}>
+							<Card
 								background
 								style={{
-									maxWidth: '100%',
-									padding: '10px',
-									display: 'flex',
-									alignItems: 'center',
-									minHeight: '150px',
+									position: 'relative',
+									border: '4px solid #4cb5ae',
+									borderRadius: '11px',
+									backgroundImage: `url(${event.image_url})`,
+									marginTop: '0',
+									marginBottom: '10px',
+									minWidth: '200px',
+									//marginBottom: '',
 								}}
 							>
-								{' '}
-								<h4 className={classes.cardTitleWhite}>{event.title}</h4>
-							</CardBody>
-						</Card>
-					</GridItem>
-				))
+								<CardBody
+									background
+									style={{
+										maxWidth: '100%',
+										padding: '10px',
+										display: 'flex',
+										alignItems: 'center',
+										minHeight: '150px',
+									}}
+								>
+									{' '}
+									<h4 className={classes.cardTitleWhite}>{event.title}</h4>
+								</CardBody>
+							</Card>
+						</GridItem>
+					))}
+				</GridContainer>
 			) : (
 				<div>No shared events!</div>
 			)}
 			{/* </GridContainer> */}
-		</GridContainer>
+		</Fragment>
 	);
 };
 

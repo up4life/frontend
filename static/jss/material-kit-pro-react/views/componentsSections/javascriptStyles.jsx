@@ -151,7 +151,7 @@ const javascriptStyles = theme => {
 			flexGrow: 1,
 			// maxHeight: '75%',
 			// height: '75%',
-			overflowY: 'scroll',
+			overflowY: 'auto',
 			backgroundColor: '#373737',
 			backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)',
 			border: '1px solid #cabac8',

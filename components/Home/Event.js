@@ -418,7 +418,7 @@ const Event = ({ event, classes, user, first }) => {
 										</h6>
 									</div>
 								</div>
-								<GridContainer style={{ maxHeight: '335px', overflow: 'scroll' }}>
+								<GridContainer style={{ maxHeight: '335px', overflowY: 'auto' }}>
 									{!event.attending.length > 0 ? (
 										<div style={{ width: '100%' }}>
 											<div>

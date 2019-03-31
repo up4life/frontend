@@ -82,10 +82,13 @@ const basicsStyle = theme => ({
 		paddingTop: '100px',
 		zIndex: 1000,
 		backgroundColor: '#2d2d2d80',
-
-		'& svg': {
+		'& button': {
 			color: '#fafafa',
 		},
+
+		// '& svg': {
+		// 	color: '#fafafa',
+		// },
 	},
 	drawerHeader: {
 		display: 'flex',

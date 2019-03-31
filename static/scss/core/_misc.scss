@@ -85,8 +85,28 @@ legend {
   }
 }
 
+// ::-webkit-scrollbar {
+//   width: 8px;
+// }
 
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   box-shadow: inset 0 0 5px grey; 
+//   border-radius: 10px;
+//   background: #373737;
+// }
+ 
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: #242121 ; 
+//   border-radius: 10px;
+//   border: 1px solid #b2ddf7;
+// }
 
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #b2ddf7; 
+// }
 a{
   color: $link-color;
   text-decoration: none;

@@ -14,7 +14,7 @@ import Media from '../../../styledComponents/Media/Media.jsx';
 import { Send } from '@material-ui/icons';
 import TextareaAutosize from 'react-autosize-textarea';
 import scrollbar from '../../../static/jss/ScrollbarStyles';
-
+import date from '../../../utils/formatDate';
 
 const TOGGLE_TYPING_MUTATION = gql`
 	mutation TOGGLE_TYPING_MUTATION($chatId: String!, $isTyping: Boolean!) {
@@ -74,33 +74,36 @@ const REMAINING_MESSAGES = gql`
 `;
 
 const Chat = ({ chat, currentUser, classes, client }) => {
-	const [message, setMessage] = useState('');
+	const [ message, setMessage ] = useState('');
 	const msgRef = useRef(null);
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
-	const [isTyping, setIsTyping] = useState(false);
+	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
 
-	useEffect(() => {
-		if (chat && isTyping && !message.trim()) {
-			toggleTyping({
-				variables: {
-					chatId: chat.id,
-					isTyping: false
-				},
-			});
-			setIsTyping(false)
-		}
-		if (chat && !isTyping && message.trim()) {
-			toggleTyping({
-				variables: {
-					chatId: chat.id,
-					isTyping: true
-				}
-			})
-			setIsTyping(true)
-		}
-	}, [message])
+	useEffect(
+		() => {
+			if (chat && isTyping && !message.trim()) {
+				toggleTyping({
+					variables: {
+						chatId: chat.id,
+						isTyping: false,
+					},
+				});
+				setIsTyping(false);
+			}
+			if (chat && !isTyping && message.trim()) {
+				toggleTyping({
+					variables: {
+						chatId: chat.id,
+						isTyping: true,
+					},
+				});
+				setIsTyping(true);
+			}
+		},
+		[ message ]
+	);
 
 	useEffect(() => {
 		// if (!currentUser.verified) {
@@ -116,8 +119,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	}, []);
 
 	useEffect(() => {
-		const unSeen =
-			chat && chat.messages.filter(msg => !msg.seen && msg.from.id !== currentUser.id);
+		const unSeen = chat && chat.messages.filter(msg => !msg.seen && msg.from.id !== currentUser.id);
 
 		if (unSeen && unSeen.length > 0) {
 			markAllAsSeen({
@@ -134,7 +136,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 				msgRef.current.scrollTop = msgRef.current.scrollHeight;
 			}
 		},
-		[ chat ],
+		[ chat ]
 	);
 	const getRemainingMessages = async () => {
 		let messagesRemaining = await client.query({
@@ -205,7 +207,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 												`/profile?slug=chats&user=${msg[0].from.id}`,
 												`/profile/chat/user/${msg[0].from.id}`,
 												{ shallow: true },
-												{ scroll: false },
+												{ scroll: false }
 											)
 										: null}
 								title={
@@ -225,22 +227,12 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 														style={{
 															display: 'inline-flex',
 															alignItems: 'center',
-															flexDirection: fromMatch
-																? 'row'
-																: 'row-reverse',
+															flexDirection: fromMatch ? 'row' : 'row-reverse',
 														}}
 													>
 														<Tooltip
-															title={moment(m.createdAt).format(
-																'MMM Do h:mm a',
-															)}
-															placement={
-																fromMatch ? (
-																	'bottom-start'
-																) : (
-																	'bottom-end'
-																)
-															}
+															title={moment(m.createdAt).format('MMM Do h:mm a')}
+															placement={fromMatch ? 'bottom-start' : 'bottom-end'}
 														>
 															<p
 																style={{
@@ -261,7 +253,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 															}}
 														>
 															{' '}
-															{moment(msg.createdAt).fromNow()}
+															{date(msg.createdAt)}
 														</small>
 													</div>
 													{currentUser.permissions !== 'FREE' &&
@@ -270,14 +262,8 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 													lastSeenMessage.id === m.id ? (
 														<div>
 															<small>
-																<span
-																	style={{ marginRight: '2px' }}
-																>
-																	seen
-																</span>
-																{moment(
-																	lastSeenMessage.updatedAt,
-																).format('M/D/YY h:mm a')}
+																<span style={{ marginRight: '2px' }}>seen</span>
+																{date(lastSeenMessage.updatedAt)}
 															</small>
 														</div>
 													) : null}
@@ -317,9 +303,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 						) : (
 							<div>
 								<h4>{error.msg}</h4>
-								<Button onClick={() => Router.push(error.link)}>
-									{error.linkText}
-								</Button>
+								<Button onClick={() => Router.push(error.link)}>{error.linkText}</Button>
 							</div>
 						) : (
 							<form
@@ -346,19 +330,21 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 										style: { color: '#fafafa', width: '80%' },
 									}}
 								/> */}
-									<TextareaAutosize
-										className={classes.textareaAutosize}
-										onChange={e => {setMessage(e.target.value)}}
-										placehotruncatelder={`Respond to ${friend.firstName}`}
-										rows={1}
-										maxRows={4}
-										value={message}
-										onKeyDown={e => {
-											if (e.keyCode === 13) {
-												sendMessage();
-												setMessage('');
-											}
-										}}
+								<TextareaAutosize
+									className={classes.textareaAutosize}
+									onChange={e => {
+										setMessage(e.target.value);
+									}}
+									placehotruncatelder={`Respond to ${friend.firstName}`}
+									rows={1}
+									maxRows={4}
+									value={message}
+									onKeyDown={e => {
+										if (e.keyCode === 13) {
+											sendMessage();
+											setMessage('');
+										}
+									}}
 								/>
 								<ButtonBase type='submit'>
 									<Button
@@ -377,9 +363,15 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 						)}
 				</Mutation>
 			)}
-			{
-				chat && <div>{chat.typing.find(user => user.firstName === friend.firstName) ? `${friend.firstName} is typing...` : ''}</div>
-			}
+			{chat && (
+				<div>
+					{chat.typing.find(user => user.firstName === friend.firstName) ? (
+						`${friend.firstName} is typing...`
+					) : (
+						''
+					)}
+				</div>
+			)}
 		</div>
 	);
 };
