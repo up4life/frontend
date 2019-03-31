@@ -397,7 +397,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 										}
 									/>
 								);
-							})})
+							})}
 						</div>,
 						<form
 							className={classes.expandedChat}
@@ -417,8 +417,8 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 						>
 							<TextareaAutosize
 								className={classes.textareaAutosize}
+								onClick={e => e.stopPropagation()}
 								onChange={e => {
-									e.preventDefault();
 									setMessage(e.target.value);
 								}}
 								placeholder={`Respond to ${data.getUserChats
@@ -428,7 +428,6 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 								maxRows={4}
 								value={message}
 								onKeyDown={e => {
-									e.preventDefault();
 									if (e.keyCode === 13) {
 										sendMessage({
 											variables: {
@@ -438,7 +437,6 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 												message,
 											},
 										});
-										setMessage(undefined);
 									}
 								}}
 							/>
