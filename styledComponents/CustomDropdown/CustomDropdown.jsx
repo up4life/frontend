@@ -63,6 +63,7 @@ class CustomDropdown extends React.Component {
 			noLiPadding,
 			innerDropDown,
 			navDropdown,
+			...rest
 		} = this.props;
 		const caretClasses = classNames({
 			[classes.caret]: true,
@@ -78,48 +79,50 @@ class CustomDropdown extends React.Component {
 			[classes.dropdownItemRTL]: rtlActive,
 		});
 		const dropDownMenu = (
-			<MenuList role='menu' className={classes.menuList}>
-				{dropdownHeader !== undefined ? (
-					<MenuItem
-						onClick={() => this.handleCloseMenu(dropdownHeader)}
-						className={messages ? classes.messagesHeader : classes.dropdownHeader}
-					>
-						{dropdownHeader}
-					</MenuItem>
-				) : null}
-				<div style={{ maxHeight: '300px', overflow: 'visible' }}>
-					{dropdownList.map((prop, key) => {
-						if (prop.divider) {
-							return (
-								<Divider
-									key={key}
-									onClick={() => this.handleCloseMenu('divider')}
-									className={classes.dropdownDividerItem}
-								/>
-							);
-						} else if (prop.props && prop.props.rep === 'multi') {
+			<div>
+				<MenuList role='menu' className={classes.menuList}>
+					{dropdownHeader !== undefined ? (
+						<MenuItem
+							onClick={() => this.handleCloseMenu(dropdownHeader)}
+							className={messages ? classes.messagesHeader : classes.dropdownHeader}
+						>
+							{dropdownHeader}
+						</MenuItem>
+					) : null}
+					<div style={{ maxHeight: '300px', overflow: 'visible' }}>
+						{dropdownList.map((prop, key) => {
+							if (prop.divider) {
+								return (
+									<Divider
+										key={key}
+										onClick={() => this.handleCloseMenu('divider')}
+										className={classes.dropdownDividerItem}
+									/>
+								);
+							} else if (prop.props && prop.props.rep === 'multi') {
+								return (
+									<MenuItem
+										key={key}
+										className={dropdownItem}
+										style={{ overflow: 'visible', padding: 0 }}
+									>
+										{prop}
+									</MenuItem>
+								);
+							}
 							return (
 								<MenuItem
 									key={key}
+									onClick={() => this.handleCloseMenu(prop)}
 									className={dropdownItem}
-									style={{ overflow: 'visible', padding: 0 }}
 								>
 									{prop}
 								</MenuItem>
 							);
-						}
-						return (
-							<MenuItem
-								key={key}
-								onClick={() => this.handleCloseMenu(prop)}
-								className={dropdownItem}
-							>
-								{prop}
-							</MenuItem>
-						);
-					})}
-				</div>
-			</MenuList>
+						})}
+					</div>
+				</MenuList>
+			</div>
 		);
 		return (
 			<div className={messages ? classes.chatManager : classes.manager}>
@@ -156,6 +159,7 @@ class CustomDropdown extends React.Component {
 					{({ TransitionProps, placement }) => (
 						<Grow
 							in={open}
+							ref={rest.forwardRef}
 							id='menu-list'
 							style={dropup ? { transformOrigin: '0 100% 0' } : { transformOrigin: '0 0 0' }}
 						>
