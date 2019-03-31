@@ -149,19 +149,22 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 			return [ ...count, ...newcount ];
 		}, []);
 	};
-	let messages = chatPage
-		? groupByUser(data.getUserChats.find(x => x.id === chatPage).messages)
-		: null;
+	let messages =
+		chatPage && data.getUserChats
+			? groupByUser(data.getUserChats.find(x => x.id === chatPage).messages)
+			: null;
 	let chats = data.getUserChats ? formatChats(data.getUserChats, user) : [];
 	let newMessages = data.getUserChats ? newMessageCount(data.getUserChats, user) : [];
-	let lastSeenMessage = chatPage
-		? [ ...data.getUserChats.find(x => x.id === chatPage).messages ]
-				.reverse()
-				.find(x => x.from.id === user.id && x.seen)
-		: null;
-	let fromUser = chatPage
-		? data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
-		: null;
+	let lastSeenMessage =
+		chatPage && data.getUserChats
+			? [ ...data.getUserChats.find(x => x.id === chatPage).messages ]
+					.reverse()
+					.find(x => x.from.id === user.id && x.seen)
+			: null;
+	let fromUser =
+		chatPage && data.getUserChats
+			? data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
+			: null;
 
 	return (
 		<CustomDropdown
@@ -172,10 +175,9 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 				chatPage ? (
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<h5 style={{ margin: 0 }}>
-							{
+							{data.getUserChats &&
 								data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
-									.firstName
-							}
+									.firstName}
 						</h5>
 						<Button
 							simple
@@ -415,17 +417,15 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 								setMessage(undefined);
 							}}
 						>
-							<TextareaAutosize
+							<input
 								className={classes.textareaAutosize}
 								onClick={e => e.stopPropagation()}
 								onChange={e => {
 									setMessage(e.target.value);
 								}}
-								placeholder={`Respond to ${data.getUserChats
-									.find(x => x.id === chatPage)
-									.users.find(x => x.id !== user.id).firstName}`}
-								rows={1}
-								maxRows={4}
+								placeholder={`Respond to ${data.getUserChats &&
+									data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
+										.firstName}`}
 								value={message}
 								onKeyDown={e => {
 									if (e.keyCode === 13) {
