@@ -96,10 +96,11 @@ const styles = {
 		//marginBottom: '20px',
 		paddingBottom: '40px',
 		backgroundColor: '#000',
+		backgroundImage: `url(${require('../../../../img/shattered-dark.png')})`,
 	},
 	drawer: {
 		padding: '0 20px',
-		width: '250p',
+		width: '250px',
 	},
 	drawerContainer: {
 		display: 'flex',
@@ -107,42 +108,7 @@ const styles = {
 		backgroundColor: '#2e2e2e',
 		backgroundImage: 'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
 	},
-	metaDrawer: {
-		backgroundColor: '#2e2e2e',
-		backgroundImage: 'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
-		'& div': {
-			backgroundColor: '#2e2e2e',
-			backgroundImage:
-				'url("https://www.transparenttextures.com/patterns/dark-fish-skin.png")',
-			borderBottom: 'none !important',
-		},
-		'& svg': {
-			color: '#fafafa',
-			borderColor: '#fafafa',
-		},
-		'& ::after': {
-			borderBottomColor: '#b2ddf7',
-		},
-		'& label': {
-			color: '#fafafa !important',
-		},
-		'& p': {
-			color: '#fafafa',
-		},
-		'& h4': {
-			color: '#fafafa',
-		},
-		'& button': {
-			backgroundColor: '#ff101f',
-		},
-		'& input': {
-			color: '#fafafa',
-		},
-		'& li': {
-			color: '#fafafa',
-		},
-		boxShadow: 'rgb(31, 31, 31) 0px 0px 9px 4px',
-	},
+
 	transparentButton: {
 		backgroundColor: 'transparent !important',
 	},

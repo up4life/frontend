@@ -2,12 +2,12 @@ import { container } from '../material-kit-pro-react';
 import customSelectStyle from '../material-kit-pro-react/customSelectStyle';
 import chipStyles from '../chipStyles';
 import inputRangeStyles from '../inputRangeStyles';
-// import { url } from "inspector";
+
 const styles = {
-	container,
 	...customSelectStyle,
 	...chipStyles,
 	...inputRangeStyles,
+
 	pageHeader: {
 		minHeight: '100vh',
 		height: 'auto',
@@ -34,6 +34,20 @@ const styles = {
 		// 	content: '""',
 		// },
 	},
+	backgroundImg: {
+		height: '100%',
+		width: '100%',
+		position: 'absolute',
+		zIndex: '-10',
+	},
+	container: {
+		...container,
+		minHeight: '100vh',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+	},
+
 	selectLabel: {
 		...customSelectStyle.selectLabel,
 		color: '#fafafa',
@@ -130,6 +144,7 @@ const styles = {
 		justifyContent: 'center',
 		backgroundColor: 'rgb(0,0,0,.6)',
 		padding: '40px',
+		position: 'relative',
 		//   border: '2px solid #ff101f',
 		borderRadius: '6px',
 		'& textarea': {
@@ -138,11 +153,29 @@ const styles = {
 		'& ::after': {
 			borderBottomColor: '#ff101f',
 		},
+		'& button': {
+			zIndex: 1,
+		},
 	},
 	center: {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
+	},
+	flexWrap: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
+	},
+	skipButton: {
+		position: 'absolute',
+		bottom: 0,
+		right: 0,
+	},
+	genderBtn: {
+		zIndex: 1,
+		width: '100%',
+		border: '1px solid #ff101f',
 	},
 };
 

@@ -12,7 +12,6 @@ import {
 import imageStyles from '../../../material-kit-pro-react/imagesStyles';
 
 import rotatingCards from '../../../material-kit-pro-react/rotatingCards';
-import { isAbsolute } from 'path';
 
 const styles = {
 	container,
@@ -393,9 +392,16 @@ const styles = {
 		boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
 		backgroundImage: 'linear-gradient(to right, #efecef, #e9e3e9, #e3dbe3, #ded2dc, #d8cad6)',
 		position: 'absolute',
-		top: 0,
+
 		right: 0,
 		transition: 'all 3s ease-in-out',
+		left: '12px',
+		top: '-25px',
+		borderTopRightRadius: '0px',
+		borderTopLeftRadius: '6px',
+		borderBottomRightRadius: '6px',
+		zIndex: '700',
+		opacity: '.9',
 		'&:hover': {
 			backgroundImage: 'linear-gradient(to right, #e2dae1, #e0cede, #dec3da, #dbb7d7, #d9abd3)',
 		},

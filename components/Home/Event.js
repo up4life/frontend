@@ -338,18 +338,7 @@ const Event = ({ event, classes, user, first }) => {
 									set(true);
 								}}
 							/>
-							<div
-								style={{
-									left: '12px',
-									top: '-25px',
-									borderTopRightRadius: '0px',
-									borderTopLeftRadius: '6px',
-									borderBottomRightRadius: '6px',
-									zIndex: '700',
-									opacity: '.9',
-								}}
-								className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}
-							>
+							<div className={isSaved ? `${classes.up4} ${classes.up4Saved}` : classes.up4}>
 								<div style={{ cursor: 'pointer' }}>
 									{isSaved ? (
 										<div

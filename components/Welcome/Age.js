@@ -35,12 +35,11 @@ const GenderPrefs = ({ classes }) => {
 			}}
 		>
 			{updateUser => (
-				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper}>
-						<h2>My birthday is...</h2>
+				<div className={classes.innerWrapper}>
+					<h2>My birthday is...</h2>
 
-						<MuiPickersUtilsProvider utils={MomentUtils}>
-							{/* <BasePicker value={selectedDate} onChange={setSelectedDate}>
+					<MuiPickersUtilsProvider utils={MomentUtils}>
+						{/* <BasePicker value={selectedDate} onChange={setSelectedDate}>
 							{({
 								date,
 								handleAccept,
@@ -51,35 +50,34 @@ const GenderPrefs = ({ classes }) => {
 								handleTextFieldChange,
 								pick12hOr24hFormat,
 							}) => ( */}
-							<Paper style={{ overflow: 'hidden', zIndex: 1, padding: '20px' }}>
-								<InlineDatePicker
-									// label='Date of birth'
-									value={selectedDate}
-									disableFuture
-									minDate={moment().subtract(100, 'years')}
-									maxDate={moment().subtract(18, 'years')}
-									clearable
-									openTo='year'
-									format='MM/DD/YYYY'
-									views={[ 'year', 'month', 'day' ]}
-									onChange={date => setSelectedDate(date.format())}
-								/>
-							</Paper>
-							{/* )}
+						<Paper style={{ overflow: 'hidden', zIndex: 1, padding: '20px' }}>
+							<InlineDatePicker
+								// label='Date of birth'
+								value={selectedDate}
+								disableFuture
+								minDate={moment().subtract(100, 'years')}
+								maxDate={moment().subtract(18, 'years')}
+								clearable
+								openTo='year'
+								format='MM/DD/YYYY'
+								views={[ 'year', 'month', 'day' ]}
+								onChange={date => setSelectedDate(date.format())}
+							/>
+						</Paper>
+						{/* )}
 						</BasePicker> */}
-						</MuiPickersUtilsProvider>
+					</MuiPickersUtilsProvider>
 
-						<Button
-							style={{ zIndex: 1, marginTop: '10px' }}
-							color='danger'
-							disabled={!selectedDate}
-							onClick={() => {
-								updateUser();
-							}}
-						>
-							Next
-						</Button>
-					</div>
+					<Button
+						style={{ zIndex: 1, marginTop: '10px' }}
+						color='danger'
+						disabled={!selectedDate}
+						onClick={() => {
+							updateUser();
+						}}
+					>
+						Next
+					</Button>
 				</div>
 			)}
 		</Mutation>

@@ -37,7 +37,7 @@ const Interests = ({ classes }) => {
 	// };
 
 	const musicChips = (
-		<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+		<div className={classes.flexWrap}>
 			{data.genres ? (
 				data.genres.filter(genre => genre.category === 'MUSIC').map(genre => {
 					let interested = interestedList.find(i => i.id === genre.id);
@@ -64,7 +64,7 @@ const Interests = ({ classes }) => {
 	);
 
 	const sportChips = (
-		<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+		<div className={classes.flexWrap}>
 			{data.genres ? (
 				data.genres.filter(genre => genre.category === 'SPORTS').map(genre => {
 					let interested = interestedList.find(i => i.id === genre.id);
@@ -91,7 +91,7 @@ const Interests = ({ classes }) => {
 	);
 
 	const performingChips = (
-		<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+		<div className={classes.flexWrap}>
 			{data.genres ? (
 				data.genres.filter(genre => genre.category === 'ARTS_THEATRE').map(genre => {
 					let interested = interestedList.find(i => i.id === genre.id);
@@ -129,58 +129,56 @@ const Interests = ({ classes }) => {
 			onError={e => console.log(e)}
 		>
 			{updateUser => (
-				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper} style={{ position: 'relative', padding: '90px' }}>
-						<h2>I am interested in...</h2>
-						<p>Please select at least 3.</p>
-						<GridContainer>
-							<GridItem sm={12} md={4} lg={4}>
-								<h4 style={{ textAlign: 'center' }} className={classes.title}>
-									Music
-								</h4>
-								{musicChips}
-							</GridItem>
-							<GridItem sm={12} md={4} lg={4}>
-								<h4 style={{ textAlign: 'center' }} className={classes.title}>
-									Sports
-								</h4>
-								{sportChips}
-							</GridItem>
-							<GridItem sm={12} md={4} lg={4}>
-								<h4 style={{ textAlign: 'center' }} className={classes.title}>
-									Performing Arts
-								</h4>
-								{performingChips}
-							</GridItem>
-						</GridContainer>
+				<div className={classes.innerWrapper} style={{ padding: '90px' }}>
+					<h2>I am interested in...</h2>
+					<p>Please select at least 3.</p>
+					<GridContainer>
+						<GridItem sm={12} md={4} lg={4}>
+							<h4 style={{ textAlign: 'center' }} className={classes.title}>
+								Music
+							</h4>
+							{musicChips}
+						</GridItem>
+						<GridItem sm={12} md={4} lg={4}>
+							<h4 style={{ textAlign: 'center' }} className={classes.title}>
+								Sports
+							</h4>
+							{sportChips}
+						</GridItem>
+						<GridItem sm={12} md={4} lg={4}>
+							<h4 style={{ textAlign: 'center' }} className={classes.title}>
+								Performing Arts
+							</h4>
+							{performingChips}
+						</GridItem>
+					</GridContainer>
+					<Button
+						disabled={interestedList.length < 3}
+						color='danger'
+						style={{ zIndex: '2' }}
+						onClick={() => {
+							NProgress.start();
+							updateUser();
+						}}
+					>
+						Next
+					</Button>
+					<Tooltip title='You can edit these later in your profile page.'>
 						<Button
-							disabled={interestedList.length < 3}
-							color='danger'
-							style={{ zIndex: '2' }}
-							onClick={() => {
-								NProgress.start();
-								updateUser();
-							}}
+							size='sm'
+							simple
+							className={classes.skipButton}
+							onClick={() =>
+								Router.push(
+									`/welcome?slug=6`,
+									`/welcome/goPro`,
+									{ shallow: true },
+									{ scroll: false }
+								)}
 						>
-							Next
+							Skip For Now
 						</Button>
-						<Tooltip title='You can edit these later in your profile page.'>
-							<Button
-								size='sm'
-								simple
-								style={{ position: 'absolute', bottom: 0, right: 0 }}
-								onClick={() =>
-									Router.push(
-										`/welcome?slug=6`,
-										`/welcome/goPro`,
-										{ shallow: true },
-										{ scroll: false }
-									)}
-							>
-								Skip For Now
-							</Button>
-						</Tooltip>
-					</div>
+					</Tooltip>
 				</div>
 			)}
 		</Mutation>

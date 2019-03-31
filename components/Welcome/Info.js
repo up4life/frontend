@@ -38,107 +38,105 @@ const Gender = ({ user, classes }) => {
 			}}
 		>
 			{(updateUser, { client }) => (
-				<div className={classes.pageWrapper}>
-					<div className={classes.innerWrapper} style={{ padding: '90px' }}>
-						<h2>I am a...</h2>
-						<GridContainer>
-							<GridItem md={4} lg={4}>
-								<Button
-									color='danger'
-									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
-									onClick={() => setGender('MALE')}
-									simple={gender !== 'MAlE'}
-								>
-									Man
-								</Button>
-							</GridItem>
-							<GridItem md={4} lg={4}>
-								<Button
-									color='danger'
-									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
-									onClick={() => setGender('FEMALE')}
-									simple={gender !== 'FEMALE'}
-								>
-									Woman
-								</Button>
-							</GridItem>
-							<GridItem md={4} lg={4}>
-								<Button
-									color='danger'
-									style={{ zIndex: 1, width: '100%', border: '1px solid #ff101f' }}
-									onClick={() => setGender('OTHER')}
-									simple={gender !== 'OTHER'}
-								>
-									Non-Binary
-								</Button>
-							</GridItem>
-						</GridContainer>
-						<h2>in...</h2>
-						<Downshift
-							inputValue={location}
-							onChange={handleLocationChange}
-							onInputValueChange={async e => {
-								setLocation(e);
-								const { data } = await client.query({
-									query: LOCATION_SUGGESTION_QUERY,
-									variables: { city: e },
-								});
+				<div className={classes.innerWrapper} style={{ padding: '90px' }}>
+					<h2>I am a...</h2>
+					<GridContainer>
+						<GridItem md={4} lg={4}>
+							<Button
+								color='danger'
+								className={classes.genderBtn}
+								onClick={() => setGender('MALE')}
+								simple={gender !== 'MAlE'}
+							>
+								Man
+							</Button>
+						</GridItem>
+						<GridItem md={4} lg={4}>
+							<Button
+								color='danger'
+								className={classes.genderBtn}
+								onClick={() => setGender('FEMALE')}
+								simple={gender !== 'FEMALE'}
+							>
+								Woman
+							</Button>
+						</GridItem>
+						<GridItem md={4} lg={4}>
+							<Button
+								color='danger'
+								className={classes.genderBtn}
+								onClick={() => setGender('OTHER')}
+								simple={gender !== 'OTHER'}
+							>
+								Non-Binary
+							</Button>
+						</GridItem>
+					</GridContainer>
+					<h2>in...</h2>
+					<Downshift
+						inputValue={location}
+						onChange={handleLocationChange}
+						onInputValueChange={async e => {
+							setLocation(e);
+							const { data } = await client.query({
+								query: LOCATION_SUGGESTION_QUERY,
+								variables: { city: e },
+							});
 
-								setItems(data.locationSearch);
-							}}
-						>
-							{({ getInputProps, getItemProps, isOpen, highlightedIndex }) => (
-								<div className={classes.downshiftContainer}>
-									<Input
-										white
-										inputProps={{
-											placeholder: 'Search for a city name...',
-											...getInputProps(),
-										}}
-										formControlProps={{
-											style: {
-												paddingTop: '12px',
-												width: '100%',
-												style: { color: '#fafafa' },
-											},
-										}}
-									/>
+							setItems(data.locationSearch);
+						}}
+					>
+						{({ getInputProps, getItemProps, isOpen, highlightedIndex }) => (
+							<div className={classes.downshiftContainer}>
+								<Input
+									white
+									inputProps={{
+										placeholder: 'Search for a city name...',
+										...getInputProps(),
+									}}
+									formControlProps={{
+										style: {
+											paddingTop: '12px',
+											width: '100%',
+											style: { color: '#fafafa' },
+										},
+									}}
+								/>
 
-									{isOpen ? (
-										<Paper className={classes.downshiftPaper}>
-											{items.map((result, index) => {
-												return (
-													<MenuItem
-														key={index}
-														style={{
-															backgroundColor: highlightedIndex === index ? '#4cb5ae' : '#fafafa',
-															color: highlightedIndex === index ? '#fafafa' : '#3C4858',
-														}}
-														{...getItemProps({
-															item: result.city,
-														})}
-													>
-														{result.city}
-													</MenuItem>
-												);
-											})}
-										</Paper>
-									) : null}
-								</div>
-							)}
-						</Downshift>
-						<Button
-							color='danger'
-							style={{ zIndex: 1 }}
-							disabled={!gender || !location}
-							onClick={() => {
-								NProgress.start();
-								updateUser();
-							}}
-						>
-							Next
-						</Button>
-					</div>
+								{isOpen ? (
+									<Paper className={classes.downshiftPaper}>
+										{items.map((result, index) => {
+											return (
+												<MenuItem
+													key={index}
+													style={{
+														backgroundColor: highlightedIndex === index ? '#4cb5ae' : '#fafafa',
+														color: highlightedIndex === index ? '#fafafa' : '#3C4858',
+													}}
+													{...getItemProps({
+														item: result.city,
+													})}
+												>
+													{result.city}
+												</MenuItem>
+											);
+										})}
+									</Paper>
+								) : null}
+							</div>
+						)}
+					</Downshift>
+					<Button
+						color='danger'
+						style={{ zIndex: 1 }}
+						disabled={!gender || !location}
+						onClick={() => {
+							NProgress.start();
+							updateUser();
+						}}
+					>
+						Next
+					</Button>
 				</div>
 			)}
 		</Mutation>

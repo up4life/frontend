@@ -1,25 +1,23 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react';
-import { Mutation, Query } from 'react-apollo';
 import _ from 'lodash';
 import { withRouter } from 'next/router';
 import NProgress from 'nprogress';
-import InfiniteScroll from 'react-infinite-scroller';
 import classNames from 'classnames';
 import { useApolloClient } from 'react-apollo-hooks';
 import { useMutation } from '../Mutations/useMutation';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
-import { Menu, ChevronLeft, CodeSharp } from '@material-ui/icons';
+import { Menu, ChevronLeft } from '@material-ui/icons';
 //Q&M
 import { ALL_EVENTS_QUERY } from '../Queries/AllEvents';
-import User, { CURRENT_USER_QUERY } from '../Queries/User';
+import User from '../Queries/User';
 import { UPDATE_USER_MUTATION } from '../Mutations/updateUser';
 //components
 import Filters from './Filters';
 import Event from './Event';
 import LocationSearch from './LocationSearch';
-import NewUser from './NewUser';
+
 import UserModal from '../UserModal/';
 import Primary from '../../styledComponents/Typography/Primary';
 import Footer from '../Footer';
@@ -28,9 +26,8 @@ import GridContainer from '../../styledComponents/Grid/GridContainer';
 import GridItem from '../../styledComponents/Grid/GridItem';
 import Button from '../../styledComponents/CustomButtons/Button';
 //styles
-import backgroundImg from '../../static/img/shattered-dark.png';
-import drawerbgImg from '../../static/img/dark-fish-skin.png';
-import styles from '../../static/jss/material-kit-pro-react/views/ecommerceSections/productsStyle.jsx';
+import Gradients from '../../static/jss/Home/linearGradients';
+import styles from '../../static/jss/Home/eventsStyles';
 
 const Events = props => {
 	let { classes, router, href, user, getEvents } = props;
@@ -67,7 +64,7 @@ const Events = props => {
 			});
 			console.log(getEvents);
 			let uniqueEvents = getEvents.events.filter(
-				x => !events.some(y => x.tmID === y.tmID || y.id === x.id),
+				x => !events.some(y => x.tmID === y.tmID || y.id === x.id)
 			);
 			let newEvents = [ ...getEvents.events, ...uniqueEvents ];
 			client.writeQuery({
@@ -99,11 +96,9 @@ const Events = props => {
 			}
 			NProgress.start();
 			setSkip(false);
-			fetchEvents()
-				.then(({ getEvents }) => setEvents(getEvents.events))
-				.catch(e => console.log(e));
+			fetchEvents().then(({ getEvents }) => setEvents(getEvents.events)).catch(e => console.log(e));
 		},
-		[ filters, location ],
+		[ filters, location ]
 	);
 
 	useEffect(
@@ -121,54 +116,25 @@ const Events = props => {
 					.catch(e => console.log(e));
 			}
 		},
-		[ page ],
+		[ page ]
 	);
 	return (
 		<User>
 			{({ data: { currentUser } }) => (
 				<Fragment>
-					<div
-						className={classes.background}
-						style={{ backgroundImage: `url(${backgroundImg})` }}
-					>
-						{router.query.user && (
-							<UserModal user={router.query.user} currentUser={currentUser} />
-						)}
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='favoriteID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#FF8A8A' />
-								<stop offset='50%' stopColor='#FF545F' />
-								<stop offset='100%' stopColor='#ff101f' />
-							</linearGradient>
-						</svg>
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='chatID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#81d6e3' />
-								<stop offset='50%' stopColor='#15C0DA' />
-								<stop offset='100%' stopColor='#81d6e3' />
-							</linearGradient>
-						</svg>
+					<div className={classes.background}>
+						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
+						<Gradients />
 						{/* {newUser && <NewUser />} */}
 						<div className={classes.container}>
 							<Fragment>
 								<IconButton
-									style={{
-										color: 'white',
-										backgroundColor: 'transparent !important',
-									}}
 									aria-label='Open drawer'
 									onClick={() => setDrawer(true)}
 									className={classNames(
 										classes.menuButton,
 										drawer && classes.hide,
+										classes.transparentButton
 									)}
 								>
 									<Menu />
@@ -188,36 +154,29 @@ const Events = props => {
 												<ChevronLeft />
 											</IconButton>
 											<LocationSearch setLocation={setLocation} />
-											<p style={{ margin: 0 }}>
-												Showing events near {location}.
-											</p>
-											<div
-												className={classes.drawerContainer}
-												style={{ backgroundImage: `url(${drawerbgImg})` }}
-											>
-												{currentUser &&
-												currentUser.location !== location ? (
-													<Primary>
-														<b
-															onClick={() => {
-																NProgress.start();
-																updateUser({
-																	variables: {
-																		location: location,
-																	},
-																});
-															}}
-															style={{
-																cursor: 'pointer',
-															}}
-														>
-															make default location?
-														</b>
-													</Primary>
-												) : (
-													<div style={{ height: '21px' }} />
-												)}
-											</div>
+											<p style={{ margin: 0 }}>Showing events near {location}.</p>
+
+											{currentUser && currentUser.location !== location ? (
+												<Primary>
+													<b
+														onClick={() => {
+															NProgress.start();
+															updateUser({
+																variables: {
+																	location: location,
+																},
+															});
+														}}
+														style={{
+															cursor: 'pointer',
+														}}
+													>
+														make default location?
+													</b>
+												</Primary>
+											) : (
+												<div style={{ height: '21px' }} />
+											)}
 										</div>
 										<Filters
 											filters={filters}
@@ -232,53 +191,26 @@ const Events = props => {
 										{events ? (
 											<GridContainer>
 												<GridItem sm={12} md={6} lg={6}>
-													{/* <InfiniteScroll
-														pageStart={getEvents.page_number}
-														loadMore={async p => {
-															console.log(p, getEvents.page_count);
-															if (p < getEvents.page_total - 1) {
-																page.set(page.value + 1);
-															}
-														}}
-														hasMore={page.value < getEvents.page_total}
-														threshold={400}
-														loader={<div key={0} />}
-													> */}
-													{events
-														.filter((e, i) => i % 2 === 0)
-														.map((event, i) => (
-															<Event
-																first={i === 0}
-																event={event}
-																key={event.id}
-																//refetch={refetch}
-																user={currentUser}
-															/>
-														))}
-
-													{/* {getEvents.events.map(event => (
-															<Event
-																event={event}
-																key={event.id}
-																refetch={refetch}
-																user={currentUser}
-																location={location}
-															/>
-														))} */}
-													{/* </InfiniteScroll> */}
+													{events.filter((e, i) => i % 2 === 0).map((event, i) => (
+														<Event
+															first={i === 0}
+															event={event}
+															key={event.id}
+															//refetch={refetch}
+															user={currentUser}
+														/>
+													))}
 												</GridItem>
 
 												<GridItem sm={12} md={6} lg={6}>
-													{events
-														.filter((e, i) => i % 2 !== 0)
-														.map(event => (
-															<Event
-																event={event}
-																key={event.id}
-																//refetch={refetch}
-																user={currentUser}
-															/>
-														))}
+													{events.filter((e, i) => i % 2 !== 0).map(event => (
+														<Event
+															event={event}
+															key={event.id}
+															//refetch={refetch}
+															user={currentUser}
+														/>
+													))}
 												</GridItem>
 											</GridContainer>
 										) : (

@@ -13,6 +13,7 @@ import Interests from './Interests';
 import Pro from './ProFeatures';
 
 import style from '../../static/jss/Welcome/welcomeStyles';
+import Gradients from '../../static/jss/Welcome/gradients';
 
 import triangle1 from '../../static/img/triangle1.svg';
 import triangle2 from '../../static/img/triangle2.svg';
@@ -84,75 +85,17 @@ const Welcome = ({ classes, user, router: { prefetch, query } }) => {
 		[ query.slug ]
 	);
 	const steps = getSteps();
-	// console.log(parseInt(query.slug));
 
 	return (
 		<User>
 			{({ data: { currentUser } }) => (
 				<div className={classes.pageHeader}>
-					<img
-						style={{
-							height: '100%',
-							width: '100%',
-							position: 'absolute',
-							zIndex: '-10',
-						}}
-						src={getImage(parseInt(query.slug))}
-					/>
-					<div
-						style={{
-							minHeight: '100vh',
-							display: 'flex',
-							flexDirection: 'column',
-							justifyContent: 'center',
-						}}
-						className={classes.container}
-					>
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='favoriteID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#FF8A8A' />
-								<stop offset='50%' stopColor='#FF545F' />
-								<stop offset='100%' stopColor='#ff101f' />
-							</linearGradient>
-						</svg>
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='chatID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#81d6e3' />
-								<stop offset='50%' stopColor='#15C0DA' />
-								<stop offset='100%' stopColor='#81d6e3' />
-							</linearGradient>
-						</svg>
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='eventID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#CABAC8' />
-								<stop offset='50%' stopColor='#B661AB' />
-								<stop offset='100%' stopColor='#AD74A6' />
-							</linearGradient>
-						</svg>
-						<svg
-							style={{ width: 0, height: 0, position: 'absolute' }}
-							aria-hidden='true'
-							focusable='false'
-						>
-							<linearGradient id='receiptID' x2='1' y2='1'>
-								<stop offset='0%' stopColor='#8AC9C5' />
-								<stop offset='50%' stopColor='#4CB5AE' />
-								<stop offset='100%' stopColor='#37C5BC' />
-							</linearGradient>
-						</svg>
-						{getStepContent(parseInt(query.slug), currentUser)}
+					<img className={classes.backgroundImg} src={getImage(parseInt(query.slug))} />
+					<div className={classes.container}>
+						<Gradients />
+						<div className={classes.pageWrapper}>
+							{getStepContent(parseInt(query.slug), currentUser)}
+						</div>
 						<Hidden smDown>
 							<Stepper
 								classes={{ root: classes.stepper, alternativeLabel: classes.step }}
@@ -162,7 +105,6 @@ const Welcome = ({ classes, user, router: { prefetch, query } }) => {
 								{steps.map(label => (
 									<Step key={label}>
 										<StepLabel
-											// className={classes.activeIcon}
 											classes={{
 												label: classes.step,
 											}}
