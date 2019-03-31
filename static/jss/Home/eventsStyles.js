@@ -65,6 +65,50 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'center',
 	},
+	fabButton: {
+		position: 'absolute',
+		bottom: '30px',
+		right: '30px',
+	},
+	chatBadge: {
+		zIndex: '10',
+		top: '5px',
+		right: '10px',
+		//backgroundColor: '#ff101f',
+	},
+	chatIcon: {
+		margin: 0,
+		width: '25px',
+		height: '25px',
+	},
+	imageDropdownButton: {
+		padding: '0px',
+		top: '4px',
+		borderRadius: '50%',
+		marginLeft: '5px',
+	},
+	messageDropdown: {
+		backgroundColor: 'red',
+	},
+	newIndicator: {
+		backgroundColor: '#ff101f',
+		marginRight: '-5px',
+		marginLeft: '-3px',
+		paddingLeft: '30px',
+		paddingTop: '2px',
+		borderBottomLeftRadius: '3px',
+		borderTopLeftRadius: '3px',
+		marginBottom: '10px',
+		fontWeight: '700',
+		textTransform: 'uppercase',
+	},
+	respondInput: {
+		width: '100%',
+		backgroundColor: '#373737',
+		border: 'none',
+		color: '#fafafa',
+		padding: '10px 10px 5px',
+	},
 };
 
 export default styles;

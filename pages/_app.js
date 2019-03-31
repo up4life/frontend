@@ -4,6 +4,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import { ApolloProvider } from 'react-apollo';
 import App, { Container } from 'next/app';
+import { SnackbarProvider } from 'notistack';
 
 import getPageContext from '../utils/getPageContext';
 import '../static/scss/material-kit-pro-react.scss';
@@ -49,9 +50,11 @@ class MyApp extends App {
 						<CssBaseline />
 						<ApolloProvider client={apollo}>
 							<ApolloHooksProvider client={apollo}>
-								<Page>
-									<Component pageContext={this.pageContext} {...pageProps} />
-								</Page>
+								<SnackbarProvider maxSnack={3} hideIconVariant>
+									<Page>
+										<Component pageContext={this.pageContext} {...pageProps} />
+									</Page>
+								</SnackbarProvider>
 							</ApolloHooksProvider>
 						</ApolloProvider>
 					</MuiThemeProvider>

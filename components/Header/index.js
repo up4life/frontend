@@ -4,8 +4,11 @@ import gql from 'graphql-tag';
 import { Mutation, Query } from 'react-apollo';
 import NProgress from 'nprogress';
 import moment from 'moment';
+import { withSnackbar } from 'notistack';
 import { useQuery, useSubscription } from 'react-apollo-hooks';
 import { withRouter } from 'next/router';
+import { useMutation } from '../Mutations/useMutation';
+import { SEND_MESSAGE_MUTATION } from '../Mutations/sendMessage';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -66,12 +69,57 @@ const SIGNOUT_MUTATION = gql`
 	}
 `;
 
-const Nav = ({ classes, color, router, href, user }) => {
+const Nav = ({ classes, color, router, href, user, enqueueSnackbar }) => {
 	const audioRef = useRef(null);
+	const [ message, setMessage ] = useState(undefined);
+	const [ sendMessage ] = useMutation(SEND_MESSAGE_MUTATION, {
+		onCompleted: () => {
+			NProgress.done();
+			setMessage(undefined);
+		},
+		onError: e => {
+			NProgress.done();
+			console.log(e);
+		},
+	});
 	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
 		variables: { id: user.id },
 		onSubscriptionData: async ({ client, subscriptionData }) => {
-			if (subscriptionData.data.myMessages.node.from.id !== user.id) {
+			let from = subscriptionData.data.myMessages.node.from;
+			if (from.id !== user.id) {
+				enqueueSnackbar(`New message from ${from.firstName}`, {
+					preventDuplicate: true,
+					anchorOrigin: {
+						vertical: 'bottom',
+						horizontal: 'right',
+					},
+					action: (
+						<Button
+							simple
+							onClick={() => {
+								Router.push(
+									{
+										pathname: router.pathname === '/' ? '/home' : router.pathname,
+										query: {
+											slug: router.query.slug,
+											user: from.id,
+										},
+									},
+									router.query.slug
+										? `${router.pathname}/${router.query.slug}/user/${from.id}`
+										: router.pathname === '/'
+											? `/user/${from.id}`
+											: `${router.pathname}/user/${from.id}`,
+									{ shallow: true },
+									{ scroll: false }
+								);
+							}}
+							size='small'
+						>
+							{'View'}
+						</Button>
+					),
+				});
 				try {
 					await audioRef.current.play();
 				} catch (e) {
@@ -81,12 +129,9 @@ const Nav = ({ classes, color, router, href, user }) => {
 		},
 	});
 
-	const { data, loading, refetch } = useQuery(
-		ALL_CHATS_QUERY,
-		{
-			// pollInterval: 600
-		}
-	);
+	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
+		pollInterval: 600,
+	});
 	const formattedChats = (newMessages, user) => {
 		return newMessages
 			.filter(msg => msg.messages)
@@ -146,9 +191,6 @@ const Nav = ({ classes, color, router, href, user }) => {
 						}
 						links={
 							<List className={classes.list + ' ' + classes.mlAuto}>
-								<div>
-									<audio ref={audioRef} src='/static/quiet-knock.mp3' />
-								</div>
 								{/* <ListItem className={classes.listItem}>
 									<Button
 										className={classes.navLink}
@@ -183,146 +225,17 @@ const Nav = ({ classes, color, router, href, user }) => {
 													caret={false}
 													dropdownHeader={currentUser && currentUser.firstName}
 													buttonText={
-														<Badge badgeContent={newMessages.length} color='error'>
-															<img
-																src={
-																	currentUser && currentUser.img.find(img => img.default).img_url
-																}
-																className={classes.img + ' ' + classes.imageProfile}
-																alt='profile'
-															/>
-														</Badge>
+														<img
+															src={currentUser && currentUser.img.find(img => img.default).img_url}
+															className={classes.img + ' ' + classes.imageProfile}
+															alt='profile'
+														/>
 													}
 													buttonProps={{
 														className: classes.navLink + ' ' + classes.imageDropdownButton,
 														color: 'transparent',
 													}}
-													dropdownList={[
-														<CustomDropdown
-															rep='multi'
-															className={classes.messageDropdown}
-															dropPlacement='left'
-															innerDropDown
-															//caret={false}
-															messages
-															// hoverColor='dark'
-															dropdownHeader={
-																newMessages.length ? (
-																	newMessages.length + ' new messages!'
-																) : (
-																	'no new messages.'
-																)
-															}
-															buttonText='Messages'
-															//
-															// 	Messages
-															// 	{/* <Mail
-															// 		style={{
-															// 			height: '30px',
-															// 			width: '30px',
-															// 			marginLeft: '10px',
-															// 			position: 'relative',
-															// 			top: 2,
-															// 		}}
-															// 	/> */}
-															// </Badge>
-
-															buttonProps={{
-																className: classes.navLink,
-																color: 'transparent',
-															}}
-															dropdownList={
-																chats ? (
-																	chats.map(chat => {
-																		return (
-																			<Fragment>
-																				{/* <Divider className={classes.dropdownDividerItem} /> */}
-																				<div
-																					onClick={() =>
-																						Router.push(
-																							{
-																								pathname:
-																									router.pathname === '/'
-																										? '/home'
-																										: router.pathname,
-																								query: {
-																									slug: router.query.slug,
-																									user: chat.fromId,
-																								},
-																							},
-																							router.query.slug
-																								? `${router.pathname}/${router.query
-																										.slug}/user/${chat.fromId}`
-																								: router.pathname === '/'
-																									? `/user/${chat.fromId}`
-																									: `${router.pathname}/user/${chat.fromId}`,
-																							{ shallow: true },
-																							{ scroll: false }
-																						)}
-																					style={{
-																						display: 'flex',
-																						padding: '5px',
-																						borderRight: newMessages.some(
-																							msg => msg.chat.id === chat.id
-																						)
-																							? '4px solid #ff101f'
-																							: 'none',
-																						borderTopRightRadius: '3px',
-																						borderBottomRightRadius: '3px',
-																					}}
-																				>
-																					<img
-																						src={chat.img}
-																						style={{
-																							width: '40px',
-																							height: '40px',
-																							borderRadius: '6px',
-																							marginRight: '15px',
-																							boxShadow:
-																								'0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-																						}}
-																					/>
-																					<div style={{ flexGrow: 1 }}>
-																						<div
-																							style={{
-																								display: 'flex',
-																								justifyContent: 'space-between',
-																							}}
-																						>
-																							<p className={classes.title}>{chat.from}</p>
-																							<small>
-																								{date(chat.time)}
-																								<div
-																									className={
-																										chat.newMsgs ? classes.newIndicator : null
-																									}
-																								>
-																									{chat.newMsgs ? chat.newMsgs + ' new' : null}
-																								</div>
-																							</small>
-																						</div>
-																						<div
-																							style={{
-																								maxWidth: '300px',
-																								overflow: 'hidden',
-																								textOverflow: 'ellipsis',
-																							}}
-																						>
-																							{chat.text}
-																						</div>
-																					</div>
-																				</div>
-																			</Fragment>
-																		);
-																	})
-																) : (
-																	[]
-																)
-															}
-														/>,
-														'Profile',
-														'Sign out',
-													]}
+													dropdownList={[ 'Profile', 'Sign out' ]}
 													onClick={e => {
 														if (e === 'Sign out') {
 															signout();
@@ -346,4 +259,4 @@ const Nav = ({ classes, color, router, href, user }) => {
 	);
 };
 
-export default withRouter(withStyles(navbarsStyle)(Nav));
+export default withSnackbar(withRouter(withStyles(navbarsStyle)(Nav)));

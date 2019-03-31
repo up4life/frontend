@@ -9,8 +9,8 @@ import JoyRide from 'react-joyride';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Drawer, IconButton, ClickAwayListener } from '@material-ui/core';
-import { Menu, ChevronLeft } from '@material-ui/icons';
+import { Drawer, IconButton, ClickAwayListener, Fab } from '@material-ui/core';
+import { Menu, ChevronLeft, ChatBubbleRounded } from '@material-ui/icons';
 //Q&M
 import { ALL_EVENTS_QUERY } from '../Queries/AllEvents';
 import User from '../Queries/User';
@@ -23,6 +23,7 @@ import LocationSearch from './LocationSearch';
 import UserModal from '../UserModal/';
 import Primary from '../../styledComponents/Typography/Primary';
 import Footer from '../Footer';
+import ChatBubble from './ChatBubble';
 //styled components
 import GridContainer from '../../styledComponents/Grid/GridContainer';
 import GridItem from '../../styledComponents/Grid/GridItem';
@@ -125,8 +126,8 @@ const Events = props => {
 		<User>
 			{({ data: { currentUser } }) => (
 				<Fragment>
-					<JoyRide steps={steps} continuous showSkipButton />
 					<div className={classes.background}>
+						<JoyRide steps={steps} continuous showSkipButton />
 						{router.query.user && <UserModal user={router.query.user} currentUser={currentUser} />}
 						<Gradients />
 						{/* {newUser && <NewUser />} */}
@@ -220,7 +221,7 @@ const Events = props => {
 									</GridItem>
 								</GridContainer>
 							</Fragment>
-
+							<ChatBubble user={currentUser} />
 							<div className={classes.centerButton}>
 								<Button onClick={() => setPage(page + 1)}>Load More</Button>
 							</div>

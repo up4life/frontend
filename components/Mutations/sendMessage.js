@@ -7,20 +7,27 @@ export const SEND_MESSAGE_MUTATION = gql`
 			users {
 				id
 				firstName
+				img {
+					id
+					img_url
+					default
+				}
 			}
 			messages {
 				id
 				text
 				seen
+				createdAt
 				from {
 					id
 					firstName
 					img {
-						default
+						id
 						img_url
+						default
 					}
 				}
-				createdAt
+				updatedAt
 			}
 		}
 	}

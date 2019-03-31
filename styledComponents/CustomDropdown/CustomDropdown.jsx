@@ -122,7 +122,7 @@ class CustomDropdown extends React.Component {
 			</MenuList>
 		);
 		return (
-			<div className={innerDropDown ? classes.innerManager : classes.manager}>
+			<div className={messages ? classes.chatManager : classes.manager}>
 				<div className={buttonText !== undefined ? '' : classes.target}>
 					<Button
 						aria-label='Notifications'

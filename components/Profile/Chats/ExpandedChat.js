@@ -81,29 +81,29 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
 
-	useEffect(
-		() => {
-			if (chat && isTyping && !message.trim()) {
-				toggleTyping({
-					variables: {
-						chatId: chat.id,
-						isTyping: false,
-					},
-				});
-				setIsTyping(false);
-			}
-			if (chat && !isTyping && message.trim()) {
-				toggleTyping({
-					variables: {
-						chatId: chat.id,
-						isTyping: true,
-					},
-				});
-				setIsTyping(true);
-			}
-		},
-		[ message ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (chat && isTyping && !message.trim()) {
+	// 			toggleTyping({
+	// 				variables: {
+	// 					chatId: chat.id,
+	// 					isTyping: false,
+	// 				},
+	// 			});
+	// 			setIsTyping(false);
+	// 		}
+	// 		if (chat && !isTyping && message.trim()) {
+	// 			toggleTyping({
+	// 				variables: {
+	// 					chatId: chat.id,
+	// 					isTyping: true,
+	// 				},
+	// 			});
+	// 			setIsTyping(true);
+	// 		}
+	// 	},
+	// 	[ message ]
+	// );
 
 	useEffect(() => {
 		// if (!currentUser.verified) {

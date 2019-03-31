@@ -1,6 +1,6 @@
 export default [
 	{
-		target: '#body',
+		target: 'body',
 		content: 'This is your events page.',
 		title: 'Welcome to Up4!',
 		placement: 'center',

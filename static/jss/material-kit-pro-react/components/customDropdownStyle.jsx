@@ -42,8 +42,17 @@ const customDropdownStyle = theme => ({
 			width: '100%',
 		},
 	},
+	chatManager: {
+		'& > div > button:first-child > span:first-child, & > div > a:first-child > span:first-child': {
+			width: '100%',
+		},
+		position: 'absolute',
+		right: '30px',
+		bottom: '30px',
+	},
 	innerManager: {
 		display: 'block',
+
 		'& > div > button,& > div > a': {
 			margin: '0px !important',
 			color: 'inherit !important',
@@ -242,7 +251,7 @@ const customDropdownStyle = theme => ({
 		borderLeft: '4px solid transparent',
 	},
 	caretActive: {
-		transform: 'rotate(180deg)',
+		transform: 'rotate(90deg)',
 	},
 	caretDropup: {
 		transform: 'rotate(180deg)',
