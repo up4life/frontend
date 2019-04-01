@@ -83,6 +83,26 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 
 	useEffect(
 		() => {
+			if (chat) {
+				return () => {
+					setMessage('');
+					toggleTyping({
+						variables: {
+							chatId: chat.id,
+							isTyping: false,
+						},
+					})
+				}
+			} else {
+				return () => {
+					setMessage('');
+				}
+			}
+		}, [ chat && chat.id ]
+	)
+
+	useEffect(
+		() => {
 			if (chat && isTyping && !message.trim()) {
 				toggleTyping({
 					variables: {
