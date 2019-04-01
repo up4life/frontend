@@ -116,12 +116,27 @@ const styles = theme => {
     },
     autofillOverride: {
       '& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus': {
-		'-webkit-box-shadow': '0 0 0 30px #262323 inset !important',
-		border: 'none !important',
-		'-webkit-text-fill-color': '#fafafa !important',
-		transition: 'background-color 5000s ease-in-out 0s'
+        '-webkit-box-shadow': '0 0 0 30px #262323 inset !important',
+        border: 'none !important',
+        '-webkit-text-fill-color': '#fafafa !important',
+        transition: 'background-color 5000s ease-in-out 0s'
       }
-    }
+    },
+    belowTheFold: {
+      width: '100%',
+      backgroundColor: 'black'
+    },
+    mainAddendum: {
+      backgroundColor: 'rgb(38, 35, 35)',
+      backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-matter.png)'
+	},
+	foldBox: {
+		borderRadius: '6px',
+		padding: '20px',
+		marginBottom: '60px',
+		backgroundColor: '#8080802e',
+		maxWidth: '100%'
+	}
   };
 };
 
