@@ -51,6 +51,32 @@ export const ALL_EVENTS_QUERY = gql`
 	}
 `;
 
+export const INITIAL_EVENTS_QUERY = gql`
+	query INITIAL_EVENTS_QUERY($location: String) {
+		getInitialEvents(location: $location) {
+			id
+			tmID
+			title
+			image_url
+			times
+			genre
+			category
+			city
+			venue
+			attending {
+				id
+				dob
+				firstName
+				img {
+					id
+					default
+					img_url
+				}
+			}
+		}
+	}
+`;
+
 const Events = ({ children, variables }) => {
 	return (
 		<Query query={ALL_EVENTS_QUERY} variables={variables}>
@@ -59,7 +85,7 @@ const Events = ({ children, variables }) => {
 	);
 };
 
-export const getAllEvents = async (client, user) => {
+export const getAllEvents = async (client, user, fetchPolicy) => {
 	try {
 		const response = await client.query({
 			query: ALL_EVENTS_QUERY,

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { withRouter } from 'next/router';
 import NProgress from 'nprogress';
 import classNames from 'classnames';
-import { useApolloClient } from 'react-apollo-hooks';
+import { useApolloClient, useQuery } from 'react-apollo-hooks';
 import { useMutation } from '../Mutations/useMutation';
 import JoyRide from 'react-joyride';
 
@@ -41,7 +41,7 @@ const Events = props => {
 	const [ skip, setSkip ] = useState(true);
 	const [ page, setPage ] = useState(0);
 	const firstUpdate = useRef(true);
-	const [ events, setEvents ] = useState(getEvents.getEvents.events);
+	//const [ events, setEvents ] = useState(getEvents.getEvents.events);
 	const [ location, setLocation ] = useState(user.location);
 	const [ filters, setFilters ] = useState({
 		categories: getEvents.getEvents.categories,
@@ -49,79 +49,83 @@ const Events = props => {
 		dates: getEvents.getEvents.dates,
 	});
 
-	async function fetchEvents(more) {
-		const variables = { page, location, ...filters };
+	const { data } = useQuery(ALL_EVENTS_QUERY, { variables: { page, location, ...filters } });
+	console.log(data);
 
-		let { data, error, loading } = await client.query({
-			query: ALL_EVENTS_QUERY,
-			variables,
-			fetchPolicy: 'no-cache',
-		});
+	let events = data.getEvents.events;
+	// async function fetchEvents(more) {
+	// 	const variables = { page, location, ...filters };
 
-		if (more) {
-			let { getEvents } = client.readQuery({
-				query: ALL_EVENTS_QUERY,
-				variables: {
-					...variables,
-					page: page - 1,
-				},
-			});
-			console.log(getEvents);
-			let uniqueEvents = getEvents.events.filter(
-				x => !events.some(y => x.tmID === y.tmID || y.id === x.id)
-			);
-			let newEvents = [ ...getEvents.events, ...uniqueEvents ];
-			client.writeQuery({
-				query: ALL_EVENTS_QUERY,
-				variables,
-				data: {
-					getEvents: {
-						...getEvents,
-						events: newEvents,
-					},
-				},
-			});
-			return newEvents;
-		}
+	// 	let { data, error, loading } = await client.query({
+	// 		query: ALL_EVENTS_QUERY,
+	// 		variables,
+	// 		fetchPolicy: 'cache-only',
+	// 	});
 
-		return data;
-	}
+	// 	if (more) {
+	// 		let { getEvents } = client.readQuery({
+	// 			query: ALL_EVENTS_QUERY,
+	// 			variables: {
+	// 				...variables,
+	// 				page: page - 1,
+	// 			},
+	// 		});
+	// 		console.log(getEvents);
+	// 		let uniqueEvents = getEvents.events.filter(
+	// 			x => !events.some(y => x.tmID === y.tmID || y.id === x.id)
+	// 		);
+	// 		let newEvents = [ ...getEvents.events, ...uniqueEvents ];
+	// 		client.writeQuery({
+	// 			query: ALL_EVENTS_QUERY,
+	// 			variables,
+	// 			data: {
+	// 				getEvents: {
+	// 					...getEvents,
+	// 					events: newEvents,
+	// 				},
+	// 			},
+	// 		});
+	// 		return newEvents;
+	// 	}
+
+	// 	return data;
+	// }
 
 	const [ updateUser ] = useMutation(UPDATE_USER_MUTATION, {
 		onCompleted: () => NProgress.done(),
 		onError: () => NProgress.done(),
 	});
 
-	useEffect(
-		() => {
-			if (firstUpdate.current) {
-				firstUpdate.current = false;
-				return;
-			}
-			NProgress.start();
-			setSkip(false);
-			fetchEvents().then(({ getEvents }) => setEvents(getEvents.events)).catch(e => console.log(e));
-		},
-		[ filters, location ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (firstUpdate.current) {
+	// 			firstUpdate.current = false;
+	// 			return;
+	// 		}
+	// 		NProgress.start();
+	// 		setSkip(false);
+	// 		fetchEvents().then(({ getEvents }) => setEvents(getEvents.events)).catch(e => console.log(e));
+	// 	},
+	// 	[ filters, location ]
+	// );
 
-	useEffect(
-		() => {
-			if (page > 0) {
-				NProgress.start();
-				setSkip(false);
+	// useEffect(
+	// 	() => {
+	// 		if (page > 0) {
+	// 			NProgress.start();
+	// 			setSkip(false);
 
-				fetchEvents(true)
-					.then(newEvents => {
-						console.log(newEvents);
-						setEvents(newEvents);
-						NProgress.done();
-					})
-					.catch(e => console.log(e));
-			}
-		},
-		[ page ]
-	);
+	// 			fetchEvents(true)
+	// 				.then(newEvents => {
+	// 					console.log(newEvents);
+	// 					setEvents(newEvents);
+	// 					NProgress.done();
+	// 				})
+	// 				.catch(e => console.log(e));
+	// 		}
+	// 	},
+	// 	[ page ]
+	// );
 	return (
 		<User>
 			{({ data: { currentUser } }) => (

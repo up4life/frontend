@@ -136,10 +136,10 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 		return grouped;
 	}
 
-	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
-		pollInterval: 600,
-	});
-	console.log(data);
+	// const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
+	// 	pollInterval: 600,
+	// });
+	// console.log(data);
 
 	const newMessageCount = (newMessages, user) => {
 		return newMessages.reduce((count, mess) => {

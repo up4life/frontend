@@ -10,7 +10,7 @@ const ChatPage = ({ messages, classes, user, lastSeenMessage, fromUser }) => {
 	const msgRef = useRef(null);
 
 	return (
-		<div style={{ overflowY: 'scroll', height: '350px' }} ref={msgRef}>
+		<div style={{ overflowY: 'scroll' }} ref={msgRef}>
 			{messages.map(msg => {
 				let fromMatch = msg[0].from.id !== user.id;
 				const img = msg[0].from.img.find(x => x.default).img_url;
