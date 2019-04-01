@@ -25,9 +25,9 @@ function Footer(props) {
 	const aClasses = classNames({
 		[classes.a]: true,
 	});
-
+	console.log(props.splash)
 	return (
-		<footer className={footerClasses}>
+		<footer style={props.splash ? {marginTop: '40px'}: null} className={footerClasses}>
 			<div className={classes.container}>
 				{children !== undefined ? (
 					<div>

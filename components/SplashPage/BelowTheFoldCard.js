@@ -31,24 +31,24 @@ const style = {
 };
 
 function BelowTheFoldCard(props) {
-  const { classes, gif, card, ...other } = props;
+  const { classes, gif, card, title, text, ...other } = props;
 
-  let borderColor;
+  let cardColor;
 
   if (card === 'first') {
-    borderColor = '#4cb5ae';
+    cardColor = '#4cb5ae';
   } else if (card === 'second') {
-    borderColor = '#ff101f';
+    cardColor = '#ff101f';
   } else {
-    borderColor = '#b2ddf7';
+    cardColor = '#b2ddf7';
   }
 
   return (
-    <Card style={{ border: `3px solid ${borderColor}` }} blog>
+    <Card style={{ border: `3px solid ${cardColor}` }} blog>
       <CardHeader image>
         <a href='#'>
           <img
-            style={{ border: `2px solid ${borderColor}` }}
+            style={{ border: `2px solid ${cardColor}` }}
             className={classes.imgCard}
             src={gif}
             alt=''
@@ -70,11 +70,10 @@ function BelowTheFoldCard(props) {
       </CardHeader>
       <CardBody>
         <Info>
-          <h6 className={classes.cardCategory}>Fashion</h6>
+          <h6 style={{color: `${cardColor}`, fontSize: '20px'}} className={classes.cardCategory}>{title}</h6>
         </Info>
-        <p>
-          Don't be scared of the truth because we need to restart the human foundation in truth And
-          I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+        <p style={{fontSize: "17px", lineHeight: '1.7', color: '#343434'}}>
+        {text}
         </p>
       </CardBody>
     </Card>

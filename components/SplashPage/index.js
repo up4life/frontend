@@ -21,6 +21,24 @@ import peopleGif from '../../static/img/people.gif';
 import chatGif from '../../static/img/chat.gif';
 import arrow from '../../static/img/up4Arrow.png';
 
+const copyArray = [
+  {
+    title: 'Events',
+    text:
+      "Live music, theater, sports — whatever you like to do just tell us what it is and we'll tell you where to find it.  There are a million stories in the city.  Find yours."
+  },
+  {
+    title: 'People',
+    text:
+      "Maybe you're just looking for new friends, maybe you're looking for something more.  Whatever it is tell us who you want to meet and we'll help connect you with people that want to meet you too."
+  },
+  {
+    title: 'Reach Out',
+    text:
+      'Keep in touch with your new connections on our chat.  Get notified the instant you revieve a new message and plan your rendezvous in real time.'
+  }
+];
+
 const Splash = ({ classes }) => {
   const [registerShowing, setRegisterShowing] = useState(false);
   const [loginShowing, setLoginShowing] = useState(false);
@@ -85,19 +103,25 @@ const Splash = ({ classes }) => {
             >
               <GridItem xs={12} sm={6}>
                 <Typography
+                  className={classes.greenGradient}
                   style={{
                     color: '#fafafa',
-                    backgroundColor: '#4cb5ae',
                     padding: '20px',
-                    borderRadius: '6px'
+                    borderRadius: '6px',
+                    textAlign: 'right'
                   }}
                   variant='h3'
                 >
-                  Somewhere to go.
+                  Somewhere
                 </Typography>
               </GridItem>
               <GridItem xs={12} sm={6}>
-                <BelowTheFoldCard card='first' gif={eventsGif} />
+                <BelowTheFoldCard
+                  title={copyArray[0].title}
+                  text={copyArray[0].text}
+                  card='first'
+                  gif={eventsGif}
+                />
               </GridItem>
             </GridContainer>
             <GridContainer
@@ -106,10 +130,16 @@ const Splash = ({ classes }) => {
               alignItems='center'
             >
               <GridItem xs={12} sm={6}>
-                <BelowTheFoldCard card='second' gif={peopleGif} />
+                <BelowTheFoldCard
+                  title={copyArray[1].title}
+                  text={copyArray[1].text}
+                  card='second'
+                  gif={peopleGif}
+                />
               </GridItem>
               <GridItem xs={12} sm={6}>
                 <Typography
+                  className={classes.redGradient}
                   style={{
                     color: '#fafafa',
                     backgroundColor: '#ff101f',
@@ -118,7 +148,7 @@ const Splash = ({ classes }) => {
                   }}
                   variant='h3'
                 >
-                  Someone to go with.
+                  Someone
                 </Typography>
               </GridItem>
             </GridContainer>
@@ -129,24 +159,30 @@ const Splash = ({ classes }) => {
             >
               <GridItem xs={12} sm={6}>
                 <Typography
+                  className={classes.blueGradient}
                   style={{
                     color: '#fafafa',
-                    backgroundColor: '#b2ddf7',
                     padding: '20px',
-                    borderRadius: '6px'
+                    borderRadius: '6px',
+                    textAlign: 'right'
                   }}
                   variant='h3'
                 >
-                  Some kind of night.
+                  Some Night
                 </Typography>
               </GridItem>
               <GridItem xs={12} sm={6}>
-                <BelowTheFoldCard card='third' gif={chatGif} />
+                <BelowTheFoldCard
+                  title={copyArray[2].title}
+                  text={copyArray[2].text}
+                  card='third'
+                  gif={chatGif}
+                />
               </GridItem>
             </GridContainer>
           </GridContainer>
         </div>
-        <Footer />
+        <Footer splash />
       </div>
     </div>
   );

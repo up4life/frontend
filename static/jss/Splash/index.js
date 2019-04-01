@@ -123,20 +123,29 @@ const styles = theme => {
       }
     },
     belowTheFold: {
-      width: '100%',
-      backgroundColor: 'black'
+	  width: '100%',
+	  backgroundImage: 'linear-gradient(to bottom, #000000, #080003, #0d0009, #0f0011, #0d0217, #0d0217, #0d0217, #0d0217, #0f0011, #0d0009, #080003, #000000)'
     },
     mainAddendum: {
       backgroundColor: 'rgb(38, 35, 35)',
       backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-matter.png)'
-	},
-	foldBox: {
-		borderRadius: '6px',
-		padding: '20px',
-		marginBottom: '60px',
-		backgroundColor: '#8080802e',
-		maxWidth: '100%'
-	}
+    },
+    foldBox: {
+      borderRadius: '6px',
+      padding: '20px',
+      marginBottom: '60px',
+      backgroundColor: '#8080802e',
+      maxWidth: '100%'
+    },
+    greenGradient: {
+      backgroundImage: 'linear-gradient(to left, #4cb5ae, #63c6c0, #79d8d1, #8feae4, #a4fcf6)'
+    },
+    redGradient: {
+      backgroundImage: 'linear-gradient(to right, #ff101f, #fe3037, #fb454b, #f7565e, #f1666f)'
+    },
+    blueGradient: {
+      backgroundImage: 'linear-gradient(to right, #b2ddf7, #9cceed, #86bfe3, #6fb1da, #56a2d0)'
+    }
   };
 };
 
