@@ -95,7 +95,7 @@ const Chat = ({
 	const msgRef = useRef(null);
 
 	//Flip flop this lil guy
-	currentUser.verified = true;
+	//currentUser.verified = true;
 
 	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
