@@ -52,7 +52,8 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 	const [ chatPage, showChat ] = useState(false);
 	const [ message, setMessage ] = useState(undefined);
 	const [ sendMessage ] = useMutation(SEND_MESSAGE_MUTATION, {
-		onCompleted: () => {
+		onCompleted: e => {
+			console.log(e);
 			NProgress.done();
 			setMessage(undefined);
 		},
@@ -61,7 +62,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 			console.log(e);
 		},
 	});
-
+	console.log(message);
 	useEffect(
 		() => {
 			if (chatPage) {
@@ -136,10 +137,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 		return grouped;
 	}
 
-	// const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY, {
-	// 	pollInterval: 600,
-	// });
-	// console.log(data);
+	const { data, loading, refetch } = useQuery(ALL_CHATS_QUERY);
 
 	const newMessageCount = (newMessages, user) => {
 		return newMessages.reduce((count, mess) => {
@@ -312,25 +310,27 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
 						/>,
 						<form
 							className={classes.expandedChat}
-							onSubmit={e => {
-								e.preventDefault();
-								NProgress.start();
-								sendMessage({
-									variables: {
-										id: data.getUserChats
-											.find(x => x.id === chatPage)
-											.users.find(x => x.id !== user.id).id,
-										message,
-									},
-								});
-								setMessage(undefined);
-							}}
+							// onSubmit={e => {
+							// 	console.log('hi');
+							// 	e.preventDefault();
+							// 	console.log(message);
+							// 	NProgress.start();
+							// 	sendMessage({
+							// 		variables: {
+							// 			id: data.getUserChats
+							// 				.find(x => x.id === chatPage)
+							// 				.users.find(x => x.id !== user.id).id,
+							// 			message,
+							// 		},
+							// 	});
+							// }}
 						>
 							<input
 								ref={msgRef}
 								className={classes.textareaAutosize}
 								onClick={e => e.stopPropagation()}
 								onChange={e => {
+									console.log('hi');
 									setMessage(e.target.value);
 								}}
 								placeholder={`Respond to ${data.getUserChats &&

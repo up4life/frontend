@@ -96,9 +96,9 @@ const Chat = ({
 
 	//Flip flop this lil guy
 	currentUser.verified = true;
-	
-	const [isTyping, setIsTyping] = useState(false);
-	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION)
+
+	const [ isTyping, setIsTyping ] = useState(false);
+	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
 
 	useEffect(
 		() => {
@@ -369,8 +369,7 @@ const Chat = ({
 						</form>
 					)}
 			</Mutation>
-			{
-				data.getConversation &&
+			{data.getConversation && (
 				<div>
 					{data.getConversation.typing.find(user => user.firstName === match.firstName) ? (
 						`${match.firstName} is typing...`
@@ -378,7 +377,7 @@ const Chat = ({
 						''
 					)}
 				</div>
-			}
+			)}
 		</div>
 	);
 };
