@@ -18,13 +18,14 @@ const DELETE_USER = gql`
   }
 `;
 
-const Footer = ({ classes, splash }) => {
+const Footer = (props) => {
   const [termsShowing, setTermsShowing] = useState(false);
   const [deleteUser] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
 
+	const {classes, splash} = props;
   return (
     <StyledFooter
-      splash
+		stuff={props}
       theme='dark'
       content={
         <div>
@@ -79,7 +80,7 @@ const Footer = ({ classes, splash }) => {
             <ul>
               <li>
                 <Button
-                  href='https://github.com/Lambda-School-Labs/labs10-date-planning'
+                  href='https://github.com/up4life'
                   color='twitter'
                   justIcon
                   simple='true'
