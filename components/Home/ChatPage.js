@@ -7,10 +7,8 @@ import { Drawer, IconButton, ClickAwayListener, Badge, Fab, Tooltip } from '@mat
 import date from '../../utils/formatDate';
 
 const ChatPage = ({ messages, classes, user, lastSeenMessage, fromUser }) => {
-	const msgRef = useRef(null);
-
 	return (
-		<div style={{ overflowY: 'scroll', height: '350px' }} ref={msgRef}>
+		<div style={{ overflowY: 'scroll' }}>
 			{messages.map(msg => {
 				let fromMatch = msg[0].from.id !== user.id;
 				const img = msg[0].from.img.find(x => x.default).img_url;

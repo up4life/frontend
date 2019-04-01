@@ -19,7 +19,6 @@ const CREATE_ORDER_MUTATION = gql`
 
 const Billing = props => {
 	const onToken = async (res, subsType, createOrder) => {
-		console.log(res);
 		await createOrder({
 			variables: {
 				token: res.id,
@@ -53,11 +52,7 @@ const Billing = props => {
 						amount={props.subsType === 'MONTHLY' ? 499 : 2999}
 						name='Up4'
 						description={
-							props.subsType === 'MONTHLY' ? (
-								'Monthly subscription'
-							) : (
-								'One year subscription'
-							)
+							props.subsType === 'MONTHLY' ? 'Monthly subscription' : 'One year subscription'
 						}
 						stripeKey='pk_test_I2tyS9xJRaeVZluJHp9CvKcB'
 						currency='USD'
