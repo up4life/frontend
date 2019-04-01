@@ -112,11 +112,11 @@ const Chat = ({
 			} 
 		},
 		[]
-		)
+	)
 		
-		useEffect(
-			() => {
-				if (isTyping && !message.trim() && data.getConversation) {
+	useEffect(
+		() => {
+			if (isTyping && !message.trim() && data.getConversation) {
 					toggleTyping({
 						variables: {
 						chatId: data.getConversation.id,
