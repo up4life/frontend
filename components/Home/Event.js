@@ -300,12 +300,11 @@ const Event = ({ event, classes, user, first }) => {
 										/>
 									</Fragment>
 								) : (
-									<div
-										style={{
-											width: '40px',
-											height: '40px',
-										}}
-									/>
+									<UserImage
+											src={user.img.find(img => img.default).img_url}
+											className={classes.meImg}
+											pose={isSaved ? 'liked' : 'hidden'}
+										/>
 								)}
 							</div>
 
