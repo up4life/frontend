@@ -50,7 +50,7 @@ const Events = props => {
   });
 
   const { data } = useQuery(ALL_EVENTS_QUERY, { variables: { page, location, ...filters } });
-  console.log(data);
+  
 
   let events = data.getEvents.events;
   // async function fetchEvents(more) {

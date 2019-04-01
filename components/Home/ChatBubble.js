@@ -72,6 +72,7 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
   const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
     variables: { id: user.id },
     onSubscriptionData: async ({ client, subscriptionData }) => {
+			console.log(subscriptionData)
       let from = subscriptionData.data.myMessages.node.from;
       if (from.id !== user.id) {
         enqueueSnackbar(`New message from ${from.firstName}`, {
@@ -184,6 +185,9 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
             >
               Back
             </Button>
+						<div>
+									<audio ref={audioRef} src='/static/quiet-knock.mp3' />
+								</div>
           </div>
         ) : (
           <Button
@@ -307,20 +311,20 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
               />,
               <form
                 className={classes.expandedChat}
-                // onSubmit={e => {
-                // 	console.log('hi');
-                // 	e.preventDefault();
-                // 	console.log(message);
-                // 	NProgress.start();
-                // 	sendMessage({
-                // 		variables: {
-                // 			id: data.getUserChats
-                // 				.find(x => x.id === chatPage)
-                // 				.users.find(x => x.id !== user.id).id,
-                // 			message,
-                // 		},
-                // 	});
-                // }}
+                onSubmit={e => {
+                	console.log('hi');
+                	e.preventDefault();
+                	console.log(message);
+                	NProgress.start();
+                	sendMessage({
+                		variables: {
+                			id: data.getUserChats
+                				.find(x => x.id === chatPage)
+                				.users.find(x => x.id !== user.id).id,
+                			message,
+                		},
+                	});
+                }}
               >
                 <input
                   ref={msgRef}
@@ -334,18 +338,18 @@ const Chat = ({ classes, enqueueSnackbar, router, user }) => {
                     data.getUserChats.find(x => x.id === chatPage).users.find(x => x.id !== user.id)
                       .firstName}`}
                   value={message}
-                  onKeyDown={e => {
-                    if (e.keyCode === 13) {
-                      sendMessage({
-                        variables: {
-                          id: data.getUserChats
-                            .find(x => x.id === chatPage)
-                            .users.find(x => x.id !== user.id).id,
-                          message
-                        }
-                      });
-                    }
-                  }}
+                  // onKeyDown={e => {
+                  //   if (e.keyCode === 13) {
+                  //     sendMessage({
+                  //       variables: {
+                  //         id: data.getUserChats
+                  //           .find(x => x.id === chatPage)
+                  //           .users.find(x => x.id !== user.id).id,
+                  //         message
+                  //       }
+                  //     });
+                  //   }
+                  // }}
                 />
               </form>
             ]
