@@ -14,7 +14,7 @@ import navbarsStyle from '../../static/jss/material-kit-pro-react/views/componen
 
 import User from '../Queries/User';
 // styled components
-
+import Button from '../../styledComponents/CustomButtons/Button.jsx';
 import Header from '../../styledComponents/Header/Header.jsx';
 
 import CustomDropdown from '../../styledComponents/CustomDropdown/CustomDropdown.jsx';
