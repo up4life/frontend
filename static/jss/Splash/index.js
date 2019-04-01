@@ -116,11 +116,35 @@ const styles = theme => {
     },
     autofillOverride: {
       '& input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill, textarea:-webkit-autofill, textarea:-webkit-autofill:hover, textarea:-webkit-autofill:focus, select:-webkit-autofill, select:-webkit-autofill:hover, select:-webkit-autofill:focus': {
-		'-webkit-box-shadow': '0 0 0 30px #262323 inset !important',
-		border: 'none !important',
-		'-webkit-text-fill-color': '#fafafa !important',
-		transition: 'background-color 5000s ease-in-out 0s'
+        '-webkit-box-shadow': '0 0 0 30px #262323 inset !important',
+        border: 'none !important',
+        '-webkit-text-fill-color': '#fafafa !important',
+        transition: 'background-color 5000s ease-in-out 0s'
       }
+    },
+    belowTheFold: {
+	  width: '100%',
+	  backgroundImage: 'linear-gradient(to bottom, #000000, #080003, #0d0009, #0f0011, #0d0217, #0d0217, #0d0217, #0d0217, #0f0011, #0d0009, #080003, #000000)'
+    },
+    mainAddendum: {
+      backgroundColor: 'rgb(38, 35, 35)',
+      backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-matter.png)'
+    },
+    foldBox: {
+      borderRadius: '6px',
+      padding: '20px',
+      marginBottom: '60px',
+      backgroundColor: '#8080802e',
+      maxWidth: '100%'
+    },
+    greenGradient: {
+      backgroundImage: 'linear-gradient(to left, #4cb5ae, #63c6c0, #79d8d1, #8feae4, #a4fcf6)'
+    },
+    redGradient: {
+      backgroundImage: 'linear-gradient(to right, #ff101f, #fe3037, #fb454b, #f7565e, #f1666f)'
+    },
+    blueGradient: {
+      backgroundImage: 'linear-gradient(to right, #b2ddf7, #9cceed, #86bfe3, #6fb1da, #56a2d0)'
     }
   };
 };

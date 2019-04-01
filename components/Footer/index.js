@@ -11,40 +11,41 @@ import ListItem from '@material-ui/core/ListItem';
 import Terms from './TermsModal';
 
 const DELETE_USER = gql`
-	mutation {
-		deleteUser {
-			message
-		}
-	}
+  mutation {
+    deleteUser {
+      message
+    }
+  }
 `;
 
-const Footer = ({ classes }) => {
-	const [ termsShowing, setTermsShowing ] = useState(false);
-	const [ deleteUser ] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
+const Footer = ({ classes, splash }) => {
+  const [termsShowing, setTermsShowing] = useState(false);
+  const [deleteUser] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
 
-	return (
-		<StyledFooter
-			theme='dark'
-			content={
-				<div>
-					<div className={classes.left}>
-						<div
-							className={classes.footerBrand}
-							style={{
-								fontFamily: 'Baumans',
-								fontSize: '24px',
-								color: '#fafafa',
-								lineHeight: 'normal',
-							}}
-						>
-							<span style={{ color: '#4cb5ae' }}>Up</span>4
-						</div>
-					</div>
-					<Button simple onClick={() => setTermsShowing(true)}>
-						Our terms and privacy policy
-					</Button>
-					<Terms showing={termsShowing} setShowing={setTermsShowing} />
-					{/* <div className={classes.pullCenter}>
+  return (
+    <StyledFooter
+      splash
+      theme='dark'
+      content={
+        <div>
+          <div className={classes.left}>
+            <div
+              className={classes.footerBrand}
+              style={{
+                fontFamily: 'Baumans',
+                fontSize: '24px',
+                color: '#fafafa',
+                lineHeight: 'normal'
+              }}
+            >
+              <span style={{ color: '#4cb5ae' }}>Up</span>4
+            </div>
+          </div>
+          <Button simple onClick={() => setTermsShowing(true)}>
+            Our terms and privacy policy
+          </Button>
+          <Terms showing={termsShowing} setShowing={setTermsShowing} />
+          {/* <div className={classes.pullCenter}>
 						<List className={classes.list}>
 							<ListItem className={classes.inlineBlock}>
 								<a href='https://www.creative-tim.com/' className={classes.block}>
@@ -74,24 +75,24 @@ const Footer = ({ classes }) => {
 							</ListItem>
 						</List>
 					</div> */}
-					<div className={classes.rightLinks}>
-						<ul>
-							<li>
-								<Button
-									href='https://github.com/Lambda-School-Labs/labs10-date-planning'
-									color='twitter'
-									justIcon
-									simple='true'
-								>
-									<i className='fab fa-github' />
-								</Button>
-							</li>
-							{/* <li>
+          <div className={classes.rightLinks}>
+            <ul>
+              <li>
+                <Button
+                  href='https://github.com/Lambda-School-Labs/labs10-date-planning'
+                  color='twitter'
+                  justIcon
+                  simple='true'
+                >
+                  <i className='fab fa-github' />
+                </Button>
+              </li>
+              {/* <li>
 								<Button onClick={() => deleteUser()} color='google' justIcon simple>
 									<i className='fab fa-google-plus-g' />
 								</Button>
 							</li> */}
-							{/* <li>
+              {/* <li>
 								<Button
 									href='https://dribbble.com/creativetim'
 									color='dribbble'
@@ -111,12 +112,12 @@ const Footer = ({ classes }) => {
 									<i className='fab fa-google-plus-g' />
 								</Button>
 							</li> */}
-						</ul>
-					</div>
-				</div>
-			}
-		/>
-	);
+            </ul>
+          </div>
+        </div>
+      }
+    />
+  );
 };
 
 export default withStyles(styles)(Footer);
