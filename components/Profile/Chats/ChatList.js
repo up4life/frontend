@@ -128,19 +128,7 @@ export default ({ user }) => {
 									if (!subscriptionData) return prev;
 
 									if (subscriptionData.data.myChat.mutation === "UPDATED") {
-										const newChats = prev.getUserChats.map(chat => {
-											if (chat.id === subscriptionData.data.myChat.node.id) {
-												return {
-													...chat,
-													typing: [...subscriptionData.data.myChat.node.typing]
-												}
-											}
-											chat
-										})
-
-										return {
-											getUserChats: newChats
-										}
+										return prev
 									}
 
 									const newNode = [...prev.getUserChats, subscriptionData.data.myChat.node];
