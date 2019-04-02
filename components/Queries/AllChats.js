@@ -9,32 +9,29 @@ export const ALL_CHATS_QUERY = gql`
 				firstName
 				img {
 					id
-					default
 					img_url
+					default
 				}
-				dob
-				gender
+			}
+			typing {
+				id
+				firstName
 			}
 			messages {
 				id
 				text
-				createdAt
 				seen
-				updatedAt
+				createdAt
 				from {
 					id
 					firstName
 					img {
 						id
-						default
 						img_url
+						default
 					}
-					dob
-					gender
 				}
-				chat {
-					id
-				}
+				updatedAt
 			}
 		}
 	}

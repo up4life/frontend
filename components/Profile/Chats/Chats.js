@@ -1,64 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+
+import { Paper, Typography } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
+
 import LikedBy from '../LikedBy';
-import { Paper, Grid, Typography } from '@material-ui/core';
-import GridContainer from '../../../styledComponents/Grid/GridContainer';
-import GridItem from '../../../styledComponents/Grid/GridItem';
-import profileStandIn from '../../../static/img/placeholder.jpg';
-import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
-import ExpandedChat from './ExpandedChat';
+import ChatContainer from '../../SingleChatContainer';
+import { ChatCtx } from '../../ConvoContainer';
 import SmallChat from './SideView';
 
-const Chats = ({ data, currentUser, classes }) => {
-	const [ chatId, setChatId ] = useState(undefined);
+import GridContainer from '../../../styledComponents/Grid/GridContainer';
+import GridItem from '../../../styledComponents/Grid/GridItem';
 
-	// useEffect(() => {
-	// 	subscribeToNewChats();
-	// }, []);
+import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/basicsStyle.jsx';
 
-	// const handleSelectUser = usr => {
-	// 	let chat;
-	// 	if (data.getUserChats && data.getUserChats.length) {
-	// 		chat = data.getUserChats.find(chat => chat.users.some(x => x.id === usr.id));
-	// 	}
-	// 	if (chat) setChatId(chat.id);
-	// 	else {
-	// 		setChatId(undefined);
-	// 		setNewChatUser(usr);
-	// 	}
-	// };
-
-	const formattedChats = userChats => {
-		return userChats
-			.filter(msg => msg.messages)
-			.map(chatObj => {
-				let newMsgs = chatObj.messages.filter(msg => msg.from.id !== currentUser.id && !msg.seen);
-				let len = chatObj.messages.length - 1;
-				const { messages, users } = chatObj;
-				let [ usr ] = users.filter(usr => usr.id !== currentUser.id);
-				let img = usr.img.length ? usr.img.find(img => img.default).img_url : profileStandIn;
-
-				return {
-					id: chatObj.id,
-					from: usr.firstName,
-					fromId: usr.id,
-					text: messages[len].text,
-					img: img,
-					time: messages[len].createdAt,
-					newMsgs: newMsgs.length,
-					typing: chatObj.typing.map(user => user.firstName),
-				};
-			})
-			.sort((a, b) => {
-				let dateA = new Date(a.time);
-				let dateB = new Date(b.time);
-				return dateB - dateA;
-			});
-	};
-
-	const selectedChat = !data.getUserChats
-		? null
-		: data.getUserChats.find(chat => chat.id === chatId);
+const Chats = ({ classes }) => {
+	const { formattedChats, chat, data, setChat, currentUser } = useContext(ChatCtx);
 
 	return (
 		<div className={classes.container} style={{ padding: '30px 0' }}>
@@ -100,15 +56,15 @@ const Chats = ({ data, currentUser, classes }) => {
 								}}
 							>
 								{data.getUserChats &&
-									formattedChats(data.getUserChats).map((chat, i) => (
+									formattedChats.map((c, i) => (
 										<div
-											key={chat.id}
+											key={c.id}
 											style={{ cursor: 'pointer' }}
 											onClick={() => {
-												setChatId(chat.id);
+												setChat(c.id);
 											}}
 										>
-											<SmallChat chat={chat} setChat={setChatId} selectedChat={selectedChat} />
+											<SmallChat chat={c} setChat={setChat} selectedChat={chat} />
 										</div>
 									))}
 							</div>
@@ -124,21 +80,7 @@ const Chats = ({ data, currentUser, classes }) => {
 									'url("https://www.transparenttextures.com/theme/images/transparent.png")',
 							}}
 						>
-							{/* <Typography
-                variant="div"
-                gutterBottom
-                style={{
-                  textAlign: "center",
-                  padding: "7px",
-                  borderTopLeftRadius: "6px",
-                  color: "white"
-                }}
-              >
-                <h4 style={{ margin: "15px" }} className={classes.title}>
-                  Select a user to the left.
-                </h4>
-              </Typography> */}
-							<ExpandedChat chat={selectedChat} currentUser={currentUser} />
+							<ChatContainer />
 						</Paper>
 					</GridItem>
 				</GridContainer>

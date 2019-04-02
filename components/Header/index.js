@@ -101,8 +101,8 @@ const MY_MESSAGE_SUBSCRIPTION = gql`
 const Nav = ({ classes, color, router, enqueueSnackbar, user }) => {
 	const audioRef = useRef(null);
 	useSubscription(MY_CHAT_SUBSCRIPTION, {
-		variables: { id: user.id }
-	})
+		variables: { id: user.id },
+	});
 	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
 		variables: { id: user.id },
 		onSubscriptionData: async ({ client, subscriptionData }) => {

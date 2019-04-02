@@ -1,7 +1,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import moment from 'moment';
-import { Badge, Divider } from '@material-ui/core';
+
+import { Badge } from '@material-ui/core';
 import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
 import date from '../../../utils/formatDate';
 

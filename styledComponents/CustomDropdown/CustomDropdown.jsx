@@ -61,6 +61,7 @@ class CustomDropdown extends React.Component {
 			messages,
 			rtlActive,
 			noLiPadding,
+			stuff,
 			innerDropDown,
 			navDropdown,
 			...rest
@@ -89,7 +90,7 @@ class CustomDropdown extends React.Component {
 							{dropdownHeader}
 						</MenuItem>
 					) : null}
-					<div style={{ maxHeight: '300px', overflow: 'visible' }}>
+					<div style={{ maxHeight: '300px', overflow: 'visible', marginTop: '30px' }}>
 						{dropdownList.map((prop, key) => {
 							if (prop.divider) {
 								return (
@@ -122,6 +123,22 @@ class CustomDropdown extends React.Component {
 						})}
 					</div>
 				</MenuList>
+			</div>
+		);
+
+		const otherThing = (
+			<div>
+				<MenuList role='menu' className={classes.menuList}>
+					{dropdownHeader !== undefined ? (
+						<MenuItem
+							onClick={() => this.handleCloseMenu(dropdownHeader)}
+							className={messages ? classes.messagesHeader : classes.dropdownHeader}
+						>
+							{dropdownHeader}
+						</MenuItem>
+					) : null}
+				</MenuList>
+				<div style={{ maxHeight: '300px', overflow: 'visible', marginTop: '30px' }}>{stuff}</div>
 			</div>
 		);
 		return (
@@ -164,7 +181,9 @@ class CustomDropdown extends React.Component {
 							style={dropup ? { transformOrigin: '0 100% 0' } : { transformOrigin: '0 0 0' }}
 						>
 							<Paper className={messages ? classes.msgdd : classes.dropdown}>
-								{innerDropDown ? (
+								{stuff ? (
+									otherThing
+								) : innerDropDown ? (
 									dropDownMenu
 								) : (
 									<ClickAwayListener onClickAway={this.handleClose} ref='cacat'>
