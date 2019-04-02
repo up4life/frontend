@@ -37,7 +37,7 @@ const Pro = ({ classes }) => {
 				</Button>
 			</Link>
 			<Link prefetch href='/home'>
-				<Button size='sm' simple className={classes.skipButton}>
+				<Button size='sm' simple component='div' className={classes.skipButton}>
 					Skip For Now
 				</Button>
 			</Link>

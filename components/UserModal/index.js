@@ -130,6 +130,8 @@ const Composed = adopt({
 });
 
 const UserModal = ({ classes, user, router, currentUser }) => {
+	currentUser.verified = true;
+	console.log(currentUser);
 	const [ reportUser, handleReport ] = useState(false);
 	return (
 		<Composed id={user}>

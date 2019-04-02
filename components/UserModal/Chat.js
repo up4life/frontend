@@ -94,31 +94,30 @@ const Chat = ({
 	const markAllAsSeen = useMutation(MARK_SEEN);
 	const msgRef = useRef(null);
 
-	//Flip flop this lil guy
+	// flop this lil guy
 	//currentUser.verified = true;
+	currentUser.permissions = 'yay';
 
 	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
 
-	useEffect(
-		() => {
-			if (data.getConversation) {
-				return () => toggleTyping({
+	useEffect(() => {
+		if (data.getConversation) {
+			return () =>
+				toggleTyping({
 					variables: {
 						chatId: data.getConversation.id,
 						isTyping: false,
 					},
-				})
-			} 
-		},
-		[]
-	)
-		
+				});
+		}
+	}, []);
+
 	useEffect(
 		() => {
 			if (isTyping && !message.trim() && data.getConversation) {
-					toggleTyping({
-						variables: {
+				toggleTyping({
+					variables: {
 						chatId: data.getConversation.id,
 						isTyping: false,
 					},
