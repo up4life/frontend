@@ -28,7 +28,7 @@ export default withApollo(
 				uri: wsEndpoint,
 				options: {
 					connectionParams: {
-						authToken: user.authToken
+						auth: 'auth passed here'
 					},
 					reconnect: true,
 					reconnectionAttempts: 50,
