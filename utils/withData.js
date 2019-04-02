@@ -8,52 +8,45 @@ import { onError } from 'apollo-link-error';
 import withApollo from 'next-with-apollo';
 import ApolloClient from 'apollo-client';
 import getConfig from 'next/config';
-const { publicRuntimeConfig } = getConfig();
+const {
+	publicRuntimeConfig: { endpoint, wsEndpoint }
+} = getConfig();
 
 export default withApollo(
-	({ headers }) => {
+	({ ctx, headers }) => {
 		const ssrMode = !process.browser;
 
 		const httpLink = createHttpLink({
-			uri: publicRuntimeConfig.endpoint,
+			uri: endpoint
 		});
+
+		console.log(ctx, 'ctx here');
 
 		const wsLink =
 			!ssrMode &&
 			new WebSocketLink({
-				uri: publicRuntimeConfig.wsEndpoint,
+				uri: wsEndpoint,
 				options: {
+					connectionParams: {
+						authToken: user.authToken
+					},
 					reconnect: true,
 					reconnectionAttempts: 50,
 					lazy: true,
-					timeout: 20000,
-				},
+					timeout: 20000
+				}
 			});
 
 		const contextLink = setContext(() => ({
 			fetchOptions: {
-				credentials: 'include',
+				credentials: 'include'
 			},
 			headers: {
 				...headers,
 				host: process.env.NODE_ENV === 'development' ? 'localhost' : 'api.up4.life',
-				cookie: headers && headers.cookie,
-			},
+				cookie: headers && headers.cookie
+			}
 		}));
-
-		// const middlewareLink = new ApolloLink((operation, forward) => {
-		// 	return forward(operation).map(response => {
-		// 		const context = operation.getContext();
-
-		// 		if (context.req && context.req.headers) {
-		// 			const cookie = context.req.headers.get("set-cookie");
-		// 			if (cookie) {
-		// 				console.log(cookie);
-		// 			}
-		// 		}
-		// 		return response;
-		// 	});
-		// });
 
 		const errorLink = onError(({ graphQLErrors, networkError }) => {
 			if (graphQLErrors) {
@@ -62,7 +55,7 @@ export default withApollo(
 			if (networkError) console.log(`[Network error]: ${networkError}`);
 		});
 
-		let link = ApolloLink.from([ errorLink, contextLink, httpLink ]);
+		let link = ApolloLink.from([errorLink, contextLink, httpLink]);
 
 		if (!ssrMode) {
 			link = split(
@@ -79,13 +72,14 @@ export default withApollo(
 		}
 
 		const cache = new InMemoryCache({
-			dataIdFromObject: (data) => (data && data.id && data.__typename ? data.__typename + data.id : null),
+			dataIdFromObject: data =>
+				data && data.id && data.__typename ? data.__typename + data.id : null
 		});
 
 		return new ApolloClient({
 			link,
 			ssrMode,
-			cache,
+			cache
 		});
 	},
 	{ getDataFromTree: 'always' }
