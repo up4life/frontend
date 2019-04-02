@@ -9,12 +9,12 @@ import styles from '../../../static/jss/material-kit-pro-react/views/componentsS
 import ExpandedChat from './ExpandedChat';
 import SmallChat from './SideView';
 
-const Chats = ({ subscribeToNewChats, data, currentUser, classes }) => {
+const Chats = ({ data, currentUser, classes }) => {
 	const [ chatId, setChatId ] = useState(undefined);
 
-	useEffect(() => {
-		subscribeToNewChats();
-	}, []);
+	// useEffect(() => {
+	// 	subscribeToNewChats();
+	// }, []);
 
 	// const handleSelectUser = usr => {
 	// 	let chat;

@@ -40,45 +40,6 @@ import getAge from '../../utils/getAge';
 
 import Fire from '../../static/icons/Fire.js';
 
-const MESSAGE_SUBSCRIPTION = gql`
-	subscription($chatId: String!) {
-		myMessage(chatId: $chatId) {
-			mutation
-			node {
-				id
-				users {
-					id
-					firstName
-					img {
-						id
-						default
-						img_url
-					}
-				}
-				typing {
-					firstName
-				}
-				messages {
-					id
-					text
-					seen
-					updatedAt
-					from {
-						id
-						firstName
-						img {
-							id
-							default
-							img_url
-						}
-					}
-					createdAt
-				}
-			}
-		}
-	}
-`;
-
 let settings = {
 	dots: true,
 	infinite: true,
@@ -358,22 +319,6 @@ const UserModal = ({ classes, user, router, currentUser }) => {
 													match={match}
 													currentUser={currentUser}
 													refetch={refetch}
-													subscribeToNewMessages={() => {
-														data &&
-															data.getConversation &&
-															subscribeToMore({
-																document: MESSAGE_SUBSCRIPTION,
-																variables: {
-																	chatId: data.getConversation.id,
-																},
-																updateQuery: (prev, { subscriptionData }) => {
-																	if (!subscriptionData) return prev;
-																	return {
-																		...prev,
-																	};
-																},
-															});
-													}}
 												/>
 											);
 										}}
