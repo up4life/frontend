@@ -84,7 +84,6 @@ const Chat = ({
 	data,
 	id,
 	currentUser,
-	subscribeToNewMessages,
 	match,
 	client,
 	refetch,
@@ -139,7 +138,7 @@ const Chat = ({
 	);
 
 	useEffect(() => {
-		subscribeToNewMessages();
+		// subscribeToNewMessages();
 		// if (!currentUser.verified) {
 		// 	setError({
 		// 		msg: 'You must verify your account before you can send messages!',
