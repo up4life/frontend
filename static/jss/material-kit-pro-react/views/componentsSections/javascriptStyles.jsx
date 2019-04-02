@@ -168,6 +168,14 @@ const javascriptStyles = theme => {
 			backgroundColor: '#373737',
 			backgroundImage: 'url(https://www.transparenttextures.com/patterns/dark-fish-skin.png)',
 		},
+		smallMessageList: {
+			height: '80%',
+			overflow: 'scroll',
+			padding: '20px 10px',
+			borderRadius: '6px',
+			//border: '1px solid #a7defa',
+			backgroundColor: '#373737',
+		},
 		gradientBox: {
 			display: 'flex',
 			alignItems: 'center',

@@ -1,20 +1,21 @@
-import React, { useEffect, useState, Fragment, useRef } from 'react';
+import React, { useEffect, useState, Fragment, useRef, useContext } from 'react';
 import NProgress from 'nprogress';
 import { Mutation, withApollo } from 'react-apollo';
 import { useMutation } from 'react-apollo-hooks';
-import Router from 'next/router';
+import Router, { withRouter } from 'next/router';
 import moment from 'moment';
 import gql from 'graphql-tag';
+import { ChatCtx } from './ConvoContainer';
 import { withStyles, ButtonBase, Tooltip } from '@material-ui/core';
-import Verify from '../../verifyPhone';
-import styles from '../../../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
-import Button from '../../../styledComponents/CustomButtons/Button';
-import CustomInput from '../../../styledComponents/CustomInput/CustomInput.jsx';
-import Media from '../../../styledComponents/Media/Media.jsx';
+import Verify from './verifyPhone';
+import styles from '../static/jss/material-kit-pro-react/views/componentsSections/javascriptStyles.jsx';
+import Button from '../styledComponents/CustomButtons/Button';
+import CustomInput from '../styledComponents/CustomInput/CustomInput.jsx';
+import Media from '../styledComponents/Media/Media.jsx';
 import { Send } from '@material-ui/icons';
 import TextareaAutosize from 'react-autosize-textarea';
-import scrollbar from '../../../static/jss/ScrollbarStyles';
-import date from '../../../utils/formatDate';
+import scrollbar from '../static/jss/ScrollbarStyles';
+import date from '../utils/formatDate';
 
 const TOGGLE_TYPING_MUTATION = gql`
 	mutation TOGGLE_TYPING_MUTATION($chatId: String!, $isTyping: Boolean!) {
@@ -73,13 +74,28 @@ const REMAINING_MESSAGES = gql`
 	}
 `;
 
-const Chat = ({ chat, currentUser, classes, client }) => {
+const ChatContainer = ({ classes, client, router, small }) => {
+	const { chat, currentUser } = useContext(ChatCtx);
 	const [ message, setMessage ] = useState('');
 	const msgRef = useRef(null);
+	const pageRef = useRef(null);
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
 	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
+
+	useEffect(() => {
+		// if (!currentUser.verified) {
+		// 	setError({
+		// 		msg: 'You must verify your account before you can send messages!',
+		// 		link: null,
+		// 		linkText: 'Verify now?',
+		// 	});
+		// } else
+		if (currentUser.permissions === 'FREE') {
+			getRemainingMessages();
+		}
+	}, []);
 
 	useEffect(
 		() => {
@@ -91,15 +107,28 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 							chatId: chat.id,
 							isTyping: false,
 						},
-					})
-				}
+					});
+				};
 			} else {
 				return () => {
 					setMessage('');
-				}
+				};
 			}
-		}, [ chat && chat.id ]
-	)
+		},
+		[ chat && chat.id ]
+	);
+
+	useEffect(
+		() => {
+			if (msgRef.current) {
+				msgRef.current.focus();
+			}
+			if (pageRef.current) {
+				pageRef.current.scrollTop = pageRef.current.scrollHeight;
+			}
+		},
+		[ chat ]
+	);
 
 	useEffect(
 		() => {
@@ -126,19 +155,6 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	);
 
 	useEffect(() => {
-		// if (!currentUser.verified) {
-		// 	setError({
-		// 		msg: 'You must verify your account before you can send messages!',
-		// 		link: null,
-		// 		linkText: 'Verify now?',
-		// 	});
-		// } else
-		if (currentUser.permissions === 'FREE') {
-			getRemainingMessages();
-		}
-	}, []);
-
-	useEffect(() => {
 		const unSeen = chat && chat.messages.filter(msg => !msg.seen && msg.from.id !== currentUser.id);
 
 		if (unSeen && unSeen.length > 0) {
@@ -150,14 +166,6 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 		}
 	});
 
-	useEffect(
-		() => {
-			if (msgRef.current) {
-				msgRef.current.scrollTop = msgRef.current.scrollHeight;
-			}
-		},
-		[ chat ]
-	);
 	const getRemainingMessages = async () => {
 		let messagesRemaining = await client.query({
 			query: REMAINING_MESSAGES,
@@ -200,18 +208,10 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 	let lastSeenMessage = chat
 		? [ ...chat.messages ].reverse().find(x => x.from.id === currentUser.id && x.seen)
 		: null;
+
 	return (
-		<div
-			style={{
-				flexGrow: 1,
-				height: '100%',
-				overflow: 'hidden',
-				display: 'flex',
-				flexDirection: 'column',
-				justifyContent: 'space-between',
-			}}
-		>
-			<div className={classes.messageList} ref={msgRef}>
+		<Fragment>
+			<div className={small ? classes.smallMessageList : classes.messageList} ref={pageRef}>
 				{chat &&
 					messages.map(msg => {
 						let fromMatch = msg[0].from.id !== currentUser.id;
@@ -224,8 +224,18 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 								avatarClick={() =>
 									fromMatch
 										? Router.push(
-												`/profile?slug=chats&user=${msg[0].from.id}`,
-												`/profile/chat/user/${msg[0].from.id}`,
+												{
+													pathname: router.pathname === '/' ? '/home' : router.pathname,
+													query: {
+														slug: router.query.slug,
+														user: friend.id,
+													},
+												},
+												router.query.slug
+													? `${router.pathname}/${router.query.slug}/user/${friend.id}`
+													: router.pathname === '/'
+														? `/user/${friend.id}`
+														: `${router.pathname}/user/${friend.id}`,
 												{ shallow: true },
 												{ scroll: false }
 											)
@@ -257,7 +267,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 															<p
 																style={{
 																	wordBreak: 'break-word',
-																	fontSize: '14px',
+																	fontSize: small ? '13px' : '14px',
 																	cursor: 'default',
 																}}
 															>
@@ -355,6 +365,7 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 									onChange={e => {
 										setMessage(e.target.value);
 									}}
+									ref={msgRef}
 									placehotruncatelder={`Respond to ${friend.firstName}`}
 									rows={1}
 									maxRows={4}
@@ -392,8 +403,8 @@ const Chat = ({ chat, currentUser, classes, client }) => {
 					)}
 				</div>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 
-export default withApollo(withStyles(styles)(Chat));
+export default withRouter(withApollo(withStyles(styles)(ChatContainer)));

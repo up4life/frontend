@@ -79,15 +79,7 @@ const REMAINING_MESSAGES = gql`
 	}
 `;
 
-const Chat = ({
-	classes,
-	data,
-	id,
-	currentUser,
-	match,
-	client,
-	refetch,
-}) => {
+const Chat = ({ classes, data, id, currentUser, match, client, refetch }) => {
 	const [ message, setMessage ] = useState('');
 	const [ error, setError ] = useState(null);
 	const markAllAsSeen = useMutation(MARK_SEEN);
@@ -95,7 +87,7 @@ const Chat = ({
 
 	// flop this lil guy
 	//currentUser.verified = true;
-	currentUser.permissions = 'yay';
+	//currentUser.permissions = 'yay';
 
 	const [ isTyping, setIsTyping ] = useState(false);
 	const toggleTyping = useMutation(TOGGLE_TYPING_MUTATION);
