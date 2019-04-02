@@ -31,6 +31,46 @@ const SIGNOUT_MUTATION = gql`
 	}
 `;
 
+const MY_CHAT_SUBSCRIPTION = gql`
+	subscription($id: String!) {
+		myChat(id: $id) {
+			mutation
+			node {
+				id
+				users {
+					id
+					firstName
+					img {
+						id
+						img_url
+						default
+					}
+				}
+				typing {
+					id
+					firstName
+				}
+				messages {
+					id
+					text
+					seen
+					createdAt
+					from {
+						id
+						firstName
+						img {
+							id
+							img_url
+							default
+						}
+					}
+					updatedAt
+				}
+			}
+		}
+	}
+`;
+
 const MY_MESSAGE_SUBSCRIPTION = gql`
 	subscription($id: String!) {
 		myMessages(id: $id) {
@@ -60,10 +100,13 @@ const MY_MESSAGE_SUBSCRIPTION = gql`
 
 const Nav = ({ classes, color, router, enqueueSnackbar, user }) => {
 	const audioRef = useRef(null);
+	useSubscription(MY_CHAT_SUBSCRIPTION, {
+		variables: { id: user.id }
+	})
 	const subscription = useSubscription(MY_MESSAGE_SUBSCRIPTION, {
 		variables: { id: user.id },
 		onSubscriptionData: async ({ client, subscriptionData }) => {
-			console.log(subscriptionData);
+			//console.log(subscriptionData);
 			let from = subscriptionData.data.myMessages.node.from;
 			if (from.id !== user.id) {
 				enqueueSnackbar(`New message from ${from.firstName}`, {
