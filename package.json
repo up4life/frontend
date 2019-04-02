@@ -8,8 +8,7 @@
 		"npm": "6.9.0"
 	},
 	"scripts": {
-		"dev": "next",
-		"route-dev": "node server.js",
+		"dev": "nodemon server.js",
 		"build": "next build",
 		"start": "NODE_ENV=production node server.js -p $PORT",
 		"test": "NODE_ENV=test jest --watch"
@@ -125,6 +124,7 @@
 		"enzyme": "^3.9.0",
 		"enzyme-to-json": "^3.3.5",
 		"jest": "^24.6.0",
+		"nodemon": "^1.18.10",
 		"waait": "^1.0.4"
 	}
 }
