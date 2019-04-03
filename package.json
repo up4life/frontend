@@ -49,10 +49,12 @@
 		"next": "^8.0.4",
 		"next-assets-import": "0.0.2",
 		"next-images": "^1.1.1",
+		"next-offline": "^3.3.7",
 		"next-with-apollo": "^3.4.0",
 		"node-sass": "^4.11.0",
 		"notistack": "^0.6.1",
 		"nprogress": "^0.2.0",
+		"path": "^0.12.7",
 		"prop-types": "^15.7.2",
 		"react": "^16.8.6",
 		"react-adopt": "^0.6.0",
@@ -77,6 +79,7 @@
 		"react-swipeable-views": "^0.13.1",
 		"styled-components": "^4.2.0",
 		"subscriptions-transport-ws": "^0.9.16",
+		"url": "^0.11.0",
 		"utf-8-validate": "^5.0.2"
 	},
 	"jest": {
