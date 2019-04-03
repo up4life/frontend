@@ -60,10 +60,8 @@ export default withApollo(
 			link = split(
 				// split based on operation type
 				({ query }) => {
-					const definition = getMainDefinition(query);
-					return (
-						definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
-					);
+					const { kind, operation } = getMainDefinition(query);
+					return kind === 'OperationDefinition' && operation === 'subscription';
 				},
 				wsLink,
 				link
