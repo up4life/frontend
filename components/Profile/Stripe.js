@@ -4,6 +4,8 @@ import { Mutation } from 'react-apollo';
 // import Router from 'next/router';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 import { CURRENT_USER_QUERY } from '../Queries/User';
 import { GET_REMAINING_DATES } from './DatesLeft';
@@ -54,7 +56,7 @@ const Billing = props => {
 						description={
 							props.subsType === 'MONTHLY' ? 'Monthly subscription' : 'One year subscription'
 						}
-						stripeKey='pk_test_I2tyS9xJRaeVZluJHp9CvKcB'
+						stripeKey={publicRuntimeConfig.stripe_key}
 						currency='USD'
 						email={props.user.email}
 						token={res => onToken(res, props.subsType, createOrder)}

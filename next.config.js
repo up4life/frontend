@@ -16,6 +16,7 @@ module.exports = withSass(
 			firebase_id: process.env.FIREBASE_ID,
 			firebase_bucket: process.env.FIREBASE_BUCKET,
 			firebase_msg_id: process.env.FIREBASE_MSG_ID,
+			stripe_key: process.env.STRIPE,
 		},
 	})
 );
