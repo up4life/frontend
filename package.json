@@ -8,7 +8,7 @@
 		"npm": "6.9.0"
 	},
 	"scripts": {
-		"dev": "nodemon server.js",
+		"dev": "next build && nodemon server.js",
 		"build": "next build",
 		"start": "NODE_ENV=production node server.js -p $PORT",
 		"test": "NODE_ENV=test jest --watch"
@@ -26,6 +26,8 @@
 		"apollo-cache-inmemory": "^1.5.1",
 		"apollo-client": "^2.5.1",
 		"apollo-link-context": "^1.0.17",
+		"apollo-link-error": "^1.1.10",
+		"apollo-link-http": "^1.5.14",
 		"apollo-link-ws": "^1.0.17",
 		"bufferutil": "^4.0.1",
 		"classnames": "^2.2.6",
@@ -74,6 +76,7 @@
 		"react-stripe-checkout": "^2.6.3",
 		"react-swipeable-views": "^0.13.1",
 		"styled-components": "^4.2.0",
+		"subscriptions-transport-ws": "^0.9.16",
 		"utf-8-validate": "^5.0.2"
 	},
 	"jest": {

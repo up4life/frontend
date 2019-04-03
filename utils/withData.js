@@ -13,14 +13,12 @@ const {
 } = getConfig();
 
 export default withApollo(
-	({ ctx, headers }) => {
+	({ headers }) => {
 		const ssrMode = !process.browser;
 
 		const httpLink = createHttpLink({
 			uri: endpoint
 		});
-
-		console.log(ctx, 'ctx here');
 
 		const wsLink =
 			!ssrMode &&
@@ -28,7 +26,8 @@ export default withApollo(
 				uri: wsEndpoint,
 				options: {
 					connectionParams: {
-						auth: 'auth passed here'
+						cookie: headers && headers.cookie,
+						test: 'test string here'
 					},
 					reconnect: true,
 					reconnectionAttempts: 50,
