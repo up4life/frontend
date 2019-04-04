@@ -2,6 +2,7 @@ import { title } from '../../material-kit-pro-react';
 const mediaStyle = {
 	media: {
 		display: 'flex',
+		margin: '2px 0',
 		// WebkitBoxAlign: 'start',
 		// alignItems: 'flex-start',
 		'& p': {
@@ -15,10 +16,18 @@ const mediaStyle = {
 	},
 	reverse: {
 		flexDirection: 'row-reverse',
-		justifyContent: 'space-between',
+		justifyContent: 'flex-start',
 	},
 	mediaLink: {
 		padding: '10px',
+		float: 'left !important',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'flex-start',
+		justifyContent: 'space-between',
+	},
+	smallLink: {
+		//padding: '10px',
 		float: 'left !important',
 		display: 'flex',
 		flexDirection: 'column',
@@ -40,8 +49,8 @@ const mediaStyle = {
 	},
 	smallAvatar: {
 		margin: '0 auto',
-		width: '40px',
-		height: '40px',
+		width: '45px',
+		height: '45px',
 		overflow: 'hidden',
 		borderRadius: '6px',
 		marginRight: '8px',
@@ -54,7 +63,7 @@ const mediaStyle = {
 	otherBody: {
 		paddingRight: '10px',
 		WebkitBoxFlex: '1',
-		flex: '1',
+		//flex: '1',
 		textAlign: 'end',
 	},
 	mediaBody: {
@@ -62,9 +71,23 @@ const mediaStyle = {
 		WebkitBoxFlex: '1',
 		flex: '1',
 	},
+	smallBody: {
+		width: '217px',
+		maxWidth: '217px',
+	},
 	mediaHeading: {
 		...title,
 		marginTop: '10px',
+		marginBottom: '0',
+		'& small': {
+			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+		},
+	},
+	smallHeading: {
+		...title,
+		fontSize: '14px',
+		marginTop: '0',
+		minHeight: '20px',
 		marginBottom: '0',
 		'& small': {
 			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

@@ -171,7 +171,8 @@ const javascriptStyles = theme => {
 		smallMessageList: {
 			height: '80%',
 			overflow: 'scroll',
-			padding: '20px 10px',
+			marginBottom: '41px',
+			padding: '5px 10px',
 			borderRadius: '6px',
 			//border: '1px solid #a7defa',
 			backgroundColor: '#373737',
@@ -276,6 +277,32 @@ const javascriptStyles = theme => {
 				// position: 'relative',
 				// bottom: '16px'
 			},
+		},
+		smallExpanded: {
+			display: 'flex',
+			justifyContent: 'flex-end',
+			alignItems: 'flex-end',
+			marginTop: '20px',
+			// borderTop: "2px solid #b2ddf7",
+			'& textarea': {
+				color: '#fafafa',
+			},
+			'& ::after': {
+				borderBottomColor: '#81d6e3',
+			},
+			'& button': {
+				backgroundImage: 'linear-gradient(to right, #81d6e3, #71d0df, #5ecadb, #49c3d8, #2dbdd4)',
+				background: 'transparent',
+				borderRadius: '6px',
+				marginLeft: '20px',
+			},
+			margin: '5px 0',
+			padding: '2px',
+			position: 'fixed',
+			bottom: 0,
+			left: 0,
+			right: 0,
+			backgroundColor: '#242121',
 		},
 		userFavorite: {
 			fontSize: '30px',

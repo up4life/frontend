@@ -221,6 +221,7 @@ const ChatContainer = ({ classes, client, router, small }) => {
 								currentUser={!fromMatch}
 								key={msg[0].id}
 								avatar={img}
+								small={small}
 								avatarClick={() =>
 									fromMatch
 										? Router.push(
@@ -240,14 +241,7 @@ const ChatContainer = ({ classes, client, router, small }) => {
 												{ scroll: false }
 											)
 										: null}
-								title={
-									<span style={{ color: '#fafafa' }}>
-										{msg[0].from.firstName}{' '}
-										{/* <small style={{ fontSize: '12px' }}>
-											· {moment(msg.createdAt).fromNow()}
-										</small> */}
-									</span>
-								}
+								title={<span style={{ color: '#fafafa' }}>{msg[0].from.firstName}</span>}
 								body={
 									<span>
 										{msg.map((m, i) => {
@@ -269,6 +263,7 @@ const ChatContainer = ({ classes, client, router, small }) => {
 																	wordBreak: 'break-word',
 																	fontSize: small ? '13px' : '14px',
 																	cursor: 'default',
+																	marginBottom: small ? '2px' : '10px',
 																}}
 															>
 																{m.text}
@@ -337,7 +332,7 @@ const ChatContainer = ({ classes, client, router, small }) => {
 							</div>
 						) : (
 							<form
-								className={classes.expandedChat}
+								className={small ? classes.smallExpanded : classes.expandedChat}
 								onSubmit={e => {
 									e.preventDefault();
 									NProgress.start();
@@ -377,11 +372,18 @@ const ChatContainer = ({ classes, client, router, small }) => {
 										}
 									}}
 								/>
-								<ButtonBase type='submit'>
+								<ButtonBase
+									type='submit'
+									style={{ marginLeft: small && '12px', marginRight: small && '5px' }}
+								>
 									<Button
 										style={{
 											background: 'transparent',
 											borderRadius: '6px !important',
+											width: small && '24px',
+											height: small && '24px',
+											minWidth: small && '33px',
+											marginRight: small && '2px',
 										}}
 										justIcon
 										className={classes.floatRight}

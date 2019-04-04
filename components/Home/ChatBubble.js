@@ -105,10 +105,10 @@ const Page = ({ classes }) => {
 							<img
 								src={chat.img}
 								style={{
-									width: '40px',
-									height: '40px',
+									width: '45px',
+									height: '45px',
 									borderRadius: '6px',
-									marginRight: '15px',
+									marginRight: '10px',
 									boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
 								}}
 							/>
@@ -120,7 +120,7 @@ const Page = ({ classes }) => {
 									}}
 								>
 									<div>
-										<p className={classes.title}>{chat.from}</p>
+										<h4 className={classes.smallHeading}>{chat.from}</h4>
 										<div
 											style={{
 												maxWidth: '250px',
