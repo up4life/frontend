@@ -9,6 +9,7 @@ import {
 	warningColor,
 	warningBoxShadow,
 	dangerColor,
+	title,
 	dangerBoxShadow,
 	roseColor,
 	roseBoxShadow,
@@ -268,6 +269,8 @@ const customDropdownStyle = theme => ({
 		color: '#777',
 		position: 'fixed',
 		top: 0,
+		left: 0,
+		right: 0,
 		whiteSpace: 'nowrap',
 		fontWeight: 'inherit',
 		marginTop: '10px',
@@ -299,6 +302,16 @@ const customDropdownStyle = theme => ({
 	},
 	noLiPadding: {
 		padding: '0',
+	},
+	smallHeading: {
+		...title,
+		fontSize: '14px',
+		marginTop: '3px',
+		minHeight: '20px',
+		marginBottom: '0',
+		'& small': {
+			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+		},
 	},
 });
 

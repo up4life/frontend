@@ -90,7 +90,7 @@ class CustomDropdown extends React.Component {
 							{dropdownHeader}
 						</MenuItem>
 					) : null}
-					<div style={{ maxHeight: '300px', overflow: 'visible', marginTop: '30px' }}>
+					<div style={{ maxHeight: '300px', overflowY: 'scroll', marginTop: '30px' }}>
 						{dropdownList.map((prop, key) => {
 							if (prop.divider) {
 								return (
@@ -138,7 +138,7 @@ class CustomDropdown extends React.Component {
 						</MenuItem>
 					) : null}
 				</MenuList>
-				<div style={{ maxHeight: '300px', overflow: 'visible', marginTop: '30px' }}>{stuff}</div>
+				<div style={{ maxHeight: '300px', overflowY: 'scroll', marginTop: '30px' }}>{stuff}</div>
 			</div>
 		);
 		return (
@@ -182,7 +182,9 @@ class CustomDropdown extends React.Component {
 						>
 							<Paper className={messages ? classes.msgdd : classes.dropdown}>
 								{stuff ? (
-									otherThing
+									<ClickAwayListener onClickAway={this.handleClose} ref='cacat'>
+										{otherThing}
+									</ClickAwayListener>
 								) : innerDropDown ? (
 									dropDownMenu
 								) : (

@@ -1,7 +1,8 @@
-import { container } from '../material-kit-pro-react';
+import { container, title } from '../material-kit-pro-react';
 
 const styles = {
 	container,
+
 	background: {
 		paddingTop: '40px',
 		height: '100%',
@@ -17,6 +18,17 @@ const styles = {
 	},
 	hide: {
 		opacity: 0,
+	},
+	smallHeading: {
+		...title,
+		fontSize: '14px',
+		marginTop: '3px',
+		color: '#fafafa',
+		minHeight: '20px',
+		marginBottom: '0',
+		'& small': {
+			fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+		},
 	},
 	transparentButton: {
 		backgroundColor: 'transparent !important',

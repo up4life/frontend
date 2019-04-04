@@ -29,9 +29,14 @@ function Media({ ...props }) {
 		[classes.media]: true,
 		[classes.reverse]: currentUser,
 	});
+	const classessss = classNames({
+		[classes.smallBody]: small,
+		[classes.otherBody]: currentUser,
+		[classes.mediaBody]: !currentUser,
+	});
 	return (
 		<div {...rest} className={yayclasses}>
-			<div className={classes.mediaLink}>
+			<div className={small ? classes.smallLink : classes.mediaLink}>
 				<div
 					style={{ cursor: !currentUser ? 'pointer' : 'default' }}
 					className={small ? classes.smallAvatar : classes.mediaAvatar}
@@ -41,8 +46,10 @@ function Media({ ...props }) {
 				</div>
 				<div className={classes.mediaFooter}>{footer}</div>
 			</div>
-			<div className={currentUser ? classes.otherBody : classes.mediaBody}>
-				{title !== undefined ? <h4 className={classes.mediaHeading}>{title}</h4> : null}
+			<div className={classessss}>
+				{title !== undefined ? (
+					<h4 className={small ? classes.smallHeading : classes.mediaHeading}>{title}</h4>
+				) : null}
 				{body}
 
 				{innerMedias !== undefined ? (
