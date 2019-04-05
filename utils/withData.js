@@ -26,7 +26,7 @@ export default withApollo(
 				uri: wsEndpoint,
 				options: {
 					connectionParams: {
-						cookie: headers && headers.cookie,
+						// cookie: headers && headers.cookie,
 						test: 'test string here'
 					},
 					reconnect: true,
