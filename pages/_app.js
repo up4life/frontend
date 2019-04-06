@@ -22,17 +22,6 @@ class MyApp extends App {
 			jssStyles.parentNode.removeChild(jssStyles);
 		}
 	}
-	// static async getInitialProps({ Component, ctx, router }) {
-	// 	let pageProps = {};
-
-	// 	if (Component.getInitialProps) {
-	// 		pageProps = await Component.getInitialProps(ctx);
-	// 	}
-	// 	console.log('pageprops', pageProps);
-	// 	pageProps.query = ctx.query;
-
-	// 	return { pageProps };
-	// }
 
 	render() {
 		const { Component, apollo, pageProps } = this.props;

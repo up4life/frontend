@@ -90,7 +90,7 @@ export const getAllEvents = async (client, user, fetchPolicy) => {
 		const response = await client.query({
 			query: ALL_EVENTS_QUERY,
 			variables: {
-				location: user.location || 'Los Angeles, CA',
+				location: user.location || 'Seattle, WA',
 				page: 0,
 				categories: [],
 				genres: user.interests.map(x => x.tmID) || [],

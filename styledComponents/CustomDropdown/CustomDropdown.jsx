@@ -138,7 +138,11 @@ class CustomDropdown extends React.Component {
 						</MenuItem>
 					) : null}
 				</MenuList>
-				<div style={{ maxHeight: '300px', overflowY: 'scroll', marginTop: '30px' }}>{stuff}</div>
+				<div
+					style={{ maxHeight: '300px', height: '300px', overflowY: 'scroll', marginTop: '30px' }}
+				>
+					{stuff}
+				</div>
 			</div>
 		);
 		return (

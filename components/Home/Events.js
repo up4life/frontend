@@ -150,7 +150,7 @@ const Events = props => {
 						{/* {newUser && <NewUser />} */}
 						<div id='body' className={classes.container}>
 							<Fragment>
-								<IconButton
+								{/* <IconButton
 									aria-label='Open drawer'
 									id='filters'
 									onClick={() => {
@@ -207,7 +207,7 @@ const Events = props => {
 											setSkip={setSkip}
 										/>
 									</Drawer>
-								</ClickAwayListener>
+								</ClickAwayListener> */}
 								<GridContainer style={{ marginBottom: '20px' }}>
 									<GridItem sm={12} md={12} sm={12}>
 										{events ? (
