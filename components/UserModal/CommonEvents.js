@@ -61,7 +61,7 @@ const CommonEvents = ({ classes, id }) => {
 					))}
 				</GridContainer>
 			) : (
-				<div>No shared events!</div>
+				<div/>
 			)}
 			{/* </GridContainer> */}
 		</Fragment>
