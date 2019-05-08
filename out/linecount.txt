@@ -1,0 +1,132 @@
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2019-05-01 19:39:53
+count workspace : /Users/lauren/up4life
+total files : 120
+total code lines : 23957
+total comment lines : 653
+total blank lines : 610
+
+.env, code is 9, comment is 3, blank is 0.
+.gitignore, code is 7, comment is 0, blank is 0.
+.nowignore, code is 2, comment is 0, blank is 0.
+components/ChatListContainer.js, code is 0, comment is 0, blank is 0.
+components/ConvoContainer.js, code is 63, comment is 0, blank is 7.
+components/Footer/index.js, code is 68, comment is 52, blank is 7.
+components/Footer/TermsModal.js, code is 29, comment is 0, blank is 2.
+components/Header/index.js, code is 210, comment is 4, blank is 9.
+components/Header/UpFor.js, code is 39, comment is 3, blank is 4.
+components/Home/ChatBubble.js, code is 150, comment is 0, blank is 10.
+components/Home/Event.js, code is 491, comment is 7, blank is 25.
+components/Home/Events.js, code is 113, comment is 130, blank is 18.
+components/Home/Filters.js, code is 421, comment is 3, blank is 10.
+components/Home/InfoModal.js, code is 64, comment is 14, blank is 5.
+components/Home/Intro.js, code is 40, comment is 4, blank is 1.
+components/Home/LocationSearch.js, code is 92, comment is 3, blank is 9.
+components/Home/NewUser.js, code is 288, comment is 18, blank is 11.
+components/Home/UpFor.js, code is 55, comment is 0, blank is 5.
+components/linearGradients.js, code is 50, comment is 0, blank is 0.
+components/Meta.js, code is 44, comment is 0, blank is 2.
+components/Mutations/addEvent.js, code is 35, comment is 0, blank is 2.
+components/Mutations/createChat.js, code is 25, comment is 0, blank is 1.
+components/Mutations/sendMessage.js, code is 33, comment is 0, blank is 1.
+components/Mutations/updateLocation.js, code is 9, comment is 0, blank is 1.
+components/Mutations/updateSeenMessage.js, code is 17, comment is 0, blank is 1.
+components/Mutations/updateUser.js, code is 77, comment is 0, blank is 5.
+components/Mutations/useMutation.js, code is 39, comment is 2, blank is 9.
+components/Mutations/verifyText.js, code is 15, comment is 0, blank is 2.
+components/Page.js, code is 11, comment is 0, blank is 2.
+components/Profile/Bio.js, code is 68, comment is 16, blank is 4.
+components/Profile/ChatList.js, code is 70, comment is 0, blank is 2.
+components/Profile/Chats/ChatList.js, code is 10, comment is 0, blank is 3.
+components/Profile/Chats/Chats.js, code is 42, comment is 0, blank is 6.
+components/Profile/Chats/SideView.js, code is 61, comment is 0, blank is 3.
+components/Profile/Date.js, code is 184, comment is 4, blank is 9.
+components/Profile/Dates.js, code is 73, comment is 14, blank is 5.
+components/Profile/DatesLeft.js, code is 26, comment is 0, blank is 3.
+components/Profile/Drawer.js, code is 69, comment is 1, blank is 3.
+components/Profile/ImageModal.js, code is 301, comment is 2, blank is 9.
+components/Profile/index.js, code is 69, comment is 13, blank is 15.
+components/Profile/Interests.js, code is 152, comment is 5, blank is 7.
+components/Profile/LikedBy.js, code is 57, comment is 0, blank is 3.
+components/Profile/MessageList.js, code is 140, comment is 0, blank is 6.
+components/Profile/Messages.js, code is 108, comment is 3, blank is 13.
+components/Profile/MessageSubscription.js, code is 169, comment is 0, blank is 10.
+components/Profile/Prefs.js, code is 123, comment is 17, blank is 4.
+components/Profile/Pricing.js, code is 285, comment is 4, blank is 7.
+components/Profile/Settings.js, code is 67, comment is 2, blank is 8.
+components/Profile/Stripe.js, code is 62, comment is 5, blank is 5.
+components/Profile/TransactionList.js, code is 49, comment is 0, blank is 3.
+components/Queries/AllChats.js, code is 37, comment is 0, blank is 1.
+components/Queries/AllEvents.js, code is 103, comment is 0, blank is 6.
+components/Queries/Event.js, code is 13, comment is 2, blank is 1.
+components/Queries/Genres.js, code is 24, comment is 0, blank is 2.
+components/Queries/GeoHash.js, code is 8, comment is 0, blank is 1.
+components/Queries/getConvo.js, code is 36, comment is 0, blank is 1.
+components/Queries/LikedBy.js, code is 14, comment is 0, blank is 1.
+components/Queries/Location.js, code is 32, comment is 1, blank is 6.
+components/Queries/LocationSuggestion.js, code is 8, comment is 0, blank is 1.
+components/Queries/OtherUser.js, code is 32, comment is 0, blank is 2.
+components/Queries/User.js, code is 78, comment is 0, blank is 6.
+components/Queries/UserEvents.js, code is 23, comment is 0, blank is 1.
+components/Reset/index.js, code is 206, comment is 5, blank is 6.
+components/Settings/ImageUpload.js, code is 76, comment is 4, blank is 6.
+components/Settings/Location.js, code is 179, comment is 7, blank is 8.
+components/Settings/ResetPassword.js, code is 124, comment is 4, blank is 4.
+components/Settings/Sidebar.js, code is 22, comment is 0, blank is 2.
+components/SingleChatContainer.js, code is 365, comment is 28, blank is 20.
+components/SplashPage/BelowTheFoldCard.js, code is 52, comment is 22, blank is 10.
+components/SplashPage/ErrorModal.js, code is 57, comment is 4, blank is 3.
+components/SplashPage/index.js, code is 178, comment is 5, blank is 8.
+components/SplashPage/Login.js, code is 306, comment is 9, blank is 7.
+components/SplashPage/PasswordRequest.js, code is 90, comment is 1, blank is 3.
+components/SplashPage/Register.js, code is 424, comment is 71, blank is 13.
+components/SplashPage/Terms.js, code is 179, comment is 0, blank is 2.
+components/Subscriptions/Chat.js, code is 43, comment is 0, blank is 2.
+components/TheatreMask.js, code is 20, comment is 0, blank is 1.
+components/Transistion.js, code is 6, comment is 0, blank is 2.
+components/UserModal/Chat.js, code is 353, comment is 13, blank is 23.
+components/UserModal/CommonEvents.js, code is 65, comment is 2, blank is 4.
+components/UserModal/CommonInterests.js, code is 46, comment is 0, blank is 3.
+components/UserModal/index.js, code is 306, comment is 18, blank is 16.
+components/UserModal/ReportUser.js, code is 74, comment is 10, blank is 11.
+components/verifyPhone.js, code is 108, comment is 0, blank is 6.
+components/Welcome/Age.js, code is 65, comment is 16, blank is 8.
+components/Welcome/index.js, code is 134, comment is 49, blank is 10.
+components/Welcome/Info.js, code is 139, comment is 0, blank is 7.
+components/Welcome/Interests.js, code is 175, comment is 6, blank is 7.
+components/Welcome/Main.js, code is 36, comment is 0, blank is 2.
+components/Welcome/More.js, code is 142, comment is 2, blank is 8.
+components/Welcome/Prefs.js, code is 111, comment is 0, blank is 7.
+components/Welcome/ProFeatures.js, code is 44, comment is 0, blank is 4.
+components/whyUpdate.js, code is 22, comment is 9, blank is 4.
+config.js, code is 6, comment is 5, blank is 0.
+jest.setup.js, code is 3, comment is 0, blank is 1.
+next.config.js, code is 20, comment is 1, blank is 2.
+now.json, code is 11, comment is 0, blank is 1.
+offline/serviceWorker.js, code is 0, comment is 10, blank is 2.
+package-lock.json, code is 13984, comment is 0, blank is 0.
+package.json, code is 134, comment is 0, blank is 3.
+pages/_app.js, code is 51, comment is 0, blank is 5.
+pages/_document.js, code is 37, comment is 0, blank is 3.
+pages/chats.js, code is 18, comment is 0, blank is 2.
+pages/home.js, code is 25, comment is 0, blank is 6.
+pages/index.js, code is 21, comment is 0, blank is 4.
+pages/joinus.js, code is 12, comment is 0, blank is 5.
+pages/profile.js, code is 22, comment is 0, blank is 6.
+pages/reset.js, code is 7, comment is 0, blank is 1.
+pages/welcome.js, code is 20, comment is 0, blank is 5.
+server.js, code is 93, comment is 11, blank is 17.
+utils/cloudinary.js, code is 35, comment is 0, blank is 2.
+utils/firebaseProd.js, code is 14, comment is 0, blank is 2.
+utils/formatChats.js, code is 25, comment is 0, blank is 0.
+utils/formatDate.js, code is 13, comment is 0, blank is 1.
+utils/genres.js, code is 41, comment is 0, blank is 3.
+utils/getAge.js, code is 4, comment is 1, blank is 0.
+utils/getLoggedIn.js, code is 6, comment is 0, blank is 0.
+utils/getPageContext.js, code is 38, comment is 6, blank is 6.
+utils/redirect.js, code is 9, comment is 0, blank is 1.
+utils/withData.js, code is 72, comment is 2, blank is 9.
+===============================================================================

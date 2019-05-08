@@ -1,0 +1,737 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "/Users/lauren/up4life",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2019-05-01 19:39:53",
+            "filesum": 120,
+            "codesum": 23957,
+            "commentsum": 653,
+            "blanksum": 610,
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 9,
+                    "comment": 3,
+                    "filename": ".env"
+                },
+                {
+                    "blank": 0,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 2,
+                    "comment": 0,
+                    "filename": ".nowignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "components/ChatListContainer.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 63,
+                    "comment": 0,
+                    "filename": "components/ConvoContainer.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 68,
+                    "comment": 52,
+                    "filename": "components/Footer/index.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 29,
+                    "comment": 0,
+                    "filename": "components/Footer/TermsModal.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 210,
+                    "comment": 4,
+                    "filename": "components/Header/index.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 39,
+                    "comment": 3,
+                    "filename": "components/Header/UpFor.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 150,
+                    "comment": 0,
+                    "filename": "components/Home/ChatBubble.js"
+                },
+                {
+                    "blank": 25,
+                    "code": 491,
+                    "comment": 7,
+                    "filename": "components/Home/Event.js"
+                },
+                {
+                    "blank": 18,
+                    "code": 113,
+                    "comment": 130,
+                    "filename": "components/Home/Events.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 421,
+                    "comment": 3,
+                    "filename": "components/Home/Filters.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 64,
+                    "comment": 14,
+                    "filename": "components/Home/InfoModal.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 40,
+                    "comment": 4,
+                    "filename": "components/Home/Intro.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 92,
+                    "comment": 3,
+                    "filename": "components/Home/LocationSearch.js"
+                },
+                {
+                    "blank": 11,
+                    "code": 288,
+                    "comment": 18,
+                    "filename": "components/Home/NewUser.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 55,
+                    "comment": 0,
+                    "filename": "components/Home/UpFor.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 50,
+                    "comment": 0,
+                    "filename": "components/linearGradients.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "components/Meta.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "components/Mutations/addEvent.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "components/Mutations/createChat.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 33,
+                    "comment": 0,
+                    "filename": "components/Mutations/sendMessage.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "components/Mutations/updateLocation.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 17,
+                    "comment": 0,
+                    "filename": "components/Mutations/updateSeenMessage.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 77,
+                    "comment": 0,
+                    "filename": "components/Mutations/updateUser.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 39,
+                    "comment": 2,
+                    "filename": "components/Mutations/useMutation.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "components/Mutations/verifyText.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "components/Page.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 68,
+                    "comment": 16,
+                    "filename": "components/Profile/Bio.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 70,
+                    "comment": 0,
+                    "filename": "components/Profile/ChatList.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "components/Profile/Chats/ChatList.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 42,
+                    "comment": 0,
+                    "filename": "components/Profile/Chats/Chats.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 61,
+                    "comment": 0,
+                    "filename": "components/Profile/Chats/SideView.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 184,
+                    "comment": 4,
+                    "filename": "components/Profile/Date.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 73,
+                    "comment": 14,
+                    "filename": "components/Profile/Dates.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 26,
+                    "comment": 0,
+                    "filename": "components/Profile/DatesLeft.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 69,
+                    "comment": 1,
+                    "filename": "components/Profile/Drawer.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 301,
+                    "comment": 2,
+                    "filename": "components/Profile/ImageModal.js"
+                },
+                {
+                    "blank": 15,
+                    "code": 69,
+                    "comment": 13,
+                    "filename": "components/Profile/index.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 152,
+                    "comment": 5,
+                    "filename": "components/Profile/Interests.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 57,
+                    "comment": 0,
+                    "filename": "components/Profile/LikedBy.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 140,
+                    "comment": 0,
+                    "filename": "components/Profile/MessageList.js"
+                },
+                {
+                    "blank": 13,
+                    "code": 108,
+                    "comment": 3,
+                    "filename": "components/Profile/Messages.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 169,
+                    "comment": 0,
+                    "filename": "components/Profile/MessageSubscription.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 123,
+                    "comment": 17,
+                    "filename": "components/Profile/Prefs.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 285,
+                    "comment": 4,
+                    "filename": "components/Profile/Pricing.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 67,
+                    "comment": 2,
+                    "filename": "components/Profile/Settings.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 62,
+                    "comment": 5,
+                    "filename": "components/Profile/Stripe.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 49,
+                    "comment": 0,
+                    "filename": "components/Profile/TransactionList.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "components/Queries/AllChats.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 103,
+                    "comment": 0,
+                    "filename": "components/Queries/AllEvents.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 13,
+                    "comment": 2,
+                    "filename": "components/Queries/Event.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "components/Queries/Genres.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "components/Queries/GeoHash.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "components/Queries/getConvo.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "components/Queries/LikedBy.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 32,
+                    "comment": 1,
+                    "filename": "components/Queries/Location.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "components/Queries/LocationSuggestion.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 32,
+                    "comment": 0,
+                    "filename": "components/Queries/OtherUser.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 78,
+                    "comment": 0,
+                    "filename": "components/Queries/User.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "components/Queries/UserEvents.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 206,
+                    "comment": 5,
+                    "filename": "components/Reset/index.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 76,
+                    "comment": 4,
+                    "filename": "components/Settings/ImageUpload.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 179,
+                    "comment": 7,
+                    "filename": "components/Settings/Location.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 124,
+                    "comment": 4,
+                    "filename": "components/Settings/ResetPassword.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "components/Settings/Sidebar.js"
+                },
+                {
+                    "blank": 20,
+                    "code": 365,
+                    "comment": 28,
+                    "filename": "components/SingleChatContainer.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 52,
+                    "comment": 22,
+                    "filename": "components/SplashPage/BelowTheFoldCard.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 57,
+                    "comment": 4,
+                    "filename": "components/SplashPage/ErrorModal.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 178,
+                    "comment": 5,
+                    "filename": "components/SplashPage/index.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 306,
+                    "comment": 9,
+                    "filename": "components/SplashPage/Login.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 90,
+                    "comment": 1,
+                    "filename": "components/SplashPage/PasswordRequest.js"
+                },
+                {
+                    "blank": 13,
+                    "code": 424,
+                    "comment": 71,
+                    "filename": "components/SplashPage/Register.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 179,
+                    "comment": 0,
+                    "filename": "components/SplashPage/Terms.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 43,
+                    "comment": 0,
+                    "filename": "components/Subscriptions/Chat.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "components/TheatreMask.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "components/Transistion.js"
+                },
+                {
+                    "blank": 23,
+                    "code": 353,
+                    "comment": 13,
+                    "filename": "components/UserModal/Chat.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 65,
+                    "comment": 2,
+                    "filename": "components/UserModal/CommonEvents.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 46,
+                    "comment": 0,
+                    "filename": "components/UserModal/CommonInterests.js"
+                },
+                {
+                    "blank": 16,
+                    "code": 306,
+                    "comment": 18,
+                    "filename": "components/UserModal/index.js"
+                },
+                {
+                    "blank": 11,
+                    "code": 74,
+                    "comment": 10,
+                    "filename": "components/UserModal/ReportUser.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 108,
+                    "comment": 0,
+                    "filename": "components/verifyPhone.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 65,
+                    "comment": 16,
+                    "filename": "components/Welcome/Age.js"
+                },
+                {
+                    "blank": 10,
+                    "code": 134,
+                    "comment": 49,
+                    "filename": "components/Welcome/index.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 139,
+                    "comment": 0,
+                    "filename": "components/Welcome/Info.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 175,
+                    "comment": 6,
+                    "filename": "components/Welcome/Interests.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "components/Welcome/Main.js"
+                },
+                {
+                    "blank": 8,
+                    "code": 142,
+                    "comment": 2,
+                    "filename": "components/Welcome/More.js"
+                },
+                {
+                    "blank": 7,
+                    "code": 111,
+                    "comment": 0,
+                    "filename": "components/Welcome/Prefs.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 44,
+                    "comment": 0,
+                    "filename": "components/Welcome/ProFeatures.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 22,
+                    "comment": 9,
+                    "filename": "components/whyUpdate.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 5,
+                    "filename": "config.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "jest.setup.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 20,
+                    "comment": 1,
+                    "filename": "next.config.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "now.json"
+                },
+                {
+                    "blank": 2,
+                    "code": 0,
+                    "comment": 10,
+                    "filename": "offline/serviceWorker.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 13984,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 3,
+                    "code": 134,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 5,
+                    "code": 51,
+                    "comment": 0,
+                    "filename": "pages/_app.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "pages/_document.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 18,
+                    "comment": 0,
+                    "filename": "pages/chats.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "pages/home.js"
+                },
+                {
+                    "blank": 4,
+                    "code": 21,
+                    "comment": 0,
+                    "filename": "pages/index.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 12,
+                    "comment": 0,
+                    "filename": "pages/joinus.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 22,
+                    "comment": 0,
+                    "filename": "pages/profile.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "pages/reset.js"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "pages/welcome.js"
+                },
+                {
+                    "blank": 17,
+                    "code": 93,
+                    "comment": 11,
+                    "filename": "server.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 35,
+                    "comment": 0,
+                    "filename": "utils/cloudinary.js"
+                },
+                {
+                    "blank": 2,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "utils/firebaseProd.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 25,
+                    "comment": 0,
+                    "filename": "utils/formatChats.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "utils/formatDate.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 41,
+                    "comment": 0,
+                    "filename": "utils/genres.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 4,
+                    "comment": 1,
+                    "filename": "utils/getAge.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 6,
+                    "comment": 0,
+                    "filename": "utils/getLoggedIn.js"
+                },
+                {
+                    "blank": 6,
+                    "code": 38,
+                    "comment": 6,
+                    "filename": "utils/getPageContext.js"
+                },
+                {
+                    "blank": 1,
+                    "code": 9,
+                    "comment": 0,
+                    "filename": "utils/redirect.js"
+                },
+                {
+                    "blank": 9,
+                    "code": 72,
+                    "comment": 2,
+                    "filename": "utils/withData.js"
+                }
+            ]
+        }
+    ]
+}
