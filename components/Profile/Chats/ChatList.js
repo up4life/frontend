@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import ConvoContainer from '../../ConvoContainer';
+import ConvoContainer from '../../ConvoContainer'
 
-import Chats from './Chats';
+import Chats from './Chats'
 
 export default () => {
-	return (
-		<ConvoContainer>
-			<Chats />
-		</ConvoContainer>
-	);
-};
+  return (
+    <ConvoContainer>
+      <Chats />
+    </ConvoContainer>
+  )
+}

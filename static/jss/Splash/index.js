@@ -6,8 +6,8 @@ import {
   description,
   main,
   mainRaised
-} from '../material-kit-pro-react';
-import modalStyle from '../material-kit-pro-react/modalStyle';
+} from '../material-kit-pro-react'
+import modalStyle from '../material-kit-pro-react/modalStyle'
 
 const styles = theme => {
   return {
@@ -123,8 +123,9 @@ const styles = theme => {
       }
     },
     belowTheFold: {
-	  width: '100%',
-	  backgroundImage: 'linear-gradient(to bottom, #000000, #080003, #0d0009, #0f0011, #0d0217, #0d0217, #0d0217, #0d0217, #0f0011, #0d0009, #080003, #000000)'
+      width: '100%',
+      backgroundImage:
+        'linear-gradient(to bottom, #000000, #080003, #0d0009, #0f0011, #0d0217, #0d0217, #0d0217, #0d0217, #0f0011, #0d0009, #080003, #000000)'
     },
     mainAddendum: {
       backgroundColor: 'rgb(38, 35, 35)',
@@ -146,7 +147,7 @@ const styles = theme => {
     blueGradient: {
       backgroundImage: 'linear-gradient(to right, #b2ddf7, #9cceed, #86bfe3, #6fb1da, #56a2d0)'
     }
-  };
-};
+  }
+}
 
-export default styles;
+export default styles

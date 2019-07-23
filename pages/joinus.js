@@ -1,17 +1,17 @@
-import Splash from '../components/SplashPage';
-import { isLoggedIn } from '../components/Queries/User';
-import redirect from '../utils/redirect';
+import Splash from '../components/SplashPage'
+import { isLoggedIn } from '../components/Queries/User'
+import redirect from '../utils/redirect'
 
-const Index = () => <Splash />;
+const Index = () => <Splash />
 
 Index.getInitialProps = async ctx => {
-	let { currentUser } = await isLoggedIn(ctx.apolloClient);
+  let { currentUser } = await isLoggedIn(ctx.apolloClient)
 
-	if (currentUser) {
-		redirect(ctx, '/home');
-	}
+  if (currentUser) {
+    redirect(ctx, '/home')
+  }
 
-	return {};
-};
+  return {}
+}
 
-export default Index;
+export default Index

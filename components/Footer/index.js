@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import gql from 'graphql-tag';
-import Router from 'next/router';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { useMutation } from '../Mutations/useMutation';
-import StyledFooter from '../../styledComponents/Footer/Footer.jsx';
-import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/footerStyle.jsx';
-import List from '@material-ui/core/List';
-import Button from '../../styledComponents/CustomButtons/Button.jsx';
-import ListItem from '@material-ui/core/ListItem';
-import Terms from './TermsModal';
+import React, { useState } from 'react'
+import gql from 'graphql-tag'
+import Router from 'next/router'
+import withStyles from '@material-ui/core/styles/withStyles'
+import { useMutation } from '../Mutations/useMutation'
+import StyledFooter from '../../styledComponents/Footer/Footer.jsx'
+import styles from '../../static/jss/material-kit-pro-react/views/componentsSections/footerStyle.jsx'
+import List from '@material-ui/core/List'
+import Button from '../../styledComponents/CustomButtons/Button.jsx'
+import ListItem from '@material-ui/core/ListItem'
+import Terms from './TermsModal'
 
 const DELETE_USER = gql`
   mutation {
@@ -16,17 +16,17 @@ const DELETE_USER = gql`
       message
     }
   }
-`;
+`
 
-const Footer = (props) => {
-  const [termsShowing, setTermsShowing] = useState(false);
-  const [deleteUser] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') });
+const Footer = props => {
+  const [termsShowing, setTermsShowing] = useState(false)
+  const [deleteUser] = useMutation(DELETE_USER, { onCompleted: () => Router.push('/joinus') })
 
-	const {classes, splash} = props;
+  const { classes, splash } = props
   return (
     <StyledFooter
-		stuff={props}
-      theme='dark'
+      stuff={props}
+      theme="dark"
       content={
         <div>
           <div className={classes.left}>
@@ -79,13 +79,8 @@ const Footer = (props) => {
           <div className={classes.rightLinks}>
             <ul>
               <li>
-                <Button
-                  href='https://github.com/up4life'
-                  color='twitter'
-                  justIcon
-                  simple='true'
-                >
-                  <i className='fab fa-github' />
+                <Button href="https://github.com/up4life" color="twitter" justIcon simple="true">
+                  <i className="fab fa-github" />
                 </Button>
               </li>
               {/* <li>
@@ -118,7 +113,7 @@ const Footer = (props) => {
         </div>
       }
     />
-  );
-};
+  )
+}
 
-export default withStyles(styles)(Footer);
+export default withStyles(styles)(Footer)

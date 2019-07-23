@@ -1,8 +1,8 @@
-import React from 'react';
-import Slide from '@material-ui/core/Slide';
+import React from 'react'
+import Slide from '@material-ui/core/Slide'
 
 function Transition(props) {
-	return <Slide direction='down' {...props} />;
+  return <Slide direction="down" {...props} />
 }
 
-export default Transition;
+export default Transition

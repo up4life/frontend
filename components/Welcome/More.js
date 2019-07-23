@@ -1,18 +1,18 @@
-import React, {useState} from "react";
-import Router from "next/router";
-import NProgress from "nprogress";
-import {Mutation} from "react-apollo";
-import gql from "graphql-tag";
-import {InputLabel, Tooltip} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React, { useState } from 'react'
+import Router from 'next/router'
+import NProgress from 'nprogress'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { InputLabel, Tooltip } from '@material-ui/core'
+import withStyles from '@material-ui/core/styles/withStyles'
 
-import CustomInput from "../../styledComponents/CustomInput/CustomInput.jsx";
-import Button from "../../styledComponents/CustomButtons/Button";
+import CustomInput from '../../styledComponents/CustomInput/CustomInput.jsx'
+import Button from '../../styledComponents/CustomButtons/Button'
 
-import {openUploadWidget} from "../../utils/cloudinary";
-import {UPDATE_USER_MUTATION} from "../Mutations/updateUser";
-import {useMutation} from "../Mutations/useMutation";
-import styles from "../../static/jss/Welcome/welcomeStyles";
+import { openUploadWidget } from '../../utils/cloudinary'
+import { UPDATE_USER_MUTATION } from '../Mutations/updateUser'
+import { useMutation } from '../Mutations/useMutation'
+import styles from '../../static/jss/Welcome/welcomeStyles'
 
 const UPLOAD_IMAGE_MUTATION = gql`
   mutation UPLOAD_IMAGE_MUTATION($url: String!) {
@@ -25,44 +25,44 @@ const UPLOAD_IMAGE_MUTATION = gql`
       }
     }
   }
-`;
-const MoreInfo = ({user, classes}) => {
-  const [bio, setBio] = useState("");
-  const [charsLeft, setCharsLeft] = useState(350 - bio.length);
+`
+const MoreInfo = ({ user, classes }) => {
+  const [bio, setBio] = useState('')
+  const [charsLeft, setCharsLeft] = useState(350 - bio.length)
   const [uploadImage] = useMutation(UPLOAD_IMAGE_MUTATION, {
-    onCompleted: () => NProgress.done(),
-  });
+    onCompleted: () => NProgress.done()
+  })
 
-  const handleInput = ({target: {value}}) => {
-    setBio(value);
-    setCharsLeft(350 - value.length);
-  };
+  const handleInput = ({ target: { value } }) => {
+    setBio(value)
+    setCharsLeft(350 - value.length)
+  }
   const handleUpload = async () => {
     openUploadWidget((error, result) => {
       // console.log(result.event);
-      if (result.event === "success") {
-        NProgress.start();
+      if (result.event === 'success') {
+        NProgress.start()
         uploadImage({
           variables: {
-            url: result.info.secure_url,
-          },
-        });
+            url: result.info.secure_url
+          }
+        })
       }
-    });
-  };
+    })
+  }
 
   return (
     <Mutation
       mutation={UPDATE_USER_MUTATION}
-      variables={{biography: bio}}
+      variables={{ biography: bio }}
       onCompleted={() => {
-        NProgress.done();
+        NProgress.done()
         Router.push(
           `/welcome?slug=4`,
           `/welcome/profile/preferences`,
-          {shallow: true},
-          {scroll: false}
-        );
+          { shallow: true },
+          { scroll: false }
+        )
       }}
       onError={e => console.log(e)}
     >
@@ -71,52 +71,52 @@ const MoreInfo = ({user, classes}) => {
           <h2>More about me...</h2>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              justifyContent: 'center'
             }}
           >
-            <div className='thumbnail' style={{width: "70%", margin: "0 auto"}}>
+            <div className="thumbnail" style={{ width: '70%', margin: '0 auto' }}>
               {user.img.length ? (
-                <img src={user.img.find(x => x.default).img_url} alt='...' />
+                <img src={user.img.find(x => x.default).img_url} alt="..." />
               ) : null}
             </div>
             <Button
               simple
-              color='danger'
+              color="danger"
               onClick={() => {
-                handleUpload();
+                handleUpload()
               }}
             >
-              {user.img.length ? "Change" : "Upload"}
+              {user.img.length ? 'Change' : 'Upload'}
             </Button>
           </div>
-          <div style={{width: "100%"}}>
+          <div style={{ width: '100%' }}>
             <CustomInput
               //labelText='About'
 
               formControlProps={{
-                fullWidth: true,
+                fullWidth: true
               }}
-              id='textarea-input'
+              id="textarea-input"
               inputProps={{
                 multiline: true,
                 rows: 4,
                 value: bio,
                 onChange: e => handleInput(e),
-                placeholder: "Write a little about yourself",
-                value: `${charsLeft > 0 ? bio : bio.slice(0, 350)}`,
+                placeholder: 'Write a little about yourself',
+                value: `${charsLeft > 0 ? bio : bio.slice(0, 350)}`
               }}
             />
             <InputLabel
               style={{
-                marginBottom: "10px",
-                textAlign: "end",
-                alignSelf: "flex-end",
-                color: charsLeft <= 20 ? "red" : "auto",
+                marginBottom: '10px',
+                textAlign: 'end',
+                alignSelf: 'flex-end',
+                color: charsLeft <= 20 ? 'red' : 'auto'
               }}
-              htmlFor='textarea-input'
+              htmlFor="textarea-input"
               className={classes.selectLabel}
             >
               Chars left: {charsLeft}
@@ -124,27 +124,28 @@ const MoreInfo = ({user, classes}) => {
           </div>
           {user.img.length ? (
             <Button
-              color='danger'
+              color="danger"
               onClick={() => {
-                NProgress.start();
-                updateUser();
+                NProgress.start()
+                updateUser()
               }}
             >
               Next
             </Button>
           ) : null}
-          <Tooltip title='You can edit these later in your profile page.'>
+          <Tooltip title="You can edit these later in your profile page.">
             <Button
-              size='sm'
+              size="sm"
               simple
               className={classes.skipButton}
               onClick={() =>
                 Router.push(
                   `/welcome?slug=4`,
                   `/welcome/profile/preferences`,
-                  {shallow: true},
-                  {scroll: false}
-                )}
+                  { shallow: true },
+                  { scroll: false }
+                )
+              }
             >
               Skip For Now
             </Button>
@@ -152,7 +153,7 @@ const MoreInfo = ({user, classes}) => {
         </div>
       )}
     </Mutation>
-  );
-};
+  )
+}
 
-export default withStyles(styles)(MoreInfo);
+export default withStyles(styles)(MoreInfo)

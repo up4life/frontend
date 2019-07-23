@@ -1,20 +1,20 @@
-import User from "../components/Queries/User";
-import JoinUs from "./joinus";
-import Chats from "../components/Profile/Chats/ChatList";
+import User from '../components/Queries/User'
+import JoinUs from './joinus'
+import Chats from '../components/Profile/Chats/ChatList'
 
 const ChatPage = () => (
-	<User>
-		{({ loading, error, data }) => {
-			if (loading) return <div />;
-			if (error || !data.currentUser) return <JoinUs />;
-			else
-				return (
-					<>
-						<Chats user={data.currentUser} />
-					</>
-				);
-		}}
-	</User>
-);
+  <User>
+    {({ loading, error, data }) => {
+      if (loading) return <div />
+      if (error || !data.currentUser) return <JoinUs />
+      else
+        return (
+          <>
+            <Chats user={data.currentUser} />
+          </>
+        )
+    }}
+  </User>
+)
 
-export default ChatPage;
+export default ChatPage
