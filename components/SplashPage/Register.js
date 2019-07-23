@@ -1,11 +1,11 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import gql from 'graphql-tag';
-import { Mutation } from 'react-apollo';
-import firebase from 'firebase/app';
-import Router from 'next/router';
-import NProgress from 'nprogress';
+import React, { useEffect, useState, Fragment } from 'react'
+import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
+import firebase from 'firebase/app'
+import Router from 'next/router'
+import NProgress from 'nprogress'
 //MUI
-import withStyles from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles'
 import {
   DialogTitle,
   Dialog,
@@ -16,7 +16,7 @@ import {
   ButtonBase,
   IconButton,
   Icon
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   Visibility,
   VisibilityOff,
@@ -27,27 +27,27 @@ import {
   Check,
   Close,
   LockOutlined
-} from '@material-ui/icons';
+} from '@material-ui/icons'
 //Q&M
-import { CURRENT_USER_QUERY } from '../Queries/User';
+import { CURRENT_USER_QUERY } from '../Queries/User'
 //Components
-import ErrorModal from './ErrorModal';
-import Terms from '../../components/SplashPage/Terms';
-import Transition from '../Transistion';
+import ErrorModal from './ErrorModal'
+import Terms from '../../components/SplashPage/Terms'
+import Transition from '../Transistion'
 //styled components
-import Button from '../../styledComponents/CustomButtons/Button';
-import Card from '../../styledComponents/Card/Card';
-import GridContainer from '../../styledComponents/Grid/GridContainer';
-import GridItem from '../../styledComponents/Grid/GridItem';
-import CustomInput from '../../styledComponents/CustomInput/CustomInput';
-import InfoArea from '../../styledComponents/InfoArea/InfoArea';
+import Button from '../../styledComponents/CustomButtons/Button'
+import Card from '../../styledComponents/Card/Card'
+import GridContainer from '../../styledComponents/Grid/GridContainer'
+import GridItem from '../../styledComponents/Grid/GridItem'
+import CustomInput from '../../styledComponents/CustomInput/CustomInput'
+import InfoArea from '../../styledComponents/InfoArea/InfoArea'
 //assets
-import TheaterMasks from '../../static/icons/TheatreMask';
-import Futbol from '../../static/icons/futbol-solid.js';
+import TheaterMasks from '../../static/icons/TheatreMask'
+import Futbol from '../../static/icons/futbol-solid.js'
 //styles
-import Styles from '../../static/jss/Splash';
+import Styles from '../../static/jss/Splash'
 //utils
-import { auth } from '../../utils/firebaseProd';
+import { auth } from '../../utils/firebaseProd'
 
 const REGISTER_USER = gql`
   mutation REGISTER_USER(
@@ -63,7 +63,7 @@ const REGISTER_USER = gql`
       email
     }
   }
-`;
+`
 const FIREBASE_SIGNUP = gql`
   mutation FIREBASE_LOGIN($idToken: String!) {
     firebaseAuth(idToken: $idToken) {
@@ -76,64 +76,64 @@ const FIREBASE_SIGNUP = gql`
       }
     }
   }
-`;
+`
 
 const Register = ({ classes, showing, setShowing }) => {
-  const [passwordShowing, setPasswordShowing] = useState(false);
+  const [passwordShowing, setPasswordShowing] = useState(false)
   // const [showing, setModalShowing] = useState(false);
-  const [termsShowing, setTermsShowing] = useState(false);
-  const [terms, setTerms] = useState(false);
+  const [termsShowing, setTermsShowing] = useState(false)
+  const [terms, setTerms] = useState(false)
   const [user, setUser] = useState({
     name: undefined,
     email: undefined,
     password: undefined
-  });
+  })
   const [err, setError] = useState({
     name: undefined,
     email: undefined,
     password: undefined
-  });
-  const [serverError, setServerError] = useState(undefined);
+  })
+  const [serverError, setServerError] = useState(undefined)
   const handleChange = ({ target: { name, value } }) => {
-    setUser({ ...user, [name]: value });
-  };
+    setUser({ ...user, [name]: value })
+  }
 
   useEffect(() => {
     if (err.password) {
-      setError({ ...err, password: undefined });
+      setError({ ...err, password: undefined })
     }
-  }, [user.password]);
+  }, [user.password])
 
   const firebaseSignup = async (e, firebaseAuth, company) => {
-    NProgress.start();
-    e.preventDefault();
+    NProgress.start()
+    e.preventDefault()
     try {
-      let provider;
+      let provider
       switch (company) {
         case 'google':
-          provider = new firebase.auth.GoogleAuthProvider();
-          break;
+          provider = new firebase.auth.GoogleAuthProvider()
+          break
         case 'facebook':
-          provider = new firebase.auth.FacebookAuthProvider();
-          break;
+          provider = new firebase.auth.FacebookAuthProvider()
+          break
         case 'twitter':
-          provider = new firebase.auth.TwitterAuthProvider();
-          break;
+          provider = new firebase.auth.TwitterAuthProvider()
+          break
         default:
-          provider = undefined;
+          provider = undefined
       }
-      await auth.signInWithPopup(provider);
-      const idToken = await auth.currentUser.getIdToken(true);
-      await firebaseAuth({ variables: { idToken } });
+      await auth.signInWithPopup(provider)
+      const idToken = await auth.currentUser.getIdToken(true)
+      await firebaseAuth({ variables: { idToken } })
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
   const handleSubmit = async (e, signup) => {
-    e.preventDefault();
-    let nameArray = user.name.split(' ');
+    e.preventDefault()
+    let nameArray = user.name.split(' ')
     if (nameArray.length < 2) {
-      setError({ ...err, name: 'First name and last name required.' });
+      setError({ ...err, name: 'First name and last name required.' })
     } else {
       let newUser = await signup({
         variables: {
@@ -142,20 +142,20 @@ const Register = ({ classes, showing, setShowing }) => {
           firstName: nameArray[0],
           lastName: nameArray[1]
         }
-      });
+      })
     }
-  };
+  }
 
   const handleError = error => {
-    NProgress.done();
+    NProgress.done()
     if (error.message.includes('unique')) {
-      setError({ ...err, email: 'A user with this email already exists.' });
+      setError({ ...err, email: 'A user with this email already exists.' })
     } else if (error.message.includes('Password')) {
-      setError({ ...err, password: error.message });
+      setError({ ...err, password: error.message })
     } else {
-      setServerError(error);
+      setServerError(error)
     }
-  };
+  }
 
   return (
     <Fragment>
@@ -171,10 +171,10 @@ const Register = ({ classes, showing, setShowing }) => {
             TransitionComponent={Transition}
             keepMounted
             onClose={() => {
-              setShowing(false);
+              setShowing(false)
             }}
-            aria-labelledby='signup-modal-slide-title'
-            aria-describedby='signup-modal-slide-description'
+            aria-labelledby="signup-modal-slide-title"
+            aria-describedby="signup-modal-slide-description"
           >
             <Card plain className={classes.modalSignupCard + ' ' + classes.register}>
               {termsShowing ? (
@@ -182,15 +182,15 @@ const Register = ({ classes, showing, setShowing }) => {
               ) : (
                 <div>
                   <DialogTitle
-                    id='signup-modal-slide-title'
+                    id="signup-modal-slide-title"
                     disableTypography
                     className={classes.modalHeader}
                   >
                     <Button
-                      simple='true'
+                      simple="true"
                       className={classes.modalCloseButton}
-                      key='close'
-                      aria-label='Close'
+                      key="close"
+                      aria-label="Close"
                       onClick={() => setShowing(false)}
                     >
                       {' '}
@@ -198,12 +198,12 @@ const Register = ({ classes, showing, setShowing }) => {
                     </Button>
                     <h3 className={`${classes.cardTitle} ${classes.modalTitle}`}>Register</h3>
                   </DialogTitle>
-                  <DialogContent id='signup-modal-slide-description' className={classes.modalBody}>
+                  <DialogContent id="signup-modal-slide-description" className={classes.modalBody}>
                     <GridContainer>
                       <GridItem xs={12} sm={5} md={5} className={classes.mlAuto}>
                         <InfoArea
                           className={classes.infoArea}
-                          title='Music'
+                          title="Music"
                           description={
                             <p>
                               From the biggest acts in town to more intimate venues, find out who's
@@ -211,11 +211,11 @@ const Register = ({ classes, showing, setShowing }) => {
                             </p>
                           }
                           icon={MusicNote}
-                          iconColor='rose'
+                          iconColor="rose"
                         />
                         <InfoArea
                           className={classes.infoArea}
-                          title='Theater'
+                          title="Theater"
                           description={
                             <p>
                               Comedy, musicals, classical productions. Discover the productions on
@@ -223,14 +223,14 @@ const Register = ({ classes, showing, setShowing }) => {
                             </p>
                           }
                           icon={TheaterMasks}
-                          iconColor='primary'
+                          iconColor="primary"
                         />
                         <InfoArea
                           className={classes.infoArea}
-                          title='Sports'
+                          title="Sports"
                           description={<p>Sports ball. If you're into that.</p>}
                           icon={Futbol}
-                          iconColor='info'
+                          iconColor="info"
                         />
                       </GridItem>
                       <GridItem xs={12} sm={5} md={5} className={classes.mrAuto}>
@@ -240,14 +240,14 @@ const Register = ({ classes, showing, setShowing }) => {
                             refetchQueries={[{ query: CURRENT_USER_QUERY }]}
                             awaitRefetchQueries
                             onError={error => {
-                              NProgress.done();
-                              setServerError(error);
+                              NProgress.done()
+                              setServerError(error)
                             }}
                             onCompleted={({ firebaseAuth }) => {
                               if (firebaseAuth.newUser) {
-                                Router.push('/welcome?slug=0', '/welcome/profile/getstarted');
+                                Router.push('/welcome?slug=0', '/welcome/profile/getstarted')
                               } else {
-                                Router.push('/home');
+                                Router.push('/home')
                               }
                             }}
                           >
@@ -256,31 +256,31 @@ const Register = ({ classes, showing, setShowing }) => {
                                 <Fragment>
                                   <Button
                                     justIcon
-                                    round='true'
-                                    color='google'
+                                    round="true"
+                                    color="google"
                                     onClick={e => firebaseSignup(e, firebaseAuth, 'google')}
                                   >
-                                    <i className='fab fa-google' />
+                                    <i className="fab fa-google" />
                                   </Button>
 
                                   <Button
                                     justIcon
-                                    round='true'
-                                    color='facebook'
+                                    round="true"
+                                    color="facebook"
                                     onClick={e => firebaseSignup(e, firebaseAuth, 'facebook')}
                                   >
-                                    <i className='fab fa-facebook-f' />
+                                    <i className="fab fa-facebook-f" />
                                   </Button>
                                   <Button
                                     justIcon
-                                    round='true'
-                                    color='instagram'
+                                    round="true"
+                                    color="instagram"
                                     onClick={e => firebaseSignup(e, firebaseAuth, 'twitter')}
                                   >
-                                    <i className='fab fa-twitter' />
+                                    <i className="fab fa-twitter" />
                                   </Button>
                                 </Fragment>
-                              );
+                              )
                             }}
                           </Mutation>
 
@@ -290,14 +290,14 @@ const Register = ({ classes, showing, setShowing }) => {
                           mutation={REGISTER_USER}
                           refetchQueries={[{ query: CURRENT_USER_QUERY }]}
                           onCompleted={() => {
-                            NProgress.done();
-                            Router.push('/welcome?slug=0', '/welcome/profile/getstarted');
+                            NProgress.done()
+                            Router.push('/welcome?slug=0', '/welcome/profile/getstarted')
                           }}
                           onError={handleError}
                           awaitRefetchQueries
                         >
                           {(signup, { loading, called }) => {
-                            if (called) NProgress.start();
+                            if (called) NProgress.start()
 
                             return (
                               <form
@@ -312,7 +312,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                 >
                                   <CustomInput
                                     error={err.name}
-                                    id='name'
+                                    id="name"
                                     formControlProps={{
                                       fullWidth: true,
                                       className:
@@ -323,7 +323,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                     inputProps={{
                                       startAdornment: (
                                         <InputAdornment
-                                          position='start'
+                                          position="start"
                                           className={classes.inputAdornment}
                                         >
                                           <Face className={classes.inputAdornmentIcon} />
@@ -344,7 +344,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                   />
                                   <CustomInput
                                     error={err.email}
-                                    id='email'
+                                    id="email"
                                     formControlProps={{
                                       fullWidth: true,
                                       className:
@@ -355,7 +355,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                     inputProps={{
                                       startAdornment: (
                                         <InputAdornment
-                                          position='start'
+                                          position="start"
                                           className={classes.inputAdornment}
                                         >
                                           <Email className={classes.inputAdornmentIcon} />
@@ -374,16 +374,16 @@ const Register = ({ classes, showing, setShowing }) => {
                                   />
                                   <CustomInput
                                     error={err.password}
-                                    id='password'
+                                    id="password"
                                     formControlProps={{
                                       fullWidth: true,
                                       className: classes.customFormControlClasses
                                     }}
                                     inputProps={{
                                       endAdornment: (
-                                        <InputAdornment position='end'>
+                                        <InputAdornment position="end">
                                           <IconButton
-                                            aria-label='Toggle password visibility'
+                                            aria-label="Toggle password visibility"
                                             onClick={() => setPasswordShowing(!passwordShowing)}
                                           >
                                             {!err.password &&
@@ -397,7 +397,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                       ),
                                       startAdornment: (
                                         <InputAdornment
-                                          position='start'
+                                          position="start"
                                           className={classes.inputAdornment}
                                         >
                                           <LockOutlined className={classes.inputAdornmentIcon} />
@@ -412,7 +412,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                       onChange: handleChange,
                                       error: err.password && true
                                     }}
-                                    labelText='Must be at least 8 characters including a number.'
+                                    labelText="Must be at least 8 characters including a number."
                                     labelProps={{
                                       error: err.password ? true : false
                                     }}
@@ -423,7 +423,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                     }}
                                   >
                                     By registering you are agreeing to
-                                    <a onClick={() => setTermsShowing(true)} href='#'>
+                                    <a onClick={() => setTermsShowing(true)} href="#">
                                       {' '}
                                       our terms and conditions and privacy policy
                                     </a>
@@ -493,14 +493,14 @@ const Register = ({ classes, showing, setShowing }) => {
 																		}
 																	/> */}
                                   <div className={classes.textCenter}>
-                                    <ButtonBase type='submit'>
+                                    <ButtonBase type="submit">
                                       <Button
                                         className={classes.loginButton}
-                                        round='true'
+                                        round="true"
                                         // disabled
                                         //disabled={!terms}
-                                        color='primary'
-                                        component='div'
+                                        color="primary"
+                                        component="div"
                                       >
                                         Get Started
                                       </Button>
@@ -508,7 +508,7 @@ const Register = ({ classes, showing, setShowing }) => {
                                   </div>
                                 </fieldset>
                               </form>
-                            );
+                            )
                           }}
                         </Mutation>
                       </GridItem>
@@ -523,7 +523,7 @@ const Register = ({ classes, showing, setShowing }) => {
         </div>
       </GridItem>
     </Fragment>
-  );
-};
+  )
+}
 
-export default withStyles(Styles)(Register);
+export default withStyles(Styles)(Register)

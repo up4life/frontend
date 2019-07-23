@@ -1,8 +1,8 @@
-import Reset from '../components/Reset';
+import Reset from '../components/Reset'
 const ResetPage = props => (
-	<div>
-		<Reset resetToken={props.query.resetToken} />
-	</div>
-);
+  <div>
+    <Reset resetToken={props.query.resetToken} />
+  </div>
+)
 
-export default ResetPage;
+export default ResetPage

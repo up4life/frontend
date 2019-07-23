@@ -11,7 +11,8 @@
 		"dev": "next build && nodemon server.js",
 		"build": "next build",
 		"start": "NODE_ENV=production node server.js -p $PORT",
-		"test": "NODE_ENV=test jest --watch"
+		"test": "NODE_ENV=test jest --watch",
+		"pretty": "prettier --write \"**/{*.js,*.ts,*.tsx}\""
 	},
 	"author": "",
 	"license": "ISC",
@@ -55,6 +56,7 @@
 		"notistack": "^0.6.1",
 		"nprogress": "^0.2.0",
 		"path": "^0.12.7",
+		"prettier": "^1.18.2",
 		"prop-types": "^15.7.2",
 		"react": "^16.8.6",
 		"react-adopt": "^0.6.0",

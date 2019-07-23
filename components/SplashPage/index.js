@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 //MUI
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Typography } from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles'
+import { Typography } from '@material-ui/core'
 //components
-import Register from './Register';
-import Login from './Login';
-import BelowTheFoldCard from './BelowTheFoldCard';
-import Footer from '../Footer';
+import Register from './Register'
+import Login from './Login'
+import BelowTheFoldCard from './BelowTheFoldCard'
+import Footer from '../Footer'
 //styled components
-import Parallax from '../../styledComponents/Parallax/Parallax';
-import GridContainer from '../../styledComponents/Grid/GridContainer';
-import GridItem from '../../styledComponents/Grid/GridItem';
-import Button from '../../styledComponents/CustomButtons/Button';
+import Parallax from '../../styledComponents/Parallax/Parallax'
+import GridContainer from '../../styledComponents/Grid/GridContainer'
+import GridItem from '../../styledComponents/Grid/GridItem'
+import Button from '../../styledComponents/CustomButtons/Button'
 //styles
-import Styles from '../../static/jss/Splash';
-import Logo from '../Header/UpFor';
+import Styles from '../../static/jss/Splash'
+import Logo from '../Header/UpFor'
 //gifs and imgs
-import eventsGif from '../../static/img/events.gif';
-import peopleGif from '../../static/img/people.gif';
-import chatGif from '../../static/img/chat.gif';
-import arrow from '../../static/img/up4Arrow.png';
+import eventsGif from '../../static/img/events.gif'
+import peopleGif from '../../static/img/people.gif'
+import chatGif from '../../static/img/chat.gif'
+import arrow from '../../static/img/up4Arrow.png'
 
 const copyArray = [
   {
@@ -37,14 +37,14 @@ const copyArray = [
     text:
       'Keep in touch with your new connections on our chat.  Get notified the instant you revieve a new message and plan your rendezvous in real time.'
   }
-];
+]
 
 const Splash = ({ classes }) => {
-  const [registerShowing, setRegisterShowing] = useState(false);
-  const [loginShowing, setLoginShowing] = useState(false);
+  const [registerShowing, setRegisterShowing] = useState(false)
+  const [loginShowing, setLoginShowing] = useState(false)
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div>
       <Parallax>
@@ -52,17 +52,17 @@ const Splash = ({ classes }) => {
           <GridContainer>
             <GridItem
               container
-              justify='center'
-              alignItems='center'
-              direction='column'
+              justify="center"
+              alignItems="center"
+              direction="column"
               xs={12}
               sm={8}
               md={12}
             >
-              <Logo main='true' />
+              <Logo main="true" />
 
               <div className={classes.tagline}>
-                <Typography color='inherit' variant='h2'>
+                <Typography color="inherit" variant="h2">
                   Meet People. Go Places.
                 </Typography>
               </div>
@@ -70,14 +70,14 @@ const Splash = ({ classes }) => {
                 <GridContainer className={classes.centerGrid}>
                   <Button
                     className={classes.registerButton}
-                    color='danger'
-                    size='lg'
+                    color="danger"
+                    size="lg"
                     onClick={() => setRegisterShowing(true)}
                   >
                     Sign Up
                   </Button>
 
-                  <Button color='info' onClick={() => setLoginShowing(true)}>
+                  <Button color="info" onClick={() => setLoginShowing(true)}>
                     Log In
                   </Button>
                 </GridContainer>
@@ -91,7 +91,7 @@ const Splash = ({ classes }) => {
       <div className={classes.belowTheFold}>
         <div className={`${classes.main} ${classes.mainRaised} ${classes.mainAddendum}`}>
           <GridContainer
-            justify='center'
+            justify="center"
             style={{ paddingBottom: '100px' }}
             className={classes.container}
           >
@@ -99,7 +99,7 @@ const Splash = ({ classes }) => {
             <GridContainer
               className={classes.foldBox}
               style={{ border: '2px solid #4cb5ae' }}
-              alignItems='center'
+              alignItems="center"
             >
               <GridItem xs={12} sm={6}>
                 <Typography
@@ -110,7 +110,7 @@ const Splash = ({ classes }) => {
                     borderRadius: '6px',
                     textAlign: 'right'
                   }}
-                  variant='h3'
+                  variant="h3"
                 >
                   Somewhere
                 </Typography>
@@ -119,7 +119,7 @@ const Splash = ({ classes }) => {
                 <BelowTheFoldCard
                   title={copyArray[0].title}
                   text={copyArray[0].text}
-                  card='first'
+                  card="first"
                   gif={eventsGif}
                 />
               </GridItem>
@@ -127,13 +127,13 @@ const Splash = ({ classes }) => {
             <GridContainer
               className={classes.foldBox}
               style={{ border: '2px solid #ff101f' }}
-              alignItems='center'
+              alignItems="center"
             >
               <GridItem xs={12} sm={6}>
                 <BelowTheFoldCard
                   title={copyArray[1].title}
                   text={copyArray[1].text}
-                  card='second'
+                  card="second"
                   gif={peopleGif}
                 />
               </GridItem>
@@ -146,7 +146,7 @@ const Splash = ({ classes }) => {
                     padding: '20px',
                     borderRadius: '6px'
                   }}
-                  variant='h3'
+                  variant="h3"
                 >
                   Someone
                 </Typography>
@@ -155,7 +155,7 @@ const Splash = ({ classes }) => {
             <GridContainer
               className={classes.foldBox}
               style={{ border: '2px solid #b2ddf7' }}
-              alignItems='center'
+              alignItems="center"
             >
               <GridItem xs={12} sm={6}>
                 <Typography
@@ -166,7 +166,7 @@ const Splash = ({ classes }) => {
                     borderRadius: '6px',
                     textAlign: 'right'
                   }}
-                  variant='h3'
+                  variant="h3"
                 >
                   Some Night
                 </Typography>
@@ -175,7 +175,7 @@ const Splash = ({ classes }) => {
                 <BelowTheFoldCard
                   title={copyArray[2].title}
                   text={copyArray[2].text}
-                  card='third'
+                  card="third"
                   gif={chatGif}
                 />
               </GridItem>
@@ -185,7 +185,7 @@ const Splash = ({ classes }) => {
         <Footer splash />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default withStyles(Styles)(Splash);
+export default withStyles(Styles)(Splash)
